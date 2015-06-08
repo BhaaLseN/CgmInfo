@@ -115,6 +115,10 @@ namespace CgmInfo.Binary
         }
         private CommandHeader ReadCommandHeader()
         {
+            // commands are always word aligned [ISO/IEC 8632-3 5.4]
+            if (_reader.BaseStream.Position % 2 == 1)
+                _reader.BaseStream.Seek(1, SeekOrigin.Current);
+
             ushort commandHeader = ReadWord();
             int elementClass = (commandHeader >> 12) & 0xF;
             int elementId = (commandHeader >> 5) & 0x7F;
@@ -123,7 +127,10 @@ namespace CgmInfo.Binary
             bool isNoop = elementClass == 0 && elementId == 0;
             if (isNoop)
             {
-                _reader.BaseStream.Seek(parameterListLength, SeekOrigin.Current);
+                if (parameterListLength > 2)
+                    // TODO: length seems to include the 2 bytes already read for the header?
+                    //       spec is not exactly clear there =/ [ISO/IEC 8632-3 8.2 Table 3 add.]
+                    _reader.BaseStream.Seek(parameterListLength - 2, SeekOrigin.Current);
                 return ReadCommandHeader();
             }
 

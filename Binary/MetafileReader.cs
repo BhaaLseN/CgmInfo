@@ -26,42 +26,47 @@ namespace CgmInfo.Binary
         public bool Next()
         {
             var parameters = new List<object>();
-            switch (State)
+            try
             {
-                case MetafileState.Start:
-                    var beginMetafile = ReadCommandHeader();
-                    if (beginMetafile.ElementClass != 0)
-                        throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
-                    if (beginMetafile.ElementId != 1)
-                        throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
+                switch (State)
+                {
+                    case MetafileState.Start:
+                        var beginMetafile = ReadCommandHeader();
+                        if (beginMetafile.ElementClass != 0)
+                            throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
+                        if (beginMetafile.ElementId != 1)
+                            throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
 
-                    State = MetafileState.BeginMetafile;
-                    string identifier = ReadBString(beginMetafile.ParameterListLength);
-                    parameters.Add(identifier);
-                    Parameters = parameters;
-                    return true;
-                case MetafileState.BeginMetafile:
-                case MetafileState.MetafileDescriptor:
-                    var metafileDescriptor = ReadCommandHeader();
-                    if (metafileDescriptor.ElementClass == 1)
-                    {
-                        State = MetafileState.MetafileDescriptor;
-                        parameters.Add(ReadMetafileDescriptorParameters(metafileDescriptor));
-                        Parameters = parameters;
+                        State = MetafileState.BeginMetafile;
+                        string identifier = ReadBString(beginMetafile.ParameterListLength);
+                        parameters.Add(identifier);
                         return true;
-                    }
-                    else
-                    {
-                        State = 0;
-                    }
-                    break;
-                case MetafileState.EndMetafile:
-                    break;
-                default:
-                    break;
-            }
+                    case MetafileState.BeginMetafile:
+                    case MetafileState.MetafileDescriptor:
+                        var metafileDescriptor = ReadCommandHeader();
+                        if (metafileDescriptor.ElementClass == 1)
+                        {
+                            State = MetafileState.MetafileDescriptor;
+                            parameters.Add(ReadMetafileDescriptorParameters(metafileDescriptor));
+                            return true;
+                        }
+                        else
+                        {
+                            State = 0;
+                        }
+                        break;
+                    case MetafileState.EndMetafile:
+                        break;
+                    default:
+                        break;
+                }
 
-            return false;
+                return false;
+            }
+            finally
+            {
+                Parameters = parameters;
+            }
         }
 
         private MetafileDescriptorParameter ReadMetafileDescriptorParameters(CommandHeader metafileDescriptor)

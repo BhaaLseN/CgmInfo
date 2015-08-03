@@ -124,16 +124,6 @@ namespace CgmInfo.Binary
             int elementId = (commandHeader >> 5) & 0x7F;
             int parameterListLength = commandHeader & 0x1F;
 
-            bool isNoop = elementClass == 0 && elementId == 0;
-            if (isNoop)
-            {
-                if (parameterListLength > 2)
-                    // TODO: length seems to include the 2 bytes already read for the header?
-                    //       spec is not exactly clear there =/ [ISO/IEC 8632-3 8.2 Table 3 add.]
-                    _reader.BaseStream.Seek(parameterListLength - 2, SeekOrigin.Current);
-                return ReadCommandHeader();
-            }
-
             bool isLongFormat = parameterListLength == 0x1F;
             if (isLongFormat)
             {
@@ -143,6 +133,16 @@ namespace CgmInfo.Binary
                 if (!isLastPartition)
                     throw new InvalidOperationException("Sorry, cannot read command headers with parameters larger than 32767 octets");
                 parameterListLength = longFormCommandHeader & 0x7FFF;
+            }
+
+            bool isNoop = elementClass == 0 && elementId == 0;
+            if (isNoop)
+            {
+                if (parameterListLength > 2)
+                    // TODO: length seems to include the 2 bytes already read for the header?
+                    //       spec is not exactly clear there =/ [ISO/IEC 8632-3 8.2 Table 3 add.]
+                    _reader.BaseStream.Seek(parameterListLength - 2, SeekOrigin.Current);
+                return ReadCommandHeader();
             }
 
             return new CommandHeader(elementClass, elementId, parameterListLength);

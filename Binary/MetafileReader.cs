@@ -114,8 +114,6 @@ namespace CgmInfo.Binary
         private string ReadBString(int maxLength)
         {
             string str = _reader.ReadString();
-            if (str.Length < maxLength)
-                _reader.BaseStream.Seek(maxLength - str.Length, SeekOrigin.Current);
             return str;
         }
         private CommandHeader ReadCommandHeader()

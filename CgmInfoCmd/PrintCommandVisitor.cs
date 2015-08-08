@@ -65,6 +65,10 @@ namespace CgmInfoCmd
                 parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
                     colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);
         }
+        public void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Name Precision: {0} bit", namePrecision.Precision);
+        }
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);

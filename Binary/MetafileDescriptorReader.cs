@@ -130,6 +130,12 @@ namespace CgmInfo.Binary
             return new ColorModelCommand(reader.ReadInteger(commandHeader.ParameterListLength));
         }
 
+        public static NamePrecision NamePrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) name precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            return new NamePrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
+
         private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;

@@ -22,6 +22,7 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision,T parameter);
         void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, T parameter);
         void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, T parameter);
+        void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
     }
 }

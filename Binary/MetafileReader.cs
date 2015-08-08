@@ -184,6 +184,9 @@ namespace CgmInfo.Binary
                 case 10: // COLOUR VALUE EXTENT
                     result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
                     break;
+                case 16: // NAME PRECISION
+                    result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    break;
                 case 19: // COLOUR MODEL
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
                     _descriptor.ColorModel = colorModel.ColorModel;
@@ -194,7 +197,6 @@ namespace CgmInfo.Binary
                 case 13: // FONT LIST
                 case 14: // CHARACTER SET LIST
                 case 15: // CHARACTER CODING ANNOUNCER
-                case 16: // NAME PRECISION
                 case 17: // MAXIMUM VDC EXTENT
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION

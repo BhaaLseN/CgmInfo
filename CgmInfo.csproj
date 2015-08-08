@@ -46,6 +46,7 @@
     <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
+    <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
     <Compile Include="Binary\MetafileParameterReader.cs" />
     <Compile Include="Binary\MetafileReader.cs" />

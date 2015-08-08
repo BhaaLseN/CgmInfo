@@ -23,5 +23,11 @@ namespace CgmInfo.Binary
             //      1 VDC values specified in reals
             return new VdcType(reader.ReadInteger(commandHeader.ParameterListLength));
         }
+
+        public static IntegerPrecision IntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) integer precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            return new IntegerPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
     }
 }

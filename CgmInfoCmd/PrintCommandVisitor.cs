@@ -25,6 +25,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("VDC Type: {0}", vdcType.Specification);
         }
+        public void AcceptMetafileDescriptorIntegerPrecision(IntegerPrecision integerPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Integer Precision: {0} bit", integerPrecision.Precision);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

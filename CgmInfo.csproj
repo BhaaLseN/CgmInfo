@@ -44,10 +44,12 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
     <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
+    <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
     <Compile Include="Binary\MetafileParameterReader.cs" />
     <Compile Include="Binary\MetafileReader.cs" />
+    <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
     <Compile Include="Commands\UnsupportedCommand.cs" />
     <Compile Include="MetafileState.cs" />
     <Compile Include="Parameters\IMetafileDescriptorParameterVisitor.cs" />

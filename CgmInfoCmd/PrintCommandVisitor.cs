@@ -21,6 +21,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Metafile Description: {0}", metafileDescription.Description);
         }
+        public void AcceptMetafileDescriptorVdcType(VdcType vdcType, PrintContext parameter)
+        {
+            parameter.WriteLine("VDC Type: {0}", vdcType.Specification);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

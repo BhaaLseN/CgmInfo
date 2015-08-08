@@ -14,5 +14,6 @@ namespace CgmInfo.Traversal
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);
         void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, T parameter);
+        void AcceptMetafileDescriptorVdcType(VdcType vdcType, T parameter);
     }
 }

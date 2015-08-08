@@ -15,5 +15,13 @@ namespace CgmInfo.Binary
             // P1: (string fixed) metafile description string [ISO/IEC 8632-3 8.3]
             return new MetafileDescription(reader.ReadString());
         }
+
+        public static VdcType VdcType(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) VDC TYPE: valid values are [ISO/IEC 8632-3 8.3]
+            //      0 VDC values specified in integers
+            //      1 VDC values specified in reals
+            return new VdcType(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
     }
 }

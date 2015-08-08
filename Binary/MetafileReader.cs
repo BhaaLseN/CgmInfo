@@ -32,6 +32,8 @@ namespace CgmInfo.Binary
                     result = ReadDelimiterElement(commandHeader);
                     break;
                 case 1: // metafile descriptor
+                    result = ReadMetafileDescriptorElement(commandHeader);
+                    break;
                 case 2: // picture descriptor
                 case 3: // control
                 case 4: // graphical primitive
@@ -128,6 +130,45 @@ namespace CgmInfo.Binary
                 case 21: // BEGIN APPLICATION STRUCTURE
                 case 22: // BEGIN APPLICATION STRUCTURE BODY
                 case 23: // END APPLICATION STRUCTURE
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadMetafileDescriptorElement(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.3, Table 4
+            switch (commandHeader.ElementId)
+            {
+                case 1: // METAFILE VERSION
+                    result = MetafileDescriptorReader.MetafileVersion(this, commandHeader);
+                    break;
+                case 2: // METAFILE DESCRIPTION
+                case 3: // VDC TYPE
+                case 4: // INTEGER PRECISION
+                case 5: // REAL PRECISION
+                case 6: // INDEX PRECISION
+                case 7: // COLOUR PRECISION
+                case 8: // COLOUR INDEX PRECISION
+                case 9: // MAXIMUM COLOUR INDEX
+                case 10: // COLOUR VALUE EXTENT
+                case 11: // METAFILE ELEMENT LIST
+                case 12: // METAFILE DEFAULTS REPLACEMENT
+                case 13: // FONT LIST
+                case 14: // CHARACTER SET LIST
+                case 15: // CHARACTER CODING ANNOUNCER
+                case 16: // NAME PRECISION
+                case 17: // MAXIMUM VDC EXTENT
+                case 18: // SEGMENT PRIORITY EXTENT
+                case 19: // COLOUR MODEL
+                case 20: // COLOUR CALIBRATION
+                case 21: // FONT PROPERTIES
+                case 22: // GLYPH MAPPING
+                case 23: // SYMBOL LIBRARY LIST
+                case 24: // PICTURE DIRECTORY
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -118,6 +118,18 @@ namespace CgmInfo.Binary
             return result;
         }
 
+        public static ColorModelCommand ColorModelCommand(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) colour model: valid values are [ISO/IEC 8632-3 8.3]
+            //      1 RGB
+            //      2 CIELAB
+            //      3 CIELUV
+            //      4 CMYK
+            //      5 RGB - related
+            //      > 5 reserved for registered values.
+            return new ColorModelCommand(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
+
         private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;

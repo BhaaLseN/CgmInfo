@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CgmInfo.Parameters;
+using CgmInfo.Commands;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.Binary
 {
@@ -12,110 +9,62 @@ namespace CgmInfo.Binary
     {
         private readonly string _fileName;
         private readonly BinaryReader _reader;
+        private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
 
-        public MetafileState State { get; private set; }
-        public List<object> Parameters { get; private set; }
+        private bool _insideMetafile;
+
+        public MetafileDescriptor Descriptor
+        {
+            get { return _descriptor; }
+        }
 
         public MetafileReader(string fileName)
         {
             _fileName = fileName;
             _reader = new BinaryReader(File.OpenRead(fileName));
-            State = MetafileState.Start;
         }
 
-        public bool Next()
+        public Command ReadCommand()
         {
-            var parameters = new List<object>();
-            try
-            {
-                switch (State)
-                {
-                    case MetafileState.Start:
-                        var beginMetafile = ReadCommandHeader();
-                        if (beginMetafile.ElementClass != 0)
-                            throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
-                        if (beginMetafile.ElementId != 1)
-                            throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
+            // stop at EOF; or when we cannot at least read another command header
+            if (_reader.BaseStream.Position + 2 >= _reader.BaseStream.Length)
+                return null;
 
-                        State = MetafileState.BeginMetafile;
-                        string identifier = ReadBString(beginMetafile.ParameterListLength);
-                        parameters.Add(identifier);
-                        return true;
-                    case MetafileState.BeginMetafile:
-                    case MetafileState.MetafileDescriptor:
-                        var metafileDescriptor = ReadCommandHeader();
-                        if (metafileDescriptor.ElementClass == 1)
-                        {
-                            State = MetafileState.MetafileDescriptor;
-                            parameters.Add(ReadMetafileDescriptorParameters(metafileDescriptor));
-                            return true;
-                        }
-                        else
-                        {
-                            State = 0;
-                        }
-                        break;
-                    case MetafileState.EndMetafile:
-                        break;
-                    default:
-                        break;
-                }
-
-                return false;
-            }
-            finally
+            Command result;
+            CommandHeader commandHeader = ReadCommandHeader();
+            // ISO/IEC 8632-3 8.1, Table 2
+            switch (commandHeader.ElementClass)
             {
-                Parameters = parameters;
-            }
-        }
-
-        private MetafileDescriptorParameter ReadMetafileDescriptorParameters(CommandHeader metafileDescriptor)
-        {
-            MetafileDescriptorType type = (MetafileDescriptorType)metafileDescriptor.ElementId;
-            switch (metafileDescriptor.ElementId)
-            {
-                case 1: // METAFILE VERSION (I)
-                case 4: // INTEGER PRECISION (I)
-                case 6: // INDEX PRECISION (I)
-                case 7: // COLOUR PRECISION (I)
-                case 8: // COLOUR INDEX PRECISION (I)
-                case 16: // NAME PRECISION (I)
-                case 3: // VDC TYPE (E)
-                case 15: // CHARACTER CODING ANNOUNCER (E)
-                case 9: // MAXIMUM COLOUR INDEX (CI)
-                    int @int = ReadInteger(metafileDescriptor.ParameterListLength);
-                    return new IntegerMetafileDescriptorParameter(@int, type);
-                case 2: // METAFILE DESCRIPTION (SF)
-                    string @string = ReadBString(metafileDescriptor.ParameterListLength);
-                    return new StringMetafileDescriptorParameter(@string, type);
-                case 5: // REAL PRECISION (E, 2I)
-                    int realFormat = ReadInteger(2);
-                    int realExponent = ReadInteger(2);
-                    int realFraction = ReadInteger(2);
-                    return new RealPrecisionMetafileDescriptorParameter(realFormat, realExponent, realFraction, type);
-                case 10: // COLOUR VALUE EXTENT (2CD or 6R)
-                case 11: // METAFILE ELEMENT LIST (I, 2nIX)
-                case 12: // METAFILE DEFAULTS REPLACEMENT (Metafile elements)
-                case 13: // FONT LIST (nSF)
-                case 14: // CHARACTER SET LIST (n(E, SF))
-                case 17: // MAXIMUM VDC EXTENT (2P)
-                case 18: // SEGMENT PRIORTY EXTENT (2I)
-                case 19: // COLOUR MODEL (IX)
-                case 20: // COLOUR CALIBRATION (IX, 3R, 18R, I, 6nCCO, I, mCD, 3mR)
-                case 21: // FONT PROPERTIES (n[IX, I, SDR])
-                case 22: // GLYPH MAPPING (IX, E, SF, I, IX, SDR)
-                case 23: // SYMBOL LIBRARY List (nSF)
-                case 24: // PICTURE DIRECTORY (E, n(SF, 2[ldt]))
+                case 0: // delimiter
+                    result = ReadDelimiterElement(commandHeader);
+                    break;
+                case 1: // metafile descriptor
+                    result = ReadMetafileDescriptorElement(commandHeader);
+                    break;
+                case 2: // picture descriptor
+                case 3: // control
+                case 4: // graphical primitive
+                case 5: // attribute
+                case 6: // escape
+                case 7: // external
+                case 8: // segment control/segment attribute
+                case 9: // application structure descriptor
                 default:
-                    byte[] raw = _reader.ReadBytes(metafileDescriptor.ParameterListLength);
-                    return new UnsupportedMetafileDescriptorParameter(raw, type);
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
             }
+
+            if (result != null && !_insideMetafile)
+            {
+                if (result.ElementClass != 0)
+                    throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
+                if (result.ElementId != 1)
+                    throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
+            }
+
+            return result;
         }
-        private string ReadBString(int maxLength)
-        {
-            string str = _reader.ReadString();
-            return str;
-        }
+
         private CommandHeader ReadCommandHeader()
         {
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
@@ -151,7 +100,118 @@ namespace CgmInfo.Binary
             return new CommandHeader(elementClass, elementId, parameterListLength);
         }
 
-        private int ReadInteger(int numBytes)
+        private Command ReadUnsupportedElement(CommandHeader commandHeader)
+        {
+            // skip the command parameter bytes we don't know
+            _reader.BaseStream.Seek(commandHeader.ParameterListLength, SeekOrigin.Current);
+            return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId);
+        }
+
+        private Command ReadDelimiterElement(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.2, Table 3
+            switch (commandHeader.ElementId)
+            {
+                //case 0: // no-op; these are skipped already while reading the command header
+                case 1: // BEGIN METAFILE
+                    result = DelimiterElementReader.BeginMetafile(this, commandHeader);
+                    _insideMetafile = result != null;
+                    break;
+                case 2: // END METAFILE
+                case 3: // BEGIN PICTURE
+                case 4: // BEGIN PICTURE BODY
+                case 5: // END PICTURE
+                case 6: // BEGIN SEGMENT
+                case 7: // END SEGMENT
+                case 8: // BEGIN FIGURE
+                case 9: // END FIGURE
+                case 13: // BEGIN PROTECTION REGION
+                case 14: // END PROTECTION REGION
+                case 15: // BEGIN COMPOUND LINE
+                case 16: // END COMPOUND LINE
+                case 17: // BEGIN COMPOUND TEXT PATH
+                case 18: // END COMPOUND TEXT PATH
+                case 19: // BEGIN TILE ARRAY
+                case 20: // END TILE ARRAY
+                case 21: // BEGIN APPLICATION STRUCTURE
+                case 22: // BEGIN APPLICATION STRUCTURE BODY
+                case 23: // END APPLICATION STRUCTURE
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadMetafileDescriptorElement(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.3, Table 4
+            switch (commandHeader.ElementId)
+            {
+                case 1: // METAFILE VERSION
+                    result = MetafileDescriptorReader.MetafileVersion(this, commandHeader);
+                    break;
+                case 2: // METAFILE DESCRIPTION
+                    result = MetafileDescriptorReader.MetafileDescription(this, commandHeader);
+                    break;
+                case 3: // VDC TYPE
+                    result = MetafileDescriptorReader.VdcType(this, commandHeader);
+                    break;
+                case 4: // INTEGER PRECISION
+                    result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
+                    break;
+                case 5: // REAL PRECISION
+                    var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
+                    _descriptor.RealPrecision = realPrecision.Specification;
+                    result = realPrecision;
+                    break;
+                case 6: // INDEX PRECISION
+                    result = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
+                    break;
+                case 7: // COLOUR PRECISION
+                    var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
+                    _descriptor.ColorPrecision = colorPrecision.Precision;
+                    result = colorPrecision;
+                    break;
+                case 8: // COLOUR INDEX PRECISION
+                    result = MetafileDescriptorReader.ColorIndexPrecision(this, commandHeader);
+                    break;
+                case 9: // MAXIMUM COLOUR INDEX
+                    result = MetafileDescriptorReader.MaximumColorIndex(this, commandHeader);
+                    break;
+                case 10: // COLOUR VALUE EXTENT
+                    result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
+                    break;
+                case 16: // NAME PRECISION
+                    result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    break;
+                case 19: // COLOUR MODEL
+                    var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
+                    _descriptor.ColorModel = colorModel.ColorModel;
+                    result = colorModel;
+                    break;
+                case 11: // METAFILE ELEMENT LIST
+                case 12: // METAFILE DEFAULTS REPLACEMENT
+                case 13: // FONT LIST
+                case 14: // CHARACTER SET LIST
+                case 15: // CHARACTER CODING ANNOUNCER
+                case 17: // MAXIMUM VDC EXTENT
+                case 18: // SEGMENT PRIORITY EXTENT
+                case 20: // COLOUR CALIBRATION
+                case 21: // FONT PROPERTIES
+                case 22: // GLYPH MAPPING
+                case 23: // SYMBOL LIBRARY LIST
+                case 24: // PICTURE DIRECTORY
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        internal int ReadInteger(int numBytes)
         {
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
@@ -160,17 +220,63 @@ namespace CgmInfo.Binary
                 ret = (ret << 8) | _reader.ReadByte();
             return ret;
         }
-        private ushort ReadWord()
+
+        internal int ReadColorValue()
+        {
+            return ReadInteger(Descriptor.ColorPrecision / 8);
+        }
+        private double ReadFixedPoint(int numBytes)
+        {
+            // ISO/IEC 8632-3 6.4
+            // real value is computed as "whole + (fraction / 2**exp)"
+            // exp is the width of the fraction value
+            int whole = ReadInteger(numBytes / 2);
+            int fraction = ReadInteger(numBytes / 2);
+            // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
+            // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
+            int exp = numBytes / 2 * 8;
+            return whole + fraction / Math.Pow(2, exp);
+        }
+        private double ReadFloatingPoint(int numBytes)
+        {
+            // ISO/IEC 8632-3 6.5
+            // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;
+            // so simply using BinaryReader works out just fine.
+            if (numBytes == 4)
+                return _reader.ReadSingle();
+            if (numBytes == 8)
+                return _reader.ReadDouble();
+
+            throw new InvalidOperationException(string.Format("Sorry, cannot read a floating point value with {0} bytes", numBytes));
+        }
+        internal double ReadReal()
+        {
+            switch (Descriptor.RealPrecision)
+            {
+                case RealPrecisionSpecification.FixedPoint32Bit:
+                    return ReadFixedPoint(4);
+                case RealPrecisionSpecification.FixedPoint64Bit:
+                    return ReadFixedPoint(8);
+                case RealPrecisionSpecification.FloatingPoint32Bit:
+                    return ReadFloatingPoint(4);
+                case RealPrecisionSpecification.FloatingPoint64Bit:
+                    return ReadFloatingPoint(8);
+            }
+            throw new NotSupportedException("The current Real Precision is not supported");
+        }
+        internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());
         }
-        #region IDisposable Members
+
+        internal string ReadString()
+        {
+            return _reader.ReadString();
+        }
 
         public void Dispose()
         {
             _reader.Dispose();
         }
-
-        #endregion
     }
 }

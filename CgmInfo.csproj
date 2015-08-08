@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,17 +40,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binary\DelimiterElementReader.cs" />
+    <Compile Include="Binary\MetafileDescriptorReader.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
+    <Compile Include="Commands\Enums\ColorModel.cs" />
+    <Compile Include="Commands\Enums\ColorSpace.cs" />
+    <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
+    <Compile Include="Commands\Enums\RealRepresentation.cs" />
+    <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
+    <Compile Include="Commands\MetafileDescriptor\NamePrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\ColorIndexPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\ColorModelCommand.cs" />
+    <Compile Include="Commands\MetafileDescriptor\ColorValueExtent.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MaximumColorIndex.cs" />
+    <Compile Include="Commands\MetafileDescriptor\ColorPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\RealPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
+    <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
     <Compile Include="Binary\MetafileReader.cs" />
-    <Compile Include="MetafileState.cs" />
-    <Compile Include="Parameters\IMetafileDescriptorParameterVisitor.cs" />
-    <Compile Include="Parameters\IntegerMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\MetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\Parameter.cs" />
-    <Compile Include="Parameters\RealPrecisionMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\StringMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\UnsupportedMetafileDescriptorParameter.cs" />
+    <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
+    <Compile Include="Commands\UnsupportedCommand.cs" />
+    <Compile Include="MetafileDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traversal\ICommandVisitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

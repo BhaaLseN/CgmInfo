@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using CgmInfo;
 using CgmInfo.Binary;
-using CgmInfo.Parameters;
+using CgmInfo.Commands;
 
 namespace CgmInfoCmd
 {
@@ -19,25 +18,15 @@ namespace CgmInfoCmd
 
             using (var reader = new MetafileReader(fileName))
             {
-                var printVisitor = new PrintMetafileDescriptorParameterVisitor();
-                while (reader.Next())
+                var printVisitor = new PrintCommandVisitor();
+                var printContext = new PrintContext(fileName);
+                Command command;
+                do
                 {
-                    if (reader.State == MetafileState.BeginMetafile)
-                    {
-                        Console.WriteLine("{0} - {1}", reader.Parameters[0], fileName);
-                    }
-                    else if (reader.State == MetafileState.MetafileDescriptor)
-                    {
-                        foreach (object parameter in reader.Parameters)
-                        {
-                            var mdp = parameter as MetafileDescriptorParameter;
-                            if (mdp == null)
-                                Console.WriteLine(parameter);
-                            else
-                                mdp.Accept(printVisitor, 1);
-                        }
-                    }
-                }
+                    command = reader.ReadCommand();
+                    if (command != null)
+                        command.Accept(printVisitor, printContext);
+                } while (command != null);
             }
         }
     }

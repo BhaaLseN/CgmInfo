@@ -50,6 +50,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Color Index Precision: {0} bit", colorIndexPrecision.Precision);
         }
+        public void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Maximum Color Index: {0} bit", maximumColorIndex.Index);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

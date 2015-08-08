@@ -48,6 +48,7 @@
     <Compile Include="Commands\Enums\RealRepresentation.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorIndexPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MaximumColorIndex.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\RealPrecision.cs" />

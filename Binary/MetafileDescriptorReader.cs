@@ -57,5 +57,11 @@ namespace CgmInfo.Binary
             // P1: (integer) Colour index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
             return new ColorIndexPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
         }
+
+        public static MaximumColorIndex MaximumColorIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour index) maximum colour index that may be encountered in the metafile. [ISO/IEC 8632-3 8.3]
+            return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
     }
 }

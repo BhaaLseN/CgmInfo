@@ -17,6 +17,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Metafile Version: {0}", metafileVersion.Version);
         }
+        public void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, PrintContext parameter)
+        {
+            parameter.WriteLine("Metafile Description: {0}", metafileDescription.Description);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

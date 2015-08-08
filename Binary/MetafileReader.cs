@@ -147,6 +147,8 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.MetafileVersion(this, commandHeader);
                     break;
                 case 2: // METAFILE DESCRIPTION
+                    result = MetafileDescriptorReader.MetafileDescription(this, commandHeader);
+                    break;
                 case 3: // VDC TYPE
                 case 4: // INTEGER PRECISION
                 case 5: // REAL PRECISION

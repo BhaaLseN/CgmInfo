@@ -42,6 +42,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Index Precision: {0} bit", indexPrecision.Precision);
         }
+        public void AcceptMetafileDescriptorColorPrecision(ColorPrecision colorPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Color Precision: {0} bit", colorPrecision.Precision);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

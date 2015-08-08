@@ -162,6 +162,8 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
                     break;
                 case 7: // COLOUR PRECISION
+                    result = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
+                    break;
                 case 8: // COLOUR INDEX PRECISION
                 case 9: // MAXIMUM COLOUR INDEX
                 case 10: // COLOUR VALUE EXTENT

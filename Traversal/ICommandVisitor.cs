@@ -19,5 +19,6 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorRealPrecision(RealPrecision realPrecision, T parameter);
         void AcceptMetafileDescriptorIndexPrecision(IndexPrecision indexPrecision, T parameter);
         void AcceptMetafileDescriptorColorPrecision(ColorPrecision colorPrecision, T parameter);
+        void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision,T parameter);
     }
 }

@@ -51,5 +51,11 @@ namespace CgmInfo.Binary
             // P1: (integer) Colour precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
             return new ColorPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
         }
+
+        public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) Colour index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
+            return new ColorIndexPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
     }
 }

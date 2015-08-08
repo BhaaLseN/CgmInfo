@@ -17,7 +17,7 @@ namespace CgmInfoCmd
                 return;
             }
 
-            using (var reader = new MetafileReader(fileName))
+            using (var reader = new MetafileParameterReader(fileName))
             {
                 var printVisitor = new PrintMetafileDescriptorParameterVisitor();
                 while (reader.Next())

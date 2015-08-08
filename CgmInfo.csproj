@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binary\CommandHeader.cs" />
-    <Compile Include="Binary\MetafileReader.cs" />
+    <Compile Include="Binary\MetafileParameterReader.cs" />
     <Compile Include="MetafileState.cs" />
     <Compile Include="Parameters\IMetafileDescriptorParameterVisitor.cs" />
     <Compile Include="Parameters\IntegerMetafileDescriptorParameter.cs" />

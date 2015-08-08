@@ -8,7 +8,7 @@ using CgmInfo.Parameters;
 
 namespace CgmInfo.Binary
 {
-    public class MetafileReader : IDisposable
+    public class MetafileParameterReader : IDisposable
     {
         private readonly string _fileName;
         private readonly BinaryReader _reader;
@@ -16,7 +16,7 @@ namespace CgmInfo.Binary
         public MetafileState State { get; private set; }
         public List<object> Parameters { get; private set; }
 
-        public MetafileReader(string fileName)
+        public MetafileParameterReader(string fileName)
         {
             _fileName = fileName;
             _reader = new BinaryReader(File.OpenRead(fileName));

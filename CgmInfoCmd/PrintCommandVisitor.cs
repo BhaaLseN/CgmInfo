@@ -38,6 +38,10 @@ namespace CgmInfoCmd
             else
                 parameter.WriteLine("Real Precision: {0}", realPrecision.Specification);
         }
+        public void AcceptMetafileDescriptorIndexPrecision(IndexPrecision indexPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Index Precision: {0} bit", indexPrecision.Precision);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

@@ -47,6 +47,7 @@
     <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
     <Compile Include="Commands\Enums\RealRepresentation.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
+    <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\RealPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
     <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />

@@ -39,5 +39,11 @@ namespace CgmInfo.Binary
             // P3: (integer) field width for fraction or fractional part
             return new RealPrecision(reader.ReadInteger(2), reader.ReadInteger(2), reader.ReadInteger(2));
         }
+
+        public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) Index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
+            return new IndexPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
     }
 }

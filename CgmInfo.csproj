@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binary\DelimiterElementReader.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
     <Compile Include="Binary\MetafileParameterReader.cs" />
     <Compile Include="Binary\MetafileReader.cs" />
     <Compile Include="Commands\UnsupportedCommand.cs" />

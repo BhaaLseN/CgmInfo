@@ -9,6 +9,8 @@ namespace CgmInfo.Binary
         private readonly string _fileName;
         private readonly BinaryReader _reader;
 
+        private bool _insideMetafile;
+
         public MetafileReader(string fileName)
         {
             _fileName = fileName;
@@ -27,6 +29,8 @@ namespace CgmInfo.Binary
             switch (commandHeader.ElementClass)
             {
                 case 0: // delimiter
+                    result = ReadDelimiterElement(commandHeader);
+                    break;
                 case 1: // metafile descriptor
                 case 2: // picture descriptor
                 case 3: // control
@@ -39,6 +43,14 @@ namespace CgmInfo.Binary
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
+            }
+
+            if (result != null && !_insideMetafile)
+            {
+                if (result.ElementClass != 0)
+                    throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
+                if (result.ElementId != 1)
+                    throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
             }
 
             return result;
@@ -86,7 +98,44 @@ namespace CgmInfo.Binary
             return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId);
         }
 
-        private int ReadInteger(int numBytes)
+        private Command ReadDelimiterElement(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.2, Table 3
+            switch (commandHeader.ElementId)
+            {
+                //case 0: // no-op; these are skipped already while reading the command header
+                case 1: // BEGIN METAFILE
+                    result = DelimiterElementReader.BeginMetafile(this, commandHeader);
+                    _insideMetafile = result != null;
+                    break;
+                case 2: // END METAFILE
+                case 3: // BEGIN PICTURE
+                case 4: // BEGIN PICTURE BODY
+                case 5: // END PICTURE
+                case 6: // BEGIN SEGMENT
+                case 7: // END SEGMENT
+                case 8: // BEGIN FIGURE
+                case 9: // END FIGURE
+                case 13: // BEGIN PROTECTION REGION
+                case 14: // END PROTECTION REGION
+                case 15: // BEGIN COMPOUND LINE
+                case 16: // END COMPOUND LINE
+                case 17: // BEGIN COMPOUND TEXT PATH
+                case 18: // END COMPOUND TEXT PATH
+                case 19: // BEGIN TILE ARRAY
+                case 20: // END TILE ARRAY
+                case 21: // BEGIN APPLICATION STRUCTURE
+                case 22: // BEGIN APPLICATION STRUCTURE BODY
+                case 23: // END APPLICATION STRUCTURE
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        internal int ReadInteger(int numBytes)
         {
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
@@ -96,9 +145,14 @@ namespace CgmInfo.Binary
             return ret;
         }
 
-        private ushort ReadWord()
+        internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());
+        }
+
+        internal string ReadString()
+        {
+            return _reader.ReadString();
         }
 
         public void Dispose()

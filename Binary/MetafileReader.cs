@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using CgmInfo.Commands;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.Binary
 {
@@ -8,8 +9,14 @@ namespace CgmInfo.Binary
     {
         private readonly string _fileName;
         private readonly BinaryReader _reader;
+        private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
 
         private bool _insideMetafile;
+
+        public MetafileDescriptor Descriptor
+        {
+            get { return _descriptor; }
+        }
 
         public MetafileReader(string fileName)
         {
@@ -156,13 +163,17 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
                     break;
                 case 5: // REAL PRECISION
-                    result = MetafileDescriptorReader.RealPrecision(this, commandHeader);
+                    var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
+                    _descriptor.RealPrecision = realPrecision.Specification;
+                    result = realPrecision;
                     break;
                 case 6: // INDEX PRECISION
                     result = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
                     break;
                 case 7: // COLOUR PRECISION
-                    result = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
+                    var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
+                    _descriptor.ColorPrecision = colorPrecision.Precision;
+                    result = colorPrecision;
                     break;
                 case 8: // COLOUR INDEX PRECISION
                     result = MetafileDescriptorReader.ColorIndexPrecision(this, commandHeader);
@@ -171,6 +182,8 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.MaximumColorIndex(this, commandHeader);
                     break;
                 case 10: // COLOUR VALUE EXTENT
+                    result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
+                    break;
                 case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT
                 case 13: // FONT LIST
@@ -202,6 +215,49 @@ namespace CgmInfo.Binary
             return ret;
         }
 
+        internal int ReadColorValue()
+        {
+            return ReadInteger(Descriptor.ColorPrecision / 8);
+        }
+        private double ReadFixedPoint(int numBytes)
+        {
+            // ISO/IEC 8632-3 6.4
+            // real value is computed as "whole + (fraction / 2**exp)"
+            // exp is the width of the fraction value
+            int whole = ReadInteger(numBytes / 2);
+            int fraction = ReadInteger(numBytes / 2);
+            // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
+            // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
+            int exp = numBytes / 2 * 8;
+            return whole + fraction / Math.Pow(2, exp);
+        }
+        private double ReadFloatingPoint(int numBytes)
+        {
+            // ISO/IEC 8632-3 6.5
+            // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;
+            // so simply using BinaryReader works out just fine.
+            if (numBytes == 4)
+                return _reader.ReadSingle();
+            if (numBytes == 8)
+                return _reader.ReadDouble();
+
+            throw new InvalidOperationException(string.Format("Sorry, cannot read a floating point value with {0} bytes", numBytes));
+        }
+        internal double ReadReal()
+        {
+            switch (Descriptor.RealPrecision)
+            {
+                case RealPrecisionSpecification.FixedPoint32Bit:
+                    return ReadFixedPoint(4);
+                case RealPrecisionSpecification.FixedPoint64Bit:
+                    return ReadFixedPoint(8);
+                case RealPrecisionSpecification.FloatingPoint32Bit:
+                    return ReadFloatingPoint(4);
+                case RealPrecisionSpecification.FloatingPoint64Bit:
+                    return ReadFloatingPoint(8);
+            }
+            throw new NotSupportedException("The current Real Precision is not supported");
+        }
         internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());

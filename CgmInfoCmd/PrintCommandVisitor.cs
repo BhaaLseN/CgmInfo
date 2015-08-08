@@ -54,6 +54,17 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Maximum Color Index: {0} bit", maximumColorIndex.Index);
         }
+        public void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, PrintContext parameter)
+        {
+            if (colorValueExtent.ColorSpace == ColorSpace.Unknown)
+                parameter.WriteLine("Color Value Extent: Unknown Color Space");
+            else if (colorValueExtent.ColorSpace == ColorSpace.CIE)
+                parameter.WriteLine("Color Value Extent: CIE {0}/{1}/{2}",
+                    colorValueExtent.FirstComponent, colorValueExtent.SecondComponent, colorValueExtent.ThirdComponent);
+            else // RGB or CMYK
+                parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
+                    colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);
+        }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)
         {

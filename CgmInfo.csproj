@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,10 +45,13 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
     <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
+    <Compile Include="Commands\Enums\ColorModel.cs" />
+    <Compile Include="Commands\Enums\ColorSpace.cs" />
     <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
     <Compile Include="Commands\Enums\RealRepresentation.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorIndexPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\ColorValueExtent.cs" />
     <Compile Include="Commands\MetafileDescriptor\MaximumColorIndex.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Binary\MetafileReader.cs" />
     <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
     <Compile Include="Commands\UnsupportedCommand.cs" />
+    <Compile Include="MetafileDescriptor.cs" />
     <Compile Include="MetafileState.cs" />
     <Compile Include="Parameters\IMetafileDescriptorParameterVisitor.cs" />
     <Compile Include="Parameters\IntegerMetafileDescriptorParameter.cs" />

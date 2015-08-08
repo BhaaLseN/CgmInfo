@@ -1,3 +1,5 @@
+using System.Drawing;
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
 namespace CgmInfo.Binary
@@ -62,6 +64,80 @@ namespace CgmInfo.Binary
         {
             // P1: (colour index) maximum colour index that may be encountered in the metafile. [ISO/IEC 8632-3 8.3]
             return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
+
+        public static ColorValueExtent ColorValueExtent(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // If the model is RGB or CMYK, then 2 parameters: [ISO/IEC 8632-3 8.3]
+            // P1: (direct colour value) minimum colour value
+            // P2: (direct colour value) maximum colour value
+            // If the model is CIELAB, CIELUV, or RGB-related then 3 parameters:
+            // P1: (real) scale and offset pair for first component.
+            // P2: (real) scale and offset pair for second component.
+            // P3: (real) scale and offset pair for third component.
+            ColorValueExtent result;
+            if (reader.Descriptor.ColorModel == ColorModel.RGB)
+            {
+                int minR = reader.ReadColorValue();
+                int minG = reader.ReadColorValue();
+                int minB = reader.ReadColorValue();
+                Color min = Color.FromArgb(minR, minG, minB);
+                int maxR = reader.ReadColorValue();
+                int maxG = reader.ReadColorValue();
+                int maxB = reader.ReadColorValue();
+                Color max = Color.FromArgb(maxR, maxG, maxB);
+                result = new ColorValueExtent(ColorSpace.RGB, min, max);
+            }
+            else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
+            {
+                int minC = reader.ReadColorValue();
+                int minM = reader.ReadColorValue();
+                int minY = reader.ReadColorValue();
+                int minK = reader.ReadColorValue();
+                Color min = ColorFromCMYK(minC, minM, minY, minK);
+                int maxC = reader.ReadColorValue();
+                int maxM = reader.ReadColorValue();
+                int maxY = reader.ReadColorValue();
+                int maxK = reader.ReadColorValue();
+                Color max = ColorFromCMYK(maxC, maxM, maxY, maxK);
+                result = new ColorValueExtent(ColorSpace.CMYK, min, max);
+            }
+            else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)
+            {
+                double first = reader.ReadReal();
+                double second = reader.ReadReal();
+                double third = reader.ReadReal();
+                result = new ColorValueExtent(ColorSpace.CIE, first, second, third);
+            }
+            else
+            {
+                // unsupported, just return a default unknown color space
+                result = new ColorValueExtent();
+            }
+
+            return result;
+        }
+
+        private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
+        {
+            double c = cyan / 255.0;
+            double m = magenta / 255.0;
+            double y = yellow / 255.0;
+            double k = black / 255.0;
+
+            double r = c * (1.0 - k) + k;
+            double g = m * (1.0 - k) + k;
+            double b = y * (1.0 - k) + k;
+
+            r = (1.0 - r) * 255.0 + 0.5;
+            g = (1.0 - g) * 255.0 + 0.5;
+            b = (1.0 - b) * 255.0 + 0.5;
+
+            int red = (int)r;
+            int green = (int)g;
+            int blue = (int)b;
+
+            return Color.FromArgb(red, green, blue);
         }
     }
 }

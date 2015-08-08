@@ -1,4 +1,6 @@
-﻿namespace CgmInfo.Commands
+﻿using CgmInfo.Traversal;
+
+namespace CgmInfo.Commands
 {
 #if DEBUG
     [System.Diagnostics.DebuggerDisplay("{ElementClass}/{ElementId}")]
@@ -13,5 +15,7 @@
 
         public int ElementId { get; private set; }
         public int ElementClass { get; private set; }
+
+        public abstract void Accept<T>(ICommandVisitor<T> visitor, T parameter);
     }
 }

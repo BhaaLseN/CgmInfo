@@ -1,5 +1,6 @@
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 
@@ -28,6 +29,14 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorIntegerPrecision(IntegerPrecision integerPrecision, PrintContext parameter)
         {
             parameter.WriteLine("Integer Precision: {0} bit", integerPrecision.Precision);
+        }
+        public void AcceptMetafileDescriptorRealPrecision(RealPrecision realPrecision, PrintContext parameter)
+        {
+            if (realPrecision.Specification == RealPrecisionSpecification.Unsupported)
+                parameter.WriteLine("Real Precision: Unsupported ({0}, {1} bit Exponent width, {2} bit Fraction width)",
+                    realPrecision.RepresentationForm, realPrecision.ExponentWidth, realPrecision.FractionWidth);
+            else
+                parameter.WriteLine("Real Precision: {0}", realPrecision.Specification);
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

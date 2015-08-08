@@ -156,6 +156,8 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
                     break;
                 case 5: // REAL PRECISION
+                    result = MetafileDescriptorReader.RealPrecision(this, commandHeader);
+                    break;
                 case 6: // INDEX PRECISION
                 case 7: // COLOUR PRECISION
                 case 8: // COLOUR INDEX PRECISION

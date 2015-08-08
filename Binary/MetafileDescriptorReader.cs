@@ -29,5 +29,15 @@ namespace CgmInfo.Binary
             // P1: (integer) integer precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
             return new IntegerPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
         }
+
+        public static RealPrecision RealPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) form of representation for real values: valid values are [ISO/IEC 8632-3 8.3]
+            //      0 floating point format
+            //      1 fixed point format
+            // P2: (integer) field width for exponent or whole part(including 1 bit for sign)
+            // P3: (integer) field width for fraction or fractional part
+            return new RealPrecision(reader.ReadInteger(2), reader.ReadInteger(2), reader.ReadInteger(2));
+        }
     }
 }

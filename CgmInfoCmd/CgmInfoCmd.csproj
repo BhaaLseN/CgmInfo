@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="PrintCommandVisitor.cs" />
     <Compile Include="PrintContext.cs" />
-    <Compile Include="PrintMetafileDescriptorParameterVisitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

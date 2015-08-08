@@ -61,19 +61,10 @@
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
     <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
-    <Compile Include="Binary\MetafileParameterReader.cs" />
     <Compile Include="Binary\MetafileReader.cs" />
     <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
     <Compile Include="Commands\UnsupportedCommand.cs" />
     <Compile Include="MetafileDescriptor.cs" />
-    <Compile Include="MetafileState.cs" />
-    <Compile Include="Parameters\IMetafileDescriptorParameterVisitor.cs" />
-    <Compile Include="Parameters\IntegerMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\MetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\Parameter.cs" />
-    <Compile Include="Parameters\RealPrecisionMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\StringMetafileDescriptorParameter.cs" />
-    <Compile Include="Parameters\UnsupportedMetafileDescriptorParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
   </ItemGroup>

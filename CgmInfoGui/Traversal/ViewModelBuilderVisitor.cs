@@ -84,7 +84,7 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "METAFILE DESCRIPTION: '{0}'", metafileDescription.Description);
+            parameter.Metafile.Descriptor.Nodes.Add(new MetafileDescriptionViewModel(metafileDescription.Description));
         }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, MetafileContext parameter)

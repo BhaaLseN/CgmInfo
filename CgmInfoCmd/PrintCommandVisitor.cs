@@ -52,7 +52,7 @@ namespace CgmInfoCmd
         }
         public void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, PrintContext parameter)
         {
-            parameter.WriteLine("Maximum Color Index: {0} bit", maximumColorIndex.Index);
+            parameter.WriteLine("Maximum Color Index: {0}", maximumColorIndex.Index);
         }
         public void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, PrintContext parameter)
         {

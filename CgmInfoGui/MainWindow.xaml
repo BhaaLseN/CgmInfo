@@ -27,5 +27,6 @@
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
         </Grid>
+        <TreeView ItemsSource="{Binding MetafileNodes}"/>
     </DockPanel>
 </Window>

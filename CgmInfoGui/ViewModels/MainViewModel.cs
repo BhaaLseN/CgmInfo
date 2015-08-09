@@ -1,6 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using CgmInfo.Binary;
+using CgmInfo.Commands;
+using CgmInfoGui.Traversal;
+using CgmInfoGui.ViewModels.Nodes;
 using Microsoft.Win32;
 
 namespace CgmInfoGui.ViewModels
@@ -23,6 +28,21 @@ namespace CgmInfoGui.ViewModels
                 }
             }
         }
+
+        private List<NodeBase> _metafileNodes;
+        public List<NodeBase> MetafileNodes
+        {
+            get { return _metafileNodes; }
+            set
+            {
+                if (value != _metafileNodes)
+                {
+                    _metafileNodes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public DelegateCommand BrowseCommand { get; }
         public DelegateCommand ProcessCommand { get; }
 
@@ -48,13 +68,33 @@ namespace CgmInfoGui.ViewModels
             if (ofd.ShowDialog() == true)
             {
                 FileName = ofd.FileName;
+                if (CanProcess(null))
+                    Process(null);
             }
         }
 
         private bool CanProcess(object parameter) => File.Exists(FileName);
         private void Process(object parameter)
         {
-            // TODO: implement
+            using (var reader = new MetafileReader(FileName))
+            {
+                var vmVisitor = new ViewModelBuilderVisitor();
+                var metafileContext = new MetafileContext();
+                Command command;
+                do
+                {
+                    command = reader.ReadCommand();
+                    if (command != null)
+                    {
+                        // stop processing as soon as we reach a non-delimiter or non-metafile descriptor element; we're only interrested in the descriptor for now.
+                        if (command.ElementClass >= 2)
+                            break;
+
+                        command.Accept(vmVisitor, metafileContext);
+                    }
+                } while (command != null);
+                MetafileNodes = new List<NodeBase> { metafileContext.Metafile };
+            }
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

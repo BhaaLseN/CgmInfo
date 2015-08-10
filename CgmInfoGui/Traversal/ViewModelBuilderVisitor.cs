@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
-using CgmInfo.Commands.Enums;
+
 namespace CgmInfoGui.Traversal
 {
     public class MetafileContext
@@ -24,12 +21,18 @@ namespace CgmInfoGui.Traversal
 
         private static NodeBase AddMetafileNode(MetafileContext context, string format, params object[] args)
         {
+            var newNode = new SimpleNode(string.Format(format, args));
+            return AddMetafileNode(context, newNode);
+        }
+
+        private static NodeBase AddMetafileNode(MetafileContext context, NodeBase newNode)
+        {
             if (context.Metafile == null)
                 throw new InvalidOperationException("Got a Metafile Descriptor element without a Metafile");
-            var newNode = new SimpleNode(string.Format(format, args));
             context.Metafile.Descriptor.Nodes.Add(newNode);
             return newNode;
         }
+
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             AddMetafileNode(parameter, "COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);
@@ -84,7 +87,7 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, MetafileContext parameter)
         {
-            parameter.Metafile.Descriptor.Nodes.Add(new MetafileDescriptionViewModel(metafileDescription.Description));
+            AddMetafileNode(parameter, new MetafileDescriptionViewModel(metafileDescription.Description));
         }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, MetafileContext parameter)

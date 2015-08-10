@@ -212,6 +212,9 @@ namespace CgmInfo.Binary
                 case 10: // COLOUR VALUE EXTENT
                     result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
                     break;
+                case 13: // FONT LIST
+                    result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
+                    break;
                 case 16: // NAME PRECISION
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
@@ -219,9 +222,6 @@ namespace CgmInfo.Binary
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
                     _descriptor.ColorModel = colorModel.ColorModel;
                     result = colorModel;
-                    break;
-                case 13: // FONT LIST
-                    result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
                     break;
                 case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT

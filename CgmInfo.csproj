@@ -51,6 +51,7 @@
     <Compile Include="Commands\Enums\RealRepresentation.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
     <Compile Include="Commands\MetafileDescriptor\FontList.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MaximumVdcExtent.cs" />
     <Compile Include="Commands\MetafileDescriptor\NamePrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorIndexPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorModelCommand.cs" />

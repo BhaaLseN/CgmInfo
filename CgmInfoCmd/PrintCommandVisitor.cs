@@ -78,6 +78,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Name Precision: {0} bit", namePrecision.Precision);
         }
+        public void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, PrintContext parameter)
+        {
+            parameter.WriteLine("Maximum VDC Extent: {0} - {1}", maximumVdcExtent.FirstCorner, maximumVdcExtent.SecondCorner);
+        }
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);

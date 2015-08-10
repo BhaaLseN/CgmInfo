@@ -146,6 +146,13 @@ namespace CgmInfo.Binary
             return new FontList(fonts);
         }
 
+        public static MaximumVdcExtent ReadMaximumVdcExtent(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) first corner [ISO/IEC 8632-3 8.3]
+            // P2: (point) second corner
+            return new MaximumVdcExtent(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc());
+        }
+
         private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;

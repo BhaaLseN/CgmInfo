@@ -120,6 +120,18 @@ namespace CgmInfoGui.Traversal
             AddMetafileNode(parameter, new FontListViewModel(fontList));
         }
 
+        public void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, MetafileContext parameter)
+        {
+            var maxVdcNode = AddMetafileNode(parameter, "MAXIMUM VDC EXTENT: {0} by {1}",
+                Math.Abs(maximumVdcExtent.SecondCorner.X - maximumVdcExtent.FirstCorner.X),
+                Math.Abs(maximumVdcExtent.SecondCorner.Y - maximumVdcExtent.FirstCorner.Y));
+            maxVdcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", maximumVdcExtent.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", maximumVdcExtent.SecondCorner)),
+            });
+        }
+
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)
         {
             // do nothing

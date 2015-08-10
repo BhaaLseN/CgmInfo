@@ -185,7 +185,9 @@ namespace CgmInfo.Binary
                     result = MetafileDescriptorReader.MetafileDescription(this, commandHeader);
                     break;
                 case 3: // VDC TYPE
-                    result = MetafileDescriptorReader.VdcType(this, commandHeader);
+                    var vdcType = MetafileDescriptorReader.VdcType(this, commandHeader);
+                    _descriptor.VdcType = vdcType.Specification;
+                    result = vdcType;
                     break;
                 case 4: // INTEGER PRECISION
                     result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
@@ -218,6 +220,9 @@ namespace CgmInfo.Binary
                 case 16: // NAME PRECISION
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
+                case 17: // MAXIMUM VDC EXTENT
+                    result = MetafileDescriptorReader.ReadMaximumVdcExtent(this, commandHeader);
+                    break;
                 case 19: // COLOUR MODEL
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
                     _descriptor.ColorModel = colorModel.ColorModel;
@@ -227,7 +232,6 @@ namespace CgmInfo.Binary
                 case 12: // METAFILE DEFAULTS REPLACEMENT
                 case 14: // CHARACTER SET LIST
                 case 15: // CHARACTER CODING ANNOUNCER
-                case 17: // MAXIMUM VDC EXTENT
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION
                 case 21: // FONT PROPERTIES
@@ -254,6 +258,21 @@ namespace CgmInfo.Binary
             while (numBytes-- > 0)
                 ret = (ret << 8) | _reader.ReadByte();
             return ret;
+        }
+
+        internal double ReadVdc()
+        {
+            // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-3 7, Table 1, Note 7]
+            if (Descriptor.VdcType == VdcTypeSpecification.Integer)
+            {
+                return ReadInteger(Descriptor.VdcIntegerPrecision / 8);
+            }
+            else if (Descriptor.VdcType == VdcTypeSpecification.Real)
+            {
+                return ReadReal(Descriptor.VdcRealPrecision);
+            }
+
+            throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
         internal int ReadColorValue()
@@ -286,7 +305,12 @@ namespace CgmInfo.Binary
         }
         internal double ReadReal()
         {
-            switch (Descriptor.RealPrecision)
+            return ReadReal(Descriptor.RealPrecision);
+        }
+
+        private double ReadReal(RealPrecisionSpecification precision)
+        {
+            switch (precision)
             {
                 case RealPrecisionSpecification.FixedPoint32Bit:
                     return ReadFixedPoint(4);
@@ -299,6 +323,7 @@ namespace CgmInfo.Binary
             }
             throw new NotSupportedException("The current Real Precision is not supported");
         }
+
         internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());

@@ -9,9 +9,10 @@ namespace CgmInfo.Binary
     public class MetafileReader : IDisposable
     {
         private readonly string _fileName;
-        private readonly BinaryReader _reader;
+        private readonly FileStream _fileStream;
         private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
 
+        private BinaryReader _reader;
         private bool _insideMetafile;
 
         public MetafileDescriptor Descriptor
@@ -22,13 +23,13 @@ namespace CgmInfo.Binary
         public MetafileReader(string fileName)
         {
             _fileName = fileName;
-            _reader = new BinaryReader(File.OpenRead(fileName));
+            _fileStream = File.OpenRead(fileName);
         }
 
         public Command ReadCommand()
         {
             // stop at EOF; or when we cannot at least read another command header
-            if (_reader.BaseStream.Position + 2 >= _reader.BaseStream.Length)
+            if (_fileStream.Position + 2 >= _fileStream.Length)
                 return null;
 
             Command result;
@@ -69,32 +70,59 @@ namespace CgmInfo.Binary
         private CommandHeader ReadCommandHeader()
         {
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
-            if (_reader.BaseStream.Position % 2 == 1)
-                _reader.BaseStream.Seek(1, SeekOrigin.Current);
+            if (_fileStream.Position % 2 == 1)
+                _fileStream.Seek(1, SeekOrigin.Current);
 
-            ushort commandHeader = ReadWord();
+            ushort commandHeader = _fileStream.ReadWord();
             int elementClass = (commandHeader >> 12) & 0xF;
             int elementId = (commandHeader >> 5) & 0x7F;
             int parameterListLength = commandHeader & 0x1F;
 
+            // store the whole element in a buffer; resolving long commands ahead of time
+            var readBuffer = new MemoryStream(parameterListLength);
+            // long format commands have a parameterListLength of all-ones (31, 0x1F, 11111b) and use word-size prefixed partitions.
+            // each partition indicates whether it is the last by having its top-most bit set to 0 [ISO/IEC 8632-3 5.4]
             bool isLongFormat = parameterListLength == 0x1F;
             if (isLongFormat)
             {
-                ushort longFormCommandHeader = ReadWord();
-                int partitionFlag = (longFormCommandHeader >> 15) & 0x1;
-                bool isLastPartition = partitionFlag == 0;
-                if (!isLastPartition)
-                    throw new InvalidOperationException("Sorry, cannot read command headers with parameters larger than 32767 octets");
-                parameterListLength = longFormCommandHeader & 0x7FFF;
+                bool isLastPartition;
+                parameterListLength = 0;
+                do
+                {
+                    // first comes the length; 2 octets
+                    ushort longFormCommandHeader = _fileStream.ReadWord();
+                    // top-most bit indicates whether more partitions follow or not
+                    int partitionFlag = (longFormCommandHeader >> 15) & 0x1;
+                    isLastPartition = partitionFlag == 0;
+                    // the remaining 15 bits are the actual length of this partition
+                    int partitionLength = longFormCommandHeader & 0x7FFF;
+                    parameterListLength += partitionLength;
+
+                    // directly after the length, data follows
+                    byte[] buffer = new byte[partitionLength];
+                    _fileStream.Read(buffer, 0, buffer.Length);
+                    readBuffer.Write(buffer, 0, buffer.Length);
+
+                } while (!isLastPartition);
             }
+            else
+            {
+                // short command form; buffer the contents directly
+                byte[] buffer = new byte[parameterListLength];
+                _fileStream.Read(buffer, 0, buffer.Length);
+                readBuffer.Write(buffer, 0, buffer.Length);
+            }
+
+            readBuffer.Position = 0;
+
+            if (_reader != null)
+                _reader.Dispose();
+            _reader = new BinaryReader(readBuffer);
 
             bool isNoop = elementClass == 0 && elementId == 0;
             if (isNoop)
             {
-                if (parameterListLength > 2)
-                    // TODO: length seems to include the 2 bytes already read for the header?
-                    //       spec is not exactly clear there =/ [ISO/IEC 8632-3 8.2 Table 3 add.]
-                    _reader.BaseStream.Seek(parameterListLength - 2, SeekOrigin.Current);
+                // no need to seek here anymore; the whole no-op has been read into the temporary buffer already anyways
                 return ReadCommandHeader();
             }
 
@@ -103,8 +131,7 @@ namespace CgmInfo.Binary
 
         private Command ReadUnsupportedElement(CommandHeader commandHeader)
         {
-            // skip the command parameter bytes we don't know
-            _reader.BaseStream.Seek(commandHeader.ParameterListLength, SeekOrigin.Current);
+            // no need to seek here anymore; the whole unsupported element has been read into the temporary buffer already anyways
             return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId);
         }
 
@@ -212,6 +239,11 @@ namespace CgmInfo.Binary
             return result;
         }
 
+        internal bool HasMoreData()
+        {
+            return _reader != null && _reader.BaseStream.Position < _reader.BaseStream.Length;
+        }
+
         internal int ReadInteger(int numBytes)
         {
             if (numBytes < 1 || numBytes > 4)
@@ -285,7 +317,9 @@ namespace CgmInfo.Binary
 
         public void Dispose()
         {
-            _reader.Dispose();
+            _fileStream.Dispose();
+            if (_reader != null)
+                _reader.Dispose();
         }
     }
 }

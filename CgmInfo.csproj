@@ -66,6 +66,7 @@
     <Compile Include="Commands\UnsupportedCommand.cs" />
     <Compile Include="MetafileDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StreamExtensions.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -115,6 +115,11 @@ namespace CgmInfoGui.Traversal
             AddMetafileNode(parameter, "VDC TYPE: {0}", vdcType.Specification);
         }
 
+        public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
+        {
+            AddMetafileNode(parameter, new FontListViewModel(fontList));
+        }
+
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)
         {
             // do nothing

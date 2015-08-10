@@ -1,3 +1,4 @@
+using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
@@ -64,6 +65,14 @@ namespace CgmInfoCmd
             else // RGB or CMYK
                 parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
                     colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);
+        }
+        public void AcceptMetafileDescriptorFontList(FontList fontList, PrintContext parameter)
+        {
+            parameter.WriteLine("Font List: {0} entries", fontList.Fonts.Count());
+            parameter.BeginLevel();
+            foreach (string font in fontList.Fonts)
+                parameter.WriteLine(font);
+            parameter.EndLevel();
         }
         public void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, PrintContext parameter)
         {

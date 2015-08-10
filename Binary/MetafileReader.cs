@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
 
@@ -271,7 +272,15 @@ namespace CgmInfo.Binary
 
         internal string ReadString()
         {
-            return _reader.ReadString();
+            var sb = new StringBuilder();
+            // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
+            // FIXME: just like long commands, this could be 255 and include continuation
+            int length = _reader.ReadByte();
+            while (length --> 0)
+                // cannot use ReadChar here; it would fail in case of surrogate characters
+                // FIXME: handle them correctly?!
+                sb.Append((char)_reader.ReadByte());
+            return sb.ToString();
         }
 
         public void Dispose()

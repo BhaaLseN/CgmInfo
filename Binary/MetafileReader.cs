@@ -220,9 +220,11 @@ namespace CgmInfo.Binary
                     _descriptor.ColorModel = colorModel.ColorModel;
                     result = colorModel;
                     break;
+                case 13: // FONT LIST
+                    result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
+                    break;
                 case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT
-                case 13: // FONT LIST
                 case 14: // CHARACTER SET LIST
                 case 15: // CHARACTER CODING ANNOUNCER
                 case 17: // MAXIMUM VDC EXTENT

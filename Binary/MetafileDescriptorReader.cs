@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -134,6 +135,15 @@ namespace CgmInfo.Binary
         {
             // P1: (integer) name precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
             return new NamePrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+        }
+
+        public static FontList ReadFontList(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1-Pn: (string fixed) n font names [ISO/IEC 8632-3 8.3]
+            var fonts = new List<string>();
+            while (reader.HasMoreData())
+                fonts.Add(reader.ReadString());
+            return new FontList(fonts);
         }
 
         private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)

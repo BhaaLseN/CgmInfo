@@ -12,7 +12,7 @@ namespace CgmInfo.Binary
 
         public static EndMetafile EndMetafile(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END METAFILE: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END METAFILE: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndMetafile();
         }
 
@@ -24,13 +24,13 @@ namespace CgmInfo.Binary
 
         public static BeginPictureBody BeginPictureBody(MetafileReader reader, CommandHeader commandHeader)
         {
-            // BEGIN PICTURE BODY: has no parameters. [ISO/IEC 8632-3 8.2]
+            // BEGIN PICTURE BODY: has no parameters [ISO/IEC 8632-3 8.2]
             return new BeginPictureBody();
         }
 
         public static EndPicture EndPicture(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END PICTURE: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END PICTURE: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndPicture();
         }
 
@@ -60,43 +60,43 @@ namespace CgmInfo.Binary
 
         public static BeginProtectionRegion BeginProtectionRegion(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (index) region index. [ISO/IEC 8632-3 8.2]
+            // P1: (index) region index [ISO/IEC 8632-3 8.2]
             return new BeginProtectionRegion(reader.ReadIndex());
         }
 
         public static EndProtectionRegion EndProtectionRegion(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END PROTECTION REGION: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END PROTECTION REGION: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndProtectionRegion();
         }
 
         public static BeginCompoundLine BeginCompoundLine(MetafileReader reader, CommandHeader commandHeader)
         {
-            // BEGIN COMPOUND LINE: has no parameters: [ISO/IEC 8632-3 8.2]
+            // BEGIN COMPOUND LINE: has no parameters [ISO/IEC 8632-3 8.2]
             return new BeginCompoundLine();
         }
 
         public static EndCompoundLine EndCompoundLine(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END COMPOUND LINE: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END COMPOUND LINE: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndCompoundLine();
         }
 
         public static BeginCompoundTextPath BeginCompoundTextPath(MetafileReader reader, CommandHeader commandHeader)
         {
-            // BEGIN COMPOUND TEXT PATH: has no parameters: [ISO/IEC 8632-3 8.2]
+            // BEGIN COMPOUND TEXT PATH: has no parameters [ISO/IEC 8632-3 8.2]
             return new BeginCompoundTextPath();
         }
 
         public static EndCompoundTextPath EndCompoundTextPath(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END COMPOUND TEXT PATH: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END COMPOUND TEXT PATH: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndCompoundTextPath();
         }
 
         public static BeginTileArray BeginTileArray(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (point) position.  [ISO/IEC 8632-3 8.2]
+            // P1: (point) position [ISO/IEC 8632-3 8.2]
             // P2: (enumerated) cell path direction: valid values are
             //      0 0°
             //      1 90°
@@ -105,16 +105,16 @@ namespace CgmInfo.Binary
             // P3: (enumerated) line progression direction: valid values are
             //      0 90°
             //      1 270°
-            // P4: (integer) number of tiles in pth direction.
-            // P5: (integer) number of tiles in line direction.
-            // P6: (integer) number of cells/ tile in path direction.
-            // P7: (integer) number of cells/ tile in line direction.
-            // P8: (real) cell size in path direction.
-            // P9: (real) cell size in line direction.
-            // P10: (integer) image offset in path direction.
-            // P11: (integer) image offset in line direction.
-            // P12: (integer) image number of cells in path direction.
-            // P13: (integer) image number of cells in line direction.
+            // P4: (integer) number of tiles in pth direction
+            // P5: (integer) number of tiles in line direction
+            // P6: (integer) number of cells/ tile in path direction
+            // P7: (integer) number of cells/ tile in line direction
+            // P8: (real) cell size in path direction
+            // P9: (real) cell size in line direction
+            // P10: (integer) image offset in path direction
+            // P11: (integer) image offset in line direction
+            // P12: (integer) image number of cells in path direction
+            // P13: (integer) image number of cells in line direction
             return new BeginTileArray(
                 reader.ReadVdc(), reader.ReadVdc(),
                 reader.ReadEnum(), reader.ReadEnum(),
@@ -127,7 +127,7 @@ namespace CgmInfo.Binary
 
         public static EndTileArray EndTileArray(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END TILE ARRAY: has no parameters. [ISO/IEC 8632-3 8.2]
+            // END TILE ARRAY: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndTileArray();
         }
 
@@ -143,13 +143,13 @@ namespace CgmInfo.Binary
 
         public static BeginApplicationStructureBody BeginApplicationStructureBody(MetafileReader reader, CommandHeader commandHeader)
         {
-            // BEGIN APPLICATION STRUCTURE BODY:has no parameters [ISO/IEC 8632-3 8.2]
+            // BEGIN APPLICATION STRUCTURE BODY: has no parameters [ISO/IEC 8632-3 8.2]
             return new BeginApplicationStructureBody();
         }
 
         public static EndApplicationStructure EndApplicationStructure(MetafileReader reader, CommandHeader commandHeader)
         {
-            // END APPLICATION STRUCTURE:has no parameters [ISO/IEC 8632-3 8.2]
+            // END APPLICATION STRUCTURE: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndApplicationStructure();
         }
     }

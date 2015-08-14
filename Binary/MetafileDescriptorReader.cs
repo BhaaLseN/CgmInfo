@@ -45,25 +45,25 @@ namespace CgmInfo.Binary
 
         public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
             return new IndexPrecision(reader.ReadInteger());
         }
 
         public static ColorPrecision ColorPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Colour precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
             return new ColorPrecision(reader.ReadInteger());
         }
 
         public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Colour index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
             return new ColorIndexPrecision(reader.ReadInteger());
         }
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (colour index) maximum colour index that may be encountered in the metafile. [ISO/IEC 8632-3 8.3]
+            // P1: (colour index) maximum colour index that may be encountered in the metafile [ISO/IEC 8632-3 8.3]
             return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength));
         }
 
@@ -73,9 +73,9 @@ namespace CgmInfo.Binary
             // P1: (direct colour value) minimum colour value
             // P2: (direct colour value) maximum colour value
             // If the model is CIELAB, CIELUV, or RGB-related then 3 parameters:
-            // P1: (real) scale and offset pair for first component.
-            // P2: (real) scale and offset pair for second component.
-            // P3: (real) scale and offset pair for third component.
+            // P1: (real) scale and offset pair for first component
+            // P2: (real) scale and offset pair for second component
+            // P3: (real) scale and offset pair for third component
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
@@ -127,7 +127,7 @@ namespace CgmInfo.Binary
             //      3 CIELUV
             //      4 CMYK
             //      5 RGB - related
-            //      > 5 reserved for registered values.
+            //      > 5 reserved for registered values
             return new ColorModelCommand(reader.ReadInteger(commandHeader.ParameterListLength));
         }
 

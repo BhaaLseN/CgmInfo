@@ -34,6 +34,11 @@ namespace CgmInfo.Binary
 
             Command result;
             CommandHeader commandHeader = ReadCommandHeader();
+            // special case: we might encounter a no-op after END METAFILE, which leads into EOF.
+            // ReadCommandHeader will return null in that case, and we should simply pass this on here.
+            if (commandHeader == null)
+                return null;
+
             // ISO/IEC 8632-3 8.1, Table 2
             switch (commandHeader.ElementClass)
             {
@@ -123,6 +128,9 @@ namespace CgmInfo.Binary
             if (isNoop)
             {
                 // no need to seek here anymore; the whole no-op has been read into the temporary buffer already anyways
+                // however, if we reached EOF, we simply caught a padding no-op...lets say we reached EOF right away, and be done.
+                if (_fileStream.Position >= _fileStream.Length)
+                    return null;
                 return ReadCommandHeader();
             }
 

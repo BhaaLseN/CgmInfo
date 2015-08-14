@@ -44,7 +44,10 @@
     <Compile Include="Binary\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="Commands\Delimiter\EndApplicationStructure.cs" />
     <Compile Include="Commands\Delimiter\BeginCompoundTextPath.cs" />
+    <Compile Include="Commands\Delimiter\BeginApplicationStructure.cs" />
+    <Compile Include="Commands\Delimiter\BeginApplicationStructureBody.cs" />
     <Compile Include="Commands\Delimiter\BeginTileArray.cs" />
     <Compile Include="Commands\Delimiter\EndTileArray.cs" />
     <Compile Include="Commands\Delimiter\EndCompoundTextPath.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="Commands\Enums\CellPathDirection.cs" />
     <Compile Include="Commands\Enums\ColorModel.cs" />
     <Compile Include="Commands\Enums\ColorSpace.cs" />
+    <Compile Include="Commands\Enums\InheritanceFlag.cs" />
     <Compile Include="Commands\Enums\LineProgressionDirection.cs" />
     <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
     <Compile Include="Commands\Enums\RealRepresentation.cs" />

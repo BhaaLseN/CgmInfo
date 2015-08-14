@@ -93,6 +93,22 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END TILE ARRAY");
         }
 
+        public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new ApplicationStructureViewModel(beginApplicationStructure));
+        }
+
+        public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, MetafileContext parameter)
+        {
+            parameter.AddNode("BEGIN APPLICATION STRUCTURE BODY");
+        }
+
+        public void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, MetafileContext parameter)
+        {
+            parameter.EndLevel("END APPLICATION STRUCTURE");
+        }
+
+
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);

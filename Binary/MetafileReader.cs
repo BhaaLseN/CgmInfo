@@ -214,8 +214,14 @@ namespace CgmInfo.Binary
                     result = DelimiterElementReader.EndTileArray(this, commandHeader);
                     break;
                 case 21: // BEGIN APPLICATION STRUCTURE
+                    result = DelimiterElementReader.BeginApplicationStructure(this, commandHeader);
+                    break;
                 case 22: // BEGIN APPLICATION STRUCTURE BODY
+                    result = DelimiterElementReader.BeginApplicationStructureBody(this, commandHeader);
+                    break;
                 case 23: // END APPLICATION STRUCTURE
+                    result = DelimiterElementReader.EndApplicationStructure(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -130,5 +130,27 @@ namespace CgmInfo.Binary
             // END TILE ARRAY: has no parameters. [ISO/IEC 8632-3 8.2]
             return new EndTileArray();
         }
+
+        public static BeginApplicationStructure BeginApplicationStructure(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (string fixed) application structure identifier [ISO/IEC 8632-3 8.2]
+            // P2: (string fixed) application structure type
+            // P3: (enumerated) inheritance flag: valid values are
+            //      0 STATELIST
+            //      1 APPLICATION STRUCTURE
+            return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), reader.ReadEnum());
+        }
+
+        public static BeginApplicationStructureBody BeginApplicationStructureBody(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // BEGIN APPLICATION STRUCTURE BODY:has no parameters [ISO/IEC 8632-3 8.2]
+            return new BeginApplicationStructureBody();
+        }
+
+        public static EndApplicationStructure EndApplicationStructure(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END APPLICATION STRUCTURE:has no parameters [ISO/IEC 8632-3 8.2]
+            return new EndApplicationStructure();
+        }
     }
 }

@@ -26,6 +26,9 @@ namespace CgmInfo.Traversal
         void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, T parameter);
         void AcceptDelimiterBeginTileArray(BeginTileArray beginTileArray, T parameter);
         void AcceptDelimiterEndTileArray(EndTileArray endTileArray, T parameter);
+        void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, T parameter);
+        void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, T parameter);
+        void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, T parameter);
 
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);

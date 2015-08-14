@@ -88,6 +88,19 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Application Structure: {0} '{1}'", beginApplicationStructure.Type, beginApplicationStructure.Identifier);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Application Structure Body");
+        }
+        public void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

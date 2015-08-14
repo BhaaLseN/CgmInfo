@@ -9,5 +9,11 @@ namespace CgmInfo.Binary
             // P1: (string fixed) metafile name [ISO/IEC 8632-3 8.2]
             return new BeginMetafile(reader.ReadString());
         }
+
+        public static EndMetafile EndMetafile(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END METAFILE: has no parameters. [ISO/IEC 8632-3 8.2]
+            return new EndMetafile();
+        }
     }
 }

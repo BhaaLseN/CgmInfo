@@ -14,6 +14,10 @@ namespace CgmInfoCmd
             parameter.WriteLine("{0} - {1}", parameter.FileName, beginMetafile.Name);
             parameter.BeginLevel();
         }
+        public void AcceptDelimiterEndMetafile(EndMetafile endMetafile, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

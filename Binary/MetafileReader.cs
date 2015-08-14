@@ -61,11 +61,21 @@ namespace CgmInfo.Binary
                     break;
             }
 
+            // the only case where _insideMetafile is allowed to be false is at the end of the file (0/2 END METAFILE)
             if (result != null && !_insideMetafile)
             {
                 if (result.ElementClass != 0)
                     throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
-                if (result.ElementId != 1)
+
+                if (result.ElementId == 2)
+                {
+                    // the Metafile should end at END METAFILE and EOF; +/- a padding byte
+                    if (_fileStream.Position < _fileStream.Length - 2)
+                        throw new FormatException(string.Format(
+                            "Found Element Id 2 (END METAFILE), but got {0} bytes left to read. Multiple Metafiles within a single file are not supported.",
+                            _fileStream.Length - _fileStream.Position - 1));
+                }
+                else if (result.ElementId != 1)
                     throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
             }
 
@@ -155,6 +165,9 @@ namespace CgmInfo.Binary
                     _insideMetafile = result != null;
                     break;
                 case 2: // END METAFILE
+                    result = DelimiterElementReader.EndMetafile(this, commandHeader);
+                    _insideMetafile = false;
+                    break;
                 case 3: // BEGIN PICTURE
                 case 4: // BEGIN PICTURE BODY
                 case 5: // END PICTURE

@@ -10,6 +10,7 @@ namespace CgmInfo.Traversal
 
         // delimiters
         void AcceptDelimiterBeginMetafile(BeginMetafile beginMetafile, T parameter);
+        void AcceptDelimiterEndMetafile(EndMetafile endMetafile, T parameter);
 
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);

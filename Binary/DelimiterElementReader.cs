@@ -57,5 +57,17 @@ namespace CgmInfo.Binary
             // END FIGURE: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndFigure();
         }
+
+        public static BeginProtectionRegion BeginProtectionRegion(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) region index. [ISO/IEC 8632-3 8.2]
+            return new BeginProtectionRegion(reader.ReadIndex());
+        }
+
+        public static EndProtectionRegion EndProtectionRegion(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END PROTECTION REGION: has no parameters. [ISO/IEC 8632-3 8.2]
+            return new EndProtectionRegion();
+        }
     }
 }

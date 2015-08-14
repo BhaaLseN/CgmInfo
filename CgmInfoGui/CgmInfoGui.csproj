@@ -63,6 +63,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\PictureViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SimpleNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />

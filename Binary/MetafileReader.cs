@@ -169,8 +169,14 @@ namespace CgmInfo.Binary
                     _insideMetafile = false;
                     break;
                 case 3: // BEGIN PICTURE
+                    result = DelimiterElementReader.BeginPicture(this, commandHeader);
+                    break;
                 case 4: // BEGIN PICTURE BODY
+                    result = DelimiterElementReader.BeginPictureBody(this, commandHeader);
+                    break;
                 case 5: // END PICTURE
+                    result = DelimiterElementReader.EndPicture(this, commandHeader);
+                    break;
                 case 6: // BEGIN SEGMENT
                 case 7: // END SEGMENT
                 case 8: // BEGIN FIGURE

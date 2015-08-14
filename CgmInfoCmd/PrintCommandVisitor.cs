@@ -18,6 +18,19 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginPicture(BeginPicture beginPicture, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Picture: '{0}'", beginPicture.Name);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterBeginPictureBody(BeginPictureBody beginPictureBody, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Picture Body");
+        }
+        public void AcceptDelimiterEndPicture(EndPicture endPicture, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

@@ -20,6 +20,21 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END METAFILE");
         }
 
+        public void AcceptDelimiterBeginPicture(BeginPicture beginPicture, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new PictureViewModel(beginPicture.Name));
+        }
+
+        public void AcceptDelimiterBeginPictureBody(BeginPictureBody beginPictureBody, MetafileContext parameter)
+        {
+            parameter.AddNode("BEGIN PICTURE BODY");
+        }
+
+        public void AcceptDelimiterEndPicture(EndPicture endPicture, MetafileContext parameter)
+        {
+            parameter.EndLevel("END PICTURE");
+        }
+
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);

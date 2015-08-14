@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CgmInfo.Binary;
 using CgmInfo.Commands;
@@ -93,7 +94,7 @@ namespace CgmInfoGui.ViewModels
                         command.Accept(vmVisitor, metafileContext);
                     }
                 } while (command != null);
-                MetafileNodes = new List<NodeBase> { metafileContext.Metafile };
+                MetafileNodes = metafileContext.RootLevel.ToList();
             }
         }
 

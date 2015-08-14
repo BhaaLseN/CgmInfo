@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Traversal\MetafileContext.cs" />
     <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

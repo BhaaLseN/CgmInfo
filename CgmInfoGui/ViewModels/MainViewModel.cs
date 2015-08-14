@@ -87,10 +87,6 @@ namespace CgmInfoGui.ViewModels
                     command = reader.ReadCommand();
                     if (command != null)
                     {
-                        // stop processing as soon as we reach a non-delimiter or non-metafile descriptor element; we're only interrested in the descriptor for now.
-                        if (command.ElementClass >= 2)
-                            break;
-
                         command.Accept(vmVisitor, metafileContext);
                     }
                 } while (command != null);

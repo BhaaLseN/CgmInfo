@@ -93,5 +93,42 @@ namespace CgmInfo.Binary
             // END COMPOUND TEXT PATH: has no parameters. [ISO/IEC 8632-3 8.2]
             return new EndCompoundTextPath();
         }
+
+        public static BeginTileArray BeginTileArray(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) position.  [ISO/IEC 8632-3 8.2]
+            // P2: (enumerated) cell path direction: valid values are
+            //      0 0°
+            //      1 90°
+            //      2 180°
+            //      3 270°
+            // P3: (enumerated) line progression direction: valid values are
+            //      0 90°
+            //      1 270°
+            // P4: (integer) number of tiles in pth direction.
+            // P5: (integer) number of tiles in line direction.
+            // P6: (integer) number of cells/ tile in path direction.
+            // P7: (integer) number of cells/ tile in line direction.
+            // P8: (real) cell size in path direction.
+            // P9: (real) cell size in line direction.
+            // P10: (integer) image offset in path direction.
+            // P11: (integer) image offset in line direction.
+            // P12: (integer) image number of cells in path direction.
+            // P13: (integer) image number of cells in line direction.
+            return new BeginTileArray(
+                reader.ReadVdc(), reader.ReadVdc(),
+                reader.ReadEnum(), reader.ReadEnum(),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadReal(), reader.ReadReal(),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadInteger(), reader.ReadInteger());
+        }
+
+        public static EndTileArray EndTileArray(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END TILE ARRAY: has no parameters. [ISO/IEC 8632-3 8.2]
+            return new EndTileArray();
+        }
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="ViewModels\Nodes\SimpleNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />
+    <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -76,6 +76,18 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginTileArray(BeginTileArray beginTileArray, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Tile Array: {0} by {1} tiles at {2} ({3} by {4} cells per tile)",
+                beginTileArray.PathDirectionTileCount, beginTileArray.LineDirectionTileCount,
+                beginTileArray.Position,
+                beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndTileArray(EndTileArray endTileArray, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

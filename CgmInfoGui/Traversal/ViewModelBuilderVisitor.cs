@@ -83,6 +83,16 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END COMPOUND TEXT PATH");
         }
 
+        public void AcceptDelimiterBeginTileArray(BeginTileArray beginTileArray, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new TileArrayViewModel(beginTileArray));
+        }
+
+        public void AcceptDelimiterEndTileArray(EndTileArray endTileArray, MetafileContext parameter)
+        {
+            parameter.EndLevel("END TILE ARRAY");
+        }
+
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);

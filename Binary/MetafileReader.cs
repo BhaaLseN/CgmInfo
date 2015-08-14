@@ -208,7 +208,11 @@ namespace CgmInfo.Binary
                     result = DelimiterElementReader.EndCompoundTextPath(this, commandHeader);
                     break;
                 case 19: // BEGIN TILE ARRAY
+                    result = DelimiterElementReader.BeginTileArray(this, commandHeader);
+                    break;
                 case 20: // END TILE ARRAY
+                    result = DelimiterElementReader.EndTileArray(this, commandHeader);
+                    break;
                 case 21: // BEGIN APPLICATION STRUCTURE
                 case 22: // BEGIN APPLICATION STRUCTURE BODY
                 case 23: // END APPLICATION STRUCTURE

@@ -309,6 +309,11 @@ namespace CgmInfo.Binary
             return ret;
         }
 
+        internal int ReadEnum()
+        {
+            // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
+            return ReadInteger(2);
+        }
         internal double ReadVdc()
         {
             // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-3 7, Table 1, Note 7]

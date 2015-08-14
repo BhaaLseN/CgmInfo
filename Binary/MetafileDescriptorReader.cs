@@ -24,7 +24,7 @@ namespace CgmInfo.Binary
             // P1: (enumerated) VDC TYPE: valid values are [ISO/IEC 8632-3 8.3]
             //      0 VDC values specified in integers
             //      1 VDC values specified in reals
-            return new VdcType(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new VdcType(reader.ReadEnum());
         }
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
@@ -40,7 +40,7 @@ namespace CgmInfo.Binary
             //      1 fixed point format
             // P2: (integer) field width for exponent or whole part(including 1 bit for sign)
             // P3: (integer) field width for fraction or fractional part
-            return new RealPrecision(reader.ReadInteger(2), reader.ReadInteger(2), reader.ReadInteger(2));
+            return new RealPrecision(reader.ReadEnum(), reader.ReadInteger(2), reader.ReadInteger(2));
         }
 
         public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)

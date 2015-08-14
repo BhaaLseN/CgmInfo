@@ -10,6 +10,7 @@ namespace CgmInfo
             ColorModel = ColorModel.RGB;
             ColorPrecision = 8;
             RealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
+            IntegerPrecision = 16;
             IndexPrecision = 16;
             VdcType = VdcTypeSpecification.Integer;
             VdcIntegerPrecision = 16;
@@ -19,6 +20,7 @@ namespace CgmInfo
         public ColorModel ColorModel { get; internal set; }
         public int ColorPrecision { get; internal set; }
         public RealPrecisionSpecification RealPrecision { get; internal set; }
+        public int IntegerPrecision { get; internal set; }
         public int IndexPrecision { get; internal set; }
 
         public VdcTypeSpecification VdcType { get; internal set; }

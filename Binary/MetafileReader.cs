@@ -237,7 +237,9 @@ namespace CgmInfo.Binary
                     result = vdcType;
                     break;
                 case 4: // INTEGER PRECISION
-                    result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
+                    var integerPrecision = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
+                    _descriptor.IntegerPrecision = integerPrecision.Precision;
+                    result = integerPrecision;
                     break;
                 case 5: // REAL PRECISION
                     var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
@@ -299,6 +301,11 @@ namespace CgmInfo.Binary
             return _reader != null && _reader.BaseStream.Position < _reader.BaseStream.Length;
         }
 
+        internal int ReadInteger()
+        {
+            // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
+            return ReadInteger(Descriptor.IntegerPrecision / 8);
+        }
         internal int ReadInteger(int numBytes)
         {
             if (numBytes < 1 || numBytes > 4)

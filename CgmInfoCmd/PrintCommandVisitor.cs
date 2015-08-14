@@ -67,6 +67,15 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginCompoundTextPath(BeginCompoundTextPath beginCompoundTextPath, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Compound Text Path");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

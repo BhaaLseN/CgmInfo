@@ -73,6 +73,15 @@ namespace CgmInfoGui.Traversal
         {
             parameter.EndLevel("END COMPOUND LINE");
         }
+        public void AcceptDelimiterBeginCompoundTextPath(BeginCompoundTextPath beginCompoundTextPath, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN COMPOUND TEXT PATH");
+        }
+
+        public void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, MetafileContext parameter)
+        {
+            parameter.EndLevel("END COMPOUND TEXT PATH");
+        }
 
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {

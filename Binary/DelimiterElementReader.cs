@@ -81,5 +81,17 @@ namespace CgmInfo.Binary
             // END COMPOUND LINE: has no parameters. [ISO/IEC 8632-3 8.2]
             return new EndCompoundLine();
         }
+
+        public static BeginCompoundTextPath BeginCompoundTextPath(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // BEGIN COMPOUND TEXT PATH: has no parameters: [ISO/IEC 8632-3 8.2]
+            return new BeginCompoundTextPath();
+        }
+
+        public static EndCompoundTextPath EndCompoundTextPath(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END COMPOUND TEXT PATH: has no parameters. [ISO/IEC 8632-3 8.2]
+            return new EndCompoundTextPath();
+        }
     }
 }

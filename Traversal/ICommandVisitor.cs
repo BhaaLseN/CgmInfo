@@ -22,6 +22,8 @@ namespace CgmInfo.Traversal
         void AcceptDelimiterEndProtectionRegion(EndProtectionRegion endProtectionRegion, T parameter);
         void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, T parameter);
         void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, T parameter);
+        void AcceptDelimiterBeginCompoundTextPath(BeginCompoundTextPath beginCompoundTextPath, T parameter);
+        void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, T parameter);
 
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);

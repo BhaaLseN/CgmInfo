@@ -44,6 +44,8 @@
     <Compile Include="Binary\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="Commands\Delimiter\BeginCompoundTextPath.cs" />
+    <Compile Include="Commands\Delimiter\EndCompoundTextPath.cs" />
     <Compile Include="Commands\Delimiter\EndCompoundLine.cs" />
     <Compile Include="Commands\Delimiter\BeginCompoundLine.cs" />
     <Compile Include="Commands\Delimiter\BeginProtectionRegion.cs" />

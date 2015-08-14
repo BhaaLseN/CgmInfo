@@ -8,49 +8,125 @@ using CgmInfoGui.ViewModels.Nodes;
 
 namespace CgmInfoGui.Traversal
 {
-    public class MetafileContext
-    {
-        public MetafileViewModel Metafile { get; set; }
-    }
     public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     {
         public void AcceptDelimiterBeginMetafile(BeginMetafile beginMetafile, MetafileContext parameter)
         {
-            parameter.Metafile = new MetafileViewModel(beginMetafile.Name);
+            parameter.BeginLevel(new MetafileViewModel(beginMetafile.Name));
         }
 
-        private static NodeBase AddMetafileNode(MetafileContext context, string format, params object[] args)
+        public void AcceptDelimiterEndMetafile(EndMetafile endMetafile, MetafileContext parameter)
         {
-            var newNode = new SimpleNode(string.Format(format, args));
-            return AddMetafileNode(context, newNode);
+            parameter.EndLevel("END METAFILE");
         }
 
-        private static NodeBase AddMetafileNode(MetafileContext context, NodeBase newNode)
+        public void AcceptDelimiterBeginPicture(BeginPicture beginPicture, MetafileContext parameter)
         {
-            if (context.Metafile == null)
-                throw new InvalidOperationException("Got a Metafile Descriptor element without a Metafile");
-            context.Metafile.Descriptor.Nodes.Add(newNode);
-            return newNode;
+            parameter.BeginLevel(new PictureViewModel(beginPicture.Name));
         }
+
+        public void AcceptDelimiterBeginPictureBody(BeginPictureBody beginPictureBody, MetafileContext parameter)
+        {
+            parameter.AddNode("BEGIN PICTURE BODY");
+        }
+
+        public void AcceptDelimiterEndPicture(EndPicture endPicture, MetafileContext parameter)
+        {
+            parameter.EndLevel("END PICTURE");
+        }
+
+        public void AcceptDelimiterBeginSegment(BeginSegment beginSegment, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new SegmentViewModel(beginSegment.Identifier));
+        }
+
+        public void AcceptDelimiterEndSegment(EndSegment endSegment, MetafileContext parameter)
+        {
+            parameter.EndLevel("END SEGMENT");
+        }
+
+        public void AcceptDelimiterBeginFigure(BeginFigure beginFigure, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN FIGURE");
+        }
+
+        public void AcceptDelimiterEndFigure(EndFigure endFigure, MetafileContext parameter)
+        {
+            parameter.EndLevel("END FIGURE");
+        }
+
+        public void AcceptDelimiterBeginProtectionRegion(BeginProtectionRegion beginProtectionRegion, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN PROTECTION REGION: {0}", beginProtectionRegion.RegionIndex);
+        }
+
+        public void AcceptDelimiterEndProtectionRegion(EndProtectionRegion endProtectionRegion, MetafileContext parameter)
+        {
+            parameter.EndLevel("END PROTECTION REGION");
+        }
+        public void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN COMPOUND LINE");
+        }
+
+        public void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, MetafileContext parameter)
+        {
+            parameter.EndLevel("END COMPOUND LINE");
+        }
+        public void AcceptDelimiterBeginCompoundTextPath(BeginCompoundTextPath beginCompoundTextPath, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN COMPOUND TEXT PATH");
+        }
+
+        public void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, MetafileContext parameter)
+        {
+            parameter.EndLevel("END COMPOUND TEXT PATH");
+        }
+
+        public void AcceptDelimiterBeginTileArray(BeginTileArray beginTileArray, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new TileArrayViewModel(beginTileArray));
+        }
+
+        public void AcceptDelimiterEndTileArray(EndTileArray endTileArray, MetafileContext parameter)
+        {
+            parameter.EndLevel("END TILE ARRAY");
+        }
+
+        public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new ApplicationStructureViewModel(beginApplicationStructure));
+        }
+
+        public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, MetafileContext parameter)
+        {
+            parameter.AddNode("BEGIN APPLICATION STRUCTURE BODY");
+        }
+
+        public void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, MetafileContext parameter)
+        {
+            parameter.EndLevel("END APPLICATION STRUCTURE");
+        }
+
 
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);
+            parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);
         }
 
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "COLOUR MODEL: {0}", colorModel.ColorModel);
+            parameter.AddMetafileDescriptorNode("COLOUR MODEL: {0}", colorModel.ColorModel);
         }
 
         public void AcceptMetafileDescriptorColorPrecision(ColorPrecision colorPrecision, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "COLOUR PRECISION: {0} bit", colorPrecision.Precision);
+            parameter.AddMetafileDescriptorNode("COLOUR PRECISION: {0} bit", colorPrecision.Precision);
         }
 
         public void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, MetafileContext parameter)
         {
-            var extentNode = AddMetafileNode(parameter, "COLOUR VALUE EXTENT: Color Space {0}", colorValueExtent.ColorSpace);
+            var extentNode = parameter.AddMetafileDescriptorNode("COLOUR VALUE EXTENT: Color Space {0}", colorValueExtent.ColorSpace);
             if (colorValueExtent.ColorSpace == ColorSpace.CIE)
             {
                 extentNode.Nodes.AddRange(new[]
@@ -72,37 +148,37 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptMetafileDescriptorIndexPrecision(IndexPrecision indexPrecision, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "INDEX PRECISION: {0} bit", indexPrecision.Precision);
+            parameter.AddMetafileDescriptorNode("INDEX PRECISION: {0} bit", indexPrecision.Precision);
         }
 
         public void AcceptMetafileDescriptorIntegerPrecision(IntegerPrecision integerPrecision, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "INTEGER PRECISION: {0} bit", integerPrecision.Precision);
+            parameter.AddMetafileDescriptorNode("INTEGER PRECISION: {0} bit", integerPrecision.Precision);
         }
 
         public void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "MAXIMUM COLOUR INDEX: {0}", maximumColorIndex.Index);
+            parameter.AddMetafileDescriptorNode("MAXIMUM COLOUR INDEX: {0}", maximumColorIndex.Index);
         }
 
         public void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, new MetafileDescriptionViewModel(metafileDescription.Description));
+            parameter.AddDescriptorNode(new MetafileDescriptionViewModel(metafileDescription.Description));
         }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "METAFILE VERSION: {0}", metafileVersion.Version);
+            parameter.AddMetafileDescriptorNode("METAFILE VERSION: {0}", metafileVersion.Version);
         }
 
         public void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "NAME PRECISION: {0} bit", namePrecision.Precision);
+            parameter.AddMetafileDescriptorNode("NAME PRECISION: {0} bit", namePrecision.Precision);
         }
 
         public void AcceptMetafileDescriptorRealPrecision(RealPrecision realPrecision, MetafileContext parameter)
         {
-            var realNode = AddMetafileNode(parameter, "REAL PRECISION: {0}", realPrecision.RepresentationForm);
+            var realNode = parameter.AddMetafileDescriptorNode("REAL PRECISION: {0}", realPrecision.RepresentationForm);
             realNode.Nodes.AddRange(new[]
             {
                 new SimpleNode(string.Format("Exponent Width: {0} bit", realPrecision.ExponentWidth)),
@@ -112,17 +188,17 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptMetafileDescriptorVdcType(VdcType vdcType, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, "VDC TYPE: {0}", vdcType.Specification);
+            parameter.AddMetafileDescriptorNode("VDC TYPE: {0}", vdcType.Specification);
         }
 
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {
-            AddMetafileNode(parameter, new FontListViewModel(fontList));
+            parameter.AddDescriptorNode(new FontListViewModel(fontList));
         }
 
         public void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, MetafileContext parameter)
         {
-            var maxVdcNode = AddMetafileNode(parameter, "MAXIMUM VDC EXTENT: {0} by {1}",
+            var maxVdcNode = parameter.AddMetafileDescriptorNode("MAXIMUM VDC EXTENT: {0} by {1}",
                 Math.Abs(maximumVdcExtent.SecondCorner.X - maximumVdcExtent.FirstCorner.X),
                 Math.Abs(maximumVdcExtent.SecondCorner.Y - maximumVdcExtent.FirstCorner.Y));
             maxVdcNode.Nodes.AddRange(new[]

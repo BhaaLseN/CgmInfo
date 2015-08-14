@@ -10,7 +10,7 @@ namespace CgmInfo.Binary
         public static MetafileVersion MetafileVersion(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (integer) metafile version number: valid values are 1, 2, 3, 4 [ISO/IEC 8632-3 8.3]
-            return new MetafileVersion(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new MetafileVersion(reader.ReadInteger());
         }
 
         public static MetafileDescription MetafileDescription(MetafileReader reader, CommandHeader commandHeader)
@@ -24,13 +24,13 @@ namespace CgmInfo.Binary
             // P1: (enumerated) VDC TYPE: valid values are [ISO/IEC 8632-3 8.3]
             //      0 VDC values specified in integers
             //      1 VDC values specified in reals
-            return new VdcType(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new VdcType(reader.ReadEnum());
         }
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (integer) integer precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
-            return new IntegerPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new IntegerPrecision(reader.ReadInteger());
         }
 
         public static RealPrecision RealPrecision(MetafileReader reader, CommandHeader commandHeader)
@@ -40,30 +40,30 @@ namespace CgmInfo.Binary
             //      1 fixed point format
             // P2: (integer) field width for exponent or whole part(including 1 bit for sign)
             // P3: (integer) field width for fraction or fractional part
-            return new RealPrecision(reader.ReadInteger(2), reader.ReadInteger(2), reader.ReadInteger(2));
+            return new RealPrecision(reader.ReadEnum(), reader.ReadInteger(), reader.ReadInteger());
         }
 
         public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
-            return new IndexPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+            // P1: (integer) Index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            return new IndexPrecision(reader.ReadInteger());
         }
 
         public static ColorPrecision ColorPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
-            return new ColorPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+            // P1: (integer) Colour precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            return new ColorPrecision(reader.ReadInteger());
         }
 
         public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour index precision: valid values are 8,16,24,32 [ISO/IEC 8632-3 8.3]
-            return new ColorIndexPrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+            // P1: (integer) Colour index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            return new ColorIndexPrecision(reader.ReadInteger());
         }
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (colour index) maximum colour index that may be encountered in the metafile. [ISO/IEC 8632-3 8.3]
+            // P1: (colour index) maximum colour index that may be encountered in the metafile [ISO/IEC 8632-3 8.3]
             return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength));
         }
 
@@ -73,9 +73,9 @@ namespace CgmInfo.Binary
             // P1: (direct colour value) minimum colour value
             // P2: (direct colour value) maximum colour value
             // If the model is CIELAB, CIELUV, or RGB-related then 3 parameters:
-            // P1: (real) scale and offset pair for first component.
-            // P2: (real) scale and offset pair for second component.
-            // P3: (real) scale and offset pair for third component.
+            // P1: (real) scale and offset pair for first component
+            // P2: (real) scale and offset pair for second component
+            // P3: (real) scale and offset pair for third component
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
@@ -127,14 +127,14 @@ namespace CgmInfo.Binary
             //      3 CIELUV
             //      4 CMYK
             //      5 RGB - related
-            //      > 5 reserved for registered values.
+            //      > 5 reserved for registered values
             return new ColorModelCommand(reader.ReadInteger(commandHeader.ParameterListLength));
         }
 
         public static NamePrecision NamePrecision(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (integer) name precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
-            return new NamePrecision(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new NamePrecision(reader.ReadInteger());
         }
 
         public static FontList ReadFontList(MetafileReader reader, CommandHeader commandHeader)

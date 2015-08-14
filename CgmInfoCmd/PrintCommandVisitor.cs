@@ -14,6 +14,93 @@ namespace CgmInfoCmd
             parameter.WriteLine("{0} - {1}", parameter.FileName, beginMetafile.Name);
             parameter.BeginLevel();
         }
+        public void AcceptDelimiterEndMetafile(EndMetafile endMetafile, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginPicture(BeginPicture beginPicture, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Picture: '{0}'", beginPicture.Name);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterBeginPictureBody(BeginPictureBody beginPictureBody, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Picture Body");
+        }
+        public void AcceptDelimiterEndPicture(EndPicture endPicture, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginSegment(BeginSegment beginSegment, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Segment: '{0}'", beginSegment.Identifier);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndSegment(EndSegment endSegment, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginFigure(BeginFigure beginFigure, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Figure");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndFigure(EndFigure endFigure, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginProtectionRegion(BeginProtectionRegion beginProtectionRegion, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Protection Region: {0}", beginProtectionRegion.RegionIndex);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndProtectionRegion(EndProtectionRegion endProtectionRegion, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Compound Line");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginCompoundTextPath(BeginCompoundTextPath beginCompoundTextPath, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Compound Text Path");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndCompoundTextPath(EndCompoundTextPath endCompoundTextPath, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginTileArray(BeginTileArray beginTileArray, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Tile Array: {0} by {1} tiles at {2} ({3} by {4} cells per tile)",
+                beginTileArray.PathDirectionTileCount, beginTileArray.LineDirectionTileCount,
+                beginTileArray.Position,
+                beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndTileArray(EndTileArray endTileArray, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
+        public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Application Structure: {0} '{1}'", beginApplicationStructure.Type, beginApplicationStructure.Identifier);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Application Structure Body");
+        }
+        public void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

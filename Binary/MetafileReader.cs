@@ -61,11 +61,21 @@ namespace CgmInfo.Binary
                     break;
             }
 
+            // the only case where _insideMetafile is allowed to be false is at the end of the file (0/2 END METAFILE)
             if (result != null && !_insideMetafile)
             {
                 if (result.ElementClass != 0)
                     throw new FormatException("Expected Element Class 0 (Delimiter) at the beginning of a Metafile");
-                if (result.ElementId != 1)
+
+                if (result.ElementId == 2)
+                {
+                    // the Metafile should end at END METAFILE and EOF; +/- a padding byte
+                    if (_fileStream.Position < _fileStream.Length - 2)
+                        throw new FormatException(string.Format(
+                            "Found Element Id 2 (END METAFILE), but got {0} bytes left to read. Multiple Metafiles within a single file are not supported.",
+                            _fileStream.Length - _fileStream.Position - 1));
+                }
+                else if (result.ElementId != 1)
                     throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
             }
 
@@ -155,24 +165,63 @@ namespace CgmInfo.Binary
                     _insideMetafile = result != null;
                     break;
                 case 2: // END METAFILE
+                    result = DelimiterElementReader.EndMetafile(this, commandHeader);
+                    _insideMetafile = false;
+                    break;
                 case 3: // BEGIN PICTURE
+                    result = DelimiterElementReader.BeginPicture(this, commandHeader);
+                    break;
                 case 4: // BEGIN PICTURE BODY
+                    result = DelimiterElementReader.BeginPictureBody(this, commandHeader);
+                    break;
                 case 5: // END PICTURE
+                    result = DelimiterElementReader.EndPicture(this, commandHeader);
+                    break;
                 case 6: // BEGIN SEGMENT
+                    result = DelimiterElementReader.BeginSegment(this, commandHeader);
+                    break;
                 case 7: // END SEGMENT
+                    result = DelimiterElementReader.EndSegment(this, commandHeader);
+                    break;
                 case 8: // BEGIN FIGURE
+                    result = DelimiterElementReader.BeginFigure(this, commandHeader);
+                    break;
                 case 9: // END FIGURE
+                    result = DelimiterElementReader.EndFigure(this, commandHeader);
+                    break;
                 case 13: // BEGIN PROTECTION REGION
+                    result = DelimiterElementReader.BeginProtectionRegion(this, commandHeader);
+                    break;
                 case 14: // END PROTECTION REGION
+                    result = DelimiterElementReader.EndProtectionRegion(this, commandHeader);
+                    break;
                 case 15: // BEGIN COMPOUND LINE
+                    result = DelimiterElementReader.BeginCompoundLine(this, commandHeader);
+                    break;
                 case 16: // END COMPOUND LINE
+                    result = DelimiterElementReader.EndCompoundLine(this, commandHeader);
+                    break;
                 case 17: // BEGIN COMPOUND TEXT PATH
+                    result = DelimiterElementReader.BeginCompoundTextPath(this, commandHeader);
+                    break;
                 case 18: // END COMPOUND TEXT PATH
+                    result = DelimiterElementReader.EndCompoundTextPath(this, commandHeader);
+                    break;
                 case 19: // BEGIN TILE ARRAY
+                    result = DelimiterElementReader.BeginTileArray(this, commandHeader);
+                    break;
                 case 20: // END TILE ARRAY
+                    result = DelimiterElementReader.EndTileArray(this, commandHeader);
+                    break;
                 case 21: // BEGIN APPLICATION STRUCTURE
+                    result = DelimiterElementReader.BeginApplicationStructure(this, commandHeader);
+                    break;
                 case 22: // BEGIN APPLICATION STRUCTURE BODY
+                    result = DelimiterElementReader.BeginApplicationStructureBody(this, commandHeader);
+                    break;
                 case 23: // END APPLICATION STRUCTURE
+                    result = DelimiterElementReader.EndApplicationStructure(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
@@ -198,7 +247,9 @@ namespace CgmInfo.Binary
                     result = vdcType;
                     break;
                 case 4: // INTEGER PRECISION
-                    result = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
+                    var integerPrecision = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
+                    _descriptor.IntegerPrecision = integerPrecision.Precision;
+                    result = integerPrecision;
                     break;
                 case 5: // REAL PRECISION
                     var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
@@ -206,7 +257,9 @@ namespace CgmInfo.Binary
                     result = realPrecision;
                     break;
                 case 6: // INDEX PRECISION
-                    result = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
+                    var indexPrecision = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
+                    _descriptor.IndexPrecision = indexPrecision.Precision;
+                    result = indexPrecision;
                     break;
                 case 7: // COLOUR PRECISION
                     var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
@@ -258,6 +311,11 @@ namespace CgmInfo.Binary
             return _reader != null && _reader.BaseStream.Position < _reader.BaseStream.Length;
         }
 
+        internal int ReadInteger()
+        {
+            // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
+            return ReadInteger(Descriptor.IntegerPrecision / 8);
+        }
         internal int ReadInteger(int numBytes)
         {
             if (numBytes < 1 || numBytes > 4)
@@ -268,6 +326,11 @@ namespace CgmInfo.Binary
             return ret;
         }
 
+        internal int ReadEnum()
+        {
+            // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
+            return ReadInteger(2);
+        }
         internal double ReadVdc()
         {
             // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-3 7, Table 1, Note 7]
@@ -332,6 +395,11 @@ namespace CgmInfo.Binary
             throw new NotSupportedException("The current Real Precision is not supported");
         }
 
+        internal int ReadIndex()
+        {
+            // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
+            return ReadInteger(Descriptor.IndexPrecision / 8);
+        }
         internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());

@@ -57,14 +57,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Traversal\MetafileContext.cs" />
     <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\ApplicationStructureViewModel.cs" />
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\PictureViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\SegmentViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SimpleNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />
+    <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

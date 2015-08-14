@@ -29,7 +29,7 @@ namespace CgmInfo.Binary
         public Command ReadCommand()
         {
             // stop at EOF; or when we cannot at least read another command header
-            if (_fileStream.Position + 2 >= _fileStream.Length)
+            if (_fileStream.Position + 2 > _fileStream.Length)
                 return null;
 
             Command result;

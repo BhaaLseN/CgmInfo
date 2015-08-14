@@ -233,7 +233,9 @@ namespace CgmInfo.Binary
                     result = realPrecision;
                     break;
                 case 6: // INDEX PRECISION
-                    result = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
+                    var indexPrecision = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
+                    _descriptor.IndexPrecision = indexPrecision.Precision;
+                    result = indexPrecision;
                     break;
                 case 7: // COLOUR PRECISION
                     var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
@@ -359,6 +361,11 @@ namespace CgmInfo.Binary
             throw new NotSupportedException("The current Real Precision is not supported");
         }
 
+        internal int ReadIndex()
+        {
+            // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
+            return ReadInteger(Descriptor.IndexPrecision / 8);
+        }
         internal ushort ReadWord()
         {
             return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());

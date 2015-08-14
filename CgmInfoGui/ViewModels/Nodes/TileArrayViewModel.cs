@@ -12,10 +12,7 @@ namespace CgmInfoGui.ViewModels.Nodes
                 "BEGIN TILE ARRAY: {0} by {1} tiles, {2} by {3} cells each",
                 beginTileArray.PathDirectionTileCount, beginTileArray.LineDirectionTileCount,
                 beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount);
-            Descriptor = new SimpleNode("TILE ARRAY DESCRIPTOR");
-            Nodes.Add(Descriptor);
-
-            Descriptor.Nodes.AddRange(new[]
+            Descriptor = new SimpleNode("TILE ARRAY DESCRIPTOR")
             {
                 new SimpleNode(string.Format("Position: {0}", beginTileArray.Position)),
                 new SimpleNode(string.Format("Cell Path Direction: {0}", beginTileArray.CellPathDirection)),
@@ -30,7 +27,8 @@ namespace CgmInfoGui.ViewModels.Nodes
                 new SimpleNode(string.Format("Image Offset in Line Direction: {0}", beginTileArray.LineDirectionImageOffset)),
                 new SimpleNode(string.Format("Image Number of Cells per Tile in Path Direction: {0}", beginTileArray.PathDirectionImageCellCount)),
                 new SimpleNode(string.Format("Image Number of Cells per Tile in Line Direction: {0}", beginTileArray.LineDirectionImageCellCount)),
-            });
+            };
+            Nodes.Add(Descriptor);
         }
         public SimpleNode Descriptor { get; }
 

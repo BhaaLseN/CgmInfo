@@ -196,7 +196,11 @@ namespace CgmInfo.Binary
                     result = DelimiterElementReader.EndProtectionRegion(this, commandHeader);
                     break;
                 case 15: // BEGIN COMPOUND LINE
+                    result = DelimiterElementReader.BeginCompoundLine(this, commandHeader);
+                    break;
                 case 16: // END COMPOUND LINE
+                    result = DelimiterElementReader.EndCompoundLine(this, commandHeader);
+                    break;
                 case 17: // BEGIN COMPOUND TEXT PATH
                 case 18: // END COMPOUND TEXT PATH
                 case 19: // BEGIN TILE ARRAY

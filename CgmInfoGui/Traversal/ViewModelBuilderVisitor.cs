@@ -64,6 +64,15 @@ namespace CgmInfoGui.Traversal
         {
             parameter.EndLevel("END PROTECTION REGION");
         }
+        public void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, MetafileContext parameter)
+        {
+            parameter.BeginLevel("BEGIN COMPOUND LINE");
+        }
+
+        public void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, MetafileContext parameter)
+        {
+            parameter.EndLevel("END COMPOUND LINE");
+        }
 
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {

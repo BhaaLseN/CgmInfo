@@ -69,5 +69,17 @@ namespace CgmInfo.Binary
             // END PROTECTION REGION: has no parameters. [ISO/IEC 8632-3 8.2]
             return new EndProtectionRegion();
         }
+
+        public static BeginCompoundLine BeginCompoundLine(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // BEGIN COMPOUND LINE: has no parameters: [ISO/IEC 8632-3 8.2]
+            return new BeginCompoundLine();
+        }
+
+        public static EndCompoundLine EndCompoundLine(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END COMPOUND LINE: has no parameters. [ISO/IEC 8632-3 8.2]
+            return new EndCompoundLine();
+        }
     }
 }

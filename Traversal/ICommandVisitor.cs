@@ -20,6 +20,8 @@ namespace CgmInfo.Traversal
         void AcceptDelimiterEndFigure(EndFigure endFigure, T parameter);
         void AcceptDelimiterBeginProtectionRegion(BeginProtectionRegion beginProtectionRegion, T parameter);
         void AcceptDelimiterEndProtectionRegion(EndProtectionRegion endProtectionRegion, T parameter);
+        void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, T parameter);
+        void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, T parameter);
 
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);

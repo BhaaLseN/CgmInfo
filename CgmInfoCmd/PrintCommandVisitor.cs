@@ -58,6 +58,15 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginCompoundLine(BeginCompoundLine beginCompoundLine, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Compound Line");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndCompoundLine(EndCompoundLine endCompoundLine, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

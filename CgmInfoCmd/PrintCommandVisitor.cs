@@ -40,6 +40,15 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginFigure(BeginFigure beginFigure, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Figure");
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndFigure(EndFigure endFigure, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

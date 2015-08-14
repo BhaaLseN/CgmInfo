@@ -45,5 +45,17 @@ namespace CgmInfo.Binary
             // END SEGMENT: has no parameters [ISO/IEC 8632-3 8.2]
             return new EndSegment();
         }
+
+        public static BeginFigure BeginFigure(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // BEGIN FIGURE: has no parameters [ISO/IEC 8632-3 8.2]
+            return new BeginFigure();
+        }
+
+        public static EndFigure EndFigure(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // END FIGURE: has no parameters [ISO/IEC 8632-3 8.2]
+            return new EndFigure();
+        }
     }
 }

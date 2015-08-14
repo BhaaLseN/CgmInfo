@@ -16,6 +16,8 @@ namespace CgmInfo.Traversal
         void AcceptDelimiterEndPicture(EndPicture endPicture, T parameter);
         void AcceptDelimiterBeginSegment(BeginSegment beginSegment, T parameter);
         void AcceptDelimiterEndSegment(EndSegment endSegment, T parameter);
+        void AcceptDelimiterBeginFigure(BeginFigure beginFigure, T parameter);
+        void AcceptDelimiterEndFigure(EndFigure endFigure, T parameter);
 
         // metafile descriptor
         void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, T parameter);

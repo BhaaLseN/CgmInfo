@@ -31,6 +31,15 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
+        public void AcceptDelimiterBeginSegment(BeginSegment beginSegment, PrintContext parameter)
+        {
+            parameter.WriteLine("Begin Segment: '{0}'", beginSegment.Identifier);
+            parameter.BeginLevel();
+        }
+        public void AcceptDelimiterEndSegment(EndSegment endSegment, PrintContext parameter)
+        {
+            parameter.EndLevel();
+        }
 
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {

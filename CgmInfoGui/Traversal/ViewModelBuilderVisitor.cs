@@ -35,6 +35,16 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END PICTURE");
         }
 
+        public void AcceptDelimiterBeginSegment(BeginSegment beginSegment, MetafileContext parameter)
+        {
+            parameter.BeginLevel(new SegmentViewModel(beginSegment.Identifier));
+        }
+
+        public void AcceptDelimiterEndSegment(EndSegment endSegment, MetafileContext parameter)
+        {
+            parameter.EndLevel("END SEGMENT");
+        }
+
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);

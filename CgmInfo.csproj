@@ -44,8 +44,10 @@
     <Compile Include="Binary\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="Commands\Delimiter\BeginSegment.cs" />
     <Compile Include="Commands\Delimiter\BeginPicture.cs" />
     <Compile Include="Commands\Delimiter\BeginPictureBody.cs" />
+    <Compile Include="Commands\Delimiter\EndSegment.cs" />
     <Compile Include="Commands\Delimiter\EndPicture.cs" />
     <Compile Include="Commands\Delimiter\EndMetafile.cs" />
     <Compile Include="Commands\Delimiter\BeginMetafile.cs" />

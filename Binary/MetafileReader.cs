@@ -178,7 +178,11 @@ namespace CgmInfo.Binary
                     result = DelimiterElementReader.EndPicture(this, commandHeader);
                     break;
                 case 6: // BEGIN SEGMENT
+                    result = DelimiterElementReader.BeginSegment(this, commandHeader);
+                    break;
                 case 7: // END SEGMENT
+                    result = DelimiterElementReader.EndSegment(this, commandHeader);
+                    break;
                 case 8: // BEGIN FIGURE
                 case 9: // END FIGURE
                 case 13: // BEGIN PROTECTION REGION

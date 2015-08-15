@@ -210,7 +210,7 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)
         {
-            // do nothing
+            parameter.AddUnsupportedNode(unsupportedCommand);
         }
     }
 }

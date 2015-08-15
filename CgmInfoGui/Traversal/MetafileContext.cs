@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CgmInfo.Commands;
 using CgmInfoGui.ViewModels.Nodes;
 
 namespace CgmInfoGui.Traversal
@@ -70,6 +71,18 @@ namespace CgmInfoGui.Traversal
             AddNode(endNode);
             if (_levelStack.Count > 0)
                 _currentLevel = _levelStack.Pop();
+        }
+
+        public void AddUnsupportedNode(UnsupportedCommand unsupportedCommand)
+        {
+            var level = _currentLevel != null ? _currentLevel.Nodes : _rootLevel;
+            var container = level.OfType<UnsupportedContainer>().FirstOrDefault();
+            if (container == null)
+            {
+                container = new UnsupportedContainer();
+                level.Insert(0, container);
+            }
+            container.Add(new UnsupportedNode(unsupportedCommand));
         }
     }
 }

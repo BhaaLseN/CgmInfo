@@ -2,6 +2,7 @@
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
@@ -206,6 +207,19 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("First Corner: {0}", maximumVdcExtent.FirstCorner)),
                 new SimpleNode(string.Format("Second Corner: {0}", maximumVdcExtent.SecondCorner)),
             });
+        }
+
+        public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
+        }
+        public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTRICTED TEXT: '{0}'{1}", restrictedText.Text, restrictedText.Final == FinalFlag.Final ? " (final)" : "");
+        }
+        public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, MetafileContext parameter)
+        {
+            parameter.AddNode("APPEND TEXT: '{0}'{1}", appendText.Text, appendText.Final == FinalFlag.Final ? " (final)" : "");
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)

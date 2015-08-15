@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binary\DelimiterElementReader.cs" />
+    <Compile Include="Binary\GraphicalPrimitiveReader.cs" />
     <Compile Include="Binary\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
@@ -67,11 +68,15 @@
     <Compile Include="Commands\Enums\CellPathDirection.cs" />
     <Compile Include="Commands\Enums\ColorModel.cs" />
     <Compile Include="Commands\Enums\ColorSpace.cs" />
+    <Compile Include="Commands\Enums\FinalFlag.cs" />
     <Compile Include="Commands\Enums\InheritanceFlag.cs" />
     <Compile Include="Commands\Enums\LineProgressionDirection.cs" />
     <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
     <Compile Include="Commands\Enums\RealRepresentation.cs" />
     <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\AppendText.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\RestrictedText.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\TextCommand.cs" />
     <Compile Include="Commands\MetafileDescriptor\FontList.cs" />
     <Compile Include="Commands\MetafileDescriptor\MaximumVdcExtent.cs" />
     <Compile Include="Commands\MetafileDescriptor\NamePrecision.cs" />

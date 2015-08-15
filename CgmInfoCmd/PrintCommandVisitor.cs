@@ -2,6 +2,7 @@ using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 
@@ -172,6 +173,20 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
+        }
+
+        public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
+        {
+            parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);
+        }
+        public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, PrintContext parameter)
+        {
+            parameter.WriteLine("Restricted Text: '{0}' (at {1}, +/-{2} by {3})",
+                restrictedText.Text, restrictedText.Position, restrictedText.DeltaWidth, restrictedText.DeltaHeight);
+        }
+        public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, PrintContext parameter)
+        {
+            parameter.WriteLine("Append Text: '{0}'", appendText.Text);
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

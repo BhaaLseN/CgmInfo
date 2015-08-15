@@ -49,9 +49,11 @@ namespace CgmInfo.Binary
                 case 1: // metafile descriptor
                     result = ReadMetafileDescriptorElement(commandHeader);
                     break;
+                case 4: // graphical primitive
+                    result = ReadGraphicalPrimitive(commandHeader);
+                    break;
                 case 2: // picture descriptor
                 case 3: // control
-                case 4: // graphical primitive
                 case 5: // attribute
                 case 6: // escape
                 case 7: // external
@@ -300,6 +302,28 @@ namespace CgmInfo.Binary
                 case 22: // GLYPH MAPPING
                 case 23: // SYMBOL LIBRARY LIST
                 case 24: // PICTURE DIRECTORY
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadGraphicalPrimitive(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.6, Table 7
+            switch (commandHeader.ElementId)
+            {
+                case 4: // TEXT
+                    result = GraphicalPrimitiveReader.Text(this, commandHeader);
+                    break;
+                case 5: // RESTRICTED TEXT
+                    result = GraphicalPrimitiveReader.RestrictedText(this, commandHeader);
+                    break;
+                case 6: // APPEND TEXT
+                    result = GraphicalPrimitiveReader.AppendText(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

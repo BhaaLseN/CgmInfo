@@ -68,6 +68,7 @@
     <Compile Include="Commands\Enums\CellPathDirection.cs" />
     <Compile Include="Commands\Enums\ColorModel.cs" />
     <Compile Include="Commands\Enums\ColorSpace.cs" />
+    <Compile Include="Commands\Enums\DataTypeIndex.cs" />
     <Compile Include="Commands\Enums\FinalFlag.cs" />
     <Compile Include="Commands\Enums\InheritanceFlag.cs" />
     <Compile Include="Commands\Enums\LineProgressionDirection.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
     <Compile Include="Binary\MetafileReader.cs" />
     <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
+    <Compile Include="Commands\StructuredDataElement.cs" />
+    <Compile Include="Commands\StructuredDataRecord.cs" />
     <Compile Include="Commands\UnsupportedCommand.cs" />
     <Compile Include="MetafileDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

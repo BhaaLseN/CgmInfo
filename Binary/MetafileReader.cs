@@ -409,12 +409,26 @@ namespace CgmInfo.Binary
         {
             var sb = new StringBuilder();
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
-            // FIXME: just like long commands, this could be 255 and include continuation
             int length = _reader.ReadByte();
+            // long string: length of 255 indicates that either one or two words follow
+            bool isPartialString = false;
+            if (length == 255)
+            {
+                length = ReadWord();
+                // first bit indicates whether this is just a partial string and another one follows
+                isPartialString = (length >> 16) == 1;
+                length &= 0x7FFF;
+            }
+
             while (length --> 0)
                 // cannot use ReadChar here; it would fail in case of surrogate characters
                 // FIXME: handle them correctly?!
                 sb.Append((char)_reader.ReadByte());
+
+            // TODO: verify this actually works like that; not sure if the string immediately follows...
+            if (isPartialString)
+                sb.Append(ReadString());
+
             return sb.ToString();
         }
 

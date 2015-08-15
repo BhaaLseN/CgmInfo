@@ -321,8 +321,8 @@ namespace CgmInfo.Binary
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
             int ret = 0;
-            while (numBytes-- > 0)
-                ret = (ret << 8) | _reader.ReadByte();
+            while (numBytes --> 0)
+                ret = (ret << 8) | ReadByte();
             return ret;
         }
 
@@ -402,14 +402,19 @@ namespace CgmInfo.Binary
         }
         internal ushort ReadWord()
         {
-            return (ushort)((_reader.ReadByte() << 8) | _reader.ReadByte());
+            return (ushort)((ReadByte() << 8) | ReadByte());
+        }
+
+        internal byte ReadByte()
+        {
+            return _reader.ReadByte();
         }
 
         internal string ReadString()
         {
             var sb = new StringBuilder();
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
-            int length = _reader.ReadByte();
+            int length = ReadByte();
             // long string: length of 255 indicates that either one or two words follow
             bool isPartialString = false;
             if (length == 255)
@@ -423,7 +428,7 @@ namespace CgmInfo.Binary
             while (length --> 0)
                 // cannot use ReadChar here; it would fail in case of surrogate characters
                 // FIXME: handle them correctly?!
-                sb.Append((char)_reader.ReadByte());
+                sb.Append((char)ReadByte());
 
             // TODO: verify this actually works like that; not sure if the string immediately follows...
             if (isPartialString)

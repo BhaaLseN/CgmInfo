@@ -79,28 +79,14 @@ namespace CgmInfo.Binary
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
-                int minR = reader.ReadColorValue();
-                int minG = reader.ReadColorValue();
-                int minB = reader.ReadColorValue();
-                Color min = Color.FromArgb(minR, minG, minB);
-                int maxR = reader.ReadColorValue();
-                int maxG = reader.ReadColorValue();
-                int maxB = reader.ReadColorValue();
-                Color max = Color.FromArgb(maxR, maxG, maxB);
+                Color min = reader.ReadColor();
+                Color max = reader.ReadColor();
                 result = new ColorValueExtent(ColorSpace.RGB, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
             {
-                int minC = reader.ReadColorValue();
-                int minM = reader.ReadColorValue();
-                int minY = reader.ReadColorValue();
-                int minK = reader.ReadColorValue();
-                Color min = ColorFromCMYK(minC, minM, minY, minK);
-                int maxC = reader.ReadColorValue();
-                int maxM = reader.ReadColorValue();
-                int maxY = reader.ReadColorValue();
-                int maxK = reader.ReadColorValue();
-                Color max = ColorFromCMYK(maxC, maxM, maxY, maxK);
+                Color min = reader.ReadColor();
+                Color max = reader.ReadColor();
                 result = new ColorValueExtent(ColorSpace.CMYK, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)
@@ -151,28 +137,6 @@ namespace CgmInfo.Binary
             // P1: (point) first corner [ISO/IEC 8632-3 8.3]
             // P2: (point) second corner
             return new MaximumVdcExtent(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc());
-        }
-
-        private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
-        {
-            double c = cyan / 255.0;
-            double m = magenta / 255.0;
-            double y = yellow / 255.0;
-            double k = black / 255.0;
-
-            double r = c * (1.0 - k) + k;
-            double g = m * (1.0 - k) + k;
-            double b = y * (1.0 - k) + k;
-
-            r = (1.0 - r) * 255.0 + 0.5;
-            g = (1.0 - g) * 255.0 + 0.5;
-            b = (1.0 - b) * 255.0 + 0.5;
-
-            int red = (int)r;
-            int green = (int)g;
-            int blue = (int)b;
-
-            return Color.FromArgb(red, green, blue);
         }
     }
 }

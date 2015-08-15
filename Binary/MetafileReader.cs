@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using CgmInfo.Commands;
@@ -346,8 +347,38 @@ namespace CgmInfo.Binary
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
+        internal Color ReadColor()
+        {
+            if (Descriptor.ColorModel == ColorModel.RGB)
+            {
+                int r = ReadColorValue();
+                int g = ReadColorValue();
+                int b = ReadColorValue();
+                return Color.FromArgb(r, g, b);
+            }
+            else if (Descriptor.ColorModel == ColorModel.CMYK)
+            {
+                int c = ReadColorValue();
+                int m = ReadColorValue();
+                int y = ReadColorValue();
+                int k = ReadColorValue();
+                return ColorFromCMYK(c, m, y, k);
+            }
+            else
+            {
+                // CIELAB/CIELUV/RGB-related are not exactly .NET Color values, but we'll return them anyways.
+                // TODO: actually convert them to RGB (using CIEXYZ for example, [ISO/IEC 8632-1 Annex G])
+                double first = ReadReal();
+                double second = ReadReal();
+                double third = ReadReal();
+
+                return Color.FromArgb((int)(first / 255), (int)(second / 255), (int)(third / 255));
+            }
+        }
+
         internal int ReadColorValue()
         {
+            // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
             return ReadInteger(Descriptor.ColorPrecision / 8);
         }
         private double ReadFixedPoint(int numBytes)
@@ -435,6 +466,28 @@ namespace CgmInfo.Binary
                 sb.Append(ReadString());
 
             return sb.ToString();
+        }
+
+        private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
+        {
+            double c = cyan / 255.0;
+            double m = magenta / 255.0;
+            double y = yellow / 255.0;
+            double k = black / 255.0;
+
+            double r = c * (1.0 - k) + k;
+            double g = m * (1.0 - k) + k;
+            double b = y * (1.0 - k) + k;
+
+            r = (1.0 - r) * 255.0 + 0.5;
+            g = (1.0 - g) * 255.0 + 0.5;
+            b = (1.0 - b) * 255.0 + 0.5;
+
+            int red = (int)r;
+            int green = (int)g;
+            int blue = (int)b;
+
+            return Color.FromArgb(red, green, blue);
         }
 
         public void Dispose()

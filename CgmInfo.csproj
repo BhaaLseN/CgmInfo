@@ -68,6 +68,8 @@
     <Compile Include="Commands\Delimiter\EndMetafile.cs" />
     <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
     <Compile Include="Commands\Enums\CellPathDirection.cs" />
+    <Compile Include="Commands\Enums\CharacterCodingAnnouncerType.cs" />
+    <Compile Include="Commands\Enums\CharacterSetType.cs" />
     <Compile Include="Commands\Enums\ColorModel.cs" />
     <Compile Include="Commands\Enums\ColorSpace.cs" />
     <Compile Include="Commands\Enums\DataTypeIndex.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Commands\GraphicalPrimitives\AppendText.cs" />
     <Compile Include="Commands\GraphicalPrimitives\RestrictedText.cs" />
     <Compile Include="Commands\GraphicalPrimitives\TextCommand.cs" />
+    <Compile Include="Commands\MetafileDescriptor\CharacterCodingAnnouncer.cs" />
     <Compile Include="Commands\MetafileDescriptor\FontList.cs" />
     <Compile Include="Commands\MetafileDescriptor\MaximumVdcExtent.cs" />
     <Compile Include="Commands\MetafileDescriptor\NamePrecision.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Commands\MetafileDescriptor\MaximumColorIndex.cs" />
     <Compile Include="Commands\MetafileDescriptor\ColorPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
+    <Compile Include="Commands\MetafileDescriptor\CharacterSetList.cs" />
     <Compile Include="Commands\MetafileDescriptor\RealPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
     <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />

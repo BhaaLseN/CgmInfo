@@ -103,7 +103,6 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
-
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {
             parameter.WriteLine("Metafile Version: {0}", metafileVersion.Version);
@@ -162,6 +161,14 @@ namespace CgmInfoCmd
             foreach (string font in fontList.Fonts)
                 parameter.WriteLine(font);
             parameter.EndLevel();
+        }
+        public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Set List: {0}", characterSetList.CharacterSetType);
+        }
+        public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Coding Announcer: {0}", characterCodingAnnouncer.CharacterCodingAnnouncerType);
         }
         public void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, PrintContext parameter)
         {

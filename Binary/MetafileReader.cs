@@ -285,6 +285,12 @@ namespace CgmInfo.Binary
                 case 13: // FONT LIST
                     result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
                     break;
+                case 14: // CHARACTER SET LIST
+                    result = MetafileDescriptorReader.CharacterSetList(this, commandHeader);
+                    break;
+                case 15: // CHARACTER CODING ANNOUNCER
+                    result = MetafileDescriptorReader.CharacterCodingAnnouncer(this, commandHeader);
+                    break;
                 case 16: // NAME PRECISION
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
@@ -298,8 +304,6 @@ namespace CgmInfo.Binary
                     break;
                 case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT
-                case 14: // CHARACTER SET LIST
-                case 15: // CHARACTER CODING ANNOUNCER
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION
                 case 21: // FONT PROPERTIES

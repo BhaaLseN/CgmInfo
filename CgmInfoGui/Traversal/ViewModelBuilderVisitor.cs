@@ -111,7 +111,6 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END APPLICATION STRUCTURE");
         }
 
-
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);
@@ -197,6 +196,17 @@ namespace CgmInfoGui.Traversal
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {
             parameter.AddDescriptorNode(new FontListViewModel(fontList));
+        }
+
+        public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, MetafileContext parameter)
+        {
+            var characterSetNode = parameter.AddMetafileDescriptorNode("CHARACTER SET LIST: {0}", characterSetList.CharacterSetType);
+            characterSetNode.Nodes.Add(new SimpleNode(string.Format("Tail: {0}", string.Join(", ", characterSetList.DesignationSequenceTail.Select(c => ((int)c).ToString("x2"))))));
+        }
+
+        public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, MetafileContext parameter)
+        {
+            parameter.AddMetafileDescriptorNode("CHARACTER CODING ANNOUNCER: {0}", characterCodingAnnouncer.CharacterCodingAnnouncerType);
         }
 
         public void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, MetafileContext parameter)

@@ -15,6 +15,8 @@ namespace CgmInfo.Binary
 
         private BinaryReader _reader;
         private bool _insideMetafile;
+        // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
+        private Encoding _currentEncoding = Encoding.ASCII;
 
         public MetafileDescriptor Descriptor
         {
@@ -490,7 +492,6 @@ namespace CgmInfo.Binary
 
         internal string ReadString()
         {
-            var sb = new StringBuilder();
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
             int length = ReadByte();
             // long string: length of 255 indicates that either one or two words follow
@@ -503,16 +504,46 @@ namespace CgmInfo.Binary
                 length &= 0x7FFF;
             }
 
-            while (length --> 0)
-                // cannot use ReadChar here; it would fail in case of surrogate characters
-                // FIXME: handle them correctly?!
-                sb.Append((char)ReadByte());
+            byte[] characters = new byte[length];
+            for (int i = 0; i < length; i++)
+                characters[i] = ReadByte();
+
+            string result;
+            // try to detect certain common encodings (based on ISO/IEC 2022 / ECMA-35)
+            // this only checks for DOCS (DECIDE OTHER CODING SYSTEM), identified by "ESC % / F" (0x1B 0x25 0x2F F)
+            // and limited to F = "G" (0x47), "H" (0x48), "I" (0x49), "J" (0x4A), "K" (0x4B) and "L" (0x4C) at this point.
+            // 0x47 until 0x49 are various levels of UTF-8, while 0x4A until 0x4C are various levels of UTF-16
+            // [ISO-IR International Register of Coded Character Sets to be used with Escape Sequences, 2.8.2]
+            // [ISO/IEC 8632-1 6.3.4.5, Example 1]
+            if (length >= 4 && characters[0] == 0x1B && characters[1] == 0x25 && characters[2] == 0x2F &&
+                characters[3] >= 0x47 && characters[3] <= 0x4C)
+            {
+                if (characters[3] >= 0x47 && characters[3] <= 0x49)
+                {
+                    // ESC 2/5 2/15 4/7: UTF-8 Level 1
+                    // ESC 2/5 2/15 4/8: UTF-8 Level 2
+                    // ESC 2/5 2/15 4/9: UTF-8 Level 3
+                    _currentEncoding = Encoding.UTF8;
+                }
+                else
+                {
+                    // ESC 2/5 2/15 4/10: UTF-16 Level 1
+                    // ESC 2/5 2/15 4/11: UTF-16 Level 2
+                    // ESC 2/5 2/15 4/12: UTF-16 Level 3
+                    _currentEncoding = Encoding.BigEndianUnicode;
+                }
+                result = _currentEncoding.GetString(characters, 4, length - 4);
+            }
+            else
+            {
+                result = _currentEncoding.GetString(characters);
+            }
 
             // TODO: verify this actually works like that; not sure if the string immediately follows...
             if (isPartialString)
-                sb.Append(ReadString());
+                result += ReadString();
 
-            return sb.ToString();
+            return result;
         }
 
         internal StructuredDataRecord ReadStructuredDataRecord()

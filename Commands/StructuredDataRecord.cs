@@ -25,7 +25,9 @@ namespace CgmInfo.Commands
             }
 
             var elements = new List<StructuredDataElement>();
-            while (reader.HasMoreData())
+            // require at least 2 bytes for the enum, and 2 bytes for the count
+            // some files seem to include padding or similar, which throws this off by having an extra byte available at the end
+            while (reader.HasMoreData(4))
             {
                 DataTypeIndex type = (DataTypeIndex)reader.ReadEnum();
                 int count = reader.ReadWord();

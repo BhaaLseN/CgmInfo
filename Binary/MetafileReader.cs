@@ -351,7 +351,12 @@ namespace CgmInfo.Binary
 
         internal bool HasMoreData()
         {
-            return _reader != null && _reader.BaseStream.Position < _reader.BaseStream.Length;
+            return HasMoreData(0);
+        }
+
+        internal bool HasMoreData(int minimumLeft)
+        {
+            return _reader != null && _reader.BaseStream.Position + minimumLeft < _reader.BaseStream.Length;
         }
 
         internal int ReadInteger()

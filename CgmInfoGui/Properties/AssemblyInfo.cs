@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CgmInfoGui")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("CGM Metafile Info Browser (https://github.com/BhaaLseN/CgmInfo)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BhaaL")]
 [assembly: AssemblyProduct("CgmInfoGui")]

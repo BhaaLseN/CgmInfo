@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CgmInfoCmd")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("CGM Metafile Info command line tool for testing (https://github.com/BhaaLseN/CgmInfo)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BhaaL")]
 [assembly: AssemblyProduct("CgmInfoCmd")]

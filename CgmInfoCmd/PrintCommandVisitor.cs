@@ -1,7 +1,9 @@
 using System.Linq;
 using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 
@@ -101,7 +103,6 @@ namespace CgmInfoCmd
         {
             parameter.EndLevel();
         }
-
         public void AcceptMetafileDescriptorMetafileVersion(MetafileVersion metafileVersion, PrintContext parameter)
         {
             parameter.WriteLine("Metafile Version: {0}", metafileVersion.Version);
@@ -161,6 +162,14 @@ namespace CgmInfoCmd
                 parameter.WriteLine(font);
             parameter.EndLevel();
         }
+        public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Set List: {0}", characterSetList.CharacterSetType);
+        }
+        public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Coding Announcer: {0}", characterCodingAnnouncer.CharacterCodingAnnouncerType);
+        }
         public void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, PrintContext parameter)
         {
             parameter.WriteLine("Name Precision: {0} bit", namePrecision.Precision);
@@ -172,6 +181,24 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
+        }
+
+        public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
+        {
+            parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);
+        }
+        public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, PrintContext parameter)
+        {
+            parameter.WriteLine("Restricted Text: '{0}' (at {1}, +/-{2} by {3})",
+                restrictedText.Text, restrictedText.Position, restrictedText.DeltaWidth, restrictedText.DeltaHeight);
+        }
+        public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, PrintContext parameter)
+        {
+            parameter.WriteLine("Append Text: '{0}'", appendText.Text);
+        }
+        public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
+        {
+            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, applicationStructureAttribute.DataRecord);
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

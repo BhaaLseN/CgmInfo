@@ -1,5 +1,7 @@
 ﻿using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 
 namespace CgmInfo.Traversal
@@ -42,8 +44,18 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, T parameter);
         void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, T parameter);
         void AcceptMetafileDescriptorFontList(FontList fontList, T parameter);
+        void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, T parameter);
+        void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, T parameter);
         void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, T parameter);
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
+
+        // graphical primitives
+        void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
+        void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
+        void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
+
+        // application structure descriptor
+        void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);
     }
 }

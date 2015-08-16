@@ -15,6 +15,8 @@ namespace CgmInfo.Binary
 
         private BinaryReader _reader;
         private bool _insideMetafile;
+        // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
+        private Encoding _currentEncoding = Encoding.ASCII;
 
         public MetafileDescriptor Descriptor
         {
@@ -49,14 +51,18 @@ namespace CgmInfo.Binary
                 case 1: // metafile descriptor
                     result = ReadMetafileDescriptorElement(commandHeader);
                     break;
+                case 4: // graphical primitive
+                    result = ReadGraphicalPrimitive(commandHeader);
+                    break;
+                case 9: // application structure descriptor
+                    result = ReadApplicationStructureDescriptor(commandHeader);
+                    break;
                 case 2: // picture descriptor
                 case 3: // control
-                case 4: // graphical primitive
                 case 5: // attribute
                 case 6: // escape
                 case 7: // external
                 case 8: // segment control/segment attribute
-                case 9: // application structure descriptor
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
@@ -279,6 +285,12 @@ namespace CgmInfo.Binary
                 case 13: // FONT LIST
                     result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
                     break;
+                case 14: // CHARACTER SET LIST
+                    result = MetafileDescriptorReader.CharacterSetList(this, commandHeader);
+                    break;
+                case 15: // CHARACTER CODING ANNOUNCER
+                    result = MetafileDescriptorReader.CharacterCodingAnnouncer(this, commandHeader);
+                    break;
                 case 16: // NAME PRECISION
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
@@ -292,8 +304,6 @@ namespace CgmInfo.Binary
                     break;
                 case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT
-                case 14: // CHARACTER SET LIST
-                case 15: // CHARACTER CODING ANNOUNCER
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION
                 case 21: // FONT PROPERTIES
@@ -307,9 +317,52 @@ namespace CgmInfo.Binary
             return result;
         }
 
+        private Command ReadGraphicalPrimitive(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.6, Table 7
+            switch (commandHeader.ElementId)
+            {
+                case 4: // TEXT
+                    result = GraphicalPrimitiveReader.Text(this, commandHeader);
+                    break;
+                case 5: // RESTRICTED TEXT
+                    result = GraphicalPrimitiveReader.RestrictedText(this, commandHeader);
+                    break;
+                case 6: // APPEND TEXT
+                    result = GraphicalPrimitiveReader.AppendText(this, commandHeader);
+                    break;
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadApplicationStructureDescriptor(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.11, Table 12
+            switch (commandHeader.ElementId)
+            {
+                case 1: // APPLICATION STRUCTURE ATTRIBUTE
+                    result = ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute(this, commandHeader);
+                    break;
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
         internal bool HasMoreData()
         {
-            return _reader != null && _reader.BaseStream.Position < _reader.BaseStream.Length;
+            return HasMoreData(0);
+        }
+
+        internal bool HasMoreData(int minimumLeft)
+        {
+            return _reader != null && _reader.BaseStream.Position + minimumLeft < _reader.BaseStream.Length;
         }
 
         internal int ReadInteger()
@@ -443,7 +496,6 @@ namespace CgmInfo.Binary
 
         internal string ReadString()
         {
-            var sb = new StringBuilder();
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
             int length = ReadByte();
             // long string: length of 255 indicates that either one or two words follow
@@ -456,16 +508,57 @@ namespace CgmInfo.Binary
                 length &= 0x7FFF;
             }
 
-            while (length --> 0)
-                // cannot use ReadChar here; it would fail in case of surrogate characters
-                // FIXME: handle them correctly?!
-                sb.Append((char)ReadByte());
+            byte[] characters = new byte[length];
+            for (int i = 0; i < length; i++)
+                characters[i] = ReadByte();
+
+            string result;
+            // try to detect certain common encodings (based on ISO/IEC 2022 / ECMA-35)
+            // this only checks for DOCS (DECIDE OTHER CODING SYSTEM), identified by "ESC % / F" (0x1B 0x25 0x2F F)
+            // and limited to F = "G" (0x47), "H" (0x48), "I" (0x49), "J" (0x4A), "K" (0x4B) and "L" (0x4C) at this point.
+            // 0x47 until 0x49 are various levels of UTF-8, while 0x4A until 0x4C are various levels of UTF-16
+            // [ISO-IR International Register of Coded Character Sets to be used with Escape Sequences, 2.8.2]
+            // [ISO/IEC 8632-1 6.3.4.5, Example 1]
+            if (length >= 4 && characters[0] == 0x1B && characters[1] == 0x25 && characters[2] == 0x2F &&
+                characters[3] >= 0x47 && characters[3] <= 0x4C)
+            {
+                if (characters[3] >= 0x47 && characters[3] <= 0x49)
+                {
+                    // ESC 2/5 2/15 4/7: UTF-8 Level 1
+                    // ESC 2/5 2/15 4/8: UTF-8 Level 2
+                    // ESC 2/5 2/15 4/9: UTF-8 Level 3
+                    _currentEncoding = Encoding.UTF8;
+                }
+                else
+                {
+                    // ESC 2/5 2/15 4/10: UTF-16 Level 1
+                    // ESC 2/5 2/15 4/11: UTF-16 Level 2
+                    // ESC 2/5 2/15 4/12: UTF-16 Level 3
+                    _currentEncoding = Encoding.BigEndianUnicode;
+                }
+                result = _currentEncoding.GetString(characters, 4, length - 4);
+            }
+            else
+            {
+                result = _currentEncoding.GetString(characters);
+            }
 
             // TODO: verify this actually works like that; not sure if the string immediately follows...
             if (isPartialString)
-                sb.Append(ReadString());
+                result += ReadString();
 
-            return sb.ToString();
+            return result;
+        }
+
+        internal StructuredDataRecord ReadStructuredDataRecord()
+        {
+            // structured data records are self-defining structures [ISO/IEC 8632-3 7, Table 1, Note 17]
+            // each record contains a single member and is comprised of [ISO/IEC 8632-3 8.3, 21 FONT PROPERTIES, P3]
+            //      data type indicator
+            //      data element count
+            //      data element(s)
+            // see also [ISO/IEC 8632-1 Annex C, C.2.2]
+            return StructuredDataRecord.Read(this);
         }
 
         private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)

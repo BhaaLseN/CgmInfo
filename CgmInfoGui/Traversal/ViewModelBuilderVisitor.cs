@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
@@ -108,7 +111,6 @@ namespace CgmInfoGui.Traversal
             parameter.EndLevel("END APPLICATION STRUCTURE");
         }
 
-
         public void AcceptMetafileDescriptorColorIndexPrecision(ColorIndexPrecision colorIndexPrecision, MetafileContext parameter)
         {
             parameter.AddMetafileDescriptorNode("COLOUR INDEX PRECISION: {0} bit", colorIndexPrecision.Precision);
@@ -196,6 +198,17 @@ namespace CgmInfoGui.Traversal
             parameter.AddDescriptorNode(new FontListViewModel(fontList));
         }
 
+        public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, MetafileContext parameter)
+        {
+            var characterSetNode = parameter.AddMetafileDescriptorNode("CHARACTER SET LIST: {0}", characterSetList.CharacterSetType);
+            characterSetNode.Nodes.Add(new SimpleNode(string.Format("Tail: {0}", string.Join(", ", characterSetList.DesignationSequenceTail.Select(c => ((int)c).ToString("x2"))))));
+        }
+
+        public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, MetafileContext parameter)
+        {
+            parameter.AddMetafileDescriptorNode("CHARACTER CODING ANNOUNCER: {0}", characterCodingAnnouncer.CharacterCodingAnnouncerType);
+        }
+
         public void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, MetafileContext parameter)
         {
             var maxVdcNode = parameter.AddMetafileDescriptorNode("MAXIMUM VDC EXTENT: {0} by {1}",
@@ -206,6 +219,25 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("First Corner: {0}", maximumVdcExtent.FirstCorner)),
                 new SimpleNode(string.Format("Second Corner: {0}", maximumVdcExtent.SecondCorner)),
             });
+        }
+
+        public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
+        }
+        public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTRICTED TEXT: '{0}'{1}", restrictedText.Text, restrictedText.Final == FinalFlag.Final ? " (final)" : "");
+        }
+        public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, MetafileContext parameter)
+        {
+            parameter.AddNode("APPEND TEXT: '{0}'{1}", appendText.Text, appendText.Final == FinalFlag.Final ? " (final)" : "");
+        }
+
+        public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
+        {
+            var aps = parameter.AddNode("{0}", applicationStructureAttribute.AttributeType);
+            aps.Nodes.AddRange(applicationStructureAttribute.DataRecord.Elements.SelectMany(e => e.Values).Select(e => new SimpleNode(Convert.ToString(e))));
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)

@@ -138,5 +138,27 @@ namespace CgmInfo.Binary
             // P2: (point) second corner
             return new MaximumVdcExtent(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc());
         }
+
+        public static CharacterSetList CharacterSetList(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) CHARACTER SET TYPE: valid codes are [ISO/IEC 8632-3 8.3]
+            //      0 94 - character G - set
+            //      1 96 - character G - set
+            //      2 94 - character multibyte G-set
+            //      3 96 - character multibyte G-set
+            //      4 complete code
+            // P2: (string fixed) Designation sequence tail; see Part 1, subclause 7.3.14.
+            return new CharacterSetList(reader.ReadEnum(), reader.ReadString());
+        }
+
+        public static CharacterCodingAnnouncer CharacterCodingAnnouncer(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) character coding announcer: valid values are [ISO/IEC 8632-3 8.3]
+            //      0 basic 7 - bit
+            //      1 basic 8 - bit
+            //      2 extended 7 - bit
+            //      3 extended 8 - bit
+            return new CharacterCodingAnnouncer(reader.ReadEnum());
+        }
     }
 }

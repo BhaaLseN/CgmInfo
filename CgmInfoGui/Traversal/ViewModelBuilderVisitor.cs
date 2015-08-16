@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -220,6 +222,12 @@ namespace CgmInfoGui.Traversal
         public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, MetafileContext parameter)
         {
             parameter.AddNode("APPEND TEXT: '{0}'{1}", appendText.Text, appendText.Final == FinalFlag.Final ? " (final)" : "");
+        }
+
+        public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
+        {
+            var aps = parameter.AddNode("{0}", applicationStructureAttribute.AttributeType);
+            aps.Nodes.AddRange(applicationStructureAttribute.DataRecord.Elements.SelectMany(e => e.Values).Select(e => new SimpleNode(Convert.ToString(e))));
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)

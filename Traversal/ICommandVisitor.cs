@@ -1,4 +1,5 @@
 ﻿using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -51,5 +52,8 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
+
+        // application structure descriptor
+        void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);
     }
 }

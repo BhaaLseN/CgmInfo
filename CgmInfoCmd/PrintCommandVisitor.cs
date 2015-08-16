@@ -1,5 +1,6 @@
 using System.Linq;
 using CgmInfo.Commands;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -187,6 +188,10 @@ namespace CgmInfoCmd
         public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, PrintContext parameter)
         {
             parameter.WriteLine("Append Text: '{0}'", appendText.Text);
+        }
+        public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
+        {
+            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, applicationStructureAttribute.DataRecord);
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

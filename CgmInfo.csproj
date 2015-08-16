@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binary\ApplicationStructureDescriptorReader.cs" />
     <Compile Include="Binary\DelimiterElementReader.cs" />
     <Compile Include="Binary\GraphicalPrimitiveReader.cs" />
     <Compile Include="Binary\MetafileDescriptorReader.cs" />
+    <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Binary\CommandHeader.cs" />
     <Compile Include="Commands\Delimiter\EndApplicationStructure.cs" />

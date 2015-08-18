@@ -66,6 +66,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
+    <Compile Include="Traversal\APSStructureContext.cs" />
     <Compile Include="Traversal\MetafileContext.cs" />
     <Compile Include="Traversal\NodeContext.cs" />
     <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />

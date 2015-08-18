@@ -115,6 +115,8 @@ namespace CgmInfoGui.ViewModels
                 {
                     var vmVisitor = new ViewModelBuilderVisitor();
                     var metafileContext = new MetafileContext();
+                    var apsVisitor = new APSStructureBuilderVisitor();
+                    var apsContext = new APSStructureContext();
                     Command command;
                     do
                     {
@@ -122,16 +124,19 @@ namespace CgmInfoGui.ViewModels
                         if (command != null)
                         {
                             command.Accept(vmVisitor, metafileContext);
+                            command.Accept(apsVisitor, apsContext);
                         }
                     } while (command != null);
                     return new
                     {
                         MetafileNodes = metafileContext.RootLevel.ToList(),
+                        APSNodes = apsContext.RootLevel.ToList(),
                     };
                 }
             });
             IsBusy = false;
             MetafileNodes = result.MetafileNodes;
+            APSNodes = result.APSNodes;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

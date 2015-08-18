@@ -39,6 +39,9 @@
                             <xcad:LayoutDocument Title="Metafile Structure" ContentId="MetafileStructure" CanClose="False">
                                 <TreeView ItemsSource="{Binding MetafileNodes}"/>
                             </xcad:LayoutDocument>
+                            <xcad:LayoutDocument Title="Application Structure" ContentId="ApplicationStructure" CanClose="False">
+                                <TreeView ItemsSource="{Binding APSNodes}"/>
+                            </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
                     </xcad:LayoutDocumentPaneGroup>
                 </xcad:LayoutPanel>

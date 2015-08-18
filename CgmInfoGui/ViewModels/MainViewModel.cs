@@ -45,6 +45,20 @@ namespace CgmInfoGui.ViewModels
             }
         }
 
+        private List<NodeBase> _apsNodes;
+        public List<NodeBase> APSNodes
+        {
+            get { return _apsNodes; }
+            set
+            {
+                if (value != _apsNodes)
+                {
+                    _apsNodes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public DelegateCommand BrowseCommand { get; }
         public DelegateCommand ProcessCommand { get; }
 

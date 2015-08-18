@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Traversal\MetafileContext.cs" />
+    <Compile Include="Traversal\NodeContext.cs" />
     <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

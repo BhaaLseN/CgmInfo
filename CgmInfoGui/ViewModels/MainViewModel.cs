@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using CgmInfo.Binary;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
@@ -47,12 +48,28 @@ namespace CgmInfoGui.ViewModels
         public DelegateCommand BrowseCommand { get; }
         public DelegateCommand ProcessCommand { get; }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (value != _isBusy)
+                {
+                    _isBusy = value;
+                    BrowseCommand.NotifyCanExecuteChanged();
+                    ProcessCommand.NotifyCanExecuteChanged();
+                }
+            }
+        }
+
         public MainViewModel()
         {
-            BrowseCommand = new DelegateCommand(Browse);
+            BrowseCommand = new DelegateCommand(Browse, CanBrowse);
             ProcessCommand = new DelegateCommand(Process, CanProcess);
         }
 
+        private bool CanBrowse(object parameter) => !IsBusy;
         private void Browse(object parameter)
         {
             var ofd = new OpenFileDialog
@@ -74,24 +91,33 @@ namespace CgmInfoGui.ViewModels
             }
         }
 
-        private bool CanProcess(object parameter) => File.Exists(FileName);
-        private void Process(object parameter)
+        private bool CanProcess(object parameter) => !IsBusy && File.Exists(FileName);
+        private async void Process(object parameter)
         {
-            using (var reader = new MetafileReader(FileName))
+            IsBusy = true;
+            var result = await Task.Run(() =>
             {
-                var vmVisitor = new ViewModelBuilderVisitor();
-                var metafileContext = new MetafileContext();
-                Command command;
-                do
+                using (var reader = new MetafileReader(FileName))
                 {
-                    command = reader.ReadCommand();
-                    if (command != null)
+                    var vmVisitor = new ViewModelBuilderVisitor();
+                    var metafileContext = new MetafileContext();
+                    Command command;
+                    do
                     {
-                        command.Accept(vmVisitor, metafileContext);
-                    }
-                } while (command != null);
-                MetafileNodes = metafileContext.RootLevel.ToList();
-            }
+                        command = reader.ReadCommand();
+                        if (command != null)
+                        {
+                            command.Accept(vmVisitor, metafileContext);
+                        }
+                    } while (command != null);
+                    return new
+                    {
+                        MetafileNodes = metafileContext.RootLevel.ToList(),
+                    };
+                }
+            });
+            IsBusy = false;
+            MetafileNodes = result.MetafileNodes;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

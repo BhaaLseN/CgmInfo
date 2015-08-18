@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mvm="clr-namespace:CgmInfoGui.ViewModels"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         Title="CGM Info" Height="480" Width="640">
     <Window.DataContext>
@@ -27,6 +28,21 @@
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
         </Grid>
-        <TreeView ItemsSource="{Binding MetafileNodes}"/>
+        <xcad:DockingManager x:Name="_dockingManager">
+            <xcad:DockingManager.Theme>
+                <xcad:AeroTheme/>
+            </xcad:DockingManager.Theme>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane>
+                            <xcad:LayoutDocument Title="Metafile Structure" ContentId="MetafileStructure" CanClose="False">
+                                <TreeView ItemsSource="{Binding MetafileNodes}"/>
+                            </xcad:LayoutDocument>
+                        </xcad:LayoutDocumentPane>
+                    </xcad:LayoutDocumentPaneGroup>
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
     </DockPanel>
 </Window>

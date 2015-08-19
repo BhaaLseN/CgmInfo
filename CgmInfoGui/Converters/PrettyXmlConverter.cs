@@ -77,6 +77,27 @@ namespace CgmInfoGui.Converters
 
         #endregion
 
+        public FlowDocument Render(XDocument document)
+        {
+            var doc = new FlowDocument
+            {
+                FontFamily = this.FontFamily,
+                FontSize = this.FontSize,
+                PagePadding = this.PagePadding
+            };
+
+            if (document.Declaration != null)
+                doc.Blocks.Add(RenderLine(new[] { Bracket(document.Declaration.ToString()) }, 0, 0));
+            if (document.DocumentType != null)
+                doc.Blocks.Add(RenderLine(new[] { Bracket(document.DocumentType.ToString()) }, 0, 0));
+
+            foreach (var b in RenderElement(document.Root, 0))
+            {
+                doc.Blocks.Add(b);
+            }
+
+            return doc;
+        }
         public FlowDocument Render(XElement element)
         {
             var doc = new FlowDocument
@@ -272,7 +293,7 @@ namespace CgmInfoGui.Converters
         {
             var doc = value as XDocument;
             if (doc != null)
-                return Render(doc.Root);
+                return Render(doc);
 
             if (value is XmlNode)
             {

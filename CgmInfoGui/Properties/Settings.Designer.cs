@@ -22,5 +22,17 @@ namespace CgmInfoGui.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DockLayoutString {
+            get {
+                return ((string)(this["DockLayoutString"]));
+            }
+            set {
+                this["DockLayoutString"] = value;
+            }
+        }
     }
 }

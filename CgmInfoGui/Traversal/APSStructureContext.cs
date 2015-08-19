@@ -52,6 +52,27 @@ namespace CgmInfoGui.Traversal
 
                     WebCGM20Region(applicationStructureAttribute, allValues);
                     break;
+                case "VIEWCONTEXT": // [WebCGM20-IC 3.2.2.2]
+                    // viewcontext has exactly 4 attributes; the corner coordinates of a rectangle
+                    if (allValues.Length != 4)
+                        goto default;
+
+                    // The data record is an SDR of 1 member of type VDC defining two corner points of a rectangle.
+                    float startX = Convert.ToSingle(allValues[0]);
+                    float startY = Convert.ToSingle(allValues[1]);
+                    float endX = Convert.ToSingle(allValues[2]);
+                    float endY = Convert.ToSingle(allValues[3]);
+                    var start = new PointF(startX, startY);
+                    var end = new PointF(endX, endY);
+
+                    var regionNode = AddNode("@{0} Viewcontext ({1} by {2})", applicationStructureAttribute.AttributeType,
+                        Math.Abs(endX - startX), Math.Abs(endY - startY));
+                    regionNode.Nodes.AddRange(new[]
+                    {
+                        new SimpleNode(string.Format("Start: {0}", start)),
+                        new SimpleNode(string.Format("End: {0}", end)),
+                    });
+                    break;
 
                 #endregion
 

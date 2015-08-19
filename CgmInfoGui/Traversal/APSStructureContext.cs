@@ -29,6 +29,21 @@ namespace CgmInfoGui.Traversal
                     AddNode("@{0} = '{1}'", applicationStructureAttribute.AttributeType, allValues[0]);
                     break;
 
+                case "LINKURI": // [WebCGM20-IC 3.2.2.3]
+                    // linkuri has exactly 3 attributes; if not, show the default stuff
+                    if (allValues.Length != 3)
+                        goto default;
+
+                    // The data record is an SDR of one member, containing three strings (type SF, String Fixed).
+                    // The first string is the link destination, a IRI,
+                    // the second string (possibly null) is a Link Title parameter,
+                    // and the third string (possibly null) is the Behavior parameter.
+                    // Note that a null string is a zero-length string, and is not the same as an omitted parameter. The parameter must not be omitted.
+                    AddNode("@{0} <a href=\"{1}\" target=\"{3}\">{2}</a>",
+                        applicationStructureAttribute.AttributeType,
+                        allValues[0], allValues[1], allValues[2]);
+                    break;
+
                 #endregion
 
                 default:

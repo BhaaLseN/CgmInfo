@@ -9,16 +9,40 @@ namespace CgmInfoGui.Traversal
     {
         public void AddAttributeNode(ApplicationStructureAttribute applicationStructureAttribute)
         {
-            // in case theres just a single value; show it directly.
             var allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
-            if (allValues.Length == 1)
+            switch (applicationStructureAttribute.AttributeType.ToUpperInvariant())
             {
-                AddNode("Attribute '{0}' = '{1}'", applicationStructureAttribute.AttributeType, allValues[0]);
-            }
-            else
-            {
-                var attributeNode = AddNode("Attribute '{0}'", applicationStructureAttribute.AttributeType);
-                attributeNode.Nodes.AddRange(allValues.Select(value => new SimpleNode(Convert.ToString(value))));
+                #region WebCGM 2.0 Intelligent Content [WebCGM20-IC]
+                // http://www.w3.org/TR/webcgm20/WebCGM20-IC.html
+
+                case "CONTENT": // [WebCGM20-IC 3.2.2.8]
+                case "INTERACTIVITY": // [WebCGM20-IC 3.2.2.10]
+                case "LAYERNAME": // [WebCGM20-IC 3.2.2.4]
+                case "LAYERDESC": // [WebCGM20-IC 3.2.2.5]
+                case "NAME": // [WebCGM20-IC 3.2.2.7]
+                case "SCREENTIP": // [WebCGM20-IC 3.2.2.6]
+                case "VISIBILITY": // [WebCGM20-IC 3.2.2.9]
+                    // simple attribute with one value; show just the value (unless it doesn't have one value for whatever reason)
+                    if (allValues.Length != 1)
+                        goto default;
+
+                    AddNode("@{0} = '{1}'", applicationStructureAttribute.AttributeType, allValues[0]);
+                    break;
+
+                #endregion
+
+                default:
+                    // in case theres just a single value; show it directly.
+                    if (allValues.Length == 1)
+                    {
+                        AddNode("@{0} = '{1}'", applicationStructureAttribute.AttributeType, allValues[0]);
+                    }
+                    else
+                    {
+                        var attributeNode = AddNode("@{0} [{1} values]", applicationStructureAttribute.AttributeType, allValues.Length);
+                        attributeNode.Nodes.AddRange(allValues.Select(value => new SimpleNode(Convert.ToString(value))));
+                    }
+                    break;
             }
         }
     }

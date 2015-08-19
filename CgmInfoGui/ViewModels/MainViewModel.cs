@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using CgmInfo.Binary;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
@@ -54,6 +55,20 @@ namespace CgmInfoGui.ViewModels
                 if (value != _apsNodes)
                 {
                     _apsNodes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private XDocument _xcfDocument;
+        public XDocument XCFDocument
+        {
+            get { return _xcfDocument; }
+            set
+            {
+                if (value != _xcfDocument)
+                {
+                    _xcfDocument = value;
                     OnPropertyChanged();
                 }
             }

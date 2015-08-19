@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mvm="clr-namespace:CgmInfoGui.ViewModels"
+        xmlns:conv="clr-namespace:CgmInfoGui.Converters"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         Title="CGM Info" Height="480" Width="640">
+    <Window.Resources>
+        <conv:PrettyXmlConverter x:Key="prettyXmlConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <mvm:MainViewModel/>
     </Window.DataContext>
@@ -41,6 +45,12 @@
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Application Structure" ContentId="ApplicationStructure" CanClose="False">
                                 <TreeView ItemsSource="{Binding APSNodes}"/>
+                            </xcad:LayoutDocument>
+                            <xcad:LayoutDocument Title="XML Companion File" ContentId="XCF" CanClose="False">
+                                <FlowDocumentReader
+                                    ViewingMode="Scroll" IsPageViewEnabled="False" IsTwoPageViewEnabled="False"
+                                    Document="{Binding XCFDocument, BindsDirectlyToSource=true, Converter={StaticResource prettyXmlConverter}}">
+                                </FlowDocumentReader>
                             </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
                     </xcad:LayoutDocumentPaneGroup>

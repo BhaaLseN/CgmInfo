@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using CgmInfo.Binary;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
@@ -54,6 +55,20 @@ namespace CgmInfoGui.ViewModels
                 if (value != _apsNodes)
                 {
                     _apsNodes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private XDocument _xcfDocument;
+        public XDocument XCFDocument
+        {
+            get { return _xcfDocument; }
+            set
+            {
+                if (value != _xcfDocument)
+                {
+                    _xcfDocument = value;
                     OnPropertyChanged();
                 }
             }
@@ -117,6 +132,8 @@ namespace CgmInfoGui.ViewModels
                     var metafileContext = new MetafileContext();
                     var apsVisitor = new APSStructureBuilderVisitor();
                     var apsContext = new APSStructureContext();
+                    var xcfVisitor = new XCFDocumentBuilderVisitor();
+                    var xcfContext = new XCFDocumentContext();
                     Command command;
                     do
                     {
@@ -125,18 +142,21 @@ namespace CgmInfoGui.ViewModels
                         {
                             command.Accept(vmVisitor, metafileContext);
                             command.Accept(apsVisitor, apsContext);
+                            command.Accept(xcfVisitor, xcfContext);
                         }
                     } while (command != null);
                     return new
                     {
                         MetafileNodes = metafileContext.RootLevel.ToList(),
                         APSNodes = apsContext.RootLevel.ToList(),
+                        XCFDocument = xcfContext.XCF,
                     };
                 }
             });
             IsBusy = false;
             MetafileNodes = result.MetafileNodes;
             APSNodes = result.APSNodes;
+            XCFDocument = result.XCFDocument;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

@@ -11,6 +11,7 @@ namespace CgmInfoGui.Traversal
     {
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, XCFDocumentContext parameter)
         {
+            parameter.AddAPSAttribute(applicationStructureAttribute);
         }
 
         public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, XCFDocumentContext parameter)

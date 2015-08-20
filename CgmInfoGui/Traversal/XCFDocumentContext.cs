@@ -1,9 +1,11 @@
 ﻿using System.Xml.Linq;
+using CgmInfo.Commands.Delimiter;
 
 namespace CgmInfoGui.Traversal
 {
     public class XCFDocumentContext
     {
+        private XElement _lastElement;
         private static readonly XNamespace xcf = "http://www.cgmopen.org/schema/webcgm/";
         public XCFDocumentContext()
         {
@@ -17,5 +19,21 @@ namespace CgmInfoGui.Traversal
                     new XAttribute("version", "2.0")));
         }
         public XDocument XCF { get; private set; }
+
+        public void AddAPSElement(BeginApplicationStructure beginApplicationStructure)
+        {
+            switch (beginApplicationStructure.Type.ToUpperInvariant())
+            {
+                case "GROBJECT": // [WebCGM20-XCF 4.3.5]
+                case "LAYER": // [WebCGM20-XCF 4.3.4]
+                case "PARA": // [WebCGM20-XCF 4.3.6]
+                case "SUBPARA": // [WebCGM20-XCF 4.3.7]
+                    var apsElement = new XElement(xcf + beginApplicationStructure.Type.ToLower(),
+                        new XAttribute("apsid", beginApplicationStructure.Identifier));
+                    XCF.Root.Add(apsElement);
+                    _lastElement = apsElement;
+                    break;
+            }
+        }
     }
 }

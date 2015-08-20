@@ -15,6 +15,7 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, XCFDocumentContext parameter)
         {
+            parameter.AddAPSElement(beginApplicationStructure);
         }
 
         public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, XCFDocumentContext parameter)

@@ -39,6 +39,15 @@ namespace CgmInfoGui.Traversal
                     break;
             }
         }
+        public void RemoveEmptyAPSElement()
+        {
+            // consider any APS element empty that has nothing but the apsid set
+            if (_lastElement != null && _lastElement.IsEmpty && !_lastElement.HasElements && !_lastElement.Attributes().Any(a => a.Name.LocalName != "apsid"))
+            {
+                _lastElement.Remove();
+                _lastElement = null;
+            }
+        }
         public void AddAPSAttribute(ApplicationStructureAttribute applicationStructureAttribute)
         {
             if (_lastElement != null)

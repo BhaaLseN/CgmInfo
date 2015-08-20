@@ -21,7 +21,7 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptDelimiterBeginApplicationStructureBody(BeginApplicationStructureBody beginApplicationStructureBody, XCFDocumentContext parameter)
         {
-            // left blank for now, but we never know if/when we'd need it.
+            parameter.RemoveEmptyAPSElement();
         }
 
         public void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, XCFDocumentContext parameter)

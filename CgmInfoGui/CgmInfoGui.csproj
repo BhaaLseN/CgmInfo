@@ -67,11 +67,13 @@
     </ApplicationDefinition>
     <Compile Include="Converters\PrettyXmlConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Traversal\XCFDocumentBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureContext.cs" />
     <Compile Include="Traversal\MetafileContext.cs" />
     <Compile Include="Traversal\NodeContext.cs" />
     <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />
+    <Compile Include="Traversal\XCFDocumentContext.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ApplicationStructureViewModel.cs" />

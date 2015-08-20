@@ -132,6 +132,8 @@ namespace CgmInfoGui.ViewModels
                     var metafileContext = new MetafileContext();
                     var apsVisitor = new APSStructureBuilderVisitor();
                     var apsContext = new APSStructureContext();
+                    var xcfVisitor = new XCFDocumentBuilderVisitor();
+                    var xcfContext = new XCFDocumentContext();
                     Command command;
                     do
                     {
@@ -140,18 +142,21 @@ namespace CgmInfoGui.ViewModels
                         {
                             command.Accept(vmVisitor, metafileContext);
                             command.Accept(apsVisitor, apsContext);
+                            command.Accept(xcfVisitor, xcfContext);
                         }
                     } while (command != null);
                     return new
                     {
                         MetafileNodes = metafileContext.RootLevel.ToList(),
                         APSNodes = apsContext.RootLevel.ToList(),
+                        XCFDocument = xcfContext.XCF,
                     };
                 }
             });
             IsBusy = false;
             MetafileNodes = result.MetafileNodes;
             APSNodes = result.APSNodes;
+            XCFDocument = result.XCFDocument;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

@@ -20,6 +20,7 @@ namespace CgmInfoGui.Converters
         public static DependencyProperty ElementNameStyleProperty = RegisterStyle("ElementNameStyle", MakeStyle(Colors.DarkRed));
         public static DependencyProperty SpaceStyleProperty = RegisterStyle("SpaceStyle", null);
         public static DependencyProperty AttributeNameStyleProperty = RegisterStyle("AttributeNameStyle", MakeStyle(Colors.Red));
+        public static DependencyProperty NamespaceValueStyleProperty = RegisterStyle("NamespaceValueStyle", MakeStyle(Colors.Red));
         public static DependencyProperty AssignmentStyleProperty = RegisterStyle("AssignmentStyle", MakeStyle(Colors.DarkBlue));
         public static DependencyProperty QuoteStyleProperty = RegisterStyle("QuoteStyle", MakeStyle(Colors.DarkBlue));
         public static DependencyProperty AttributeValueStyleProperty = RegisterStyle("AttributeValueStyle", MakeStyle(Colors.Black));
@@ -38,6 +39,7 @@ namespace CgmInfoGui.Converters
         public Style ElementNameStyle { get { return (Style)GetValue(ElementNameStyleProperty); } set { SetValue(ElementNameStyleProperty, value); } }
         public Style SpaceStyle { get { return (Style)GetValue(SpaceStyleProperty); } set { SetValue(SpaceStyleProperty, value); } }
         public Style AttributeNameStyle { get { return (Style)GetValue(AttributeNameStyleProperty); } set { SetValue(AttributeNameStyleProperty, value); } }
+        public Style NamespaceValueStyle { get { return (Style)GetValue(NamespaceValueStyleProperty); } set { SetValue(NamespaceValueStyleProperty, value); } }
         public Style AssignmentStyle { get { return (Style)GetValue(AssignmentStyleProperty); } set { SetValue(AssignmentStyleProperty, value); } }
         public Style QuoteStyle { get { return (Style)GetValue(QuoteStyleProperty); } set { SetValue(QuoteStyleProperty, value); } }
         public Style AttributeValueStyle { get { return (Style)GetValue(AttributeValueStyleProperty); } set { SetValue(AttributeValueStyleProperty, value); } }
@@ -86,6 +88,16 @@ namespace CgmInfoGui.Converters
                 return name.LocalName;
 
             return string.Format("{0}:{1}", prefix, name.LocalName);
+        }
+
+        private static bool IsNamespaceDeclaration(XAttribute a)
+        {
+            if (string.Equals(a.Name.LocalName, "xmlns", StringComparison.InvariantCultureIgnoreCase))
+                return true;
+            if (a.Name.Namespace == XNamespace.Xmlns)
+                return true;
+
+            return false;
         }
 
         #endregion
@@ -182,11 +194,12 @@ namespace CgmInfoGui.Converters
 
             foreach (var a in element.Attributes())
             {
+                bool isNamespaceDeclaration = IsNamespaceDeclaration(a);
                 yield return Space();
                 yield return AttributeName(MakeName(a.Name, a.Parent));
                 yield return Assignment();
                 yield return Quote();
-                yield return AttributeValue(a.Value);
+                yield return isNamespaceDeclaration ? NamespaceValue(a.Value) : AttributeValue(a.Value);
                 yield return Quote();
             }
 
@@ -262,6 +275,11 @@ namespace CgmInfoGui.Converters
         private Inline AttributeName(string text)
         {
             return new Run(text) { Style = AttributeNameStyle };
+        }
+
+        private Inline NamespaceValue(string text)
+        {
+            return new Run(text) { Style = NamespaceValueStyle };
         }
 
         private Inline Assignment()

@@ -75,6 +75,19 @@ namespace CgmInfoGui.Converters
             return style;
         }
 
+        private static string MakeName(XName name, XElement contextElement)
+        {
+            if (name.Namespace == null)
+                return name.LocalName;
+
+            string prefix = contextElement.GetPrefixOfNamespace(name.Namespace);
+            // no prefix: probably the default namespace
+            if (string.IsNullOrEmpty(prefix))
+                return name.LocalName;
+
+            return string.Format("{0}:{1}", prefix, name.LocalName);
+        }
+
         #endregion
 
         public FlowDocument Render(XDocument document)
@@ -165,12 +178,12 @@ namespace CgmInfoGui.Converters
         public IEnumerable<Inline> RenderElement(XElement element)
         {
             yield return Bracket("<");
-            yield return ElementName(element.Name.LocalName);
+            yield return ElementName(MakeName(element.Name, element));
 
             foreach (var a in element.Attributes())
             {
                 yield return Space();
-                yield return AttributeName(a.Name.LocalName);
+                yield return AttributeName(MakeName(a.Name, a.Parent));
                 yield return Assignment();
                 yield return Quote();
                 yield return AttributeValue(a.Value);
@@ -193,7 +206,7 @@ namespace CgmInfoGui.Converters
         public IEnumerable<Inline> RenderEndElement(XElement element)
         {
             yield return Bracket("</");
-            yield return ElementName(element.Name.LocalName);
+            yield return ElementName(MakeName(element.Name, element));
             yield return Bracket(">");
         }
 

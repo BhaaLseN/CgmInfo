@@ -28,6 +28,9 @@ namespace CgmInfo.TextEncoding
             { "ENDCOMPOLINE", DelimiterElementReader.EndCompoundLine },
             { "BEGCOMPTEXTPATH", DelimiterElementReader.BeginCompoundTextPath },
             { "ENDCOMPTEXTPATH", DelimiterElementReader.EndCompoundTextPath },
+            { "BEGAPS", DelimiterElementReader.BeginApplicationStructure },
+            { "BEGAPSBODY", DelimiterElementReader.BeginApplicationStructureBody },
+            { "ENDAPS", DelimiterElementReader.EndApplicationStructure },
         };
 
         public MetafileDescriptor Descriptor
@@ -93,6 +96,10 @@ namespace CgmInfo.TextEncoding
             return token;
         }
 
+        internal string ReadEnum()
+        {
+            return ReadToken();
+        }
         private TokenState ReadToken(out string token)
         {
             var sb = new StringBuilder();

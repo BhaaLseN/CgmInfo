@@ -69,5 +69,26 @@ namespace CgmInfo.TextEncoding
             return new EndCompoundTextPath();
         }
 
+        public static BeginApplicationStructure BeginApplicationStructure(MetafileReader reader)
+        {
+            return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), ParseInheritanceFlag(reader.ReadEnum()));
+        }
+        private static int ParseInheritanceFlag(string token)
+        {
+            // assume StateList unless the value is ApplicationStructure
+            if (token.ToUpperInvariant() == "APS")
+                return 1;
+            return 0;
+        }
+
+        public static BeginApplicationStructureBody BeginApplicationStructureBody(MetafileReader reader)
+        {
+            return new BeginApplicationStructureBody();
+        }
+
+        public static EndApplicationStructure EndApplicationStructure(MetafileReader reader)
+        {
+            return new EndApplicationStructure();
+        }
     }
 }

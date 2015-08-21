@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CgmInfo.Binary;
+using CgmInfo.BinaryEncoding;
 using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.Commands

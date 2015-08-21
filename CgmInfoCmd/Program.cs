@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CgmInfo.Binary;
+using CgmInfo.BinaryEncoding;
 using CgmInfo.Commands;
 
 namespace CgmInfoCmd

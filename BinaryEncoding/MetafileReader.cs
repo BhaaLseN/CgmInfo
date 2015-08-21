@@ -5,7 +5,7 @@ using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
     public class MetafileReader : IDisposable
     {

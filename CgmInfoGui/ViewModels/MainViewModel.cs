@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using CgmInfo.Binary;
+using CgmInfo.BinaryEncoding;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
 using CgmInfoGui.ViewModels.Nodes;

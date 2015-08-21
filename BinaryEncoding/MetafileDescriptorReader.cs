@@ -3,7 +3,7 @@ using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
     internal static class MetafileDescriptorReader
     {

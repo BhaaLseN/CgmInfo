@@ -14,6 +14,20 @@ namespace CgmInfo.TextEncoding
 
         private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new Dictionary<string, Func<MetafileReader, Command>>
         {
+            // delimiter elements [ISO/IEC 8632-4 7.1]
+            { "BEGMF", DelimiterElementReader.BeginMetafile },
+            { "ENDMF", DelimiterElementReader.EndMetafile },
+            { "BEGPIC", DelimiterElementReader.BeginPicture },
+            { "BEGPICBODY", DelimiterElementReader.BeginPictureBody },
+            { "ENDPIC", DelimiterElementReader.EndPicture },
+            { "BEGSEG", DelimiterElementReader.BeginSegment },
+            { "ENDSEG", DelimiterElementReader.EndSegment },
+            { "BEGFIGURE", DelimiterElementReader.BeginFigure },
+            { "ENDFIGURE", DelimiterElementReader.EndFigure },
+            { "BEGCOMPOLINE", DelimiterElementReader.BeginCompoundLine },
+            { "ENDCOMPOLINE", DelimiterElementReader.EndCompoundLine },
+            { "BEGCOMPTEXTPATH", DelimiterElementReader.BeginCompoundTextPath },
+            { "ENDCOMPTEXTPATH", DelimiterElementReader.EndCompoundTextPath },
         };
 
         public MetafileDescriptor Descriptor
@@ -65,6 +79,18 @@ namespace CgmInfo.TextEncoding
         private Command UnsupportedCommandNoParameters(string elementName)
         {
             return new UnsupportedCommand(elementName, null);
+        }
+
+        internal string ReadString()
+        {
+            return ReadToken();
+        }
+
+        private string ReadToken()
+        {
+            string token;
+            ReadToken(out token);
+            return token;
         }
 
         private TokenState ReadToken(out string token)

@@ -49,6 +49,16 @@ namespace CgmInfo.TextEncoding
             return new EndFigure();
         }
 
+        public static BeginProtectionRegion BeginProtectionRegion(MetafileReader reader)
+        {
+            return new BeginProtectionRegion(reader.ReadIndex());
+        }
+
+        public static EndProtectionRegion EndProtectionRegion(MetafileReader reader)
+        {
+            return new EndProtectionRegion();
+        }
+
         public static BeginCompoundLine BeginCompoundLine(MetafileReader reader)
         {
             return new BeginCompoundLine();

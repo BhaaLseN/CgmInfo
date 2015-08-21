@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using CgmInfo.Commands;
 
 namespace CgmInfo.TextEncoding
@@ -24,6 +25,8 @@ namespace CgmInfo.TextEncoding
             { "ENDSEG", DelimiterElementReader.EndSegment },
             { "BEGFIGURE", DelimiterElementReader.BeginFigure },
             { "ENDFIGURE", DelimiterElementReader.EndFigure },
+            { "BEGPROTREGION", DelimiterElementReader.BeginProtectionRegion },
+            { "ENDPROTREGION", DelimiterElementReader.EndProtectionRegion },
             { "BEGCOMPOLINE", DelimiterElementReader.BeginCompoundLine },
             { "ENDCOMPOLINE", DelimiterElementReader.EndCompoundLine },
             { "BEGCOMPTEXTPATH", DelimiterElementReader.BeginCompoundTextPath },
@@ -99,6 +102,51 @@ namespace CgmInfo.TextEncoding
         internal string ReadEnum()
         {
             return ReadToken();
+        }
+        internal int ReadIndex()
+        {
+            return ReadInteger();
+        }
+        private static readonly Regex DecimalInteger = new Regex(@"^(?<sign>[+\-])?(?<digits>[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+        private static readonly Regex BasedInteger = new Regex(@"^(?<sign>[+\-])?(?<radix>(?:[2-9]|1[0-6]))#(?<digits>[0-9A-F]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private const string ExtendedDigits = "0123456789ABCDEF";
+        internal int ReadInteger()
+        {
+            string number = ReadToken();
+            var match = DecimalInteger.Match(number);
+            if (match.Success)
+            {
+                int num;
+                if (!int.TryParse(match.Groups["digits"].Value, out num))
+                    throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
+                    num = -num;
+                return num;
+            }
+
+            match = BasedInteger.Match(number);
+            if (match.Success)
+            {
+                int radix;
+                if (!int.TryParse(match.Groups["radix"].Value, out radix))
+                    throw new FormatException(string.Format("Invalid Based Integer radix '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                int num = 0;
+                string digits = match.Groups["digits"].Value.ToUpperInvariant();
+                for (int i = 0; i < digits.Length; i++)
+                {
+                    int charValue = ExtendedDigits.IndexOf(digits[i]);
+                    if (charValue < 0 || charValue >= radix)
+                        throw new ArgumentOutOfRangeException("BasedInteger", digits[charValue],
+                            string.Format("Invalid Based Integer digits '{0}' at position {1}", number, _fileStream.Position - number.Length));
+
+                    num = num * radix + charValue;
+                }
+                if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
+                    num = -num;
+                return num;
+            }
+
+            throw new FormatException(string.Format("Unsupported Integer Format '{0}' at position {1}", number, _fileStream.Position - number.Length));
         }
         private TokenState ReadToken(out string token)
         {

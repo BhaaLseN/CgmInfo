@@ -42,6 +42,7 @@ namespace CgmInfo.TextEncoding
             // metafile descriptor elements [ISO/IEC 8632-4 7.2]
             { "MFVERSION", MetafileDescriptorReader.MetafileVersion },
             { "MFDESC", MetafileDescriptorReader.MetafileDescription },
+            { "VDCTYPE", ReadVdcType },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
@@ -95,6 +96,13 @@ namespace CgmInfo.TextEncoding
         private Command UnsupportedCommandNoParameters(string elementName)
         {
             return new UnsupportedCommand(elementName, null);
+        }
+
+        private static Command ReadVdcType(MetafileReader reader)
+        {
+            var vdcType = MetafileDescriptorReader.VdcType(reader);
+            reader._descriptor.VdcType = vdcType.Specification;
+            return vdcType;
         }
 
         internal string ReadString()

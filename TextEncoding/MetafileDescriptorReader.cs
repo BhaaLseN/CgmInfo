@@ -14,6 +14,18 @@ namespace CgmInfo.TextEncoding
             return new MetafileDescription(reader.ReadString());
         }
 
+        public static VdcType VdcType(MetafileReader reader)
+        {
+            return new VdcType(ParseVdcType(reader.ReadEnum()));
+        }
+        private static int ParseVdcType(string token)
+        {
+            // assume integers unless the value is real
+            if (token.ToUpperInvariant() == "REAL")
+                return 1;
+            return 0;
+        }
+
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());

@@ -38,6 +38,12 @@ namespace CgmInfo.TextEncoding
             { "BEGAPS", DelimiterElementReader.BeginApplicationStructure },
             { "BEGAPSBODY", DelimiterElementReader.BeginApplicationStructureBody },
             { "ENDAPS", DelimiterElementReader.EndApplicationStructure },
+
+            // metafile descriptor elements [ISO/IEC 8632-4 7.2]
+            { "MFVERSION", MetafileDescriptorReader.MetafileVersion },
+            { "MFDESC", MetafileDescriptorReader.MetafileDescription },
+            { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
+            { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
 
         public MetafileDescriptor Descriptor

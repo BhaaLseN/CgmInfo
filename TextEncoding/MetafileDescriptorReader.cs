@@ -26,6 +26,14 @@ namespace CgmInfo.TextEncoding
             return 0;
         }
 
+        public static IntegerPrecision IntegerPrecision(MetafileReader reader)
+        {
+            // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
+            int minValue = reader.ReadInteger();
+            int maxValue = reader.ReadInteger();
+            return new IntegerPrecision(GetBitPrecision(maxValue - minValue));
+        }
+
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());
@@ -37,5 +45,16 @@ namespace CgmInfo.TextEncoding
             return new ColorModelCommand(reader.ReadInteger());
         }
 
+        // returns the amount of bits (multiples of a byte) required to store input
+        private static int GetBitPrecision(int input)
+        {
+            if (input <= 0xFF)
+                return 8;
+            else if (input <= 0xFFFF)
+                return 16;
+            else if (input <= 0xFFFFFF)
+                return 24;
+            return 32;
+        }
     }
 }

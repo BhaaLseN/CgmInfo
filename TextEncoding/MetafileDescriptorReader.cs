@@ -34,6 +34,27 @@ namespace CgmInfo.TextEncoding
             return new IntegerPrecision(GetBitPrecision(maxValue - minValue));
         }
 
+        public static RealPrecision RealPrecision(MetafileReader reader)
+        {
+            double minValue = reader.ReadReal();
+            double maxValue = reader.ReadReal();
+
+            // assume floating point; with their respective values from the binary encoding (also ANSI/IEEE 754 stuff)
+            int exponentWidth = 12;
+            int fractionWidth = 52;
+            if ((float)minValue >= float.MinValue && (float)maxValue <= float.MaxValue)
+            {
+                exponentWidth = 9;
+                fractionWidth = 23;
+            }
+
+            // TODO: unless writing metafiles, we probably don't really care about the number of significant digits
+            //       at least we don't for reading, and unless we should, we'll just ignore it here (intentionally unused)
+            int significantDigits = reader.ReadInteger();
+
+            return new RealPrecision(0, exponentWidth, fractionWidth);
+        }
+
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());

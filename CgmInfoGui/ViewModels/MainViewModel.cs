@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using CgmInfo.BinaryEncoding;
+using CgmInfo;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
@@ -126,7 +126,7 @@ namespace CgmInfoGui.ViewModels
             IsBusy = true;
             var result = await Task.Run(() =>
             {
-                using (var reader = new MetafileReader(FileName))
+                using (var reader = MetafileReader.Create(FileName))
                 {
                     var vmVisitor = new ViewModelBuilderVisitor();
                     var metafileContext = new MetafileContext();

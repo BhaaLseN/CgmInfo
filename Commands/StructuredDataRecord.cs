@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CgmInfo.BinaryEncoding;
+using BinaryMetafileReader = CgmInfo.BinaryEncoding.MetafileReader;
 using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.Commands
@@ -13,7 +13,7 @@ namespace CgmInfo.Commands
 
         public IEnumerable<StructuredDataElement> Elements { get; private set; }
 
-        public static StructuredDataRecord Read(MetafileReader reader)
+        public static StructuredDataRecord Read(BinaryMetafileReader reader)
         {
             // overall length seems to be encoded similar to the string length [ISO/IEC 8632-3 7, Table 1, Note 12]
             // (ie. one byte, followed by one word if its 255).
@@ -40,7 +40,7 @@ namespace CgmInfo.Commands
             }
             return new StructuredDataRecord(elements);
         }
-        private static object ReadValue(MetafileReader reader, DataTypeIndex type)
+        private static object ReadValue(BinaryMetafileReader reader, DataTypeIndex type)
         {
             switch (type)
             {

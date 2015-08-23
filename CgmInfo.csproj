@@ -44,6 +44,7 @@
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="BinaryEncoding\CommandHeader.cs" />

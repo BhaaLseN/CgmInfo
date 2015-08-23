@@ -7,15 +7,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using BaseMetafileReader = CgmInfo.MetafileReader;
 
 namespace CgmInfo.TextEncoding
 {
-    public class MetafileReader : IDisposable
+    public class MetafileReader : BaseMetafileReader
     {
-        private readonly string _fileName;
-        private readonly FileStream _fileStream;
-        private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
-
         private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new Dictionary<string, Func<MetafileReader, Command>>
         {
             // delimiter elements [ISO/IEC 8632-4 7.1]
@@ -67,18 +64,12 @@ namespace CgmInfo.TextEncoding
             { "APSATTR", ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute },
         };
 
-        public MetafileDescriptor Descriptor
-        {
-            get { return _descriptor; }
-        }
-
         public MetafileReader(string fileName)
+            : base(fileName)
         {
-            _fileName = fileName;
-            _fileStream = File.OpenRead(fileName);
         }
 
-        public Command ReadCommand()
+        public override Command ReadCommand()
         {
             string token;
             TokenState state = ReadToken(out token);
@@ -121,31 +112,31 @@ namespace CgmInfo.TextEncoding
         private static Command ReadVdcType(MetafileReader reader)
         {
             var vdcType = MetafileDescriptorReader.VdcType(reader);
-            reader._descriptor.VdcType = vdcType.Specification;
+            reader.Descriptor.VdcType = vdcType.Specification;
             return vdcType;
         }
         private static Command ReadIntegerPrecision(MetafileReader reader)
         {
             var integerPrecision = MetafileDescriptorReader.IntegerPrecision(reader);
-            reader._descriptor.IntegerPrecision = integerPrecision.Precision;
+            reader.Descriptor.IntegerPrecision = integerPrecision.Precision;
             return integerPrecision;
         }
         private static Command ReadRealPrecision(MetafileReader reader)
         {
             var realPrecision = MetafileDescriptorReader.RealPrecision(reader);
-            reader._descriptor.RealPrecision = realPrecision.Specification;
+            reader.Descriptor.RealPrecision = realPrecision.Specification;
             return realPrecision;
         }
         private static Command ReadIndexPrecision(MetafileReader reader)
         {
             var indexPrecision = MetafileDescriptorReader.IndexPrecision(reader);
-            reader._descriptor.IndexPrecision = indexPrecision.Precision;
+            reader.Descriptor.IndexPrecision = indexPrecision.Precision;
             return indexPrecision;
         }
         private static Command ReadColorPrecision(MetafileReader reader)
         {
             var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader);
-            reader._descriptor.ColorPrecision = colorPrecision.Precision;
+            reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
         }
 
@@ -394,10 +385,6 @@ namespace CgmInfo.TextEncoding
                 token = sb.ToString();
             }
             return TokenState.EndOfFile;
-        }
-        public void Dispose()
-        {
-            _fileStream.Dispose();
         }
 
         private enum TokenState

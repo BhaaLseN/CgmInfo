@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CgmInfo.Binary;
+using CgmInfo;
 using CgmInfo.Commands;
 
 namespace CgmInfoCmd
@@ -16,7 +16,7 @@ namespace CgmInfoCmd
                 return;
             }
 
-            using (var reader = new MetafileReader(fileName))
+            using (var reader = MetafileReader.Create(fileName))
             {
                 var printVisitor = new PrintCommandVisitor();
                 var printContext = new PrintContext(fileName);

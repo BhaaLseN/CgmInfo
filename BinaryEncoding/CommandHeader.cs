@@ -1,4 +1,4 @@
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
 #if DEBUG
     [System.Diagnostics.DebuggerDisplay("Class={ElementClass}, Id={ElementId}")]

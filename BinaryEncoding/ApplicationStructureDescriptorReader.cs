@@ -1,6 +1,6 @@
 using CgmInfo.Commands.ApplicationStructureDescriptor;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
     internal static class ApplicationStructureDescriptorReader
     {

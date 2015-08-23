@@ -40,13 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binary\ApplicationStructureDescriptorReader.cs" />
-    <Compile Include="Binary\DelimiterElementReader.cs" />
-    <Compile Include="Binary\GraphicalPrimitiveReader.cs" />
-    <Compile Include="Binary\MetafileDescriptorReader.cs" />
+    <Compile Include="BinaryEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
+    <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
+    <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Binary\CommandHeader.cs" />
+    <Compile Include="BinaryEncoding\CommandHeader.cs" />
     <Compile Include="Commands\Delimiter\EndApplicationStructure.cs" />
     <Compile Include="Commands\Delimiter\BeginCompoundTextPath.cs" />
     <Compile Include="Commands\Delimiter\BeginApplicationStructure.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
     <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
-    <Compile Include="Binary\MetafileReader.cs" />
+    <Compile Include="BinaryEncoding\MetafileReader.cs" />
     <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
     <Compile Include="Commands\StructuredDataElement.cs" />
     <Compile Include="Commands\StructuredDataRecord.cs" />
@@ -105,6 +106,11 @@
     <Compile Include="MetafileDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamExtensions.cs" />
+    <Compile Include="TextEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="TextEncoding\DelimiterElementReader.cs" />
+    <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
+    <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="TextEncoding\MetafileReader.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

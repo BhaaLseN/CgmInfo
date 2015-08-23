@@ -1,6 +1,6 @@
 using CgmInfo.Commands.GraphicalPrimitives;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
     internal static class GraphicalPrimitiveReader
     {

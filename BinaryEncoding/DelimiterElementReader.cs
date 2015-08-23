@@ -1,6 +1,6 @@
 using CgmInfo.Commands.Delimiter;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
     internal static class DelimiterElementReader
     {

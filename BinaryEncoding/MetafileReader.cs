@@ -4,32 +4,38 @@ using System.IO;
 using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using BaseMetafileReader = CgmInfo.MetafileReader;
 
-namespace CgmInfo.Binary
+namespace CgmInfo.BinaryEncoding
 {
-    public class MetafileReader : IDisposable
+    public class MetafileReader : BaseMetafileReader
     {
-        private readonly string _fileName;
-        private readonly FileStream _fileStream;
-        private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
-
         private BinaryReader _reader;
         private bool _insideMetafile;
         // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
         private Encoding _currentEncoding = Encoding.ASCII;
 
-        public MetafileDescriptor Descriptor
-        {
-            get { return _descriptor; }
-        }
-
         public MetafileReader(string fileName)
+            : base(fileName)
         {
-            _fileName = fileName;
-            _fileStream = File.OpenRead(fileName);
         }
 
-        public Command ReadCommand()
+        public static bool IsBinaryMetafile(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream", "stream is null.");
+            if (!stream.CanSeek)
+                throw new InvalidOperationException("Cannot seek the stream.");
+
+            stream.Seek(0, SeekOrigin.Begin);
+            ushort commandHeader = stream.ReadWord();
+            int elementClass = (commandHeader >> 12) & 0xF;
+            int elementId = (commandHeader >> 5) & 0x7F;
+
+            // check whether the first two bytes are 0/1 (BEGIN METAFILE)
+            return elementClass == 0 && elementId == 1;
+        }
+        public override Command ReadCommand()
         {
             // stop at EOF; or when we cannot at least read another command header
             if (_fileStream.Position + 2 > _fileStream.Length)
@@ -250,27 +256,27 @@ namespace CgmInfo.Binary
                     break;
                 case 3: // VDC TYPE
                     var vdcType = MetafileDescriptorReader.VdcType(this, commandHeader);
-                    _descriptor.VdcType = vdcType.Specification;
+                    Descriptor.VdcType = vdcType.Specification;
                     result = vdcType;
                     break;
                 case 4: // INTEGER PRECISION
                     var integerPrecision = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
-                    _descriptor.IntegerPrecision = integerPrecision.Precision;
+                    Descriptor.IntegerPrecision = integerPrecision.Precision;
                     result = integerPrecision;
                     break;
                 case 5: // REAL PRECISION
                     var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
-                    _descriptor.RealPrecision = realPrecision.Specification;
+                    Descriptor.RealPrecision = realPrecision.Specification;
                     result = realPrecision;
                     break;
                 case 6: // INDEX PRECISION
                     var indexPrecision = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
-                    _descriptor.IndexPrecision = indexPrecision.Precision;
+                    Descriptor.IndexPrecision = indexPrecision.Precision;
                     result = indexPrecision;
                     break;
                 case 7: // COLOUR PRECISION
                     var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
-                    _descriptor.ColorPrecision = colorPrecision.Precision;
+                    Descriptor.ColorPrecision = colorPrecision.Precision;
                     result = colorPrecision;
                     break;
                 case 8: // COLOUR INDEX PRECISION
@@ -299,7 +305,7 @@ namespace CgmInfo.Binary
                     break;
                 case 19: // COLOUR MODEL
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
-                    _descriptor.ColorModel = colorModel.ColorModel;
+                    Descriptor.ColorModel = colorModel.ColorModel;
                     result = colorModel;
                     break;
                 case 11: // METAFILE ELEMENT LIST
@@ -375,7 +381,7 @@ namespace CgmInfo.Binary
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
             int ret = 0;
-            while (numBytes --> 0)
+            while (numBytes-- > 0)
                 ret = (ret << 8) | ReadByte();
             return ret;
         }
@@ -561,7 +567,7 @@ namespace CgmInfo.Binary
             return StructuredDataRecord.Read(this);
         }
 
-        private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
+        internal static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;
             double m = magenta / 255.0;
@@ -583,11 +589,14 @@ namespace CgmInfo.Binary
             return Color.FromArgb(red, green, blue);
         }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            _fileStream.Dispose();
-            if (_reader != null)
-                _reader.Dispose();
+            if (disposing)
+            {
+                if (_reader != null)
+                    _reader.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

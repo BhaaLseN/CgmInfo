@@ -79,6 +79,42 @@ namespace CgmInfo.TextEncoding
             return new EndCompoundTextPath();
         }
 
+        public static BeginTileArray BeginTileArray(MetafileReader reader)
+        {
+            return new BeginTileArray(
+                reader.ReadVdc(), reader.ReadVdc(),
+                ParseCellPathDirection(reader.ReadEnum()),
+                ParseLineProgressionDirection(reader.ReadEnum()),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadReal(), reader.ReadReal(),
+                reader.ReadInteger(), reader.ReadInteger(),
+                reader.ReadInteger(), reader.ReadInteger());
+        }
+        private static int ParseCellPathDirection(string token)
+        {
+            // assume 0 degrees direction unless it matches any of the other possibilities
+            if (token == "90")
+                return 1;
+            else if (token == "180")
+                return 2;
+            else if (token == "270")
+                return 3;
+            return 0;
+        }
+        private static int ParseLineProgressionDirection(string token)
+        {
+            // assume clockwise 90 degrees progression unless it is counter-clockwise 270 degrees
+            if (token == "270")
+                return 1;
+            return 0;
+        }
+
+        public static EndTileArray EndTileArray(MetafileReader reader)
+        {
+            return new EndTileArray();
+        }
+
         public static BeginApplicationStructure BeginApplicationStructure(MetafileReader reader)
         {
             return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), ParseInheritanceFlag(reader.ReadEnum()));

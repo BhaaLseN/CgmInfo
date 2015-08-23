@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using CgmInfo.Commands;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.TextEncoding
 {
@@ -31,6 +33,8 @@ namespace CgmInfo.TextEncoding
             { "ENDCOMPOLINE", DelimiterElementReader.EndCompoundLine },
             { "BEGCOMPTEXTPATH", DelimiterElementReader.BeginCompoundTextPath },
             { "ENDCOMPTEXTPATH", DelimiterElementReader.EndCompoundTextPath },
+            { "BEGTILEARRAY", DelimiterElementReader.BeginTileArray },
+            { "ENDTILEARRAY", DelimiterElementReader.EndTileArray },
             { "BEGAPS", DelimiterElementReader.BeginApplicationStructure },
             { "BEGAPSBODY", DelimiterElementReader.BeginApplicationStructureBody },
             { "ENDAPS", DelimiterElementReader.EndApplicationStructure },
@@ -147,6 +151,33 @@ namespace CgmInfo.TextEncoding
             }
 
             throw new FormatException(string.Format("Unsupported Integer Format '{0}' at position {1}", number, _fileStream.Position - number.Length));
+        }
+        // according to spec, explicit point must have either 1 digit integer or 1 digit fraction. lets hope we can get away with that...[ISO/IEC 8632-4 6.3.2]
+        private static readonly Regex ExplicitPointNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)\.(?<fraction>[0-9]*)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private static readonly Regex ScaledRealNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)(?:\.(?<fraction>[0-9]*))?[Ee](?<exponent>[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        internal double ReadReal()
+        {
+            string number = ReadToken();
+
+            // all 3 formats can be parsed by double.Parse, so simply throw if the number itself doesn't match either.
+            if (!ExplicitPointNumber.IsMatch(number) && !ScaledRealNumber.IsMatch(number) && !DecimalInteger.IsMatch(number))
+                throw new FormatException(string.Format("Invalid Real number '{0}' at position {1}", number, _fileStream.Position - number.Length));
+
+            return double.Parse(number, CultureInfo.GetCultureInfo("en"));
+        }
+        internal double ReadVdc()
+        {
+            // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-4 6.3.5]
+            if (Descriptor.VdcType == VdcTypeSpecification.Integer)
+            {
+                return ReadInteger();
+            }
+            else if (Descriptor.VdcType == VdcTypeSpecification.Real)
+            {
+                return ReadReal();
+            }
+
+            throw new NotSupportedException("The current VDC TYPE is not supported");
         }
         private TokenState ReadToken(out string token)
         {

@@ -46,6 +46,7 @@ namespace CgmInfo.TextEncoding
             { "INTEGERPREC", ReadIntegerPrecision },
             { "REALPREC", ReadRealPrecision },
             { "INDEXPREC", ReadIndexPrecision },
+            { "COLRPREC", ReadColorPrecision },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
@@ -124,6 +125,12 @@ namespace CgmInfo.TextEncoding
             var indexPrecision = MetafileDescriptorReader.IndexPrecision(reader);
             reader._descriptor.IndexPrecision = indexPrecision.Precision;
             return indexPrecision;
+        }
+        private static Command ReadColorPrecision(MetafileReader reader)
+        {
+            var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader);
+            reader._descriptor.ColorPrecision = colorPrecision.Precision;
+            return colorPrecision;
         }
 
         internal string ReadString()

@@ -57,6 +57,11 @@ namespace CgmInfo.TextEncoding
             return new IndexPrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
+        public static ColorPrecision ColorPrecision(MetafileReader reader)
+        {
+            return new ColorPrecision(GetBitPrecision(reader.ReadInteger()));
+        }
+
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());

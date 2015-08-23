@@ -88,6 +88,13 @@ namespace CgmInfo.TextEncoding
             return new FontList(reader.ReadStringList());
         }
 
+        public static MaximumVdcExtent ReadMaximumVdcExtent(MetafileReader reader)
+        {
+            var firstCorner = reader.ReadPoint();
+            var secondCorner = reader.ReadPoint();
+            return new MaximumVdcExtent(firstCorner.X, firstCorner.Y, secondCorner.X, secondCorner.Y);
+        }
+
         // returns the amount of bits (multiples of a byte) required to store input
         private static int GetBitPrecision(int input)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -51,6 +52,7 @@ namespace CgmInfo.TextEncoding
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "FONTLIST", MetafileDescriptorReader.ReadFontList },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
+            { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
 
@@ -237,6 +239,13 @@ namespace CgmInfo.TextEncoding
 
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
+        internal PointF ReadPoint()
+        {
+            double x = ReadVdc();
+            double y = ReadVdc();
+            return new PointF((float)x, (float)y);
+        }
+
         private TokenState ReadToken(out string token)
         {
             var sb = new StringBuilder();
@@ -268,6 +277,11 @@ namespace CgmInfo.TextEncoding
 
                         // comma counts as a hard separator [ISO/IEC 8632-4 6.2.2]
                         case ',':
+                        // point values might be enclosed in parentheses for readability [ISO/IEC 8632-4 6.3.5]
+                        // TODO: spec says there must be exactly two numbers inside the parentheses, or the file is non-conforming.
+                        //       this isn't validated at this point, and would require rewriting ReadPoint (and possibly others).
+                        case '(':
+                        case ')':
                             return TokenState.EndOfToken;
 
                         // strings; fully read and return them as they are [ISO/IEC 8632-4 6.3.3]

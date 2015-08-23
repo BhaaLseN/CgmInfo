@@ -57,6 +57,9 @@ namespace CgmInfo.TextEncoding
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
+
+            // application structure descriptor elements [ISO/IEC 8632-4 7.10]
+            { "APSATTR", ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute },
         };
 
         public MetafileDescriptor Descriptor

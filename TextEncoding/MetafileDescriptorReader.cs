@@ -148,6 +148,23 @@ namespace CgmInfo.TextEncoding
             return 0;
         }
 
+        public static CharacterCodingAnnouncer CharacterCodingAnnouncer(MetafileReader reader)
+        {
+            return new CharacterCodingAnnouncer(ParseCharacterCodingAnnouncerType(reader.ReadEnum()));
+        }
+        private static int ParseCharacterCodingAnnouncerType(string token)
+        {
+            token = token.ToUpperInvariant();
+            // assume basic 7-bit announcer, unless its one of the others
+            if (token == "BASIC8BIT")
+                return 1;
+            else if (token == "EXTD7BIT")
+                return 2;
+            else if (token == "EXTD8BIT")
+                return 3;
+            return 0;
+        }
+
         // returns the amount of bits (multiples of a byte) required to store input
         private static int GetBitPrecision(int input)
         {

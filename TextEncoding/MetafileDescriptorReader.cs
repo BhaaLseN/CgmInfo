@@ -28,10 +28,7 @@ namespace CgmInfo.TextEncoding
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader)
         {
-            // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
-            int minValue = reader.ReadInteger();
-            int maxValue = reader.ReadInteger();
-            return new IntegerPrecision(GetBitPrecision(maxValue - minValue));
+            return new IntegerPrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
         public static RealPrecision RealPrecision(MetafileReader reader)
@@ -55,6 +52,11 @@ namespace CgmInfo.TextEncoding
             return new RealPrecision(0, exponentWidth, fractionWidth);
         }
 
+        public static IndexPrecision IndexPrecision(MetafileReader reader)
+        {
+            return new IndexPrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
+        }
+
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());
@@ -76,6 +78,11 @@ namespace CgmInfo.TextEncoding
             else if (input <= 0xFFFFFF)
                 return 24;
             return 32;
+        }
+        private static int GetBitPrecision(int minValue, int maxValue)
+        {
+            // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
+            return GetBitPrecision(maxValue - minValue);
         }
     }
 }

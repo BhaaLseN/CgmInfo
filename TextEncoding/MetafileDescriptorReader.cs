@@ -78,6 +78,11 @@ namespace CgmInfo.TextEncoding
             return new ColorModelCommand(reader.ReadInteger());
         }
 
+        public static NamePrecision NamePrecision(MetafileReader reader)
+        {
+            return new NamePrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
+        }
+
         // returns the amount of bits (multiples of a byte) required to store input
         private static int GetBitPrecision(int input)
         {

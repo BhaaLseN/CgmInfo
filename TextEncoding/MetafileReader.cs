@@ -49,6 +49,7 @@ namespace CgmInfo.TextEncoding
             { "COLRPREC", ReadColorPrecision },
             { "COLRINDEXPREC", MetafileDescriptorReader.ColorIndexPrecision },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
+            { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
 

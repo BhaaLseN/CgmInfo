@@ -107,6 +107,7 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="TextEncoding\ApplicationStructureDescriptorReader.cs" />
     <Compile Include="TextEncoding\DelimiterElementReader.cs" />
+    <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="TextEncoding\MetafileReader.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />

@@ -58,6 +58,11 @@ namespace CgmInfo.TextEncoding
             { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
+            // graphical primitive elements [ISO/IEC 8632-4 7.5]
+            { "TEXT", GraphicalPrimitiveReader.Text },
+            { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
+            { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
+
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute },
         };

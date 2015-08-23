@@ -52,6 +52,7 @@ namespace CgmInfo.TextEncoding
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "COLRVALUEEXT", MetafileDescriptorReader.ColorValueExtent },
             { "FONTLIST", MetafileDescriptorReader.ReadFontList },
+            { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },

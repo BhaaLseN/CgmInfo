@@ -128,6 +128,26 @@ namespace CgmInfo.TextEncoding
             return new MaximumVdcExtent(firstCorner.X, firstCorner.Y, secondCorner.X, secondCorner.Y);
         }
 
+        public static CharacterSetList CharacterSetList(MetafileReader reader)
+        {
+            // FIXME: character set list is actually a list of pairs; not just a single pair
+            return new CharacterSetList(ParseCharacterSetType(reader.ReadEnum()), reader.ReadString());
+        }
+        private static int ParseCharacterSetType(string token)
+        {
+            token = token.ToUpperInvariant();
+            // assume 94-character G-set by default; unless its one of the others
+            if (token == "STD96")
+                return 1;
+            else if (token == "STD94MULTIBYTE")
+                return 2;
+            else if (token == "STD96MULTIBYTE")
+                return 3;
+            else if (token == "COMPLETECODE")
+                return 4;
+            return 0;
+        }
+
         // returns the amount of bits (multiples of a byte) required to store input
         private static int GetBitPrecision(int input)
         {

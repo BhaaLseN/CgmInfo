@@ -83,6 +83,11 @@ namespace CgmInfo.TextEncoding
             return new NamePrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
+        public static FontList ReadFontList(MetafileReader reader)
+        {
+            return new FontList(reader.ReadStringList());
+        }
+
         // returns the amount of bits (multiples of a byte) required to store input
         private static int GetBitPrecision(int input)
         {

@@ -49,6 +49,7 @@ namespace CgmInfo.TextEncoding
             { "COLRPREC", ReadColorPrecision },
             { "COLRINDEXPREC", MetafileDescriptorReader.ColorIndexPrecision },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
+            { "FONTLIST", MetafileDescriptorReader.ReadFontList },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
         };
@@ -147,6 +148,19 @@ namespace CgmInfo.TextEncoding
             return token;
         }
 
+        internal IEnumerable<string> ReadStringList()
+        {
+            string token;
+            TokenState state;
+            var ret = new List<string>();
+            do
+            {
+                state = ReadToken(out token);
+                ret.Add(token);
+            } while (state == TokenState.EndOfToken);
+
+            return ret;
+        }
         internal string ReadEnum()
         {
             return ReadToken();

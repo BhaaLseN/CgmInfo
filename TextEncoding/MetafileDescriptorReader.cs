@@ -1,3 +1,5 @@
+using System.Drawing;
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
 namespace CgmInfo.TextEncoding
@@ -70,6 +72,37 @@ namespace CgmInfo.TextEncoding
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
             return new MaximumColorIndex(reader.ReadInteger());
+        }
+
+        public static ColorValueExtent ColorValueExtent(MetafileReader reader)
+        {
+            ColorValueExtent result;
+            if (reader.Descriptor.ColorModel == ColorModel.RGB)
+            {
+                Color min = reader.ReadColor();
+                Color max = reader.ReadColor();
+                result = new ColorValueExtent(ColorSpace.RGB, min, max);
+            }
+            else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
+            {
+                Color min = reader.ReadColor();
+                Color max = reader.ReadColor();
+                result = new ColorValueExtent(ColorSpace.CMYK, min, max);
+            }
+            else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)
+            {
+                double first = reader.ReadReal();
+                double second = reader.ReadReal();
+                double third = reader.ReadReal();
+                result = new ColorValueExtent(ColorSpace.CIE, first, second, third);
+            }
+            else
+            {
+                // unsupported, just return a default unknown color space
+                result = new ColorValueExtent();
+            }
+
+            return result;
         }
 
         public static ColorModelCommand ColorModelCommand(MetafileReader reader)

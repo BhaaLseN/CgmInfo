@@ -50,6 +50,7 @@ namespace CgmInfo.TextEncoding
             { "COLRPREC", ReadColorPrecision },
             { "COLRINDEXPREC", MetafileDescriptorReader.ColorIndexPrecision },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
+            { "COLRVALUEEXT", MetafileDescriptorReader.ColorValueExtent },
             { "FONTLIST", MetafileDescriptorReader.ReadFontList },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
@@ -244,6 +245,34 @@ namespace CgmInfo.TextEncoding
             double x = ReadVdc();
             double y = ReadVdc();
             return new PointF((float)x, (float)y);
+        }
+        internal Color ReadColor()
+        {
+            if (Descriptor.ColorModel == ColorModel.RGB)
+            {
+                int r = ReadInteger();
+                int g = ReadInteger();
+                int b = ReadInteger();
+                return Color.FromArgb(r, g, b);
+            }
+            else if (Descriptor.ColorModel == ColorModel.CMYK)
+            {
+                int c = ReadInteger();
+                int m = ReadInteger();
+                int y = ReadInteger();
+                int k = ReadInteger();
+                return BinaryEncoding.MetafileReader.ColorFromCMYK(c, m, y, k);
+            }
+            else
+            {
+                // CIELAB/CIELUV/RGB-related are not exactly .NET Color values, but we'll return them anyways.
+                // TODO: actually convert them to RGB (using CIEXYZ for example, [ISO/IEC 8632-1 Annex G])
+                double first = ReadReal();
+                double second = ReadReal();
+                double third = ReadReal();
+
+                return Color.FromArgb((int)(first / 255), (int)(second / 255), (int)(third / 255));
+            }
         }
 
         private TokenState ReadToken(out string token)

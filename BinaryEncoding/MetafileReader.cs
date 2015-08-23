@@ -561,7 +561,7 @@ namespace CgmInfo.BinaryEncoding
             return StructuredDataRecord.Read(this);
         }
 
-        private static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
+        internal static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;
             double m = magenta / 255.0;

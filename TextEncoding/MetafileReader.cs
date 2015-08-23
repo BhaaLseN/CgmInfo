@@ -252,17 +252,17 @@ namespace CgmInfo.TextEncoding
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {
-                int r = ReadInteger();
-                int g = ReadInteger();
-                int b = ReadInteger();
+                int r = ReadColorValue();
+                int g = ReadColorValue();
+                int b = ReadColorValue();
                 return Color.FromArgb(r, g, b);
             }
             else if (Descriptor.ColorModel == ColorModel.CMYK)
             {
-                int c = ReadInteger();
-                int m = ReadInteger();
-                int y = ReadInteger();
-                int k = ReadInteger();
+                int c = ReadColorValue();
+                int m = ReadColorValue();
+                int y = ReadColorValue();
+                int k = ReadColorValue();
                 return BinaryEncoding.MetafileReader.ColorFromCMYK(c, m, y, k);
             }
             else
@@ -275,6 +275,11 @@ namespace CgmInfo.TextEncoding
 
                 return Color.FromArgb((int)(first / 255), (int)(second / 255), (int)(third / 255));
             }
+        }
+        internal int ReadColorValue()
+        {
+            // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
+            return ReadInteger();
         }
 
         private TokenState ReadToken(out string token)

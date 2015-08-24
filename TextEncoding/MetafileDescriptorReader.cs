@@ -121,7 +121,7 @@ namespace CgmInfo.TextEncoding
             return new FontList(reader.ReadStringList());
         }
 
-        public static MaximumVdcExtent ReadMaximumVdcExtent(MetafileReader reader)
+        public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader)
         {
             var firstCorner = reader.ReadPoint();
             var secondCorner = reader.ReadPoint();

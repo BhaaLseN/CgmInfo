@@ -132,7 +132,7 @@ namespace CgmInfo.BinaryEncoding
             return new FontList(fonts);
         }
 
-        public static MaximumVdcExtent ReadMaximumVdcExtent(MetafileReader reader, CommandHeader commandHeader)
+        public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) first corner [ISO/IEC 8632-3 8.3]
             // P2: (point) second corner

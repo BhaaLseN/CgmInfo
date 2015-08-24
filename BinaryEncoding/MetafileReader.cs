@@ -301,7 +301,7 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
                 case 17: // MAXIMUM VDC EXTENT
-                    result = MetafileDescriptorReader.ReadMaximumVdcExtent(this, commandHeader);
+                    result = MetafileDescriptorReader.MaximumVdcExtent(this, commandHeader);
                     break;
                 case 19: // COLOUR MODEL
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);

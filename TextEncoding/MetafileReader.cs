@@ -52,7 +52,7 @@ namespace CgmInfo.TextEncoding
             { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
-            { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
+            { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]

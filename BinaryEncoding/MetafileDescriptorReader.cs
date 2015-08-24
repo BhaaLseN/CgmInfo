@@ -123,7 +123,7 @@ namespace CgmInfo.BinaryEncoding
             return new NamePrecision(reader.ReadInteger());
         }
 
-        public static FontList ReadFontList(MetafileReader reader, CommandHeader commandHeader)
+        public static FontList FontList(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1-Pn: (string fixed) n font names [ISO/IEC 8632-3 8.3]
             var fonts = new List<string>();

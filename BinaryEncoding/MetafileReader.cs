@@ -289,7 +289,7 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
                     break;
                 case 13: // FONT LIST
-                    result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
+                    result = MetafileDescriptorReader.FontList(this, commandHeader);
                     break;
                 case 14: // CHARACTER SET LIST
                     result = MetafileDescriptorReader.CharacterSetList(this, commandHeader);

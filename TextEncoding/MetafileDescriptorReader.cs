@@ -116,7 +116,7 @@ namespace CgmInfo.TextEncoding
             return new NamePrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
-        public static FontList ReadFontList(MetafileReader reader)
+        public static FontList FontList(MetafileReader reader)
         {
             return new FontList(reader.ReadStringList());
         }

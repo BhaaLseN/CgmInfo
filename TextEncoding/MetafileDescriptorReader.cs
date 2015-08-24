@@ -116,12 +116,12 @@ namespace CgmInfo.TextEncoding
             return new NamePrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
-        public static FontList ReadFontList(MetafileReader reader)
+        public static FontList FontList(MetafileReader reader)
         {
             return new FontList(reader.ReadStringList());
         }
 
-        public static MaximumVdcExtent ReadMaximumVdcExtent(MetafileReader reader)
+        public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader)
         {
             var firstCorner = reader.ReadPoint();
             var secondCorner = reader.ReadPoint();

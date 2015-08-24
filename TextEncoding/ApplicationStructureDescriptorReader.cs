@@ -9,7 +9,7 @@ namespace CgmInfo.TextEncoding
 {
     internal class ApplicationStructureDescriptorReader
     {
-        public static ApplicationStructureAttribute ReadApplicationStructureAttribute(MetafileReader reader)
+        public static ApplicationStructureAttribute ApplicationStructureAttribute(MetafileReader reader)
         {
             string attributeType = reader.ReadString();
             string sdr = reader.ReadString();

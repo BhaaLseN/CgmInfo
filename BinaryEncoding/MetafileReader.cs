@@ -289,7 +289,7 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
                     break;
                 case 13: // FONT LIST
-                    result = MetafileDescriptorReader.ReadFontList(this, commandHeader);
+                    result = MetafileDescriptorReader.FontList(this, commandHeader);
                     break;
                 case 14: // CHARACTER SET LIST
                     result = MetafileDescriptorReader.CharacterSetList(this, commandHeader);
@@ -301,7 +301,7 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
                     break;
                 case 17: // MAXIMUM VDC EXTENT
-                    result = MetafileDescriptorReader.ReadMaximumVdcExtent(this, commandHeader);
+                    result = MetafileDescriptorReader.MaximumVdcExtent(this, commandHeader);
                     break;
                 case 19: // COLOUR MODEL
                     var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
@@ -352,7 +352,7 @@ namespace CgmInfo.BinaryEncoding
             switch (commandHeader.ElementId)
             {
                 case 1: // APPLICATION STRUCTURE ATTRIBUTE
-                    result = ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute(this, commandHeader);
+                    result = ApplicationStructureDescriptorReader.ApplicationStructureAttribute(this, commandHeader);
                     break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);

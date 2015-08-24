@@ -48,11 +48,11 @@ namespace CgmInfo.TextEncoding
             { "COLRINDEXPREC", MetafileDescriptorReader.ColorIndexPrecision },
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "COLRVALUEEXT", MetafileDescriptorReader.ColorValueExtent },
-            { "FONTLIST", MetafileDescriptorReader.ReadFontList },
+            { "FONTLIST", MetafileDescriptorReader.FontList },
             { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
             { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
-            { "MAXVDCEXT", MetafileDescriptorReader.ReadMaximumVdcExtent },
+            { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
@@ -61,7 +61,7 @@ namespace CgmInfo.TextEncoding
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
-            { "APSATTR", ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute },
+            { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };
 
         public MetafileReader(string fileName)

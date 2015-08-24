@@ -61,7 +61,7 @@ namespace CgmInfo.TextEncoding
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
-            { "APSATTR", ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute },
+            { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };
 
         public MetafileReader(string fileName)

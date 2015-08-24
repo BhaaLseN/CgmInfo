@@ -352,7 +352,7 @@ namespace CgmInfo.BinaryEncoding
             switch (commandHeader.ElementId)
             {
                 case 1: // APPLICATION STRUCTURE ATTRIBUTE
-                    result = ApplicationStructureDescriptorReader.ReadApplicationStructureAttribute(this, commandHeader);
+                    result = ApplicationStructureDescriptorReader.ApplicationStructureAttribute(this, commandHeader);
                     break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);

@@ -74,6 +74,20 @@ namespace CgmInfoGui.ViewModels
             }
         }
 
+        private List<HotspotNode> _hotspots;
+        public List<HotspotNode> Hotspots
+        {
+            get { return _hotspots; }
+            set
+            {
+                if (value != _hotspots)
+                {
+                    _hotspots = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public DelegateCommand BrowseCommand { get; }
         public DelegateCommand ProcessCommand { get; }
 
@@ -134,6 +148,8 @@ namespace CgmInfoGui.ViewModels
                     var apsContext = new APSStructureContext();
                     var xcfVisitor = new XCFDocumentBuilderVisitor();
                     var xcfContext = new XCFDocumentContext();
+                    var hotspotVisitor = new HotspotBuilderVisitor();
+                    var hotspotContext = new HotspotContext();
                     Command command;
                     do
                     {
@@ -143,6 +159,7 @@ namespace CgmInfoGui.ViewModels
                             command.Accept(vmVisitor, metafileContext);
                             command.Accept(apsVisitor, apsContext);
                             command.Accept(xcfVisitor, xcfContext);
+                            command.Accept(hotspotVisitor, hotspotContext);
                         }
                     } while (command != null);
                     return new
@@ -150,6 +167,7 @@ namespace CgmInfoGui.ViewModels
                         MetafileNodes = metafileContext.RootLevel.ToList(),
                         APSNodes = apsContext.RootLevel.ToList(),
                         XCFDocument = xcfContext.XCF,
+                        Hotspots = hotspotContext.RootLevel.OfType<HotspotNode>().ToList(),
                     };
                 }
             });
@@ -157,6 +175,7 @@ namespace CgmInfoGui.ViewModels
             MetafileNodes = result.MetafileNodes;
             APSNodes = result.APSNodes;
             XCFDocument = result.XCFDocument;
+            Hotspots = result.Hotspots;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

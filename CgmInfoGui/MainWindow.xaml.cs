@@ -32,7 +32,7 @@ namespace CgmInfoGui
         }
 
         // this list should always have the same ContentIds listed as the XAML.
-        private static readonly string[] PanelContentIds = { "MetafileStructure", "ApplicationStructure", "XCF" };
+        private static readonly string[] PanelContentIds = { "MetafileStructure", "ApplicationStructure", "XCF", "Hotspots" };
         private static bool HasMissingPanels(XDocument layout)
         {
             var rootPanel = layout.Root.Element("RootPanel");

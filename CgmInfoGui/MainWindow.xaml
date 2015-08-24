@@ -6,6 +6,7 @@
         xmlns:mvm="clr-namespace:CgmInfoGui.ViewModels"
         xmlns:conv="clr-namespace:CgmInfoGui.Converters"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="CGM Info" Height="480" Width="640">
     <Window.Resources>
@@ -51,6 +52,18 @@
                                     ViewingMode="Scroll" IsPageViewEnabled="False" IsTwoPageViewEnabled="False"
                                     Document="{Binding XCFDocument, BindsDirectlyToSource=true, Converter={StaticResource prettyXmlConverter}}">
                                 </FlowDocumentReader>
+                            </xcad:LayoutDocument>
+                            <xcad:LayoutDocument Title="Hotspots" ContentId="Hotspots" CanClose="False">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5px"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TreeView ItemsSource="{Binding Hotspots}" x:Name="_hotspotTree"/>
+                                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+                                    <xctk:PropertyGrid Grid.Column="2" SelectedObject="{Binding SelectedItem, ElementName=_hotspotTree}"/>
+                                </Grid>
                             </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
                     </xcad:LayoutDocumentPaneGroup>

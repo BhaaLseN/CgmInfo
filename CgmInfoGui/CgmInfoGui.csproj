@@ -59,6 +59,10 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -67,6 +71,8 @@
     </ApplicationDefinition>
     <Compile Include="Converters\PrettyXmlConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Traversal\HotspotBuilderVisitor.cs" />
+    <Compile Include="Traversal\HotspotContext.cs" />
     <Compile Include="Traversal\XCFDocumentBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureContext.cs" />
@@ -78,6 +84,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ApplicationStructureViewModel.cs" />
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\HotspotNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PictureViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SegmentViewModel.cs" />

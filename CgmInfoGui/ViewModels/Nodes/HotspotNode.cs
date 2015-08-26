@@ -19,6 +19,7 @@ namespace CgmInfoGui.ViewModels.Nodes
         }
         public string Name { get; set; }
         public string Screentip { get; set; }
+        [ReadOnly(true)]
         public HotspotRegionType RegionType { get; set; }
         public double[] RegionValues { get; set; }
         public HotspotLinkTarget LinkTarget { get; set; }

@@ -7,6 +7,7 @@
         xmlns:conv="clr-namespace:CgmInfoGui.Converters"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="CGM Info" Height="480" Width="640">
     <Window.Resources>
@@ -62,7 +63,42 @@
                                     </Grid.ColumnDefinitions>
                                     <TreeView ItemsSource="{Binding Hotspots}" x:Name="_hotspotTree"/>
                                     <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
-                                    <xctk:PropertyGrid Grid.Column="2" SelectedObject="{Binding SelectedItem, ElementName=_hotspotTree}"/>
+                                    <xctk:PropertyGrid Grid.Column="2" SelectedObject="{Binding SelectedItem, ElementName=_hotspotTree}"
+                                                       AutoGenerateProperties="False" ShowSearchBox="False" ShowSortOptions="False"
+                                                       IsCategorized="False">
+                                        <xctk:PropertyGrid.EditorDefinitions>
+                                            <xctk:EditorTemplateDefinition>
+                                                <xctk:EditorTemplateDefinition.TargetProperties>
+                                                    <!-- every string value -->
+                                                    <xctk:TargetPropertyType Type="{x:Type sys:String}" />
+                                                    <!-- items inside the RegionValues array -->
+                                                    <xctk:TargetPropertyType Type="{x:Type sys:Double}" />
+                                                </xctk:EditorTemplateDefinition.TargetProperties>
+                                                <xctk:EditorTemplateDefinition.EditingTemplate>
+                                                    <DataTemplate>
+                                                        <!-- create a readonly and grayed out textbox, so we can still select text and copy it out (which isn't possible with IsReadOnly) -->
+                                                        <TextBox IsReadOnly="True" Text="{Binding Value}" BorderThickness="0" Foreground="{x:Static SystemColors.GrayTextBrush}"/>
+                                                    </DataTemplate>
+                                                </xctk:EditorTemplateDefinition.EditingTemplate>
+                                            </xctk:EditorTemplateDefinition>
+                                            <xctk:EditorTemplateDefinition TargetProperties="RegionValues">
+                                                <xctk:EditorTemplateDefinition.EditingTemplate>
+                                                    <DataTemplate>
+                                                        <!-- show a plain static textblock for the region values; ToString just looks silly -->
+                                                        <TextBlock Text="(raw values)" Foreground="{x:Static SystemColors.GrayTextBrush}"/>
+                                                    </DataTemplate>
+                                                </xctk:EditorTemplateDefinition.EditingTemplate>
+                                            </xctk:EditorTemplateDefinition>
+                                        </xctk:PropertyGrid.EditorDefinitions>
+                                        <xctk:PropertyGrid.PropertyDefinitions>
+                                            <xctk:PropertyDefinition TargetProperties="ID" DisplayOrder="1"/>
+                                            <xctk:PropertyDefinition TargetProperties="Name" DisplayOrder="2"/>
+                                            <xctk:PropertyDefinition TargetProperties="Screentip" DisplayOrder="3"/>
+                                            <xctk:PropertyDefinition TargetProperties="RegionType" DisplayName="Region Type" DisplayOrder="4"/>
+                                            <xctk:PropertyDefinition TargetProperties="RegionValues" DisplayName="Region" IsExpandable="True" DisplayOrder="5"/>
+                                            <xctk:PropertyDefinition TargetProperties="LinkTarget" IsExpandable="True" DisplayOrder="6"/>
+                                        </xctk:PropertyGrid.PropertyDefinitions>
+                                    </xctk:PropertyGrid>
                                 </Grid>
                             </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>

@@ -154,17 +154,34 @@ namespace CgmInfoGui.Converters
             if (hasContent)
             {
                 // render content
-                foreach (var e in element.Elements())
+                foreach (var node in element.Nodes())
                 {
-                    foreach (var b in RenderElement(e, indent + childIndent))
-                        yield return b;
-
+                    foreach (var block in RenderNode(node, indent + childIndent))
+                        yield return block;
                 }
 
-                yield return RenderLine(RenderContent(element, 200), indent + childIndent, 0);
                 // render end tag, since it isn't a short closing-tag
                 yield return RenderLine(RenderEndElement(element), indent, hanging);
             }
+        }
+
+        private IEnumerable<Block> RenderNode(XNode node, double indent)
+        {
+            // render a child element, if it is one
+            var xmlElement = node as XElement;
+            if (xmlElement != null)
+                return RenderElement(xmlElement, indent);
+
+            // try to render a list of handled node subclasses; or fall back to a generic result
+            // those are assumed to be inline and simply become one line.
+            IEnumerable<Inline> ret;
+            var xmlText = node as XText;
+            if (xmlText != null)
+                ret = RenderText(xmlText);
+            else
+                ret = RenderUnsupported(node);
+
+            return new[] { RenderLine(ret, indent, ChildIndent / 2) };
         }
 
         public Paragraph RenderLine(IEnumerable<Inline> inlines, double indent, double hanging)
@@ -214,13 +231,10 @@ namespace CgmInfoGui.Converters
             yield return Bracket(">");
         }
 
-        public IEnumerable<Inline> RenderContent(XElement element, int maxLength)
+        private IEnumerable<Inline> RenderText(XText text)
         {
-            var trimmed = element.Value.Trim();
-            var text = trimmed.Substring(0, Math.Min(maxLength, trimmed.Length));
-            var first = true;
-
-            foreach (var line in text.Split('\n').Select(l => l.Trim()))
+            bool first = true;
+            foreach (var line in text.Value.Split('\n').Select(l => l.Trim()))
             {
                 if (!first)
                     yield return new LineBreak();
@@ -229,12 +243,13 @@ namespace CgmInfoGui.Converters
 
                 yield return ElementValue(line.Trim());
             }
+        }
 
-            if (text.Length > maxLength)
-            {
-                yield return new LineBreak();
-                yield return new Run("(Content truncated)") { Style = NotificationStyle };
-            }
+        private IEnumerable<Inline> RenderUnsupported(XNode node)
+        {
+            yield return new Run("(Unsupported Content)") { Style = NotificationStyle };
+            yield return new LineBreak();
+            yield return new Run(node.ToString()) { Style = NotificationStyle };
         }
 
         #endregion

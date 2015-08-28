@@ -29,7 +29,7 @@ namespace CgmInfo.Commands
             // some files seem to include padding or similar, which throws this off by having an extra byte available at the end
             while (reader.HasMoreData(4))
             {
-                DataTypeIndex type = (DataTypeIndex)reader.ReadEnum();
+                DataTypeIndex type = reader.ReadEnum<DataTypeIndex>();
                 int count = reader.ReadWord();
                 object[] values = new object[count];
                 for (int i = 0; i < count; i++)

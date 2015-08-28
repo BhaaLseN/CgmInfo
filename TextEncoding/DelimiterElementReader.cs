@@ -92,23 +92,23 @@ namespace CgmInfo.TextEncoding
                 reader.ReadInteger(), reader.ReadInteger(),
                 reader.ReadInteger(), reader.ReadInteger());
         }
-        private static int ParseCellPathDirection(string token)
+        private static CellPathDirection ParseCellPathDirection(string token)
         {
             // assume 0 degrees direction unless it matches any of the other possibilities
             if (token == "90")
-                return 1;
+                return CellPathDirection.Down_90deg;
             else if (token == "180")
-                return 2;
+                return CellPathDirection.Left_180deg;
             else if (token == "270")
-                return 3;
-            return 0;
+                return CellPathDirection.Up_270deg;
+            return CellPathDirection.Right_0deg;
         }
-        private static int ParseLineProgressionDirection(string token)
+        private static LineProgressionDirection ParseLineProgressionDirection(string token)
         {
             // assume clockwise 90 degrees progression unless it is counter-clockwise 270 degrees
             if (token == "270")
-                return 1;
-            return 0;
+                return LineProgressionDirection.CounterClockwise_270deg;
+            return LineProgressionDirection.Clockwise_90deg;
         }
 
         public static EndTileArray EndTileArray(MetafileReader reader)

@@ -1,4 +1,5 @@
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -138,7 +139,7 @@ namespace CgmInfo.BinaryEncoding
             // P3: (enumerated) inheritance flag: valid values are
             //      0 STATELIST
             //      1 APPLICATION STRUCTURE
-            return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), reader.ReadEnum());
+            return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), reader.ReadEnum<InheritanceFlag>());
         }
 
         public static BeginApplicationStructureBody BeginApplicationStructureBody(MetafileReader reader, CommandHeader commandHeader)

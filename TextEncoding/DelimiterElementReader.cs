@@ -1,4 +1,5 @@
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.TextEncoding
 {
@@ -119,12 +120,12 @@ namespace CgmInfo.TextEncoding
         {
             return new BeginApplicationStructure(reader.ReadString(), reader.ReadString(), ParseInheritanceFlag(reader.ReadEnum()));
         }
-        private static int ParseInheritanceFlag(string token)
+        private static InheritanceFlag ParseInheritanceFlag(string token)
         {
             // assume StateList unless the value is ApplicationStructure
             if (token.ToUpperInvariant() == "APS")
-                return 1;
-            return 0;
+                return InheritanceFlag.ApplicationStructure;
+            return InheritanceFlag.StateList;
         }
 
         public static BeginApplicationStructureBody BeginApplicationStructureBody(MetafileReader reader)

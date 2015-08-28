@@ -5,12 +5,12 @@ namespace CgmInfo.Commands.Delimiter
 {
     public class BeginApplicationStructure : Command
     {
-        public BeginApplicationStructure(string identifier, string type, int inheritanceFlag)
+        public BeginApplicationStructure(string identifier, string type, InheritanceFlag inheritanceFlag)
             : base(0, 21)
         {
             Identifier = identifier;
             Type = type;
-            Inheritance = (InheritanceFlag)inheritanceFlag;
+            Inheritance = inheritanceFlag;
         }
 
         public string Identifier { get; private set; }

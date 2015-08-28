@@ -147,23 +147,22 @@ namespace CgmInfoGui.Converters
             var childIndent = ChildIndent;
             var hanging = childIndent / 2;
 
+            // render start tag, attributes, and short closing-tag if no content
             yield return RenderLine(RenderElement(element), indent, hanging);
 
-            var hasMultiLineText = HasText(element) && IsMultiLine(element.Value);
-
-            if (element.HasElements || hasMultiLineText)
+            bool hasContent = HasContent(element);
+            if (hasContent)
             {
+                // render content
                 foreach (var e in element.Elements())
                 {
                     foreach (var b in RenderElement(e, indent + childIndent))
                         yield return b;
+
                 }
 
-                if (hasMultiLineText)
-                {
-                    yield return RenderLine(RenderContent(element, 200), indent + childIndent, 0);
-                }
-
+                yield return RenderLine(RenderContent(element, 200), indent + childIndent, 0);
+                // render end tag, since it isn't a short closing-tag
                 yield return RenderLine(RenderEndElement(element), indent, hanging);
             }
         }
@@ -203,17 +202,9 @@ namespace CgmInfoGui.Converters
                 yield return Quote();
             }
 
-            var hasText = HasText(element);
+            bool hasContent = HasContent(element);
 
-            yield return Bracket(element.HasElements || hasText ? ">" : "/>");
-
-            if (hasText && !IsMultiLine(element.Value))
-            {
-                yield return ElementValue(element.Value);
-
-                foreach (var i in RenderEndElement(element))
-                    yield return i;
-            }
+            yield return Bracket(hasContent ? ">" : "/>");
         }
 
         public IEnumerable<Inline> RenderEndElement(XElement element)
@@ -221,13 +212,6 @@ namespace CgmInfoGui.Converters
             yield return Bracket("</");
             yield return ElementName(MakeName(element.Name, element));
             yield return Bracket(">");
-        }
-
-        public IEnumerable<Inline> RenderContent(XElement element)
-        {
-            var text = element.Value.Trim();
-
-            yield return ElementValue(text.Substring(0, Math.Min(100, text.Length)));
         }
 
         public IEnumerable<Inline> RenderContent(XElement element, int maxLength)
@@ -306,14 +290,9 @@ namespace CgmInfoGui.Converters
 
         #region XML helpers
 
-        private bool IsMultiLine(string text)
+        private bool HasContent(XElement element)
         {
-            return text.Trim().Contains('\n');
-        }
-
-        private bool HasText(XElement element)
-        {
-            return element.Nodes().Any(n => n.NodeType == XmlNodeType.Text);
+            return element.Nodes().Any();
         }
 
         #endregion

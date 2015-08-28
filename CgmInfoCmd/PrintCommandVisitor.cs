@@ -164,7 +164,13 @@ namespace CgmInfoCmd
         }
         public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, PrintContext parameter)
         {
-            parameter.WriteLine("Character Set List: {0}", characterSetList.CharacterSetType);
+            parameter.WriteLine("Character Set List: {0} entries", characterSetList.Entries.Count());
+            parameter.BeginLevel();
+            foreach (var entry in characterSetList.Entries)
+                parameter.WriteLine("{0} (Tail {1})",
+                    entry.CharacterSetType,
+                    string.Join(", ", entry.DesignationSequenceTail.Select(c => ((int)c).ToString("x2"))));
+            parameter.EndLevel();
         }
         public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, PrintContext parameter)
         {

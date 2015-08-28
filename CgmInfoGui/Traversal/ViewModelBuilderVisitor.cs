@@ -200,8 +200,11 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, MetafileContext parameter)
         {
-            var characterSetNode = parameter.AddMetafileDescriptorNode("CHARACTER SET LIST: {0}", characterSetList.CharacterSetType);
-            characterSetNode.Nodes.Add(new SimpleNode(string.Format("Tail: {0}", string.Join(", ", characterSetList.DesignationSequenceTail.Select(c => ((int)c).ToString("x2"))))));
+            var characterSetNode = parameter.AddMetafileDescriptorNode("CHARACTER SET LIST [{0} entries]", characterSetList.Entries.Count());
+            characterSetNode.Nodes.AddRange(
+                characterSetList.Entries.Select(entry => new SimpleNode(string.Format("{0} (Tail {1})",
+                    entry.CharacterSetType,
+                    string.Join(", ", entry.DesignationSequenceTail.Select(c => ((int)c).ToString("x2")))))));
         }
 
         public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, MetafileContext parameter)

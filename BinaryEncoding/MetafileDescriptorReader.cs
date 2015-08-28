@@ -148,8 +148,12 @@ namespace CgmInfo.BinaryEncoding
             //      3 96 - character multibyte G-set
             //      4 complete code
             // P2: (string fixed) Designation sequence tail; see Part 1, subclause 7.3.14.
-            // FIXME: character set list is actually a list of pairs; not just a single pair
-            return new CharacterSetList(reader.ReadEnum(), reader.ReadString());
+            var entries = new List<CharacterSetListEntry>();
+            while (reader.HasMoreData(3)) // enums take up 2 bytes, strings at least 1 byte
+            {
+                entries.Add(new CharacterSetListEntry(reader.ReadEnum<CharacterSetType>(), reader.ReadString()));
+            }
+            return new CharacterSetList(entries);
         }
 
         public static CharacterCodingAnnouncer CharacterCodingAnnouncer(MetafileReader reader, CommandHeader commandHeader)

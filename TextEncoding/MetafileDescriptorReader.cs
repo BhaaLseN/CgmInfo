@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
@@ -130,22 +132,33 @@ namespace CgmInfo.TextEncoding
 
         public static CharacterSetList CharacterSetList(MetafileReader reader)
         {
-            // FIXME: character set list is actually a list of pairs; not just a single pair
-            return new CharacterSetList(ParseCharacterSetType(reader.ReadEnum()), reader.ReadString());
+            var tokens = reader.ReadToEndOfElement();
+            var pairs = tokens
+                .Select((t, i) => new { Token = t, Index = i })
+                .GroupBy(a => a.Index / 2)
+                .Where(g => g.Count() == 2) // drop half entries; which shouldn't be in there anyways
+                .Select(g => new { CharacterSetType = g.First().Token, Tail = g.Skip(1).First().Token });
+
+            var entries = new List<CharacterSetListEntry>();
+            foreach (var pair in pairs)
+            {
+                entries.Add(new CharacterSetListEntry(ParseCharacterSetType(pair.CharacterSetType), pair.Tail));
+            }
+            return new CharacterSetList(entries);
         }
-        private static int ParseCharacterSetType(string token)
+        private static CharacterSetType ParseCharacterSetType(string token)
         {
             token = token.ToUpperInvariant();
             // assume 94-character G-set by default; unless its one of the others
             if (token == "STD96")
-                return 1;
+                return CharacterSetType.GSet96Characters;
             else if (token == "STD94MULTIBYTE")
-                return 2;
+                return CharacterSetType.GSet94CharactersMultibyte;
             else if (token == "STD96MULTIBYTE")
-                return 3;
+                return CharacterSetType.GSet96CharactersMultibyte;
             else if (token == "COMPLETECODE")
-                return 4;
-            return 0;
+                return CharacterSetType.CompleteCode;
+            return CharacterSetType.GSet94Characters;
         }
 
         public static CharacterCodingAnnouncer CharacterCodingAnnouncer(MetafileReader reader)

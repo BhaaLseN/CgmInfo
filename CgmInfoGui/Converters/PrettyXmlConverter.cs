@@ -113,14 +113,13 @@ namespace CgmInfoGui.Converters
                 PagePadding = this.PagePadding
             };
 
+            // declaration is not an XNode (or XObject), so we can only take care of it here
             if (document.Declaration != null)
                 doc.Blocks.Add(RenderLine(new[] { Bracket(document.Declaration.ToString()) }, 0, 0));
-            if (document.DocumentType != null)
-                doc.Blocks.Add(RenderLine(new[] { Bracket(document.DocumentType.ToString()) }, 0, 0));
 
-            foreach (var b in RenderElement(document.Root, 0))
+            foreach (var block in document.Nodes().SelectMany(n => RenderNode(n, 0)))
             {
-                doc.Blocks.Add(b);
+                doc.Blocks.Add(block);
             }
 
             return doc;
@@ -179,10 +178,13 @@ namespace CgmInfoGui.Converters
             IEnumerable<Inline> ret;
             var xmlText = node as XText;
             var xmlComment = node as XComment;
+            var xmlDoctype = node as XDocumentType;
             if (xmlText != null)
                 ret = RenderText(xmlText);
             else if (xmlComment != null)
                 ret = RenderComment(xmlComment);
+            else if (xmlDoctype != null)
+                ret = new[] { Bracket(xmlDoctype.ToString()) };
             else
                 ret = RenderUnsupported(node);
 

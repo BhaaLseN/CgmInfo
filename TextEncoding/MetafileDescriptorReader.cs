@@ -165,17 +165,17 @@ namespace CgmInfo.TextEncoding
         {
             return new CharacterCodingAnnouncer(ParseCharacterCodingAnnouncerType(reader.ReadEnum()));
         }
-        private static int ParseCharacterCodingAnnouncerType(string token)
+        private static CharacterCodingAnnouncerType ParseCharacterCodingAnnouncerType(string token)
         {
             token = token.ToUpperInvariant();
             // assume basic 7-bit announcer, unless its one of the others
             if (token == "BASIC8BIT")
-                return 1;
+                return CharacterCodingAnnouncerType.Basic8Bit;
             else if (token == "EXTD7BIT")
-                return 2;
+                return CharacterCodingAnnouncerType.Extended7Bit;
             else if (token == "EXTD8BIT")
-                return 3;
-            return 0;
+                return CharacterCodingAnnouncerType.Extended8Bit;
+            return CharacterCodingAnnouncerType.Basic7Bit;
         }
 
         // returns the amount of bits (multiples of a byte) required to store input

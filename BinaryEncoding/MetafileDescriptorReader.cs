@@ -163,7 +163,7 @@ namespace CgmInfo.BinaryEncoding
             //      1 basic 8 - bit
             //      2 extended 7 - bit
             //      3 extended 8 - bit
-            return new CharacterCodingAnnouncer(reader.ReadEnum());
+            return new CharacterCodingAnnouncer(reader.ReadEnum<CharacterCodingAnnouncerType>());
         }
     }
 }

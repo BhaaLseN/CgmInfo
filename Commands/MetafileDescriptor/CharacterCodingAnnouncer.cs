@@ -5,10 +5,10 @@ namespace CgmInfo.Commands.MetafileDescriptor
 {
     public class CharacterCodingAnnouncer : Command
     {
-        public CharacterCodingAnnouncer(int characterCodingAnnouncerType)
+        public CharacterCodingAnnouncer(CharacterCodingAnnouncerType characterCodingAnnouncerType)
             : base(1, 15)
         {
-            CharacterCodingAnnouncerType = (CharacterCodingAnnouncerType)characterCodingAnnouncerType;
+            CharacterCodingAnnouncerType = characterCodingAnnouncerType;
         }
 
         public CharacterCodingAnnouncerType CharacterCodingAnnouncerType { get; private set; }

@@ -1,15 +1,14 @@
-﻿using System.Drawing;
-using CgmInfo.Commands.Enums;
+﻿using CgmInfo.Commands.Enums;
 using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class AppendText : Command
     {
-        public AppendText(int final, string text)
+        public AppendText(FinalFlag final, string text)
             : base(4, 6)
         {
-            Final = (FinalFlag)final;
+            Final = final;
             Text = text;
         }
         public FinalFlag Final { get; private set; }

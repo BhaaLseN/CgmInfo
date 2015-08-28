@@ -5,10 +5,10 @@ namespace CgmInfo.Commands.MetafileDescriptor
 {
     public class VdcType : Command
     {
-        public VdcType(int specification)
+        public VdcType(VdcTypeSpecification specification)
             : base(1, 3)
         {
-            Specification = (VdcTypeSpecification)specification;
+            Specification = specification;
         }
 
         public VdcTypeSpecification Specification { get; private set; }

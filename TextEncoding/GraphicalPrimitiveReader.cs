@@ -1,3 +1,4 @@
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 
 namespace CgmInfo.TextEncoding
@@ -19,12 +20,12 @@ namespace CgmInfo.TextEncoding
             return new AppendText(ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
         }
 
-        private static int ParseFinalFlag(string token)
+        private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final
             if (token.ToUpperInvariant() == "FINAL")
-                return 1;
-            return 0;
+                return FinalFlag.Final;
+            return FinalFlag.NotFinal;
         }
     }
 }

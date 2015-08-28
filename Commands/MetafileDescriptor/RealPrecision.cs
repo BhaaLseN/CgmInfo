@@ -5,10 +5,10 @@ namespace CgmInfo.Commands.MetafileDescriptor
 {
     public class RealPrecision : Command
     {
-        public RealPrecision(int representationForm, int exponentWidth, int fractionWidth)
+        public RealPrecision(RealRepresentation representationForm, int exponentWidth, int fractionWidth)
             : base(1, 5)
         {
-            RepresentationForm = (RealRepresentation)representationForm;
+            RepresentationForm = representationForm;
             ExponentWidth = exponentWidth;
             FractionWidth = fractionWidth;
 

@@ -7,7 +7,7 @@ namespace CgmInfo.Commands.Delimiter
     public class BeginTileArray : Command
     {
         public BeginTileArray(double positionX, double positionY,
-            int cellPathDirection, int lineProgressionDirection,
+            CellPathDirection cellPathDirection, LineProgressionDirection lineProgressionDirection,
             int pathDirectionTileCount, int lineDirectionTileCount,
             int pathDirectionCellCount, int lineDirectionCellCount,
             double pathDirectionCellSize, double lineDirectionCellSize,
@@ -16,8 +16,8 @@ namespace CgmInfo.Commands.Delimiter
             : base(0, 19)
         {
             Position = new PointF((float)positionX, (float)positionY);
-            CellPathDirection = (CellPathDirection)cellPathDirection;
-            LineProgressionDirection = (LineProgressionDirection)lineProgressionDirection;
+            CellPathDirection = cellPathDirection;
+            LineProgressionDirection = lineProgressionDirection;
 
             PathDirectionTileCount = pathDirectionTileCount;
             LineDirectionTileCount = lineDirectionTileCount;

@@ -1,3 +1,4 @@
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 
 namespace CgmInfo.BinaryEncoding
@@ -11,7 +12,7 @@ namespace CgmInfo.BinaryEncoding
             //      0 not final
             //      1 final
             // P3: (string) text string 
-            return new TextCommand(reader.ReadVdc(), reader.ReadVdc(), reader.ReadEnum(), reader.ReadString());
+            return new TextCommand(reader.ReadVdc(), reader.ReadVdc(), reader.ReadEnum<FinalFlag>(), reader.ReadString());
         }
 
         public static RestrictedText RestrictedText(MetafileReader reader, CommandHeader commandHeader)
@@ -23,7 +24,7 @@ namespace CgmInfo.BinaryEncoding
             //      0 not final
             //      1 final
             // P5: (string) text string 
-            return new RestrictedText(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadEnum(), reader.ReadString());
+            return new RestrictedText(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadEnum<FinalFlag>(), reader.ReadString());
         }
 
         public static AppendText AppendText(MetafileReader reader, CommandHeader commandHeader)
@@ -32,7 +33,7 @@ namespace CgmInfo.BinaryEncoding
             //      0 not final
             //      1 final
             // P2: (string) text string [ISO/IEC 8632-3 8.6]
-            return new AppendText(reader.ReadEnum(), reader.ReadString());
+            return new AppendText(reader.ReadEnum<FinalFlag>(), reader.ReadString());
         }
     }
 }

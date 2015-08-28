@@ -22,12 +22,12 @@ namespace CgmInfo.TextEncoding
         {
             return new VdcType(ParseVdcType(reader.ReadEnum()));
         }
-        private static int ParseVdcType(string token)
+        private static VdcTypeSpecification ParseVdcType(string token)
         {
             // assume integers unless the value is real
             if (token.ToUpperInvariant() == "REAL")
-                return 1;
-            return 0;
+                return VdcTypeSpecification.Real;
+            return VdcTypeSpecification.Integer;
         }
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader)
@@ -53,7 +53,7 @@ namespace CgmInfo.TextEncoding
             //       at least we don't for reading, and unless we should, we'll just ignore it here (intentionally unused)
             int significantDigits = reader.ReadInteger();
 
-            return new RealPrecision(0, exponentWidth, fractionWidth);
+            return new RealPrecision(RealRepresentation.FloatingPoint, exponentWidth, fractionWidth);
         }
 
         public static IndexPrecision IndexPrecision(MetafileReader reader)
@@ -165,17 +165,17 @@ namespace CgmInfo.TextEncoding
         {
             return new CharacterCodingAnnouncer(ParseCharacterCodingAnnouncerType(reader.ReadEnum()));
         }
-        private static int ParseCharacterCodingAnnouncerType(string token)
+        private static CharacterCodingAnnouncerType ParseCharacterCodingAnnouncerType(string token)
         {
             token = token.ToUpperInvariant();
             // assume basic 7-bit announcer, unless its one of the others
             if (token == "BASIC8BIT")
-                return 1;
+                return CharacterCodingAnnouncerType.Basic8Bit;
             else if (token == "EXTD7BIT")
-                return 2;
+                return CharacterCodingAnnouncerType.Extended7Bit;
             else if (token == "EXTD8BIT")
-                return 3;
-            return 0;
+                return CharacterCodingAnnouncerType.Extended8Bit;
+            return CharacterCodingAnnouncerType.Basic7Bit;
         }
 
         // returns the amount of bits (multiples of a byte) required to store input

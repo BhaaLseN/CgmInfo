@@ -25,6 +25,7 @@ namespace CgmInfoGui.Converters
         public static DependencyProperty QuoteStyleProperty = RegisterStyle("QuoteStyle", MakeStyle(Colors.DarkBlue));
         public static DependencyProperty AttributeValueStyleProperty = RegisterStyle("AttributeValueStyle", MakeStyle(Colors.Black));
         public static DependencyProperty ElementValueStyleProperty = RegisterStyle("ElementValueStyle", MakeStyle(Colors.Black));
+        public static DependencyProperty CommentStyleProperty = RegisterStyle("CommentStyle", MakeStyle(Colors.Green));
         public static DependencyProperty NotificationStyleProperty = RegisterStyle("NotificationStyle", MakeStyle(Colors.DarkGreen, FontStyles.Italic));
         public static DependencyProperty ChildIndentProperty = DependencyProperty.Register("ChildIndent", typeof(double), typeof(PrettyXmlConverter), new PropertyMetadata(25d));
         public static DependencyProperty FontFamilyProperty = FlowDocument.FontFamilyProperty.AddOwner(typeof(PrettyXmlConverter), new FrameworkPropertyMetadata(new FontFamily("Consolas")));
@@ -44,6 +45,7 @@ namespace CgmInfoGui.Converters
         public Style QuoteStyle { get { return (Style)GetValue(QuoteStyleProperty); } set { SetValue(QuoteStyleProperty, value); } }
         public Style AttributeValueStyle { get { return (Style)GetValue(AttributeValueStyleProperty); } set { SetValue(AttributeValueStyleProperty, value); } }
         public Style ElementValueStyle { get { return (Style)GetValue(ElementValueStyleProperty); } set { SetValue(ElementValueStyleProperty, value); } }
+        public Style CommentStyle { get { return (Style)GetValue(CommentStyleProperty); } set { SetValue(CommentStyleProperty, value); } }
         public Style NotificationStyle { get { return (Style)GetValue(NotificationStyleProperty); } set { SetValue(NotificationStyleProperty, value); } }
         public double ChildIndent { get { return (double)GetValue(ChildIndentProperty); } set { SetValue(ChildIndentProperty, value); } }
         public FontFamily FontFamily { get { return (FontFamily)GetValue(FontFamilyProperty); } set { SetValue(FontFamilyProperty, value); } }
@@ -176,8 +178,11 @@ namespace CgmInfoGui.Converters
             // those are assumed to be inline and simply become one line.
             IEnumerable<Inline> ret;
             var xmlText = node as XText;
+            var xmlComment = node as XComment;
             if (xmlText != null)
                 ret = RenderText(xmlText);
+            else if (xmlComment != null)
+                ret = RenderComment(xmlComment);
             else
                 ret = RenderUnsupported(node);
 
@@ -245,6 +250,13 @@ namespace CgmInfoGui.Converters
             }
         }
 
+        private IEnumerable<Inline> RenderComment(XComment comment)
+        {
+            yield return Comment("<!--");
+            yield return Comment(comment.Value);
+            yield return Comment("-->");
+        }
+
         private IEnumerable<Inline> RenderUnsupported(XNode node)
         {
             yield return new Run("(Unsupported Content)") { Style = NotificationStyle };
@@ -299,6 +311,11 @@ namespace CgmInfoGui.Converters
         private Inline ElementValue(string text)
         {
             return new Run(text) { Style = ElementValueStyle };
+        }
+
+        private Inline Comment(string text)
+        {
+            return new Run(text) { Style = CommentStyle };
         }
 
         #endregion

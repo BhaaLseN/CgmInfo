@@ -53,7 +53,7 @@ namespace CgmInfo.TextEncoding
             //       at least we don't for reading, and unless we should, we'll just ignore it here (intentionally unused)
             int significantDigits = reader.ReadInteger();
 
-            return new RealPrecision(0, exponentWidth, fractionWidth);
+            return new RealPrecision(RealRepresentation.FloatingPoint, exponentWidth, fractionWidth);
         }
 
         public static IndexPrecision IndexPrecision(MetafileReader reader)

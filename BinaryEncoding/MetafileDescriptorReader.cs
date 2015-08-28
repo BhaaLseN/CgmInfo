@@ -40,7 +40,7 @@ namespace CgmInfo.BinaryEncoding
             //      1 fixed point format
             // P2: (integer) field width for exponent or whole part(including 1 bit for sign)
             // P3: (integer) field width for fraction or fractional part
-            return new RealPrecision(reader.ReadEnum(), reader.ReadInteger(), reader.ReadInteger());
+            return new RealPrecision(reader.ReadEnum<RealRepresentation>(), reader.ReadInteger(), reader.ReadInteger());
         }
 
         public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)

@@ -24,7 +24,7 @@ namespace CgmInfo.BinaryEncoding
             // P1: (enumerated) VDC TYPE: valid values are [ISO/IEC 8632-3 8.3]
             //      0 VDC values specified in integers
             //      1 VDC values specified in reals
-            return new VdcType(reader.ReadEnum());
+            return new VdcType(reader.ReadEnum<VdcTypeSpecification>());
         }
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader, CommandHeader commandHeader)

@@ -22,12 +22,12 @@ namespace CgmInfo.TextEncoding
         {
             return new VdcType(ParseVdcType(reader.ReadEnum()));
         }
-        private static int ParseVdcType(string token)
+        private static VdcTypeSpecification ParseVdcType(string token)
         {
             // assume integers unless the value is real
             if (token.ToUpperInvariant() == "REAL")
-                return 1;
-            return 0;
+                return VdcTypeSpecification.Real;
+            return VdcTypeSpecification.Integer;
         }
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader)

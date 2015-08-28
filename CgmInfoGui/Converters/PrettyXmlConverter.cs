@@ -25,6 +25,7 @@ namespace CgmInfoGui.Converters
         public static DependencyProperty QuoteStyleProperty = RegisterStyle("QuoteStyle", MakeStyle(Colors.DarkBlue));
         public static DependencyProperty AttributeValueStyleProperty = RegisterStyle("AttributeValueStyle", MakeStyle(Colors.Black));
         public static DependencyProperty ElementValueStyleProperty = RegisterStyle("ElementValueStyle", MakeStyle(Colors.Black));
+        public static DependencyProperty CommentStyleProperty = RegisterStyle("CommentStyle", MakeStyle(Colors.Green));
         public static DependencyProperty NotificationStyleProperty = RegisterStyle("NotificationStyle", MakeStyle(Colors.DarkGreen, FontStyles.Italic));
         public static DependencyProperty ChildIndentProperty = DependencyProperty.Register("ChildIndent", typeof(double), typeof(PrettyXmlConverter), new PropertyMetadata(25d));
         public static DependencyProperty FontFamilyProperty = FlowDocument.FontFamilyProperty.AddOwner(typeof(PrettyXmlConverter), new FrameworkPropertyMetadata(new FontFamily("Consolas")));
@@ -44,6 +45,7 @@ namespace CgmInfoGui.Converters
         public Style QuoteStyle { get { return (Style)GetValue(QuoteStyleProperty); } set { SetValue(QuoteStyleProperty, value); } }
         public Style AttributeValueStyle { get { return (Style)GetValue(AttributeValueStyleProperty); } set { SetValue(AttributeValueStyleProperty, value); } }
         public Style ElementValueStyle { get { return (Style)GetValue(ElementValueStyleProperty); } set { SetValue(ElementValueStyleProperty, value); } }
+        public Style CommentStyle { get { return (Style)GetValue(CommentStyleProperty); } set { SetValue(CommentStyleProperty, value); } }
         public Style NotificationStyle { get { return (Style)GetValue(NotificationStyleProperty); } set { SetValue(NotificationStyleProperty, value); } }
         public double ChildIndent { get { return (double)GetValue(ChildIndentProperty); } set { SetValue(ChildIndentProperty, value); } }
         public FontFamily FontFamily { get { return (FontFamily)GetValue(FontFamilyProperty); } set { SetValue(FontFamilyProperty, value); } }
@@ -111,14 +113,13 @@ namespace CgmInfoGui.Converters
                 PagePadding = this.PagePadding
             };
 
+            // declaration is not an XNode (or XObject), so we can only take care of it here
             if (document.Declaration != null)
                 doc.Blocks.Add(RenderLine(new[] { Bracket(document.Declaration.ToString()) }, 0, 0));
-            if (document.DocumentType != null)
-                doc.Blocks.Add(RenderLine(new[] { Bracket(document.DocumentType.ToString()) }, 0, 0));
 
-            foreach (var b in RenderElement(document.Root, 0))
+            foreach (var block in document.Nodes().SelectMany(n => RenderNode(n, 0)))
             {
-                doc.Blocks.Add(b);
+                doc.Blocks.Add(block);
             }
 
             return doc;
@@ -147,25 +148,47 @@ namespace CgmInfoGui.Converters
             var childIndent = ChildIndent;
             var hanging = childIndent / 2;
 
+            // render start tag, attributes, and short closing-tag if no content
             yield return RenderLine(RenderElement(element), indent, hanging);
 
-            var hasMultiLineText = HasText(element) && IsMultiLine(element.Value);
-
-            if (element.HasElements || hasMultiLineText)
+            bool hasContent = HasContent(element);
+            if (hasContent)
             {
-                foreach (var e in element.Elements())
+                // render content
+                foreach (var node in element.Nodes())
                 {
-                    foreach (var b in RenderElement(e, indent + childIndent))
-                        yield return b;
+                    foreach (var block in RenderNode(node, indent + childIndent))
+                        yield return block;
                 }
 
-                if (hasMultiLineText)
-                {
-                    yield return RenderLine(RenderContent(element, 200), indent + childIndent, 0);
-                }
-
+                // render end tag, since it isn't a short closing-tag
                 yield return RenderLine(RenderEndElement(element), indent, hanging);
             }
+        }
+
+        private IEnumerable<Block> RenderNode(XNode node, double indent)
+        {
+            // render a child element, if it is one
+            var xmlElement = node as XElement;
+            if (xmlElement != null)
+                return RenderElement(xmlElement, indent);
+
+            // try to render a list of handled node subclasses; or fall back to a generic result
+            // those are assumed to be inline and simply become one line.
+            IEnumerable<Inline> ret;
+            var xmlText = node as XText;
+            var xmlComment = node as XComment;
+            var xmlDoctype = node as XDocumentType;
+            if (xmlText != null)
+                ret = RenderText(xmlText);
+            else if (xmlComment != null)
+                ret = RenderComment(xmlComment);
+            else if (xmlDoctype != null)
+                ret = new[] { Bracket(xmlDoctype.ToString()) };
+            else
+                ret = RenderUnsupported(node);
+
+            return new[] { RenderLine(ret, indent, ChildIndent / 2) };
         }
 
         public Paragraph RenderLine(IEnumerable<Inline> inlines, double indent, double hanging)
@@ -203,17 +226,9 @@ namespace CgmInfoGui.Converters
                 yield return Quote();
             }
 
-            var hasText = HasText(element);
+            bool hasContent = HasContent(element);
 
-            yield return Bracket(element.HasElements || hasText ? ">" : "/>");
-
-            if (hasText && !IsMultiLine(element.Value))
-            {
-                yield return ElementValue(element.Value);
-
-                foreach (var i in RenderEndElement(element))
-                    yield return i;
-            }
+            yield return Bracket(hasContent ? ">" : "/>");
         }
 
         public IEnumerable<Inline> RenderEndElement(XElement element)
@@ -223,20 +238,10 @@ namespace CgmInfoGui.Converters
             yield return Bracket(">");
         }
 
-        public IEnumerable<Inline> RenderContent(XElement element)
+        private IEnumerable<Inline> RenderText(XText text)
         {
-            var text = element.Value.Trim();
-
-            yield return ElementValue(text.Substring(0, Math.Min(100, text.Length)));
-        }
-
-        public IEnumerable<Inline> RenderContent(XElement element, int maxLength)
-        {
-            var trimmed = element.Value.Trim();
-            var text = trimmed.Substring(0, Math.Min(maxLength, trimmed.Length));
-            var first = true;
-
-            foreach (var line in text.Split('\n').Select(l => l.Trim()))
+            bool first = true;
+            foreach (var line in text.Value.Split('\n').Select(l => l.Trim()))
             {
                 if (!first)
                     yield return new LineBreak();
@@ -245,12 +250,18 @@ namespace CgmInfoGui.Converters
 
                 yield return ElementValue(line.Trim());
             }
+        }
 
-            if (text.Length > maxLength)
-            {
-                yield return new LineBreak();
-                yield return new Run("(Content truncated)") { Style = NotificationStyle };
-            }
+        private IEnumerable<Inline> RenderComment(XComment comment)
+        {
+            yield return Comment("<!--");
+            yield return Comment(comment.Value);
+            yield return Comment("-->");
+        }
+
+        private IEnumerable<Inline> RenderUnsupported(XNode node)
+        {
+            yield return new Run(node.ToString()) { Style = NotificationStyle };
         }
 
         #endregion
@@ -302,18 +313,18 @@ namespace CgmInfoGui.Converters
             return new Run(text) { Style = ElementValueStyle };
         }
 
+        private Inline Comment(string text)
+        {
+            return new Run(text) { Style = CommentStyle };
+        }
+
         #endregion
 
         #region XML helpers
 
-        private bool IsMultiLine(string text)
+        private bool HasContent(XElement element)
         {
-            return text.Trim().Contains('\n');
-        }
-
-        private bool HasText(XElement element)
-        {
-            return element.Nodes().Any(n => n.NodeType == XmlNodeType.Text);
+            return element.Nodes().Any();
         }
 
         #endregion

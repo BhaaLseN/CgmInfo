@@ -259,8 +259,6 @@ namespace CgmInfoGui.Converters
 
         private IEnumerable<Inline> RenderUnsupported(XNode node)
         {
-            yield return new Run("(Unsupported Content)") { Style = NotificationStyle };
-            yield return new LineBreak();
             yield return new Run(node.ToString()) { Style = NotificationStyle };
         }
 

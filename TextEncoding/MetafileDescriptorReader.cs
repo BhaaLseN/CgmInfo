@@ -118,7 +118,7 @@ namespace CgmInfo.TextEncoding
 
         public static FontList FontList(MetafileReader reader)
         {
-            return new FontList(reader.ReadStringList());
+            return new FontList(reader.ReadToEndOfElement());
         }
 
         public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader)

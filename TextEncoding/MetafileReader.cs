@@ -152,7 +152,12 @@ namespace CgmInfo.TextEncoding
             return token;
         }
 
-        internal IEnumerable<string> ReadStringList()
+        /// <summary>
+        /// Reads tokens until the end of the current element (or end of file)
+        /// and returns a list of read tokens.
+        /// </summary>
+        /// <returns>List of tokens, encoded as string</returns>
+        internal IEnumerable<string> ReadToEndOfElement()
         {
             string token;
             TokenState state;

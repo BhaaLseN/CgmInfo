@@ -9,6 +9,7 @@ namespace CgmInfo
     public abstract class MetafileReader : IDisposable
     {
         private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
+        private readonly MetafileProperties _properties;
 
         protected readonly FileStream _fileStream;
 
@@ -16,10 +17,15 @@ namespace CgmInfo
         {
             get { return _descriptor; }
         }
+        public MetafileProperties Properties
+        {
+            get { return _properties; }
+        }
 
-        protected MetafileReader(string fileName)
+        protected MetafileReader(string fileName, bool isBinaryEncoding)
         {
             _fileStream = File.OpenRead(fileName);
+            _properties = new MetafileProperties(isBinaryEncoding);
         }
 
         public abstract Command ReadCommand();

@@ -65,7 +65,7 @@ namespace CgmInfo.TextEncoding
         };
 
         public MetafileReader(string fileName)
-            : base(fileName)
+            : base(fileName, false)
         {
         }
 

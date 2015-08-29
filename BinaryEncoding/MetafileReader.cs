@@ -16,7 +16,7 @@ namespace CgmInfo.BinaryEncoding
         private Encoding _currentEncoding = Encoding.ASCII;
 
         public MetafileReader(string fileName)
-            : base(fileName)
+            : base(fileName, true)
         {
         }
 

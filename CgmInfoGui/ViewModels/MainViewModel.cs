@@ -74,6 +74,20 @@ namespace CgmInfoGui.ViewModels
             }
         }
 
+        private MetafileProperties _metafileDescriptor;
+        public MetafileProperties MetafileProperties
+        {
+            get { return _metafileDescriptor; }
+            set
+            {
+                if (value != _metafileDescriptor)
+                {
+                    _metafileDescriptor = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private List<HotspotNode> _hotspots;
         public List<HotspotNode> Hotspots
         {
@@ -168,6 +182,7 @@ namespace CgmInfoGui.ViewModels
                         APSNodes = apsContext.RootLevel.ToList(),
                         XCFDocument = xcfContext.XCF,
                         Hotspots = hotspotContext.RootLevel.OfType<HotspotNode>().ToList(),
+                        MetafileProperties = reader.Properties,
                     };
                 }
             });
@@ -176,6 +191,7 @@ namespace CgmInfoGui.ViewModels
             APSNodes = result.APSNodes;
             XCFDocument = result.XCFDocument;
             Hotspots = result.Hotspots;
+            MetafileProperties = result.MetafileProperties;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

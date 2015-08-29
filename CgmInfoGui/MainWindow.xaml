@@ -34,6 +34,27 @@
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
         </Grid>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MetafileProperties}" Value="{x:Null}">
+                                    <Setter Property="TextBlock.Text" Value=""/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MetafileProperties.IsBinaryEncoding}" Value="True">
+                                    <Setter Property="TextBlock.Text" Value="Binary Encoding"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MetafileProperties.IsBinaryEncoding}" Value="False">
+                                    <Setter Property="TextBlock.Text" Value="Text Encoding"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
         <xcad:DockingManager x:Name="_dockingManager">
             <xcad:DockingManager.Theme>
                 <xcad:AeroTheme/>

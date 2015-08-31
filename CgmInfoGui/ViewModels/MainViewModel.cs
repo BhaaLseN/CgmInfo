@@ -167,7 +167,7 @@ namespace CgmInfoGui.ViewModels
                     Command command;
                     do
                     {
-                        command = reader.ReadCommand();
+                        command = reader.Read();
                         if (command != null)
                         {
                             command.Accept(vmVisitor, metafileContext);

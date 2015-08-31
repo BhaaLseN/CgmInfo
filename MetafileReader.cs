@@ -28,7 +28,13 @@ namespace CgmInfo
             _properties = new MetafileProperties(isBinaryEncoding);
         }
 
-        public abstract Command ReadCommand();
+        public Command Read()
+        {
+            var command = ReadCommand();
+            return command;
+        }
+
+        protected abstract Command ReadCommand();
 
         public static MetafileReader Create(string fileName)
         {

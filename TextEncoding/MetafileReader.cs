@@ -69,7 +69,7 @@ namespace CgmInfo.TextEncoding
         {
         }
 
-        public override Command ReadCommand()
+        protected override Command ReadCommand()
         {
             string token;
             TokenState state = ReadToken(out token);

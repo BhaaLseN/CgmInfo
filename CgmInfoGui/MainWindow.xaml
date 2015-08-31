@@ -37,6 +37,9 @@
         </Grid>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Name}"/>
+            </StatusBarItem>
+            <StatusBarItem>
                 <TextBlock>
                     <TextBlock.Style>
                         <Style>

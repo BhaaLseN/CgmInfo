@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using CgmInfo.Commands;
+using CgmInfo.Traversal;
 using BinaryMetafileReader = CgmInfo.BinaryEncoding.MetafileReader;
 using TextMetafileReader = CgmInfo.TextEncoding.MetafileReader;
 
@@ -10,6 +11,7 @@ namespace CgmInfo
     {
         private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
         private readonly MetafileProperties _properties;
+        private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
 
         protected readonly FileStream _fileStream;
 
@@ -31,6 +33,8 @@ namespace CgmInfo
         public Command Read()
         {
             var command = ReadCommand();
+            if (command != null)
+                command.Accept(_propertyVisitor, _properties);
             return command;
         }
 

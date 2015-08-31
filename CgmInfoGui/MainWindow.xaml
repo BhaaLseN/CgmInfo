@@ -13,6 +13,7 @@
     <Window.Resources>
         <conv:PrettyXmlConverter x:Key="prettyXmlConverter"/>
         <conv:FileSizeConverter x:Key="fileSizeConverter"/>
+        <conv:PrefixConverter x:Key="prefixConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <mvm:MainViewModel/>
@@ -58,6 +59,10 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Version, Converter={StaticResource prefixConverter}, ConverterParameter='v'}"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>

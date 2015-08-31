@@ -12,5 +12,6 @@ namespace CgmInfo
         public long FileSize { get; private set; }
         public string Name { get; internal set; }
         public int Version { get; internal set; }
+        public string Profile { get; internal set; }
     }
 }

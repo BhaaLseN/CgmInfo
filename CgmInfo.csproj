@@ -115,6 +115,7 @@
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
     <Compile Include="Traversal\MetafilePropertyVisitor.cs" />
+    <Compile Include="Utilities\MetafileDescriptionParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

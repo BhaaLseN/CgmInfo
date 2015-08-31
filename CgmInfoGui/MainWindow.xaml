@@ -66,6 +66,10 @@
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Profile}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
                 <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
             </StatusBarItem>
         </StatusBar>

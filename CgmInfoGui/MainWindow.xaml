@@ -9,7 +9,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="CGM Info" Height="480" Width="640">
+        Title="CGM Info" Height="480" Width="640" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <conv:PrettyXmlConverter x:Key="prettyXmlConverter"/>
         <conv:FileSizeConverter x:Key="fileSizeConverter"/>
@@ -39,6 +39,7 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding MetafileProperties.Name}"/>
             </StatusBarItem>
+            <Separator/>
             <StatusBarItem>
                 <TextBlock>
                     <TextBlock.Style>
@@ -58,6 +59,7 @@
                     </TextBlock.Style>
                 </TextBlock>
             </StatusBarItem>
+            <Separator/>
             <StatusBarItem>
                 <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
             </StatusBarItem>

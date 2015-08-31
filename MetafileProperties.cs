@@ -1,4 +1,3 @@
-
 namespace CgmInfo
 {
     public class MetafileProperties
@@ -6,7 +5,6 @@ namespace CgmInfo
         public MetafileProperties(bool isBinaryEncoding)
         {
             IsBinaryEncoding = isBinaryEncoding;
-
         }
 
         public bool IsBinaryEncoding { get; private set; }

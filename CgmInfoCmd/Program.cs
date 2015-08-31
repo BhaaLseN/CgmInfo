@@ -23,7 +23,7 @@ namespace CgmInfoCmd
                 Command command;
                 do
                 {
-                    command = reader.ReadCommand();
+                    command = reader.Read();
                     if (command != null)
                     {
                         command.Accept(printVisitor, printContext);

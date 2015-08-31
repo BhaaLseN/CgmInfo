@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using CgmInfo.Commands;
+using CgmInfo.Traversal;
 using BinaryMetafileReader = CgmInfo.BinaryEncoding.MetafileReader;
 using TextMetafileReader = CgmInfo.TextEncoding.MetafileReader;
 
@@ -9,6 +10,8 @@ namespace CgmInfo
     public abstract class MetafileReader : IDisposable
     {
         private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
+        private readonly MetafileProperties _properties;
+        private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
 
         protected readonly FileStream _fileStream;
 
@@ -16,13 +19,26 @@ namespace CgmInfo
         {
             get { return _descriptor; }
         }
-
-        protected MetafileReader(string fileName)
+        public MetafileProperties Properties
         {
-            _fileStream = File.OpenRead(fileName);
+            get { return _properties; }
         }
 
-        public abstract Command ReadCommand();
+        protected MetafileReader(string fileName, bool isBinaryEncoding)
+        {
+            _fileStream = File.OpenRead(fileName);
+            _properties = new MetafileProperties(isBinaryEncoding, _fileStream.Length);
+        }
+
+        public Command Read()
+        {
+            var command = ReadCommand();
+            if (command != null)
+                command.Accept(_propertyVisitor, _properties);
+            return command;
+        }
+
+        protected abstract Command ReadCommand();
 
         public static MetafileReader Create(string fileName)
         {

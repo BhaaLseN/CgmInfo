@@ -44,6 +44,7 @@
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
     <Compile Include="Commands\Command.cs" />
@@ -113,6 +114,8 @@
     <Compile Include="TextEncoding\MetafileReader.cs" />
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
+    <Compile Include="Traversal\MetafilePropertyVisitor.cs" />
+    <Compile Include="Utilities\MetafileDescriptionParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

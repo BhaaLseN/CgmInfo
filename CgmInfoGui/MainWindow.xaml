@@ -9,9 +9,11 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="CGM Info" Height="480" Width="640">
+        Title="CGM Info" Height="480" Width="640" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <conv:PrettyXmlConverter x:Key="prettyXmlConverter"/>
+        <conv:FileSizeConverter x:Key="fileSizeConverter"/>
+        <conv:PrefixConverter x:Key="prefixConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <mvm:MainViewModel/>
@@ -34,6 +36,43 @@
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
         </Grid>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Name}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MetafileProperties}" Value="{x:Null}">
+                                    <Setter Property="TextBlock.Text" Value=""/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MetafileProperties.IsBinaryEncoding}" Value="True">
+                                    <Setter Property="TextBlock.Text" Value="Binary Encoding"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MetafileProperties.IsBinaryEncoding}" Value="False">
+                                    <Setter Property="TextBlock.Text" Value="Text Encoding"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Version, Converter={StaticResource prefixConverter}, ConverterParameter='v'}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.Profile}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
+            </StatusBarItem>
+        </StatusBar>
         <xcad:DockingManager x:Name="_dockingManager">
             <xcad:DockingManager.Theme>
                 <xcad:AeroTheme/>

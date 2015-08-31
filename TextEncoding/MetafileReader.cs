@@ -65,11 +65,11 @@ namespace CgmInfo.TextEncoding
         };
 
         public MetafileReader(string fileName)
-            : base(fileName)
+            : base(fileName, false)
         {
         }
 
-        public override Command ReadCommand()
+        protected override Command ReadCommand()
         {
             string token;
             TokenState state = ReadToken(out token);

@@ -25,7 +25,7 @@ namespace CgmInfo
         protected MetafileReader(string fileName, bool isBinaryEncoding)
         {
             _fileStream = File.OpenRead(fileName);
-            _properties = new MetafileProperties(isBinaryEncoding);
+            _properties = new MetafileProperties(isBinaryEncoding, _fileStream.Length);
         }
 
         public Command Read()

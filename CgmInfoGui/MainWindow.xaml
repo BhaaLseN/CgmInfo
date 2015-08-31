@@ -12,6 +12,7 @@
         Title="CGM Info" Height="480" Width="640">
     <Window.Resources>
         <conv:PrettyXmlConverter x:Key="prettyXmlConverter"/>
+        <conv:FileSizeConverter x:Key="fileSizeConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <mvm:MainViewModel/>
@@ -53,6 +54,9 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
             </StatusBarItem>
         </StatusBar>
         <xcad:DockingManager x:Name="_dockingManager">

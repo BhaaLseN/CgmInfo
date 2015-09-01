@@ -9,7 +9,7 @@ namespace CgmInfoGui.ViewModels.Nodes
         {
             Description = description;
 
-            var entries = MetafileDescriptionParser.ParseDescripton(description);
+            var entries = MetafileDescriptionParser.ParseDescription(description);
             if (entries.Any())
             {
                 var original = new SimpleNode(string.Format("Original String: [{0} characters]", description.Length));

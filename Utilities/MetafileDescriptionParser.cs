@@ -24,7 +24,7 @@ namespace CgmInfo.Utilities
         /// A Dictionary with key/value pairs representing <paramref name="description"/>,
         /// or an empty dictionary when the expression could not be parsed.
         /// </returns>
-        public static Dictionary<string, string> ParseDescripton(string description)
+        public static Dictionary<string, string> ParseDescription(string description)
         {
             var ret = new Dictionary<string, string>();
 

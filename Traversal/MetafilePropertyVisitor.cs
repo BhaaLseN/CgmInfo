@@ -17,7 +17,7 @@ namespace CgmInfo.Traversal
         }
         public override void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, MetafileProperties parameter)
         {
-            var keys = MetafileDescriptionParser.ParseDescripton(metafileDescription.Description);
+            var keys = MetafileDescriptionParser.ParseDescription(metafileDescription.Description);
             if (keys.Any())
             {
                 string profileId;

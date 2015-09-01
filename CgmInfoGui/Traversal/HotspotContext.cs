@@ -35,6 +35,18 @@ namespace CgmInfoGui.Traversal
         }
         public void SealHotspot()
         {
+            if (_currentNode != null && _currentNode.RegionValues.Length < 5)
+            {
+                // treat APS without a region as "not a hotspot".
+                // "no" region is assumed as one with less than 5 raw values.
+                // every explicit region has at least one member (which is the region type),
+                // followed by at least 4 coordinates (assumed to be two points for the polygon type).
+                EndHotspot();
+                CurrentLevelNodes.Remove(_currentNode);
+                // replace the current APS stack value; otherwise EndHotspot will be called twice
+                var currentAps = EndAPS();
+                BeginAPS(new BeginApplicationStructure(currentAps.Identifier, "NotAHotspot", currentAps.Inheritance));
+            }
             // reset the node; should be called when the APS Body begins (ie. no more attributes for this node follow)
             _currentNode = null;
         }

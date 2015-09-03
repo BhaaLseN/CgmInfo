@@ -560,17 +560,6 @@ namespace CgmInfo.BinaryEncoding
             return result;
         }
 
-        internal StructuredDataRecord ReadStructuredDataRecord()
-        {
-            // structured data records are self-defining structures [ISO/IEC 8632-3 7, Table 1, Note 17]
-            // each record contains a single member and is comprised of [ISO/IEC 8632-3 8.3, 21 FONT PROPERTIES, P3]
-            //      data type indicator
-            //      data element count
-            //      data element(s)
-            // see also [ISO/IEC 8632-1 Annex C, C.2.2]
-            return StructuredDataRecord.Read(this);
-        }
-
         internal static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
         {
             double c = cyan / 255.0;

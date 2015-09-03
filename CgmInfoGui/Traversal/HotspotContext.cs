@@ -13,6 +13,7 @@ namespace CgmInfoGui.Traversal
         // keep track of APS elements; not every element is a hotspot
         private readonly Stack<BeginApplicationStructure> _apsStack = new Stack<BeginApplicationStructure>();
         private HotspotNode _currentNode;
+        private bool _shouldKeepHotspot;
 
         public void BeginAPS(BeginApplicationStructure beginAps)
         {
@@ -31,16 +32,16 @@ namespace CgmInfoGui.Traversal
             BeginLevel(hotspotNode);
             // remember this node until the APS Body begins (which is when attributes are over)
             _currentNode = hotspotNode;
+            // even though this is a hotspot element; say we don't want to keep it
+            // adding attributes to it will make it viable
+            _shouldKeepHotspot = false;
             return hotspotNode;
         }
         public void SealHotspot()
         {
-            if (_currentNode != null && _currentNode.RegionValues.Length < 5)
+            if (_currentNode != null && !_shouldKeepHotspot)
             {
-                // treat APS without a region as "not a hotspot".
-                // "no" region is assumed as one with less than 5 raw values.
-                // every explicit region has at least one member (which is the region type),
-                // followed by at least 4 coordinates (assumed to be two points for the polygon type).
+                // discard a started hotspot when no viable attributes have been seen until this point
                 EndHotspot();
                 CurrentLevelNodes.Remove(_currentNode);
                 // replace the current APS stack value; otherwise EndHotspot will be called twice
@@ -60,13 +61,18 @@ namespace CgmInfoGui.Traversal
             if (_currentNode == null || applicationStructureAttribute == null)
                 return;
 
+            bool hotspotAttribute = false;
             switch (applicationStructureAttribute.AttributeType.ToUpperInvariant())
             {
                 case "REGION": // [WebCGM20-IC 3.2.2.1]
                     UpdateHotspotRegion(applicationStructureAttribute.DataRecord);
+                    // Objects may contain an explicit 'region' APS Attribute, which provides the boundary for picking operations. [WebCGM20-Concepts 2.2.3]
+                    hotspotAttribute = true;
                     break;
                 case "LINKURI": // [WebCGM20-IC 3.2.2.3]
                     UpdateLinkTarget(applicationStructureAttribute.DataRecord);
+                    // A graphical hotspot is a graphical object that participates in a link. [S1000D Iss2.3, Chap 7.3.2, Para 4.6]
+                    hotspotAttribute = true;
                     break;
                 case "SCREENTIP": // [WebCGM20-IC 3.2.2.6]
                     UpdateScreentip(applicationStructureAttribute.DataRecord);
@@ -75,6 +81,9 @@ namespace CgmInfoGui.Traversal
                     UpdateName(applicationStructureAttribute.DataRecord);
                     break;
             }
+
+            // toggle viability to true, but never switch back to false for the same hotspot
+            _shouldKeepHotspot |= hotspotAttribute;
         }
 
         private void UpdateName(StructuredDataRecord dataRecord)

@@ -135,6 +135,14 @@
                                     Document="{Binding XCFDocument, BindsDirectlyToSource=true, Converter={StaticResource prettyXmlConverter}}">
                                 </FlowDocumentReader>
                             </xcad:LayoutDocument>
+                            <xcad:LayoutDocument Title="Visuals" ContentId="Visuals" CanClose="False">
+                                <xctk:Zoombox IsUsingScrollBars="True" ZoomModifiers="None" DragModifiers="None">
+                                    <ctrl:VisualCanvas DataContext="{Binding VisualRoot}" ItemsSource="{Binding Visuals}"
+                                                       VdcExtent="{Binding VdcExtent}"
+                                                       GeometryExtent="{Binding GeometryExtent}"
+                                                       Margin="10"/>
+                                </xctk:Zoombox>
+                            </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Hotspots" ContentId="Hotspots" CanClose="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>

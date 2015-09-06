@@ -9,6 +9,7 @@ using CgmInfo;
 using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
+using CgmInfoGui.Visuals;
 using Microsoft.Win32;
 using BinaryMetafileWriter = CgmInfo.BinaryEncoding.MetafileWriter;
 using TextMetafileWriter = CgmInfo.TextEncoding.MetafileWriter;
@@ -59,6 +60,13 @@ namespace CgmInfoGui.ViewModels
         {
             get { return _apsNodes; }
             set { SetField(ref _apsNodes, value); }
+        }
+
+        private VisualRoot _visualRoot;
+        public VisualRoot VisualRoot
+        {
+            get { return _visualRoot; }
+            set { SetField(ref _visualRoot, value); }
         }
 
         private XDocument _xcfDocument;
@@ -148,6 +156,8 @@ namespace CgmInfoGui.ViewModels
                 var xcfContext = new XCFDocumentContext();
                 var hotspotVisitor = new HotspotBuilderVisitor();
                 var hotspotContext = new HotspotContext();
+                var visualVisitor = new GraphicalElementBuilderVisitor();
+                var visualContext = new GraphicalElementContext();
                 Command command;
                 do
                 {
@@ -158,6 +168,7 @@ namespace CgmInfoGui.ViewModels
                         command.Accept(apsVisitor, apsContext);
                         command.Accept(xcfVisitor, xcfContext);
                         command.Accept(hotspotVisitor, hotspotContext);
+                        command.Accept(visualVisitor, visualContext);
                     }
                 } while (command != null);
                 return new
@@ -167,6 +178,7 @@ namespace CgmInfoGui.ViewModels
                     XCFDocument = xcfContext.XCF,
                     Hotspots = hotspotContext.RootLevel.OfType<HotspotNode>().ToList(),
                     MetafileProperties = reader.Properties,
+                    VisualRoot = visualContext.Visuals,
                 };
             });
             IsBusy = false;
@@ -175,6 +187,7 @@ namespace CgmInfoGui.ViewModels
             XCFDocument = result.XCFDocument;
             Hotspots = result.Hotspots;
             MetafileProperties = result.MetafileProperties;
+            VisualRoot = result.VisualRoot;
         }
 
         private bool CanBrowseSaveAs(object parameter) => !IsBusy;

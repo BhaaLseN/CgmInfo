@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Xml.Linq;
+using CgmInfoGui.Visuals;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 namespace CgmInfoGui
@@ -20,6 +22,8 @@ namespace CgmInfoGui
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            TextVisual.PixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+
             var layout = Properties.Settings.Default.DockLayout;
             // don't load an existing layout if panels are missing; otherwise they wont be shown
             if (layout != null && layout.Root != null && !HasMissingPanels(layout))
@@ -31,7 +35,7 @@ namespace CgmInfoGui
         }
 
         // this list should always have the same ContentIds listed as the XAML.
-        private static readonly string[] PanelContentIds = { "MetafileStructure", "ApplicationStructure", "XCF", "Hotspots" };
+        private static readonly string[] PanelContentIds = { "MetafileStructure", "ApplicationStructure", "XCF", "Hotspots", "Visuals" };
         private static bool HasMissingPanels(XDocument layout)
         {
             var rootPanel = layout.Root.Element("RootPanel");
@@ -62,6 +66,12 @@ namespace CgmInfoGui
             Properties.Settings.Default.Save();
 
             base.OnClosed(e);
+        }
+
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+        {
+            base.OnDpiChanged(oldDpi, newDpi);
+            TextVisual.PixelsPerDip = newDpi.PixelsPerDip;
         }
 
         private void FileName_Drop(object sender, DragEventArgs e)

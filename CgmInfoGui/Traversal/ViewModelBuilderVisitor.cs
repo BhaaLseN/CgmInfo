@@ -226,11 +226,32 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
-            parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
+            var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
+            node.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Position [{0}]", text.Position))
+                {
+                    new SimpleNode(string.Format("X: {0}", text.Position.X)),
+                    new SimpleNode(string.Format("Y: {0}", text.Position.Y)),
+                },
+            });
         }
         public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, MetafileContext parameter)
         {
-            parameter.AddNode("RESTRICTED TEXT: '{0}'{1}", restrictedText.Text, restrictedText.Final == FinalFlag.Final ? " (final)" : "");
+            var node = parameter.AddNode("RESTRICTED TEXT: '{0}'{1}", restrictedText.Text, restrictedText.Final == FinalFlag.Final ? " (final)" : "");
+            node.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Position [{0}]", restrictedText.Position))
+                {
+                    new SimpleNode(string.Format("X: {0}", restrictedText.Position.X)),
+                    new SimpleNode(string.Format("Y: {0}", restrictedText.Position.Y)),
+                },
+                new SimpleNode(string.Format("Bounding Box [{0}; {1}]", restrictedText.DeltaWidth, restrictedText.DeltaHeight))
+                {
+                    new SimpleNode(string.Format("Delta Width: {0}", restrictedText.DeltaWidth)),
+                    new SimpleNode(string.Format("Delta Height: {0}", restrictedText.DeltaHeight)),
+                },
+            });
         }
         public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, MetafileContext parameter)
         {

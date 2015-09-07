@@ -112,6 +112,7 @@
     <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="TextEncoding\MetafileReader.cs" />
+    <Compile Include="TextEncoding\TextEncodingHelper.cs" />
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
     <Compile Include="Traversal\MetafilePropertyVisitor.cs" />

@@ -32,7 +32,7 @@ namespace CgmInfo.TextEncoding
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader)
         {
-            return new IntegerPrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
+            return new IntegerPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
         public static RealPrecision RealPrecision(MetafileReader reader)
@@ -58,17 +58,17 @@ namespace CgmInfo.TextEncoding
 
         public static IndexPrecision IndexPrecision(MetafileReader reader)
         {
-            return new IndexPrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
+            return new IndexPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
         public static ColorPrecision ColorPrecision(MetafileReader reader)
         {
-            return new ColorPrecision(GetBitPrecision(reader.ReadInteger()));
+            return new ColorPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger()));
         }
 
         public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader)
         {
-            return new ColorIndexPrecision(GetBitPrecision(reader.ReadInteger()));
+            return new ColorIndexPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger()));
         }
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
@@ -115,7 +115,7 @@ namespace CgmInfo.TextEncoding
 
         public static NamePrecision NamePrecision(MetafileReader reader)
         {
-            return new NamePrecision(GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
+            return new NamePrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
         public static FontList FontList(MetafileReader reader)
@@ -176,23 +176,6 @@ namespace CgmInfo.TextEncoding
             else if (token == "EXTD8BIT")
                 return CharacterCodingAnnouncerType.Extended8Bit;
             return CharacterCodingAnnouncerType.Basic7Bit;
-        }
-
-        // returns the amount of bits (multiples of a byte) required to store input
-        private static int GetBitPrecision(int input)
-        {
-            if (input <= 0xFF)
-                return 8;
-            else if (input <= 0xFFFF)
-                return 16;
-            else if (input <= 0xFFFFFF)
-                return 24;
-            return 32;
-        }
-        private static int GetBitPrecision(int minValue, int maxValue)
-        {
-            // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
-            return GetBitPrecision(maxValue - minValue);
         }
     }
 }

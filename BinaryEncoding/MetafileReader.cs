@@ -405,7 +405,7 @@ namespace CgmInfo.BinaryEncoding
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
             int ret = 0;
-            while (numBytes-- > 0)
+            while (numBytes --> 0)
                 ret = (ret << 8) | ReadByte();
             return ret;
         }
@@ -484,11 +484,21 @@ namespace CgmInfo.BinaryEncoding
         {
             // ISO/IEC 8632-3 6.5
             // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;
-            // so simply using BinaryReader works out just fine.
+            // but the endianness might not work out. swap if necessary
             if (numBytes == 4)
-                return _reader.ReadSingle();
+            {
+                byte[] floatBytes = _reader.ReadBytes(4);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(floatBytes);
+                return BitConverter.ToSingle(floatBytes, 0);
+            }
             if (numBytes == 8)
-                return _reader.ReadDouble();
+            {
+                byte[] doubleBytes = _reader.ReadBytes(8);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(doubleBytes);
+                return BitConverter.ToDouble(doubleBytes, 0);
+            }
 
             throw new InvalidOperationException(string.Format("Sorry, cannot read a floating point value with {0} bytes", numBytes));
         }

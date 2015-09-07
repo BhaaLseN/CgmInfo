@@ -41,9 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="BinaryEncoding\ControlElementReader.cs" />
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="TextEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="TextEncoding\ControlElementReader.cs" />
     <Compile Include="TextEncoding\DelimiterElementReader.cs" />
     <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />

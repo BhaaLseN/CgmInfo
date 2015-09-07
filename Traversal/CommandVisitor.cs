@@ -122,6 +122,13 @@ namespace CgmInfo.Traversal
         }
         #endregion
 
+        #region Control elements
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
         #region Graphical Primitive elements
         public virtual void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter)
         {

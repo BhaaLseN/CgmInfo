@@ -224,6 +224,11 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
+        {
+            parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

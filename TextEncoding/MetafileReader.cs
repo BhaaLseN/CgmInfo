@@ -55,6 +55,9 @@ namespace CgmInfo.TextEncoding
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
+            // control elements [ISO/IEC 8632-4 7.4]
+            { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
+
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
@@ -138,6 +141,12 @@ namespace CgmInfo.TextEncoding
             var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader);
             reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
+        }
+        private static Command ReadVdcIntegerPrecision(MetafileReader reader)
+        {
+            var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(reader);
+            reader.Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
+            return vdcIntegerPrecision;
         }
 
         internal string ReadString()

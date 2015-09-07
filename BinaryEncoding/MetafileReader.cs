@@ -57,6 +57,9 @@ namespace CgmInfo.BinaryEncoding
                 case 1: // metafile descriptor
                     result = ReadMetafileDescriptorElement(commandHeader);
                     break;
+                case 3: // control
+                    result = ReadControlElement(commandHeader);
+                    break;
                 case 4: // graphical primitive
                     result = ReadGraphicalPrimitive(commandHeader);
                     break;
@@ -64,7 +67,6 @@ namespace CgmInfo.BinaryEncoding
                     result = ReadApplicationStructureDescriptor(commandHeader);
                     break;
                 case 2: // picture descriptor
-                case 3: // control
                 case 5: // attribute
                 case 6: // escape
                 case 7: // external
@@ -316,6 +318,23 @@ namespace CgmInfo.BinaryEncoding
                 case 22: // GLYPH MAPPING
                 case 23: // SYMBOL LIBRARY LIST
                 case 24: // PICTURE DIRECTORY
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadControlElement(CommandHeader commandHeader)
+        {
+            Command result;
+            switch (commandHeader.ElementId)
+            {
+                case 1: // VDC INTEGER PRECISION
+                    var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(this, commandHeader);
+                    Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
+                    result = vdcIntegerPrecision;
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -50,6 +50,9 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
 
+        // control
+        void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);
+
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);

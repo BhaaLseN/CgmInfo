@@ -189,6 +189,11 @@ namespace CgmInfoCmd
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
         }
 
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("VDC Integer Precision: {0} bit", vdcIntegerPrecision.Precision);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {
             parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);

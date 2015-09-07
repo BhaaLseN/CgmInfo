@@ -1,3 +1,4 @@
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
 namespace CgmInfo.BinaryEncoding
@@ -8,6 +9,16 @@ namespace CgmInfo.BinaryEncoding
         {
             // P1: (integer) VDC integer precision; legal values are 16, 24 or 32; the value 8 is not permitted. [ISO/IEC 8632-3 8.5]
             return new VdcIntegerPrecision(reader.ReadInteger());
+        }
+
+        public static VdcRealPrecision VdcRealPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) form of representation for real values: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 floating point format
+            //      1 fixed point format
+            // P2: (integer) field width for exponent or whole part (including 1 bit for sign)
+            // P3: (integer) field width for fraction or fractional part
+            return new VdcRealPrecision(reader.ReadEnum<RealRepresentation>(), reader.ReadInteger(), reader.ReadInteger());
         }
     }
 }

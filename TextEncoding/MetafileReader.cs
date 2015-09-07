@@ -57,6 +57,7 @@ namespace CgmInfo.TextEncoding
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
+            { "VDCREALPREC", ReadVdcRealPrecision },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },
@@ -147,6 +148,12 @@ namespace CgmInfo.TextEncoding
             var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(reader);
             reader.Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
             return vdcIntegerPrecision;
+        }
+        private static Command ReadVdcRealPrecision(MetafileReader reader)
+        {
+            var vdcRealPrecision = ControlElementReader.VdcRealPrecision(reader);
+            reader.Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
+            return vdcRealPrecision;
         }
 
         internal string ReadString()

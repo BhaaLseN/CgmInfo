@@ -193,6 +193,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("VDC Integer Precision: {0} bit", vdcIntegerPrecision.Precision);
         }
+        public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, PrintContext parameter)
+        {
+            if (vdcRealPrecision.Specification == RealPrecisionSpecification.Unsupported)
+                parameter.WriteLine("VDC Real Precision: Unsupported ({0}, {1} bit Exponent width, {2} bit Fraction width)",
+                    vdcRealPrecision.RepresentationForm, vdcRealPrecision.ExponentWidth, vdcRealPrecision.FractionWidth);
+            else
+                parameter.WriteLine("VDC Real Precision: {0}", vdcRealPrecision.Specification);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

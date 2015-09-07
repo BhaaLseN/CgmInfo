@@ -229,6 +229,16 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);
         }
 
+        public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
+        {
+            var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);
+            realNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Exponent Width: {0} bit", vdcRealPrecision.ExponentWidth)),
+                new SimpleNode(string.Format("Fraction Width: {0} bit", vdcRealPrecision.FractionWidth)),
+            });
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

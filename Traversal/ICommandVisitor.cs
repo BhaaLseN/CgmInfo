@@ -52,6 +52,7 @@ namespace CgmInfo.Traversal
 
         // control
         void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);
+        void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

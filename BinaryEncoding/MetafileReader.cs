@@ -335,6 +335,11 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
                     result = vdcIntegerPrecision;
                     break;
+                case 2: // VDC REAL PRECISION
+                    var vdcRealPrecision = ControlElementReader.VdcRealPrecision(this, commandHeader);
+                    Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
+                    result = vdcRealPrecision;
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

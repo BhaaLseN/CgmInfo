@@ -137,6 +137,43 @@
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Visuals" ContentId="Visuals" CanClose="False">
                                 <xctk:Zoombox IsUsingScrollBars="True" ZoomModifiers="None" DragModifiers="None">
+                                    <xctk:Zoombox.Resources>
+                                        <Style x:Key="{x:Type xctk:Zoombox}" BasedOn="{StaticResource {x:Type xctk:Zoombox}}" TargetType="{x:Type xctk:Zoombox}">
+                                            <Style.Triggers>
+                                                <!--
+                                                Copied straight from WPF Toolkit source.
+                                                I don't want any cursors by default when no ZoomModifier and DragModifier are set;
+                                                but they don't seem to care about that case.
+                                                Setting Drag/Zoom setters to not use any particular cursor works, but for some reason
+                                                I had to include all of the setters here; or none would trigger.
+                                                -->
+                                                <!-- NOTE:  Order matters!
+                                                  These triggers should be ordered according to the KeyModifiers assigned to
+                                                  each operation. If one operation requires Ctrl and another requires
+                                                  Ctrl+Shift, the trigger for the operation requiring both modifier keys
+                                                  should appear *after* the trigger for the operation requiring only one. -->
+                                                <Trigger Property="AreDragModifiersActive" Value="True">
+                                                    <Setter Property="Cursor" Value="{x:Null}" />
+                                                </Trigger>
+                                                <Trigger Property="AreZoomToSelectionModifiersActive" Value="True">
+                                                    <Setter Property="Cursor" Value="Cross" />
+                                                </Trigger>
+                                                <Trigger Property="AreZoomModifiersActive" Value="True">
+                                                    <Setter Property="Cursor" Value="{x:Null}" />
+                                                </Trigger>
+                                                <Trigger Property="AreRelativeZoomModifiersActive" Value="True">
+                                                    <Setter Property="Cursor" Value="{x:Static xctk:ZoomboxCursors.ZoomRelative}" />
+                                                </Trigger>
+                                                <!-- The IsDraggingContent and IsSelectingRegion triggers should always be last. -->
+                                                <Trigger Property="IsDraggingContent" Value="True">
+                                                    <Setter Property="Cursor" Value="SizeAll" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelectingRegion" Value="True">
+                                                    <Setter Property="Cursor" Value="Cross" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </xctk:Zoombox.Resources>
                                     <ctrl:VisualCanvas DataContext="{Binding VisualRoot}" ItemsSource="{Binding Visuals}"
                                                        VdcExtent="{Binding VdcExtent}"
                                                        GeometryExtent="{Binding GeometryExtent}"

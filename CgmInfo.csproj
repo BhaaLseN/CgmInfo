@@ -45,6 +45,7 @@
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="Commands\Control\AuxiliaryColor.cs" />
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
     <Compile Include="MetafileProperties.cs" />

@@ -58,6 +58,8 @@ namespace CgmInfo.TextEncoding
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
             { "VDCREALPREC", ReadVdcRealPrecision },
+            // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+            //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

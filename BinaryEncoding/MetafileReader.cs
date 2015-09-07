@@ -340,6 +340,10 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
                     result = vdcRealPrecision;
                     break;
+                // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+                //case 3: // AUXILIARY COLOR
+                //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
+                //    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

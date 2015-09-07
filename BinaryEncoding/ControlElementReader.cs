@@ -20,5 +20,13 @@ namespace CgmInfo.BinaryEncoding
             // P3: (integer) field width for fraction or fractional part
             return new VdcRealPrecision(reader.ReadEnum<RealRepresentation>(), reader.ReadInteger(), reader.ReadInteger());
         }
+
+        public static AuxiliaryColor AuxiliaryColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // FIXME: implement COLOUR SELECTION MODE first; needs to select either color index or color value.
+            throw new System.NotSupportedException("Requires COLOUR SELECTION MODE to be implemented");
+            // P1: (colour) auxiliary colour [ISO/IEC 8632-3 8.5]
+            //return new AuxiliaryColor(reader.ReadColor());
+        }
     }
 }

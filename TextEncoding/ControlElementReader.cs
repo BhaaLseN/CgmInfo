@@ -29,5 +29,12 @@ namespace CgmInfo.TextEncoding
 
             return new VdcRealPrecision(RealRepresentation.FloatingPoint, exponentWidth, fractionWidth);
         }
+
+        public static AuxiliaryColor AuxiliaryColor(MetafileReader reader)
+        {
+            // FIXME: implement COLOUR SELECTION MODE first; needs to select either color index or color value.
+            throw new System.NotSupportedException("Requires COLOUR SELECTION MODE to be implemented");
+            //return new AuxiliaryColor(reader.ReadColor());
+        }
     }
 }

@@ -201,6 +201,10 @@ namespace CgmInfoCmd
             else
                 parameter.WriteLine("VDC Real Precision: {0}", vdcRealPrecision.Specification);
         }
+        public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Auxiliary Color: {0}", auxiliaryColor.Color);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

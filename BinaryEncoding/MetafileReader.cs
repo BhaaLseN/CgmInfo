@@ -350,6 +350,9 @@ namespace CgmInfo.BinaryEncoding
                 case 5: // CLIP RECTANGLE
                     result = ControlElementReader.ClipRectangle(this, commandHeader);
                     break;
+                case 6: // CLIP INDICATOR
+                    result = ControlElementReader.ClipIndicator(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

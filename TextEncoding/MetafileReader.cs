@@ -62,6 +62,7 @@ namespace CgmInfo.TextEncoding
             //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
             { "TRANSPARENCY", ControlElementReader.Transparency },
             { "CLIPRECT", ControlElementReader.ClipRectangle },
+            { "CLIP", ControlElementReader.ClipIndicator },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

@@ -261,6 +261,11 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptControlClipIndicator(ClipIndicator clipIndicator, MetafileContext parameter)
+        {
+            parameter.AddNode("CLIP INDICATOR: {0}", clipIndicator.Indicator);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

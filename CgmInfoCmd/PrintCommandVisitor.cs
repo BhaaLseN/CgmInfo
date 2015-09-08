@@ -213,6 +213,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Clip Rectangle: {0} - {1}", clipRectangle.FirstCorner, clipRectangle.SecondCorner);
         }
+        public void AcceptControlClipIndicator(ClipIndicator clipIndicator, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Indicator: {0}", clipIndicator.Indicator);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

@@ -56,6 +56,7 @@ namespace CgmInfo.Traversal
         void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, T parameter);
         void AcceptControlTransparency(Transparency transparency, T parameter);
         void AcceptControlClipRectangle(ClipRectangle clipRectangle, T parameter);
+        void AcceptControlClipIndicator(ClipIndicator clipIndicator, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

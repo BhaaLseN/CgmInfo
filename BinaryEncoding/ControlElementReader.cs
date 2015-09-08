@@ -43,5 +43,13 @@ namespace CgmInfo.BinaryEncoding
             // P2: (point) second corner
             return new ClipRectangle(reader.ReadPoint(), reader.ReadPoint());
         }
+
+        public static ClipIndicator ClipIndicator(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) clip indicator: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 off
+            //      1 on
+            return new ClipIndicator(reader.ReadEnum<OnOffIndicator>());
+        }
     }
 }

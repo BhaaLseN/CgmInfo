@@ -47,6 +47,7 @@
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />
     <Compile Include="Commands\Control\ClipRectangle.cs" />
+    <Compile Include="Commands\Control\ClipIndicator.cs" />
     <Compile Include="Commands\Control\Transparency.cs" />
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />

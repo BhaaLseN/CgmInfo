@@ -46,5 +46,10 @@ namespace CgmInfo.TextEncoding
         {
             return new ClipRectangle(reader.ReadPoint(), reader.ReadPoint());
         }
+
+        public static ClipIndicator ClipIndicator(MetafileReader reader)
+        {
+            return new ClipIndicator(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
+        }
     }
 }

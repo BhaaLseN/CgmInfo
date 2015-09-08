@@ -5,11 +5,11 @@ namespace CgmInfo.Commands.MetafileDescriptor
 {
     public class MaximumVdcExtent : Command
     {
-        public MaximumVdcExtent(double x1, double y1, double x2, double y2)
+        public MaximumVdcExtent(PointF firstCorner, PointF secondCorner)
             : base(1, 17)
         {
-            FirstCorner = new PointF((float)x1, (float)y1);
-            SecondCorner = new PointF((float)x2, (float)y2);
+            FirstCorner = firstCorner;
+            SecondCorner = secondCorner;
         }
 
         public PointF FirstCorner { get; private set; }

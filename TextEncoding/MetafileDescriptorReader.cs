@@ -127,7 +127,7 @@ namespace CgmInfo.TextEncoding
         {
             var firstCorner = reader.ReadPoint();
             var secondCorner = reader.ReadPoint();
-            return new MaximumVdcExtent(firstCorner.X, firstCorner.Y, secondCorner.X, secondCorner.Y);
+            return new MaximumVdcExtent(firstCorner, secondCorner);
         }
 
         public static CharacterSetList CharacterSetList(MetafileReader reader)

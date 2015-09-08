@@ -286,6 +286,16 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("NEW REGION");
         }
 
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, MetafileContext parameter)
+        {
+            parameter.AddNode("SAVE PRIMITIVE CONTEXT: {0}", savePrimitiveContext.ContextName);
+        }
+
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTORE PRIMITIVE CONTEXT: {0}", restorePrimitiveContext.ContextName);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

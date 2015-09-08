@@ -61,6 +61,8 @@ namespace CgmInfo.Traversal
         void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter);
         void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter);
         void AcceptControlNewRegion(NewRegion newRegion, T parameter);
+        void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, T parameter);
+        void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

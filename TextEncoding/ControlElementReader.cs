@@ -73,6 +73,20 @@ namespace CgmInfo.TextEncoding
             return new NewRegion();
         }
 
+        public static SavePrimitiveContext SavePrimitiveContext(MetafileReader reader)
+        {
+            // TODO: spec says type "I", which is integer (for integers, coordinates, indices and names)
+            //       needs to be verified, I couldn't find any file that uses this yet.
+            return new SavePrimitiveContext(reader.ReadInteger().ToString());
+        }
+
+        public static RestorePrimitiveContext RestorePrimitiveContext(MetafileReader reader)
+        {
+            // TODO: spec says type "I", which is integer (for integers, coordinates, indices and names)
+            //       needs to be verified, I couldn't find any file that uses this yet.
+            return new RestorePrimitiveContext(reader.ReadInteger().ToString());
+        }
+
         private static ClippingMode GetClippingMode(string token)
         {
             ClippingMode ret;

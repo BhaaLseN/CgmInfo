@@ -52,6 +52,8 @@
     <Compile Include="Commands\Control\ClipRectangle.cs" />
     <Compile Include="Commands\Control\ClipIndicator.cs" />
     <Compile Include="Commands\Control\NewRegion.cs" />
+    <Compile Include="Commands\Control\RestorePrimitiveContext.cs" />
+    <Compile Include="Commands\Control\SavePrimitiveContext.cs" />
     <Compile Include="Commands\Control\Transparency.cs" />
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />

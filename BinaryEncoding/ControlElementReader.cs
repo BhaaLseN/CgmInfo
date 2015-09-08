@@ -84,5 +84,17 @@ namespace CgmInfo.BinaryEncoding
             // NEW REGION: has no parameters [ISO/IEC 8632-3 8.5]
             return new NewRegion();
         }
+
+        public static SavePrimitiveContext SavePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) context name [ISO/IEC 8632-3 8.5]
+            return new SavePrimitiveContext(reader.ReadString());
+        }
+
+        public static RestorePrimitiveContext RestorePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) context name [ISO/IEC 8632-3 8.5]
+            return new RestorePrimitiveContext(reader.ReadString());
+        }
     }
 }

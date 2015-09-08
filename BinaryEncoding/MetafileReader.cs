@@ -365,6 +365,12 @@ namespace CgmInfo.BinaryEncoding
                 case 10: // NEW REGION
                     result = ControlElementReader.NewRegion(this, commandHeader);
                     break;
+                case 11: // SAVE PRIMITIVE CONTEXT
+                    result = ControlElementReader.SavePrimitiveContext(this, commandHeader);
+                    break;
+                case 12: // RESTORE PRIMITIVE CONTEXT
+                    result = ControlElementReader.RestorePrimitiveContext(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

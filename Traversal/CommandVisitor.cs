@@ -172,6 +172,16 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

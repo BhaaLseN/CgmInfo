@@ -233,6 +233,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("New Region");
         }
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, PrintContext parameter)
+        {
+            parameter.WriteLine("Save Primitive Context: {0}", savePrimitiveContext.ContextName);
+        }
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, PrintContext parameter)
+        {
+            parameter.WriteLine("Restore Primitive Context: {0}", restorePrimitiveContext.ContextName);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

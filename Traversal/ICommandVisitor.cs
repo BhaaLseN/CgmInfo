@@ -63,6 +63,7 @@ namespace CgmInfo.Traversal
         void AcceptControlNewRegion(NewRegion newRegion, T parameter);
         void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, T parameter);
         void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, T parameter);
+        void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

@@ -96,5 +96,15 @@ namespace CgmInfo.BinaryEncoding
             // P1: (name) context name [ISO/IEC 8632-3 8.5]
             return new RestorePrimitiveContext(reader.ReadString());
         }
+
+        public static ProtectionRegionIndicator ProtectionRegionIndicator(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) region index [ISO/IEC 8632-3 8.5]
+            // P2: (index) region indicator: valid values are
+            //      1 off
+            //      2 clip
+            //      3 shield
+            return new ProtectionRegionIndicator(reader.ReadIndex(), reader.ReadEnum<RegionIndicator>());
+        }
     }
 }

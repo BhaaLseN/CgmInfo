@@ -87,6 +87,12 @@ namespace CgmInfo.TextEncoding
             return new RestorePrimitiveContext(reader.ReadInteger().ToString());
         }
 
+        public static ProtectionRegionIndicator ProtectionRegionIndicator(MetafileReader reader)
+        {
+            // this one uses an index/integer type to store the enum, not a string like the others [ISO/IEC 8632-4 7.4]
+            return new ProtectionRegionIndicator(reader.ReadIndex(), (RegionIndicator)reader.ReadIndex());
+        }
+
         private static ClippingMode GetClippingMode(string token)
         {
             ClippingMode ret;

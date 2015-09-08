@@ -371,6 +371,9 @@ namespace CgmInfo.BinaryEncoding
                 case 12: // RESTORE PRIMITIVE CONTEXT
                     result = ControlElementReader.RestorePrimitiveContext(this, commandHeader);
                     break;
+                case 17: // PROTECTION REGION INDICATOR
+                    result = ControlElementReader.ProtectionRegionIndicator(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

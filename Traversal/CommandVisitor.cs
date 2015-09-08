@@ -182,6 +182,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

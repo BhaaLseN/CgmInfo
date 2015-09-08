@@ -241,6 +241,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Restore Primitive Context: {0}", restorePrimitiveContext.ContextName);
         }
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, PrintContext parameter)
+        {
+            parameter.WriteLine("Protection Region Indicator: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

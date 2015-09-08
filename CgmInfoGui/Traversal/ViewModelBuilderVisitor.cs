@@ -296,6 +296,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("RESTORE PRIMITIVE CONTEXT: {0}", restorePrimitiveContext.ContextName);
         }
 
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, MetafileContext parameter)
+        {
+            parameter.AddNode("PROTECTION REGION INDICATOR: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

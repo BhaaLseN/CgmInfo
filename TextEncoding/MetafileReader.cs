@@ -69,6 +69,7 @@ namespace CgmInfo.TextEncoding
             { "NEWREGION", ControlElementReader.NewRegion },
             { "SAVEPRIMCONT", ControlElementReader.SavePrimitiveContext },
             { "RESPRIMCONT", ControlElementReader.RestorePrimitiveContext },
+            { "PROTREGION", ControlElementReader.ProtectionRegionIndicator },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

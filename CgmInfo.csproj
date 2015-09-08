@@ -52,6 +52,7 @@
     <Compile Include="Commands\Control\ClipRectangle.cs" />
     <Compile Include="Commands\Control\ClipIndicator.cs" />
     <Compile Include="Commands\Control\NewRegion.cs" />
+    <Compile Include="Commands\Control\ProtectionRegionIndicator.cs" />
     <Compile Include="Commands\Control\RestorePrimitiveContext.cs" />
     <Compile Include="Commands\Control\SavePrimitiveContext.cs" />
     <Compile Include="Commands\Control\Transparency.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
+    <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />

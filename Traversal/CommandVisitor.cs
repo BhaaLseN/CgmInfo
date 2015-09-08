@@ -122,6 +122,83 @@ namespace CgmInfo.Traversal
         }
         #endregion
 
+        #region Control elements
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlTransparency(Transparency transparency, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlClipIndicator(ClipIndicator clipIndicator, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlNewRegion(NewRegion newRegion, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlMiterLimit(MiterLimit miterLimit, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
         #region Graphical Primitive elements
         public virtual void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter)
         {

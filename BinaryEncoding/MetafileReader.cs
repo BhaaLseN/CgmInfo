@@ -57,6 +57,9 @@ namespace CgmInfo.BinaryEncoding
                 case 1: // metafile descriptor
                     result = ReadMetafileDescriptorElement(commandHeader);
                     break;
+                case 3: // control
+                    result = ReadControlElement(commandHeader);
+                    break;
                 case 4: // graphical primitive
                     result = ReadGraphicalPrimitive(commandHeader);
                     break;
@@ -64,7 +67,6 @@ namespace CgmInfo.BinaryEncoding
                     result = ReadApplicationStructureDescriptor(commandHeader);
                     break;
                 case 2: // picture descriptor
-                case 3: // control
                 case 5: // attribute
                 case 6: // escape
                 case 7: // external
@@ -323,6 +325,68 @@ namespace CgmInfo.BinaryEncoding
             return result;
         }
 
+        private Command ReadControlElement(CommandHeader commandHeader)
+        {
+            Command result;
+            switch (commandHeader.ElementId)
+            {
+                case 1: // VDC INTEGER PRECISION
+                    var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(this, commandHeader);
+                    Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
+                    result = vdcIntegerPrecision;
+                    break;
+                case 2: // VDC REAL PRECISION
+                    var vdcRealPrecision = ControlElementReader.VdcRealPrecision(this, commandHeader);
+                    Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
+                    result = vdcRealPrecision;
+                    break;
+                // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+                //case 3: // AUXILIARY COLOR
+                //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
+                //    break;
+                case 4: // TRANSPARENCY
+                    result = ControlElementReader.Transparency(this, commandHeader);
+                    break;
+                case 5: // CLIP RECTANGLE
+                    result = ControlElementReader.ClipRectangle(this, commandHeader);
+                    break;
+                case 6: // CLIP INDICATOR
+                    result = ControlElementReader.ClipIndicator(this, commandHeader);
+                    break;
+                case 7: // LINE CLIPPING MODE
+                    result = ControlElementReader.LineClippingMode(this, commandHeader);
+                    break;
+                case 8: // MARKER CLIPPING MODE
+                    result = ControlElementReader.MarkerClippingMode(this, commandHeader);
+                    break;
+                case 9: // EDGE CLIPPING MODE
+                    result = ControlElementReader.EdgeClippingMode(this, commandHeader);
+                    break;
+                case 10: // NEW REGION
+                    result = ControlElementReader.NewRegion(this, commandHeader);
+                    break;
+                case 11: // SAVE PRIMITIVE CONTEXT
+                    result = ControlElementReader.SavePrimitiveContext(this, commandHeader);
+                    break;
+                case 12: // RESTORE PRIMITIVE CONTEXT
+                    result = ControlElementReader.RestorePrimitiveContext(this, commandHeader);
+                    break;
+                case 17: // PROTECTION REGION INDICATOR
+                    result = ControlElementReader.ProtectionRegionIndicator(this, commandHeader);
+                    break;
+                case 18: // GENERALIZED TEXT PATH MODE
+                    result = ControlElementReader.GeneralizedTextPathMode(this, commandHeader);
+                    break;
+                case 19: // MITRE LIMIT
+                    result = ControlElementReader.MiterLimit(this, commandHeader);
+                    break;
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
         private Command ReadGraphicalPrimitive(CommandHeader commandHeader)
         {
             Command result;
@@ -381,7 +445,7 @@ namespace CgmInfo.BinaryEncoding
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
             int ret = 0;
-            while (numBytes-- > 0)
+            while (numBytes --> 0)
                 ret = (ret << 8) | ReadByte();
             return ret;
         }
@@ -394,6 +458,10 @@ namespace CgmInfo.BinaryEncoding
         internal TEnum ReadEnum<TEnum>() where TEnum : struct
         {
             return (TEnum)Enum.ToObject(typeof(TEnum), ReadEnum());
+        }
+        internal PointF ReadPoint()
+        {
+            return new PointF((float)ReadVdc(), (float)ReadVdc());
         }
         internal double ReadVdc()
         {
@@ -460,11 +528,21 @@ namespace CgmInfo.BinaryEncoding
         {
             // ISO/IEC 8632-3 6.5
             // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;
-            // so simply using BinaryReader works out just fine.
+            // but the endianness might not work out. swap if necessary
             if (numBytes == 4)
-                return _reader.ReadSingle();
+            {
+                byte[] floatBytes = _reader.ReadBytes(4);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(floatBytes);
+                return BitConverter.ToSingle(floatBytes, 0);
+            }
             if (numBytes == 8)
-                return _reader.ReadDouble();
+            {
+                byte[] doubleBytes = _reader.ReadBytes(8);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(doubleBytes);
+                return BitConverter.ToDouble(doubleBytes, 0);
+            }
 
             throw new InvalidOperationException(string.Format("Sorry, cannot read a floating point value with {0} bytes", numBytes));
         }

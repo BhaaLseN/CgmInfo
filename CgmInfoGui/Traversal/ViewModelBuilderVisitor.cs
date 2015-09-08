@@ -224,6 +224,93 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
+        {
+            parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);
+        }
+
+        public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
+        {
+            var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);
+            realNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Exponent Width: {0} bit", vdcRealPrecision.ExponentWidth)),
+                new SimpleNode(string.Format("Fraction Width: {0} bit", vdcRealPrecision.FractionWidth)),
+            });
+        }
+
+        public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, MetafileContext parameter)
+        {
+            parameter.AddNode("AUXILIARY COLOR: {0}", auxiliaryColor.Color);
+        }
+
+        public void AcceptControlTransparency(Transparency transparency, MetafileContext parameter)
+        {
+            parameter.AddNode("TRANSPARENCY: {0}", transparency.Indicator);
+        }
+
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, MetafileContext parameter)
+        {
+            var clipRectNode = parameter.AddNode("CLIP RECTANGLE: {0} by {1}",
+                Math.Abs(clipRectangle.SecondCorner.X - clipRectangle.FirstCorner.X),
+                Math.Abs(clipRectangle.SecondCorner.Y - clipRectangle.FirstCorner.Y));
+            clipRectNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", clipRectangle.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", clipRectangle.SecondCorner)),
+            });
+        }
+
+        public void AcceptControlClipIndicator(ClipIndicator clipIndicator, MetafileContext parameter)
+        {
+            parameter.AddNode("CLIP INDICATOR: {0}", clipIndicator.Indicator);
+        }
+
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE CLIPPING MODE: {0}", lineClippingMode.Mode);
+        }
+
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER CLIPPING MODE: {0}", markerClippingMode.Mode);
+        }
+
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE CLIPPING MODE: {0}", edgeClippingMode.Mode);
+        }
+
+        public void AcceptControlNewRegion(NewRegion newRegion, MetafileContext parameter)
+        {
+            parameter.AddNode("NEW REGION");
+        }
+
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, MetafileContext parameter)
+        {
+            parameter.AddNode("SAVE PRIMITIVE CONTEXT: {0}", savePrimitiveContext.ContextName);
+        }
+
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTORE PRIMITIVE CONTEXT: {0}", restorePrimitiveContext.ContextName);
+        }
+
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, MetafileContext parameter)
+        {
+            parameter.AddNode("PROTECTION REGION INDICATOR: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
+        }
+
+        public void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, MetafileContext parameter)
+        {
+            parameter.AddNode("GENERALIZED TEXT PATH MODE: {0}", generalizedTextPathMode.Mode);
+        }
+
+        public void AcceptControlMiterLimit(MiterLimit miterLimit, MetafileContext parameter)
+        {
+            parameter.AddNode("MITRE LIMIT: {0}", miterLimit.Limit);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

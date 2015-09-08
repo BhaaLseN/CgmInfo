@@ -189,6 +189,71 @@ namespace CgmInfoCmd
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
         }
 
+        public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("VDC Integer Precision: {0} bit", vdcIntegerPrecision.Precision);
+        }
+        public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, PrintContext parameter)
+        {
+            if (vdcRealPrecision.Specification == RealPrecisionSpecification.Unsupported)
+                parameter.WriteLine("VDC Real Precision: Unsupported ({0}, {1} bit Exponent width, {2} bit Fraction width)",
+                    vdcRealPrecision.RepresentationForm, vdcRealPrecision.ExponentWidth, vdcRealPrecision.FractionWidth);
+            else
+                parameter.WriteLine("VDC Real Precision: {0}", vdcRealPrecision.Specification);
+        }
+        public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Auxiliary Color: {0}", auxiliaryColor.Color);
+        }
+        public void AcceptControlTransparency(Transparency transparency, PrintContext parameter)
+        {
+            parameter.WriteLine("Transparency: {0}", transparency.Indicator);
+        }
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Rectangle: {0} - {1}", clipRectangle.FirstCorner, clipRectangle.SecondCorner);
+        }
+        public void AcceptControlClipIndicator(ClipIndicator clipIndicator, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Indicator: {0}", clipIndicator.Indicator);
+        }
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Clipping Mode: {0}", lineClippingMode.Mode);
+        }
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Clipping Mode: {0}", markerClippingMode.Mode);
+        }
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Clipping Mode: {0}", edgeClippingMode.Mode);
+        }
+        public void AcceptControlNewRegion(NewRegion newRegion, PrintContext parameter)
+        {
+            parameter.WriteLine("New Region");
+        }
+        public void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, PrintContext parameter)
+        {
+            parameter.WriteLine("Save Primitive Context: {0}", savePrimitiveContext.ContextName);
+        }
+        public void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, PrintContext parameter)
+        {
+            parameter.WriteLine("Restore Primitive Context: {0}", restorePrimitiveContext.ContextName);
+        }
+        public void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, PrintContext parameter)
+        {
+            parameter.WriteLine("Protection Region Indicator: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
+        }
+        public void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Generalized Text Path Mode: {0}", generalizedTextPathMode.Mode);
+        }
+        public void AcceptControlMiterLimit(MiterLimit miterLimit, PrintContext parameter)
+        {
+            parameter.WriteLine("Mitre Limit: {0}", miterLimit.Limit);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {
             parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);

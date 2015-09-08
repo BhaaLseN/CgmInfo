@@ -55,6 +55,24 @@ namespace CgmInfo.TextEncoding
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
+            // control elements [ISO/IEC 8632-4 7.4]
+            { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
+            { "VDCREALPREC", ReadVdcRealPrecision },
+            // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+            //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
+            { "TRANSPARENCY", ControlElementReader.Transparency },
+            { "CLIPRECT", ControlElementReader.ClipRectangle },
+            { "CLIP", ControlElementReader.ClipIndicator },
+            { "LINECLIPMODE", ControlElementReader.LineClippingMode },
+            { "MARKERCLIPMODE", ControlElementReader.MarkerClippingMode },
+            { "EDGECLIPMODE", ControlElementReader.EdgeClippingMode },
+            { "NEWREGION", ControlElementReader.NewRegion },
+            { "SAVEPRIMCONT", ControlElementReader.SavePrimitiveContext },
+            { "RESPRIMCONT", ControlElementReader.RestorePrimitiveContext },
+            { "PROTREGION", ControlElementReader.ProtectionRegionIndicator },
+            { "GENTEXTPATHMODE", ControlElementReader.GeneralizedTextPathMode },
+            { "MITRELIMIT", ControlElementReader.MiterLimit },
+
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
@@ -138,6 +156,18 @@ namespace CgmInfo.TextEncoding
             var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader);
             reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
+        }
+        private static Command ReadVdcIntegerPrecision(MetafileReader reader)
+        {
+            var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(reader);
+            reader.Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
+            return vdcIntegerPrecision;
+        }
+        private static Command ReadVdcRealPrecision(MetafileReader reader)
+        {
+            var vdcRealPrecision = ControlElementReader.VdcRealPrecision(reader);
+            reader.Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
+            return vdcRealPrecision;
         }
 
         internal string ReadString()

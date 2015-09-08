@@ -41,9 +41,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="BinaryEncoding\ControlElementReader.cs" />
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
+    <Compile Include="Commands\Control\AuxiliaryColor.cs" />
+    <Compile Include="Commands\Control\GeneralizedTextPathMode.cs" />
+    <Compile Include="Commands\Control\MarkerClippingMode.cs" />
+    <Compile Include="Commands\Control\EdgeClippingMode.cs" />
+    <Compile Include="Commands\Control\LineClippingMode.cs" />
+    <Compile Include="Commands\Control\ClipRectangle.cs" />
+    <Compile Include="Commands\Control\ClipIndicator.cs" />
+    <Compile Include="Commands\Control\MiterLimit.cs" />
+    <Compile Include="Commands\Control\NewRegion.cs" />
+    <Compile Include="Commands\Control\ProtectionRegionIndicator.cs" />
+    <Compile Include="Commands\Control\RestorePrimitiveContext.cs" />
+    <Compile Include="Commands\Control\SavePrimitiveContext.cs" />
+    <Compile Include="Commands\Control\Transparency.cs" />
+    <Compile Include="Commands\Control\VdcRealPrecision.cs" />
+    <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
+    <Compile Include="Commands\Enums\ClippingMode.cs" />
+    <Compile Include="Commands\Enums\OnOffIndicator.cs" />
+    <Compile Include="Commands\Enums\RegionIndicator.cs" />
+    <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
@@ -108,10 +128,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="TextEncoding\ApplicationStructureDescriptorReader.cs" />
+    <Compile Include="TextEncoding\ControlElementReader.cs" />
     <Compile Include="TextEncoding\DelimiterElementReader.cs" />
     <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="TextEncoding\MetafileReader.cs" />
+    <Compile Include="TextEncoding\TextEncodingHelper.cs" />
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
     <Compile Include="Traversal\MetafilePropertyVisitor.cs" />

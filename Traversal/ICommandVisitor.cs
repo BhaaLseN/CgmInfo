@@ -50,6 +50,23 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
 
+        // control
+        void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);
+        void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, T parameter);
+        void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, T parameter);
+        void AcceptControlTransparency(Transparency transparency, T parameter);
+        void AcceptControlClipRectangle(ClipRectangle clipRectangle, T parameter);
+        void AcceptControlClipIndicator(ClipIndicator clipIndicator, T parameter);
+        void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, T parameter);
+        void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter);
+        void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter);
+        void AcceptControlNewRegion(NewRegion newRegion, T parameter);
+        void AcceptControlSavePrimitiveContext(SavePrimitiveContext savePrimitiveContext, T parameter);
+        void AcceptControlRestorePrimitiveContext(RestorePrimitiveContext restorePrimitiveContext, T parameter);
+        void AcceptControlProtectionRegionIndicator(ProtectionRegionIndicator protectionRegionIndicator, T parameter);
+        void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, T parameter);
+        void AcceptControlMiterLimit(MiterLimit miterLimit, T parameter);
+
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);

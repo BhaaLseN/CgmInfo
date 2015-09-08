@@ -1,12 +1,12 @@
-﻿using System.Drawing;
+using System.Drawing;
 using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
-    public class MaximumVdcExtent : Command
+    public class ClipRectangle : Command
     {
-        public MaximumVdcExtent(PointF firstCorner, PointF secondCorner)
-            : base(1, 17)
+        public ClipRectangle(PointF firstCorner, PointF secondCorner)
+            : base(3, 5)
         {
             FirstCorner = firstCorner;
             SecondCorner = secondCorner;
@@ -17,7 +17,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {
-            visitor.AcceptMetafileDescriptorMaximumVdcExtent(this, parameter);
+            visitor.AcceptControlClipRectangle(this, parameter);
         }
     }
 }

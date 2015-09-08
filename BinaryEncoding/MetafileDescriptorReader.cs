@@ -136,7 +136,7 @@ namespace CgmInfo.BinaryEncoding
         {
             // P1: (point) first corner [ISO/IEC 8632-3 8.3]
             // P2: (point) second corner
-            return new MaximumVdcExtent(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc());
+            return new MaximumVdcExtent(reader.ReadPoint(), reader.ReadPoint());
         }
 
         public static CharacterSetList CharacterSetList(MetafileReader reader, CommandHeader commandHeader)

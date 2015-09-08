@@ -68,6 +68,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeClippingMode(GetClippingMode(reader.ReadEnum()));
         }
 
+        public static NewRegion NewRegion(MetafileReader reader)
+        {
+            return new NewRegion();
+        }
+
         private static ClippingMode GetClippingMode(string token)
         {
             ClippingMode ret;

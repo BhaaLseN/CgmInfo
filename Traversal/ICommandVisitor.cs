@@ -60,6 +60,7 @@ namespace CgmInfo.Traversal
         void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, T parameter);
         void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter);
         void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter);
+        void AcceptControlNewRegion(NewRegion newRegion, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

@@ -229,6 +229,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Clipping Mode: {0}", edgeClippingMode.Mode);
         }
+        public void AcceptControlNewRegion(NewRegion newRegion, PrintContext parameter)
+        {
+            parameter.WriteLine("New Region");
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

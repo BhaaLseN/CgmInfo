@@ -281,6 +281,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("EDGE CLIPPING MODE: {0}", edgeClippingMode.Mode);
         }
 
+        public void AcceptControlNewRegion(NewRegion newRegion, MetafileContext parameter)
+        {
+            parameter.AddNode("NEW REGION");
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

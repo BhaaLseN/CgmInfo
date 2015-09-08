@@ -362,6 +362,9 @@ namespace CgmInfo.BinaryEncoding
                 case 9: // EDGE CLIPPING MODE
                     result = ControlElementReader.EdgeClippingMode(this, commandHeader);
                     break;
+                case 10: // NEW REGION
+                    result = ControlElementReader.NewRegion(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

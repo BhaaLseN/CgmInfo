@@ -66,6 +66,7 @@ namespace CgmInfo.TextEncoding
             { "LINECLIPMODE", ControlElementReader.LineClippingMode },
             { "MARKERCLIPMODE", ControlElementReader.MarkerClippingMode },
             { "EDGECLIPMODE", ControlElementReader.EdgeClippingMode },
+            { "NEWREGION", ControlElementReader.NewRegion },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

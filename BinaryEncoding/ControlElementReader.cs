@@ -78,5 +78,11 @@ namespace CgmInfo.BinaryEncoding
             //      2 locus then shape
             return new EdgeClippingMode(reader.ReadEnum<ClippingMode>());
         }
+
+        public static NewRegion NewRegion(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // NEW REGION: has no parameters [ISO/IEC 8632-3 8.5]
+            return new NewRegion();
+        }
     }
 }

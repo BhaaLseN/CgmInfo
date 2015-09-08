@@ -167,6 +167,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlNewRegion(NewRegion newRegion, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

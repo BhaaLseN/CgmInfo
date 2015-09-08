@@ -51,5 +51,32 @@ namespace CgmInfo.BinaryEncoding
             //      1 on
             return new ClipIndicator(reader.ReadEnum<OnOffIndicator>());
         }
+
+        public static LineClippingMode LineClippingMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) clipping mode: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 locus
+            //      1 shape
+            //      2 locus then shape
+            return new LineClippingMode(reader.ReadEnum<ClippingMode>());
+        }
+
+        public static MarkerClippingMode MarkerClippingMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) clipping mode: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 locus
+            //      1 shape
+            //      2 locus then shape
+            return new MarkerClippingMode(reader.ReadEnum<ClippingMode>());
+        }
+
+        public static EdgeClippingMode EdgeClippingMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) clipping mode: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 locus
+            //      1 shape
+            //      2 locus then shape
+            return new EdgeClippingMode(reader.ReadEnum<ClippingMode>());
+        }
     }
 }

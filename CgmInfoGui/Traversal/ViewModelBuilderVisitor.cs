@@ -266,6 +266,21 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("CLIP INDICATOR: {0}", clipIndicator.Indicator);
         }
 
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE CLIPPING MODE: {0}", lineClippingMode.Mode);
+        }
+
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER CLIPPING MODE: {0}", markerClippingMode.Mode);
+        }
+
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE CLIPPING MODE: {0}", edgeClippingMode.Mode);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

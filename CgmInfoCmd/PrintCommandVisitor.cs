@@ -217,6 +217,18 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Clip Indicator: {0}", clipIndicator.Indicator);
         }
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Clipping Mode: {0}", lineClippingMode.Mode);
+        }
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Clipping Mode: {0}", markerClippingMode.Mode);
+        }
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Clipping Mode: {0}", edgeClippingMode.Mode);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

@@ -353,6 +353,15 @@ namespace CgmInfo.BinaryEncoding
                 case 6: // CLIP INDICATOR
                     result = ControlElementReader.ClipIndicator(this, commandHeader);
                     break;
+                case 7: // LINE CLIPPING MODE
+                    result = ControlElementReader.LineClippingMode(this, commandHeader);
+                    break;
+                case 8: // MARKER CLIPPING MODE
+                    result = ControlElementReader.MarkerClippingMode(this, commandHeader);
+                    break;
+                case 9: // EDGE CLIPPING MODE
+                    result = ControlElementReader.EdgeClippingMode(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

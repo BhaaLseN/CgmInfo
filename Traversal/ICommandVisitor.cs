@@ -57,6 +57,9 @@ namespace CgmInfo.Traversal
         void AcceptControlTransparency(Transparency transparency, T parameter);
         void AcceptControlClipRectangle(ClipRectangle clipRectangle, T parameter);
         void AcceptControlClipIndicator(ClipIndicator clipIndicator, T parameter);
+        void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, T parameter);
+        void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter);
+        void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter);
 
         // graphical primitives
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);

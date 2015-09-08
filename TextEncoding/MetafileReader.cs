@@ -63,6 +63,9 @@ namespace CgmInfo.TextEncoding
             { "TRANSPARENCY", ControlElementReader.Transparency },
             { "CLIPRECT", ControlElementReader.ClipRectangle },
             { "CLIP", ControlElementReader.ClipIndicator },
+            { "LINECLIPMODE", ControlElementReader.LineClippingMode },
+            { "MARKERCLIPMODE", ControlElementReader.MarkerClippingMode },
+            { "EDGECLIPMODE", ControlElementReader.EdgeClippingMode },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

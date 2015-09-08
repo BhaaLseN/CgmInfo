@@ -152,6 +152,21 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlLineClippingMode(LineClippingMode lineClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlMarkerClippingMode(MarkerClippingMode markerClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public void AcceptControlEdgeClippingMode(EdgeClippingMode edgeClippingMode, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

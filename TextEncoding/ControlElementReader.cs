@@ -1,3 +1,4 @@
+using System;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 
@@ -50,6 +51,29 @@ namespace CgmInfo.TextEncoding
         public static ClipIndicator ClipIndicator(MetafileReader reader)
         {
             return new ClipIndicator(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
+        }
+
+        public static LineClippingMode LineClippingMode(MetafileReader reader)
+        {
+            return new LineClippingMode(GetClippingMode(reader.ReadEnum()));
+        }
+
+        public static MarkerClippingMode MarkerClippingMode(MetafileReader reader)
+        {
+            return new MarkerClippingMode(GetClippingMode(reader.ReadEnum()));
+        }
+
+        public static EdgeClippingMode EdgeClippingMode(MetafileReader reader)
+        {
+            return new EdgeClippingMode(GetClippingMode(reader.ReadEnum()));
+        }
+
+        private static ClippingMode GetClippingMode(string token)
+        {
+            ClippingMode ret;
+            if (!Enum.TryParse<ClippingMode>(token, true, out ret))
+                ret = ClippingMode.Locus;
+            return ret;
         }
     }
 }

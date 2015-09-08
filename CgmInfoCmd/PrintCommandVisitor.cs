@@ -249,6 +249,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Generalized Text Path Mode: {0}", generalizedTextPathMode.Mode);
         }
+        public void AcceptControlMiterLimit(MiterLimit miterLimit, PrintContext parameter)
+        {
+            parameter.WriteLine("Mitre Limit: {0}", miterLimit.Limit);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

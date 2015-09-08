@@ -52,6 +52,7 @@
     <Compile Include="Commands\Control\LineClippingMode.cs" />
     <Compile Include="Commands\Control\ClipRectangle.cs" />
     <Compile Include="Commands\Control\ClipIndicator.cs" />
+    <Compile Include="Commands\Control\MiterLimit.cs" />
     <Compile Include="Commands\Control\NewRegion.cs" />
     <Compile Include="Commands\Control\ProtectionRegionIndicator.cs" />
     <Compile Include="Commands\Control\RestorePrimitiveContext.cs" />

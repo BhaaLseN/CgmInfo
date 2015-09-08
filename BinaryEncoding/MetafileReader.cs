@@ -377,6 +377,9 @@ namespace CgmInfo.BinaryEncoding
                 case 18: // GENERALIZED TEXT PATH MODE
                     result = ControlElementReader.GeneralizedTextPathMode(this, commandHeader);
                     break;
+                case 19: // MITRE LIMIT
+                    result = ControlElementReader.MiterLimit(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

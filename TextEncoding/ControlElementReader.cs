@@ -98,6 +98,11 @@ namespace CgmInfo.TextEncoding
             return new GeneralizedTextPathMode(GetTextPathMode(reader.ReadEnum()));
         }
 
+        public static MiterLimit MiterLimit(MetafileReader reader)
+        {
+            return new MiterLimit(reader.ReadReal());
+        }
+
         private static TextPathMode GetTextPathMode(string token)
         {
             token = token.ToUpperInvariant();

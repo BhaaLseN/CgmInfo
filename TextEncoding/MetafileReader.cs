@@ -71,6 +71,7 @@ namespace CgmInfo.TextEncoding
             { "RESPRIMCONT", ControlElementReader.RestorePrimitiveContext },
             { "PROTREGION", ControlElementReader.ProtectionRegionIndicator },
             { "GENTEXTPATHMODE", ControlElementReader.GeneralizedTextPathMode },
+            { "MITRELIMIT", ControlElementReader.MiterLimit },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

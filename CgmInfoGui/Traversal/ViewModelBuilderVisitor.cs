@@ -306,6 +306,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("GENERALIZED TEXT PATH MODE: {0}", generalizedTextPathMode.Mode);
         }
 
+        public void AcceptControlMiterLimit(MiterLimit miterLimit, MetafileContext parameter)
+        {
+            parameter.AddNode("MITRE LIMIT: {0}", miterLimit.Limit);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

@@ -115,5 +115,11 @@ namespace CgmInfo.BinaryEncoding
             //      2 axis - tangential
             return new GeneralizedTextPathMode(reader.ReadEnum<TextPathMode>());
         }
+
+        public static MiterLimit MiterLimit(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (real) mitre limit [ISO/IEC 8632-3 8.5]
+            return new MiterLimit(reader.ReadReal());
+        }
     }
 }

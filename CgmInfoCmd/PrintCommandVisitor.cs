@@ -245,6 +245,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Protection Region Indicator: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
         }
+        public void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Generalized Text Path Mode: {0}", generalizedTextPathMode.Mode);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

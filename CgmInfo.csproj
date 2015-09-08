@@ -46,6 +46,7 @@
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />
+    <Compile Include="Commands\Control\GeneralizedTextPathMode.cs" />
     <Compile Include="Commands\Control\MarkerClippingMode.cs" />
     <Compile Include="Commands\Control\EdgeClippingMode.cs" />
     <Compile Include="Commands\Control\LineClippingMode.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
+    <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />

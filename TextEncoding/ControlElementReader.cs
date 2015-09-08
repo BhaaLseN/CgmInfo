@@ -93,6 +93,20 @@ namespace CgmInfo.TextEncoding
             return new ProtectionRegionIndicator(reader.ReadIndex(), (RegionIndicator)reader.ReadIndex());
         }
 
+        public static GeneralizedTextPathMode GeneralizedTextPathMode(MetafileReader reader)
+        {
+            return new GeneralizedTextPathMode(GetTextPathMode(reader.ReadEnum()));
+        }
+
+        private static TextPathMode GetTextPathMode(string token)
+        {
+            token = token.ToUpperInvariant();
+            if (token == "AXIS")
+                return TextPathMode.AxisTangential;
+            if (token == "NONAXIS")
+                return TextPathMode.NonTangential;
+            return TextPathMode.Off;
+        }
         private static ClippingMode GetClippingMode(string token)
         {
             ClippingMode ret;

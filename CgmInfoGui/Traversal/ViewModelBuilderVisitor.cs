@@ -301,6 +301,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("PROTECTION REGION INDICATOR: {0} ({1})", protectionRegionIndicator.Index, protectionRegionIndicator.Indicator);
         }
 
+        public void AcceptControlGeneralizedTextPathMode(GeneralizedTextPathMode generalizedTextPathMode, MetafileContext parameter)
+        {
+            parameter.AddNode("GENERALIZED TEXT PATH MODE: {0}", generalizedTextPathMode.Mode);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

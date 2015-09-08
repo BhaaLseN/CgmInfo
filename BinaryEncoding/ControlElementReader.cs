@@ -106,5 +106,14 @@ namespace CgmInfo.BinaryEncoding
             //      3 shield
             return new ProtectionRegionIndicator(reader.ReadIndex(), reader.ReadEnum<RegionIndicator>());
         }
+
+        public static GeneralizedTextPathMode GeneralizedTextPathMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) text path mode: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 off
+            //      1 non - tangential
+            //      2 axis - tangential
+            return new GeneralizedTextPathMode(reader.ReadEnum<TextPathMode>());
+        }
     }
 }

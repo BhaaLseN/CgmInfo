@@ -374,6 +374,9 @@ namespace CgmInfo.BinaryEncoding
                 case 17: // PROTECTION REGION INDICATOR
                     result = ControlElementReader.ProtectionRegionIndicator(this, commandHeader);
                     break;
+                case 18: // GENERALIZED TEXT PATH MODE
+                    result = ControlElementReader.GeneralizedTextPathMode(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

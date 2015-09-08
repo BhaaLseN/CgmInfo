@@ -1,3 +1,5 @@
+using CgmInfo.Commands.Enums;
+
 namespace CgmInfo.TextEncoding
 {
     internal static class TextEncodingHelper
@@ -17,6 +19,12 @@ namespace CgmInfo.TextEncoding
         {
             // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
             return GetBitPrecision(maxValue - minValue);
+        }
+        public static OnOffIndicator GetOnOffValue(string token)
+        {
+            if (token.ToUpperInvariant() == "ON")
+                return OnOffIndicator.On;
+            return OnOffIndicator.Off;
         }
     }
 }

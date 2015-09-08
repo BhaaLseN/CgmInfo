@@ -205,6 +205,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Auxiliary Color: {0}", auxiliaryColor.Color);
         }
+        public void AcceptControlTransparency(Transparency transparency, PrintContext parameter)
+        {
+            parameter.WriteLine("Transparency: {0}", transparency.Indicator);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

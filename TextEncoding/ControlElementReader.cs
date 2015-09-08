@@ -36,5 +36,10 @@ namespace CgmInfo.TextEncoding
             throw new System.NotSupportedException("Requires COLOUR SELECTION MODE to be implemented");
             //return new AuxiliaryColor(reader.ReadColor());
         }
+
+        public static Transparency Transparency(MetafileReader reader)
+        {
+            return new Transparency(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
+        }
     }
 }

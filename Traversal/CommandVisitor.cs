@@ -137,6 +137,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlTransparency(Transparency transparency, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

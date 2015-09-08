@@ -28,5 +28,13 @@ namespace CgmInfo.BinaryEncoding
             // P1: (colour) auxiliary colour [ISO/IEC 8632-3 8.5]
             //return new AuxiliaryColor(reader.ReadColor());
         }
+
+        public static Transparency Transparency(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) on - off indicator: valid values are [ISO/IEC 8632-3 8.5]
+            //      0 off: auxiliary colour background is required
+            //      1 on: transparent background is required
+            return new Transparency(reader.ReadEnum<OnOffIndicator>());
+        }
     }
 }

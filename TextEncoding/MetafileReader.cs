@@ -60,6 +60,7 @@ namespace CgmInfo.TextEncoding
             { "VDCREALPREC", ReadVdcRealPrecision },
             // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
             //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
+            { "TRANSPARENCY", ControlElementReader.Transparency },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "TEXT", GraphicalPrimitiveReader.Text },

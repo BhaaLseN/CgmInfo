@@ -344,6 +344,9 @@ namespace CgmInfo.BinaryEncoding
                 //case 3: // AUXILIARY COLOR
                 //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
                 //    break;
+                case 4: // TRANSPARENCY
+                    result = ControlElementReader.Transparency(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

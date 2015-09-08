@@ -244,6 +244,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("AUXILIARY COLOR: {0}", auxiliaryColor.Color);
         }
 
+        public void AcceptControlTransparency(Transparency transparency, MetafileContext parameter)
+        {
+            parameter.AddNode("TRANSPARENCY: {0}", transparency.Indicator);
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

@@ -249,6 +249,18 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("TRANSPARENCY: {0}", transparency.Indicator);
         }
 
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, MetafileContext parameter)
+        {
+            var clipRectNode = parameter.AddNode("CLIP RECTANGLE: {0} by {1}",
+                Math.Abs(clipRectangle.SecondCorner.X - clipRectangle.FirstCorner.X),
+                Math.Abs(clipRectangle.SecondCorner.Y - clipRectangle.FirstCorner.Y));
+            clipRectNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", clipRectangle.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", clipRectangle.SecondCorner)),
+            });
+        }
+
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

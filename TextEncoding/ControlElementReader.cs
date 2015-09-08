@@ -41,5 +41,10 @@ namespace CgmInfo.TextEncoding
         {
             return new Transparency(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
         }
+
+        public static ClipRectangle ClipRectangle(MetafileReader reader)
+        {
+            return new ClipRectangle(reader.ReadPoint(), reader.ReadPoint());
+        }
     }
 }

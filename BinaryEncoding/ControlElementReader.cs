@@ -36,5 +36,12 @@ namespace CgmInfo.BinaryEncoding
             //      1 on: transparent background is required
             return new Transparency(reader.ReadEnum<OnOffIndicator>());
         }
+
+        public static ClipRectangle ClipRectangle(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) first corner [ISO/IEC 8632-3 8.5]
+            // P2: (point) second corner
+            return new ClipRectangle(reader.ReadPoint(), reader.ReadPoint());
+        }
     }
 }

@@ -209,6 +209,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Transparency: {0}", transparency.Indicator);
         }
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Rectangle: {0} - {1}", clipRectangle.FirstCorner, clipRectangle.SecondCorner);
+        }
 
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {

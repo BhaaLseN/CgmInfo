@@ -347,6 +347,9 @@ namespace CgmInfo.BinaryEncoding
                 case 4: // TRANSPARENCY
                     result = ControlElementReader.Transparency(this, commandHeader);
                     break;
+                case 5: // CLIP RECTANGLE
+                    result = ControlElementReader.ClipRectangle(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
@@ -425,6 +428,10 @@ namespace CgmInfo.BinaryEncoding
         internal TEnum ReadEnum<TEnum>() where TEnum : struct
         {
             return (TEnum)Enum.ToObject(typeof(TEnum), ReadEnum());
+        }
+        internal PointF ReadPoint()
+        {
+            return new PointF((float)ReadVdc(), (float)ReadVdc());
         }
         internal double ReadVdc()
         {

@@ -142,6 +142,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public void AcceptControlClipRectangle(ClipRectangle clipRectangle, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Graphical Primitive elements

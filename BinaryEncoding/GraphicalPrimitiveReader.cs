@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
+using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -49,6 +49,13 @@ namespace CgmInfo.BinaryEncoding
             //      1 final
             // P2: (string) text string [ISO/IEC 8632-3 8.6]
             return new AppendText(reader.ReadEnum<FinalFlag>(), reader.ReadString());
+        }
+
+        public static Rectangle Rectangle(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) first corner [ISO/IEC 8632-3 8.6]
+            // P2: (point) second corner
+            return new Rectangle(reader.ReadPoint(), reader.ReadPoint());
         }
     }
 }

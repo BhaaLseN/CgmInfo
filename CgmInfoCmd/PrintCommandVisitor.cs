@@ -271,6 +271,11 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Append Text: '{0}'", appendText.Text);
         }
+        public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, PrintContext parameter)
+        {
+            parameter.WriteLine("Rectangle: {0} - {1}", rectangle.FirstCorner, rectangle.SecondCorner);
+        }
+
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {
             parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, applicationStructureAttribute.DataRecord);

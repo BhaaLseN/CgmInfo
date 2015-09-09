@@ -405,6 +405,9 @@ namespace CgmInfo.BinaryEncoding
                 case 6: // APPEND TEXT
                     result = GraphicalPrimitiveReader.AppendText(this, commandHeader);
                     break;
+                case 11: // RECTANGLE
+                    result = GraphicalPrimitiveReader.Rectangle(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

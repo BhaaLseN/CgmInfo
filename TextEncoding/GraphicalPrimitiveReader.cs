@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
+using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.TextEncoding
 {
@@ -47,6 +47,11 @@ namespace CgmInfo.TextEncoding
         public static AppendText AppendText(MetafileReader reader)
         {
             return new AppendText(ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
+        }
+
+        public static Rectangle Rectangle(MetafileReader reader)
+        {
+            return new Rectangle(reader.ReadPoint(), reader.ReadPoint());
         }
 
         private static FinalFlag ParseFinalFlag(string token)

@@ -349,6 +349,17 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("APPEND TEXT: '{0}'{1}", appendText.Text, appendText.Final == FinalFlag.Final ? " (final)" : "");
         }
+        public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, MetafileContext parameter)
+        {
+            var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",
+                Math.Abs(rectangle.SecondCorner.X - rectangle.FirstCorner.X),
+                Math.Abs(rectangle.SecondCorner.Y - rectangle.FirstCorner.Y));
+            rectNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", rectangle.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", rectangle.SecondCorner)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -393,6 +393,9 @@ namespace CgmInfo.BinaryEncoding
             // ISO/IEC 8632-3 8.6, Table 7
             switch (commandHeader.ElementId)
             {
+                case 1: // POLYLINE
+                    result = GraphicalPrimitiveReader.Polyline(this, commandHeader);
+                    break;
                 case 4: // TEXT
                     result = GraphicalPrimitiveReader.Text(this, commandHeader);
                     break;

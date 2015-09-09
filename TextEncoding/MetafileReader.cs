@@ -74,6 +74,8 @@ namespace CgmInfo.TextEncoding
             { "MITRELIMIT", ControlElementReader.MiterLimit },
 
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
+            { "LINE", GraphicalPrimitiveReader.Polyline },
+            { "INCRLINE", GraphicalPrimitiveReader.IncrementalPolyline },
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
@@ -316,7 +318,19 @@ namespace CgmInfo.TextEncoding
             return ReadInteger();
         }
 
+        private TokenState _lastState;
+        internal bool AtEndOfElement
+        {
+            // consider EOF also as EOE
+            get { return _lastState != TokenState.EndOfToken; }
+        }
         private TokenState ReadToken(out string token)
+        {
+            var state = DoReadToken(out token);
+            _lastState = state;
+            return state;
+        }
+        private TokenState DoReadToken(out string token)
         {
             var sb = new StringBuilder();
             try

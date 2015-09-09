@@ -311,6 +311,11 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("MITRE LIMIT: {0}", miterLimit.Limit);
         }
 
+        public void AcceptGraphicalPrimitivePolyline(Polyline polyline, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYLINE: {0} points", polyline.Points.Length);
+            node.Nodes.AddRange(polyline.Points.Select(p => new SimpleNode(p.ToString())));
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

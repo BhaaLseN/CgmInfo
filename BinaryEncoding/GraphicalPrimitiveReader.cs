@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 
@@ -5,6 +7,19 @@ namespace CgmInfo.BinaryEncoding
 {
     internal static class GraphicalPrimitiveReader
     {
+        public static Polyline Polyline(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1-Pn: (point) n (X,Y) polyline vertices [ISO/IEC 8632-3 8.6]
+            var points = new List<PointF>();
+            // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
+            //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
+            while (reader.HasMoreData(2))
+            {
+                points.Add(reader.ReadPoint());
+            }
+            return new Polyline(points.ToArray());
+        }
+
         public static TextCommand Text(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) text position [ISO/IEC 8632-3 8.6]

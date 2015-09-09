@@ -200,6 +200,11 @@ namespace CgmInfo.Traversal
         #endregion
 
         #region Graphical Primitive elements
+        public virtual void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter)
         {
             // intentionally left blank

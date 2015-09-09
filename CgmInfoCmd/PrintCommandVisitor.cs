@@ -254,6 +254,10 @@ namespace CgmInfoCmd
             parameter.WriteLine("Mitre Limit: {0}", miterLimit.Limit);
         }
 
+        public void AcceptGraphicalPrimitivePolyline(Polyline polyline, PrintContext parameter)
+        {
+            parameter.WriteLine("Polyline: {0} points", polyline.Points.Length);
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {
             parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);

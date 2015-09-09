@@ -55,6 +55,13 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
         parameter.Add(rectVisual);
     }
 
+    public override void AcceptGraphicalPrimitiveCircle(Circle circle, GraphicalElementContext parameter)
+    {
+        var circleVisual = new CircleVisual(circle.Center.ToPoint(), circle.Radius);
+        parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
+        parameter.Add(circleVisual);
+    }
+
     public override void AcceptGraphicalPrimitiveText(TextCommand text, GraphicalElementContext parameter)
     {
         var textVisual = new TextVisual(text.Text, text.Position.ToPoint());

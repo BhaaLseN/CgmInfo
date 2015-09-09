@@ -6,10 +6,10 @@ namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class TextCommand : Command
     {
-        public TextCommand(double positionX, double positionY, FinalFlag final, string text)
+        public TextCommand(PointF position, FinalFlag final, string text)
             : base(4, 4)
         {
-            Position = new PointF((float)positionX, (float)positionY);
+            Position = position;
             Final = final;
             Text = text;
         }

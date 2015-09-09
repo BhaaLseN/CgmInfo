@@ -36,12 +36,12 @@ namespace CgmInfo.TextEncoding
 
         public static TextCommand Text(MetafileReader reader)
         {
-            return new TextCommand(reader.ReadVdc(), reader.ReadVdc(), ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
+            return new TextCommand(reader.ReadPoint(), ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
         }
 
         public static RestrictedText RestrictedText(MetafileReader reader)
         {
-            return new RestrictedText(reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), reader.ReadVdc(), ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
+            return new RestrictedText(reader.ReadVdc(), reader.ReadVdc(), reader.ReadPoint(), ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
         }
 
         public static AppendText AppendText(MetafileReader reader)

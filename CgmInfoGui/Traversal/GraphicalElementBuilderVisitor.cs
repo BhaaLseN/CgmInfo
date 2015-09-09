@@ -88,5 +88,11 @@ namespace CgmInfoGui.Traversal
             parameter.IncreaseBounds(new Rect(rectangle.FirstCorner.ToPoint(), rectangle.SecondCorner.ToPoint()));
             parameter.Add(rectVisual);
         }
+        public override void AcceptGraphicalPrimitiveCircle(Circle circle, GraphicalElementContext parameter)
+        {
+            var circleVisual = new CircleVisual(circle.Center.ToPoint(), circle.Radius);
+            parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
+            parameter.Add(circleVisual);
+        }
     }
 }

@@ -82,5 +82,11 @@ namespace CgmInfoGui.Traversal
                 parameter.LastText = textVisual;
             parameter.Add(textVisual);
         }
+        public override void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, GraphicalElementContext parameter)
+        {
+            var rectVisual = new RectangleVisual(rectangle.FirstCorner.ToPoint(), rectangle.SecondCorner.ToPoint());
+            parameter.IncreaseBounds(new Rect(rectangle.FirstCorner.ToPoint(), rectangle.SecondCorner.ToPoint()));
+            parameter.Add(rectVisual);
+        }
     }
 }

@@ -369,6 +369,16 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Radius: {0}", circle.Radius)),
             });
         }
+        public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, MetafileContext parameter)
+        {
+            var ellipseNode = parameter.AddNode("ELLIPSE: {0}", ellipse.Center);
+            ellipseNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", ellipse.Center)),
+                new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipse.FirstConjugateDiameter)),
+                new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipse.SecondConjugateDiameter)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

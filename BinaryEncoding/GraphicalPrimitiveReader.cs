@@ -64,5 +64,13 @@ namespace CgmInfo.BinaryEncoding
             // P2: (vdc) radius of circle
             return new Circle(reader.ReadPoint(), reader.ReadVdc());
         }
+
+        public static Ellipse Ellipse(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre of ellipse
+            // P2: (point) endpoint of first conjugate diameter
+            // P3: (point) endpoint of second conjugate diameter
+            return new Ellipse(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
     }
 }

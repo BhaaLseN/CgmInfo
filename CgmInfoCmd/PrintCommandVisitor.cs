@@ -279,6 +279,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Circle: {0} @ {1}", circle.Center, circle.Radius);
         }
+        public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, PrintContext parameter)
+        {
+            parameter.WriteLine("Ellipse: {0} @ {1} - {2}", ellipse.Center, ellipse.FirstConjugateDiameter, ellipse.SecondConjugateDiameter);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

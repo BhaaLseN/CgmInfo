@@ -64,6 +64,7 @@
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
     <Compile Include="MetafileProperties.cs" />

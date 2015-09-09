@@ -57,5 +57,12 @@ namespace CgmInfo.BinaryEncoding
             // P2: (point) second corner
             return new Rectangle(reader.ReadPoint(), reader.ReadPoint());
         }
+
+        public static Circle Circle(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre of circle [ISO/IEC 8632-3 8.6]
+            // P2: (vdc) radius of circle
+            return new Circle(reader.ReadPoint(), reader.ReadVdc());
+        }
     }
 }

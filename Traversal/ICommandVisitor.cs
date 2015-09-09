@@ -73,6 +73,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
         void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter);
         void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter);
+        void AcceptGraphicalPrimitiveCircle(Circle circle, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

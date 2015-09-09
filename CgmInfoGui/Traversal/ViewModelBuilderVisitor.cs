@@ -360,6 +360,15 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Second Corner: {0}", rectangle.SecondCorner)),
             });
         }
+        public void AcceptGraphicalPrimitiveCircle(Circle circle, MetafileContext parameter)
+        {
+            var circleNode = parameter.AddNode("CIRCLE: {0} by {0}", circle.Radius);
+            circleNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", circle.Center)),
+                new SimpleNode(string.Format("Radius: {0}", circle.Radius)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

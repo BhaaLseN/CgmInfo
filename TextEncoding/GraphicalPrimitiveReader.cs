@@ -54,6 +54,11 @@ namespace CgmInfo.TextEncoding
             return new Rectangle(reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static Circle Circle(MetafileReader reader)
+        {
+            return new Circle(reader.ReadPoint(), reader.ReadVdc());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

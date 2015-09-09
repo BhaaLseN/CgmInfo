@@ -408,6 +408,9 @@ namespace CgmInfo.BinaryEncoding
                 case 11: // RECTANGLE
                     result = GraphicalPrimitiveReader.Rectangle(this, commandHeader);
                     break;
+                case 12: // CIRCLE
+                    result = GraphicalPrimitiveReader.Circle(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -80,6 +80,7 @@ namespace CgmInfo.TextEncoding
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
             { "RECT", GraphicalPrimitiveReader.Rectangle },
+            { "CIRCLE", GraphicalPrimitiveReader.Circle },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

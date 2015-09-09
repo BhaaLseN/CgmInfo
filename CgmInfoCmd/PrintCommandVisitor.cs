@@ -275,6 +275,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Rectangle: {0} - {1}", rectangle.FirstCorner, rectangle.SecondCorner);
         }
+        public void AcceptGraphicalPrimitiveCircle(Circle circle, PrintContext parameter)
+        {
+            parameter.WriteLine("Circle: {0} @ {1}", circle.Center, circle.Radius);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

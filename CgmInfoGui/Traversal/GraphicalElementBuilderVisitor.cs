@@ -48,6 +48,13 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
             parameter.IncreaseBounds(point);
         parameter.Add(line);
     }
+    public override void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, GraphicalElementContext parameter)
+    {
+        var rectVisual = new RectangleVisual(rectangle.FirstCorner.ToPoint(), rectangle.SecondCorner.ToPoint());
+        parameter.IncreaseBounds(new Rect(rectangle.FirstCorner.ToPoint(), rectangle.SecondCorner.ToPoint()));
+        parameter.Add(rectVisual);
+    }
+
     public override void AcceptGraphicalPrimitiveText(TextCommand text, GraphicalElementContext parameter)
     {
         var textVisual = new TextVisual(text.Text, text.Position.ToPoint());

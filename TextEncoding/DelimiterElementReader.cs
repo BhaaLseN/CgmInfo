@@ -83,7 +83,7 @@ namespace CgmInfo.TextEncoding
         public static BeginTileArray BeginTileArray(MetafileReader reader)
         {
             return new BeginTileArray(
-                reader.ReadVdc(), reader.ReadVdc(),
+                reader.ReadPoint(),
                 ParseCellPathDirection(reader.ReadEnum()),
                 ParseLineProgressionDirection(reader.ReadEnum()),
                 reader.ReadInteger(), reader.ReadInteger(),

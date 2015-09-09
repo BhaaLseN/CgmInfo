@@ -117,7 +117,7 @@ namespace CgmInfo.BinaryEncoding
             // P12: (integer) image number of cells in path direction
             // P13: (integer) image number of cells in line direction
             return new BeginTileArray(
-                reader.ReadVdc(), reader.ReadVdc(),
+                reader.ReadPoint(),
                 reader.ReadEnum<CellPathDirection>(),
                 reader.ReadEnum<LineProgressionDirection>(),
                 reader.ReadInteger(), reader.ReadInteger(),

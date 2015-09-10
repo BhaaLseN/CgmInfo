@@ -94,5 +94,13 @@ namespace CgmInfoGui.Traversal
             parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
             parameter.Add(circleVisual);
         }
+        public override void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, GraphicalElementContext parameter)
+        {
+            var ellipseVisual = new EllipseVisual(ellipse.Center.ToPoint(), ellipse.FirstConjugateDiameter.ToPoint(), ellipse.SecondConjugateDiameter.ToPoint());
+            parameter.IncreaseBounds(new Rect(
+                ellipseVisual.Center.X - ellipseVisual.RadiusX, ellipseVisual.Center.Y - ellipseVisual.RadiusY,
+                ellipseVisual.RadiusX * 2, ellipseVisual.RadiusY * 2));
+            parameter.Add(ellipseVisual);
+        }
     }
 }

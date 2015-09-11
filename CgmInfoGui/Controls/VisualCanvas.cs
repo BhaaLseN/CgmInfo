@@ -69,6 +69,10 @@ namespace CgmInfoGui.Controls
         {
             _visuals = new VisualCollection(this);
             ResetSize();
+
+            // enable cached composition, since the visuals won't change anyways after they're loaded.
+            // scale it up by 5x to make it look crisp when zooming in
+            CacheMode = new BitmapCache(5.0) { EnableClearType = true };
         }
 
         private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)

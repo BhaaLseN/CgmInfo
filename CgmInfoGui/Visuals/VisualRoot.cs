@@ -16,6 +16,10 @@ namespace CgmInfoGui.Visuals
         public Rect VdcExtent { get; set; } = Rect.Empty;
         public Rect GeometryExtent { get; set; } = Rect.Empty;
 
+        // direction of X/Y, which might not be left/down as a canvas takes it
+        public double DirectionX { get; set; } = 1.0;
+        public double DirectionY { get; set; } = 1.0;
+
         #region IEnumerable/ICollection
 
         public int Count => _visuals.Count;

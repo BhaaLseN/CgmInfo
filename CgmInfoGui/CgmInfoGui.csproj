@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />
     <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
+    <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedNode.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

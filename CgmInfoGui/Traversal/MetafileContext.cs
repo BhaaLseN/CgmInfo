@@ -23,6 +23,14 @@ namespace CgmInfoGui.Traversal
 
         public void AddUnsupportedNode(UnsupportedCommand unsupportedCommand)
         {
+            var counterNode = RootLevel.OfType<UnsupportedCounter>().FirstOrDefault();
+            if (counterNode == null)
+            {
+                counterNode = new UnsupportedCounter();
+                RootLevel.Add(counterNode);
+            }
+            counterNode.Count(unsupportedCommand);
+
             var level = CurrentLevelNodes;
             var container = level.OfType<UnsupportedContainer>().FirstOrDefault();
             if (container == null)

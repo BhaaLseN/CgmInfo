@@ -10,7 +10,7 @@ namespace CgmInfoGui.Traversal
 
         private NodeBase _currentLevel;
 
-        public IEnumerable<NodeBase> RootLevel
+        public ICollection<NodeBase> RootLevel
         {
             get { return _rootLevel; }
         }

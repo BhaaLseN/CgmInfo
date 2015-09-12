@@ -411,6 +411,9 @@ namespace CgmInfo.BinaryEncoding
                 case 12: // CIRCLE
                     result = GraphicalPrimitiveReader.Circle(this, commandHeader);
                     break;
+                case 15: // CIRCULAR ARC CENTER
+                    result = GraphicalPrimitiveReader.CircularArcCenter(this, commandHeader);
+                    break;
                 case 17: // ELLIPSE
                     result = GraphicalPrimitiveReader.Ellipse(this, commandHeader);
                     break;

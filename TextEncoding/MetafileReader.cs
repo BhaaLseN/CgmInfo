@@ -81,6 +81,7 @@ namespace CgmInfo.TextEncoding
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
             { "RECT", GraphicalPrimitiveReader.Rectangle },
             { "CIRCLE", GraphicalPrimitiveReader.Circle },
+            { "ARCCTR", GraphicalPrimitiveReader.CircularArcCenter },
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]

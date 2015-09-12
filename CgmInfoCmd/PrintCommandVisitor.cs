@@ -279,6 +279,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Circle: {0} @ {1}", circle.Center, circle.Radius);
         }
+        public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc Center: {0} @ {1} ({2} to {3})", circularArcCenter.Center, circularArcCenter.Radius, circularArcCenter.Start, circularArcCenter.End);
+        }
         public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, PrintContext parameter)
         {
             parameter.WriteLine("Ellipse: {0} @ {1} - {2}", ellipse.Center, ellipse.FirstConjugateDiameter, ellipse.SecondConjugateDiameter);

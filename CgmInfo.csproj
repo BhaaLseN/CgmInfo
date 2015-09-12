@@ -65,6 +65,7 @@
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />

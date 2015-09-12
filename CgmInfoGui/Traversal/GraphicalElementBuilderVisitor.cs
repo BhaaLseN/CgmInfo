@@ -14,7 +14,7 @@ namespace CgmInfoGui.Traversal
     {
         public override void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, GraphicalElementContext parameter)
         {
-            parameter.Visuals.VdcExtent = new Rect(maximumVdcExtent.FirstCorner.ToPoint(), maximumVdcExtent.SecondCorner.ToPoint());
+            parameter.SetExtent(maximumVdcExtent.FirstCorner.ToPoint(), maximumVdcExtent.SecondCorner.ToPoint());
         }
 
         public override void AcceptAttributeLineColor(LineColor lineColor, GraphicalElementContext parameter)

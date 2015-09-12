@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media;
 
 namespace CgmInfoGui.Visuals
@@ -13,5 +14,14 @@ namespace CgmInfoGui.Visuals
             return black;
         });
         protected static Pen GetBlack() => Black.Value;
+
+        public static double RadiansToDegrees(double rad)
+        {
+            return 180 / Math.PI * rad;
+        }
+        public static double Distance(Point p1, Point p2)
+        {
+            return Math.Sqrt(Math.Pow(p2.X - p1.X, 2.0) + Math.Pow(p2.Y - p1.Y, 2.0));
+        }
     }
 }

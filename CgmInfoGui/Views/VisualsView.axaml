@@ -14,6 +14,7 @@
         <paz:ZoomBorder EnablePan="True" EnableZoom="True">
             <controls:VisualCanvas Margin="10"
                                    DataContext="{Binding VisualRoot}"
+                                   DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
                                    GeometryExtent="{Binding GeometryExtent}"
                                    VdcExtent="{Binding VdcExtent}" />
         </paz:ZoomBorder>

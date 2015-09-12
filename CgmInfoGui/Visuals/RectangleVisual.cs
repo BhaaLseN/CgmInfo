@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -8,15 +7,15 @@ namespace CgmInfoGui.Visuals
     {
         public RectangleVisual(Point firstCorner, Point secondCorner)
         {
-            FirstCorner = new Point(Math.Min(firstCorner.X, secondCorner.X), Math.Min(firstCorner.Y, secondCorner.Y));
-            SecondCorner = new Point(Math.Max(firstCorner.X, secondCorner.X), Math.Max(firstCorner.Y, secondCorner.Y));
+            FirstCorner = firstCorner;
+            SecondCorner = secondCorner;
         }
         public Point FirstCorner { get; private set; }
         public Point SecondCorner { get; private set; }
 
-        protected internal override void DrawTo(DrawingContext drawingContext)
+        protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
         {
-            drawingContext.DrawRectangle(null, GetBlack(), new Rect(FirstCorner, SecondCorner));
+            drawingContext.DrawRectangle(null, GetBlack(), new Rect(visualContext.Correct(FirstCorner), visualContext.Correct(SecondCorner)));
         }
     }
 }

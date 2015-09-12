@@ -26,10 +26,11 @@ namespace CgmInfoGui.Visuals
         public double RadiusY { get; private set; }
         public double Angle { get; private set; }
 
-        protected internal override void DrawTo(DrawingContext drawingContext)
+        protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
         {
-            drawingContext.PushTransform(new RotateTransform(Angle, Center.X, Center.Y));
-            drawingContext.DrawEllipse(null, GetBlack(), Center, RadiusX, RadiusY);
+            Point center = visualContext.Correct(Center);
+            drawingContext.PushTransform(new RotateTransform(Angle, center.X, center.Y));
+            drawingContext.DrawEllipse(null, GetBlack(), center, RadiusX, RadiusY);
             drawingContext.Pop();
         }
 

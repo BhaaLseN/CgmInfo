@@ -14,6 +14,10 @@ namespace CgmInfoGui.Controls
             DependencyProperty.Register(nameof(VdcExtent), typeof(Rect), typeof(VisualCanvas), new PropertyMetadata(Rect.Empty, OnVdcExtentChanged));
         public static readonly DependencyProperty GeometryExtentProperty =
             DependencyProperty.Register(nameof(GeometryExtent), typeof(Rect), typeof(VisualCanvas), new PropertyMetadata(Rect.Empty, OnGeometryExtentChanged));
+        public static readonly DependencyProperty DirectionXProperty =
+            DependencyProperty.Register(nameof(DirectionX), typeof(double), typeof(VisualCanvas), new PropertyMetadata(1.0));
+        public static readonly DependencyProperty DirectionYProperty =
+            DependencyProperty.Register(nameof(DirectionY), typeof(double), typeof(VisualCanvas), new PropertyMetadata(1.0));
 
         public static readonly DependencyProperty VdcExtentBrushProperty =
             DependencyProperty.Register(nameof(VdcExtentBrush), typeof(Brush), typeof(VisualCanvas), new PropertyMetadata(null));
@@ -62,6 +66,17 @@ namespace CgmInfoGui.Controls
         {
             get { return (Rect)GetValue(GeometryExtentProperty); }
             set { SetValue(GeometryExtentProperty, value); }
+        }
+
+        public double DirectionX
+        {
+            get { return (double)GetValue(DirectionXProperty); }
+            set { SetValue(DirectionXProperty, value); }
+        }
+        public double DirectionY
+        {
+            get { return (double)GetValue(DirectionYProperty); }
+            set { SetValue(DirectionYProperty, value); }
         }
 
         private readonly VisualCollection _visuals;
@@ -132,9 +147,10 @@ namespace CgmInfoGui.Controls
         }
         private void CreateVisuals(List<VisualBase> list)
         {
+            var visualContext = new VisualContext(GeometryExtent, DirectionX, DirectionY);
             foreach (var item in list)
             {
-                var drawingVisual = new DrawingVisualX(item);
+                var drawingVisual = new DrawingVisualX(item, visualContext);
                 _visuals.Add(drawingVisual);
             }
         }
@@ -157,13 +173,13 @@ namespace CgmInfoGui.Controls
 
         private sealed class DrawingVisualX : DrawingVisual
         {
-            public DrawingVisualX(VisualBase visual)
+            public DrawingVisualX(VisualBase visual, VisualContext visualContext)
             {
                 Visual = visual;
 
-                var context = RenderOpen();
-                visual.DrawTo(context);
-                context.Close();
+                var drawingContext = RenderOpen();
+                visual.DrawTo(drawingContext, visualContext);
+                drawingContext.Close();
             }
             public VisualBase Visual { get; }
         }

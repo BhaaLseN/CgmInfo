@@ -5,7 +5,7 @@ namespace CgmInfoGui.Visuals
 {
     public abstract class VisualBase
     {
-        protected internal abstract void DrawTo(DrawingContext drawingContext);
+        protected internal abstract void DrawTo(DrawingContext drawingContext, VisualContext visualContext);
         private static readonly Lazy<Pen> Black = new Lazy<Pen>(() =>
         {
             var black = new Pen(Brushes.Black, 1);

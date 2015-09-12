@@ -33,14 +33,5 @@ namespace CgmInfoGui.Visuals
             drawingContext.DrawEllipse(null, GetBlack(), center, RadiusX, RadiusY);
             drawingContext.Pop();
         }
-
-        private static double Distance(Point p1, Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p2.X - p1.X, 2.0) + Math.Pow(p2.Y - p1.Y, 2.0));
-        }
-        private static double RadiansToDegrees(double rad)
-        {
-            return 180 / Math.PI * rad;
-        }
     }
 }

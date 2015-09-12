@@ -61,6 +61,12 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
         parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
         parameter.Add(circleVisual);
     }
+    public override void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, GraphicalElementContext parameter)
+    {
+        var circularArcVisual = new CircularArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);
+        parameter.IncreaseBounds(new Rect(circularArcCenter.Center.X - circularArcCenter.Radius, circularArcCenter.Center.Y - circularArcCenter.Radius, circularArcCenter.Radius * 2, circularArcCenter.Radius * 2));
+        parameter.Add(circularArcVisual);
+    }
     public override void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, GraphicalElementContext parameter)
     {
         var ellipseVisual = new EllipseVisual(ellipse.Center.ToPoint(), ellipse.FirstConjugateDiameter.ToPoint(), ellipse.SecondConjugateDiameter.ToPoint());

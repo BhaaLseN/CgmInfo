@@ -177,6 +177,7 @@
                                     <ctrl:VisualCanvas DataContext="{Binding VisualRoot}" ItemsSource="{Binding Visuals}"
                                                        VdcExtent="{Binding VdcExtent}"
                                                        GeometryExtent="{Binding GeometryExtent}"
+                                                       DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
                                                        Margin="10"/>
                                 </xctk:Zoombox>
                             </xcad:LayoutDocument>

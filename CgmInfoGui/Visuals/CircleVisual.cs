@@ -13,9 +13,9 @@ namespace CgmInfoGui.Visuals
         public Point Center { get; private set; }
         public double Radius { get; private set; }
 
-        protected internal override void DrawTo(DrawingContext drawingContext)
+        protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
         {
-            drawingContext.DrawEllipse(null, GetBlack(), Center, Radius, Radius);
+            drawingContext.DrawEllipse(null, GetBlack(), visualContext.Correct(Center), Radius, Radius);
         }
     }
 }

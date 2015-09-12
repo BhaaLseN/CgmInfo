@@ -16,10 +16,10 @@ namespace CgmInfoGui.Visuals
 
         internal static double PixelsPerDip { get; set; } = 1.0d;
 
-        protected internal override void DrawTo(DrawingContext drawingContext)
+        protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
         {
             var formattedText = new FormattedText(Text, CultureInfo.GetCultureInfo("en"), FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), new FontStyle(), new FontWeight(), new FontStretch()), 12, Brushes.Black, PixelsPerDip);
-            drawingContext.DrawText(formattedText, Location);
+            drawingContext.DrawText(formattedText, visualContext.Correct(Location));
         }
     }
 }

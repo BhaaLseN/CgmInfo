@@ -4,6 +4,7 @@ using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Commands.PictureDescriptor;
 using CgmInfo.Traversal;
 using CgmInfoGui.Visuals;
 using Rect = System.Windows.Rect;
@@ -14,7 +15,11 @@ namespace CgmInfoGui.Traversal
     {
         public override void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, GraphicalElementContext parameter)
         {
-            parameter.SetExtent(maximumVdcExtent.FirstCorner.ToPoint(), maximumVdcExtent.SecondCorner.ToPoint());
+            parameter.SetMaximumExtent(maximumVdcExtent.FirstCorner.ToPoint(), maximumVdcExtent.SecondCorner.ToPoint());
+        }
+        public override void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, GraphicalElementContext parameter)
+        {
+            parameter.SetExtent(vdcExtent.FirstCorner.ToPoint(), vdcExtent.SecondCorner.ToPoint());
         }
 
         public override void AcceptAttributeLineColor(LineColor lineColor, GraphicalElementContext parameter)

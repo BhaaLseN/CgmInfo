@@ -67,6 +67,7 @@
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
     <Compile Include="MetafileProperties.cs" />

@@ -349,6 +349,11 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("APPEND TEXT: '{0}'{1}", appendText.Text, appendText.Final == FinalFlag.Final ? " (final)" : "");
         }
+        public void AcceptGraphicalPrimitivePolygon(Polygon polygon, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYGON: {0} points", polygon.Points.Length);
+            node.Nodes.AddRange(polygon.Points.Select(p => new SimpleNode(p.ToString())));
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, MetafileContext parameter)
         {
             var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",

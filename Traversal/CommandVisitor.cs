@@ -220,6 +220,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitivePolygon(Polygon polygon, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter)
         {
             // intentionally left blank

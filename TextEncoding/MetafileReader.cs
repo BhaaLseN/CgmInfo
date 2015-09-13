@@ -79,6 +79,8 @@ namespace CgmInfo.TextEncoding
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },
+            { "POLYGON", GraphicalPrimitiveReader.Polygon },
+            { "INCRPOLYGON", GraphicalPrimitiveReader.IncrementalPolygon },
             { "RECT", GraphicalPrimitiveReader.Rectangle },
             { "CIRCLE", GraphicalPrimitiveReader.Circle },
             { "ARCCTR", GraphicalPrimitiveReader.CircularArcCenter },

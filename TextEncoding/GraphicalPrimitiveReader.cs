@@ -49,6 +49,33 @@ namespace CgmInfo.TextEncoding
             return new AppendText(ParseFinalFlag(reader.ReadEnum()), reader.ReadString());
         }
 
+        public static Polygon Polygon(MetafileReader reader)
+        {
+            var points = new List<PointF>();
+            do
+            {
+                points.Add(reader.ReadPoint());
+            } while (!reader.AtEndOfElement);
+            return new Polygon(points.ToArray());
+        }
+
+        public static Polygon IncrementalPolygon(MetafileReader reader)
+        {
+            var points = new List<PointF>();
+            var lastPoint = reader.ReadPoint();
+            points.Add(lastPoint);
+            do
+            {
+                double deltaX = reader.ReadVdc();
+                if (reader.AtEndOfElement)
+                    break;
+                double deltaY = reader.ReadVdc();
+                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
+                points.Add(lastPoint);
+            } while (!reader.AtEndOfElement);
+            return new Polygon(points.ToArray());
+        }
+
         public static Rectangle Rectangle(MetafileReader reader)
         {
             return new Rectangle(reader.ReadPoint(), reader.ReadPoint());

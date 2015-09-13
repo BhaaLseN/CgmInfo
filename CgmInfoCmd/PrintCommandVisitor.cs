@@ -271,6 +271,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Append Text: '{0}'", appendText.Text);
         }
+        public void AcceptGraphicalPrimitivePolygon(Polygon polygon, PrintContext parameter)
+        {
+            parameter.WriteLine("Polygon: {0} points", polygon.Points.Length);
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, PrintContext parameter)
         {
             parameter.WriteLine("Rectangle: {0} - {1}", rectangle.FirstCorner, rectangle.SecondCorner);

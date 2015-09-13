@@ -51,6 +51,19 @@ namespace CgmInfo.BinaryEncoding
             return new AppendText(reader.ReadEnum<FinalFlag>(), reader.ReadString());
         }
 
+        public static Polygon Polygon(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1-Pn: (point) n (X,Y) polygon vertices [ISO/IEC 8632-3 8.6]
+            var points = new List<PointF>();
+            // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
+            //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
+            while (reader.HasMoreData(2))
+            {
+                points.Add(reader.ReadPoint());
+            }
+            return new Polygon(points.ToArray());
+        }
+
         public static Rectangle Rectangle(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) first corner [ISO/IEC 8632-3 8.6]

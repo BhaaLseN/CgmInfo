@@ -68,10 +68,11 @@ namespace CgmInfo.Traversal
         void AcceptControlMiterLimit(MiterLimit miterLimit, T parameter);
 
         // graphical primitives
+        void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter);
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
-        void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter);
+        void AcceptGraphicalPrimitivePolygon(Polygon polygon, T parameter);
         void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter);
         void AcceptGraphicalPrimitiveCircle(Circle circle, T parameter);
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);

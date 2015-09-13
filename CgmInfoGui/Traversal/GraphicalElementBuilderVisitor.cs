@@ -55,12 +55,6 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
         parameter.Add(rectVisual);
     }
 
-    public override void AcceptGraphicalPrimitiveCircle(Circle circle, GraphicalElementContext parameter)
-    {
-        var circleVisual = new CircleVisual(circle.Center.ToPoint(), circle.Radius);
-        parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
-        parameter.Add(circleVisual);
-    }
     public override void AcceptGraphicalPrimitivePolygon(Polygon polygon, GraphicalElementContext parameter)
     {
         var polygonVisual = new LineVisual(polygon.Points.ToPoints(), parameter.LineAttributes.GetPen, isClosed: true);
@@ -68,11 +62,27 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
             parameter.IncreaseBounds(point);
         parameter.Add(polygonVisual);
     }
+
+    public override void AcceptGraphicalPrimitiveCircle(Circle circle, GraphicalElementContext parameter)
+    {
+        var circleVisual = new CircleVisual(circle.Center.ToPoint(), circle.Radius);
+        parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
+        parameter.Add(circleVisual);
+    }
     public override void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, GraphicalElementContext parameter)
     {
-        var circularArcVisual = new CircularArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);
+        var arcVisual = new ArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);
         parameter.IncreaseBounds(new Rect(circularArcCenter.Center.X - circularArcCenter.Radius, circularArcCenter.Center.Y - circularArcCenter.Radius, circularArcCenter.Radius * 2, circularArcCenter.Radius * 2));
-        parameter.Add(circularArcVisual);
+        parameter.Add(arcVisual);
+    }
+    public override void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, GraphicalElementContext parameter)
+    {
+        var arcVisual = new ArcVisual(
+            ellipticalArc.Center.ToPoint(),
+            ellipticalArc.FirstConjugateDiameter.ToPoint(), ellipticalArc.SecondConjugateDiameter.ToPoint(),
+            ellipticalArc.Start.ToPoint(), ellipticalArc.End.ToPoint());
+        parameter.IncreaseBounds(new Rect(arcVisual.Center.X - arcVisual.RadiusX, arcVisual.Center.Y - arcVisual.RadiusY, arcVisual.RadiusX * 2, arcVisual.RadiusY * 2));
+        parameter.Add(arcVisual);
     }
     public override void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, GraphicalElementContext parameter)
     {

@@ -103,9 +103,11 @@ namespace CgmInfoGui.Traversal
         }
         public override void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, GraphicalElementContext parameter)
         {
-            var arcVisual = new ArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);
-            parameter.IncreaseBounds(new Rect(circularArcCenter.Center.X - circularArcCenter.Radius, circularArcCenter.Center.Y - circularArcCenter.Radius, circularArcCenter.Radius * 2, circularArcCenter.Radius * 2));
-            parameter.Add(arcVisual);
+            // FIXME: arc visual is kinda broken and doesn't draw correctly
+            return;
+            //var arcVisual = new ArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);
+            //parameter.IncreaseBounds(new Rect(circularArcCenter.Center.X - circularArcCenter.Radius, circularArcCenter.Center.Y - circularArcCenter.Radius, circularArcCenter.Radius * 2, circularArcCenter.Radius * 2));
+            //parameter.Add(arcVisual);
         }
         public override void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, GraphicalElementContext parameter)
         {
@@ -117,12 +119,14 @@ namespace CgmInfoGui.Traversal
         }
         public override void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, GraphicalElementContext parameter)
         {
-            var arcVisual = new ArcVisual(
-                ellipticalArc.Center.ToPoint(),
-                ellipticalArc.FirstConjugateDiameter.ToPoint(), ellipticalArc.SecondConjugateDiameter.ToPoint(),
-                ellipticalArc.Start.ToPoint(), ellipticalArc.End.ToPoint());
-            parameter.IncreaseBounds(new Rect(arcVisual.Center.X - arcVisual.RadiusX, arcVisual.Center.Y - arcVisual.RadiusY, arcVisual.RadiusX * 2, arcVisual.RadiusY * 2));
-            parameter.Add(arcVisual);
+            // FIXME: arc visual is kinda broken and doesn't draw correctly
+            return;
+            //var arcVisual = new ArcVisual(
+            //    ellipticalArc.Center.ToPoint(),
+            //    ellipticalArc.FirstConjugateDiameter.ToPoint(), ellipticalArc.SecondConjugateDiameter.ToPoint(),
+            //    ellipticalArc.Start.ToPoint(), ellipticalArc.End.ToPoint());
+            //parameter.IncreaseBounds(new Rect(arcVisual.Center.X - arcVisual.RadiusX, arcVisual.Center.Y - arcVisual.RadiusY, arcVisual.RadiusX * 2, arcVisual.RadiusY * 2));
+            //parameter.Add(arcVisual);
         }
     }
 }

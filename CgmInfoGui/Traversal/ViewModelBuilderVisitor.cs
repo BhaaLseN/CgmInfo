@@ -395,6 +395,18 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipse.SecondConjugateDiameter)),
             });
         }
+        public void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, MetafileContext parameter)
+        {
+            var ellipseNode = parameter.AddNode("ELLIPTICAL ARC: {0}", ellipticalArc.Center);
+            ellipseNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", ellipticalArc.Center)),
+                new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipticalArc.FirstConjugateDiameter)),
+                new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipticalArc.SecondConjugateDiameter)),
+                new SimpleNode(string.Format("Start: {0}", ellipticalArc.Start)),
+                new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -96,6 +96,11 @@ namespace CgmInfo.TextEncoding
             return new Ellipse(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static EllipticalArc EllipticalArc(MetafileReader reader)
+        {
+            return new EllipticalArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

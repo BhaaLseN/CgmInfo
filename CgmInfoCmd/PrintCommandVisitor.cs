@@ -291,6 +291,11 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Ellipse: {0} @ {1} - {2}", ellipse.Center, ellipse.FirstConjugateDiameter, ellipse.SecondConjugateDiameter);
         }
+        public void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, PrintContext parameter)
+        {
+            parameter.WriteLine("Elliptical Arc: {0} @ {1} - {2} ({3} to {4})",
+                ellipticalArc.Center, ellipticalArc.FirstConjugateDiameter, ellipticalArc.SecondConjugateDiameter, ellipticalArc.Start, ellipticalArc.End);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

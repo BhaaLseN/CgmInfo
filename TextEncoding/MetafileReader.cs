@@ -85,6 +85,7 @@ namespace CgmInfo.TextEncoding
             { "CIRCLE", GraphicalPrimitiveReader.Circle },
             { "ARCCTR", GraphicalPrimitiveReader.CircularArcCenter },
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
+            { "ELLIPARC", GraphicalPrimitiveReader.EllipticalArc },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

@@ -420,6 +420,9 @@ namespace CgmInfo.BinaryEncoding
                 case 17: // ELLIPSE
                     result = GraphicalPrimitiveReader.Ellipse(this, commandHeader);
                     break;
+                case 18: // ELLIPTICAL ARC
+                    result = GraphicalPrimitiveReader.EllipticalArc(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

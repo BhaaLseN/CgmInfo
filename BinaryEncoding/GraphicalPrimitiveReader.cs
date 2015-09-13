@@ -98,5 +98,19 @@ namespace CgmInfo.BinaryEncoding
             // P3: (point) endpoint of second conjugate diameter
             return new Ellipse(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
+
+        public static EllipticalArc EllipticalArc(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre of ellipse
+            // P2: (point) endpoint for first conjugate diameter
+            // P3: (point) endpoint for second conjugate diameter
+            // P4: (vdc) delta X for start vector
+            // P5: (vdc) delta Y for start vector
+            // P6: (vdc) delta X for end vector
+            // P7: (vdc) delta Y for end vector
+            // NOTE: Text Encoding allows start/end vectors to be encoded as point (mostly for syntax),
+            //       but it actually makes sense to store them as such - so we rely on ReadPoint to read 2x VDC for us.
+            return new EllipticalArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
     }
 }

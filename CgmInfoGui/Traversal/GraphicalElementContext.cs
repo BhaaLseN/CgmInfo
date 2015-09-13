@@ -16,9 +16,13 @@ namespace CgmInfoGui.Traversal
         {
             Visuals.Add(visual);
         }
-        public void SetExtent(Point lowerLeft, Point upperRight)
+        public void SetMaximumExtent(Point lowerLeft, Point upperRight)
         {
             Visuals.VdcExtent = new Rect(lowerLeft, upperRight);
+            SetExtent(lowerLeft, upperRight);
+        }
+        public void SetExtent(Point lowerLeft, Point upperRight)
+        {
             Visuals.DirectionX = lowerLeft.X <= upperRight.X ? 1.0 : -1.0;
             Visuals.DirectionY = lowerLeft.Y <= upperRight.Y ? 1.0 : -1.0;
         }

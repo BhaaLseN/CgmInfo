@@ -61,6 +61,13 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
         parameter.IncreaseBounds(new Rect(circle.Center.X - circle.Radius, circle.Center.Y - circle.Radius, circle.Radius * 2, circle.Radius * 2));
         parameter.Add(circleVisual);
     }
+    public override void AcceptGraphicalPrimitivePolygon(Polygon polygon, GraphicalElementContext parameter)
+    {
+        var polygonVisual = new LineVisual(polygon.Points.ToPoints(), parameter.LineAttributes.GetPen, isClosed: true);
+        foreach (var point in polygon.Points.Select(p => p.ToPoint()))
+            parameter.IncreaseBounds(point);
+        parameter.Add(polygonVisual);
+    }
     public override void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, GraphicalElementContext parameter)
     {
         var circularArcVisual = new CircularArcVisual(circularArcCenter.Center.ToPoint(), circularArcCenter.Start.ToPoint(), circularArcCenter.End.ToPoint(), circularArcCenter.Radius);

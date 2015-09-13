@@ -3,6 +3,7 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Commands.PictureDescriptor;
 
 namespace CgmInfo.Traversal
 {
@@ -49,6 +50,9 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, T parameter);
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
+
+        // picture descriptor
+        void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
 
         // control
         void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);

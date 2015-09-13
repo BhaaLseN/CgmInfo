@@ -6,6 +6,7 @@ using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Commands.PictureDescriptor;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 
@@ -221,6 +222,18 @@ namespace CgmInfoGui.Traversal
             {
                 new SimpleNode(string.Format("First Corner: {0}", maximumVdcExtent.FirstCorner)),
                 new SimpleNode(string.Format("Second Corner: {0}", maximumVdcExtent.SecondCorner)),
+            });
+        }
+
+        public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, MetafileContext parameter)
+        {
+            var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",
+                Math.Abs(vdcExtent.SecondCorner.X - vdcExtent.FirstCorner.X),
+                Math.Abs(vdcExtent.SecondCorner.Y - vdcExtent.FirstCorner.Y));
+            maxVdcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", vdcExtent.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", vdcExtent.SecondCorner)),
             });
         }
 

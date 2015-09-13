@@ -5,6 +5,7 @@ using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Commands.PictureDescriptor;
 using CgmInfo.Traversal;
 
 namespace CgmInfoCmd
@@ -187,6 +188,11 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
+        }
+
+        public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, PrintContext parameter)
+        {
+            parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);
         }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)

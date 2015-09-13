@@ -55,6 +55,9 @@ namespace CgmInfo.TextEncoding
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
+            // picture descriptor elements [ISO/IEC 8632-4 7.3]
+            { "VDCEXT", PictureDescriptorReader.VdcExtent },
+
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
             { "VDCREALPREC", ReadVdcRealPrecision },

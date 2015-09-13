@@ -3,6 +3,7 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Commands.PictureDescriptor;
 
 namespace CgmInfo.Traversal
 {
@@ -328,6 +329,13 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptMetafileDescriptorVdcType(VdcType vdcType, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Picture Descriptor elements
+        public virtual void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter)
         {
             // intentionally left blank
         }

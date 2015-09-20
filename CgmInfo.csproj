@@ -72,6 +72,7 @@
     <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
+    <Compile Include="Commands\MetafileDescriptor\MetafileElementsList.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />

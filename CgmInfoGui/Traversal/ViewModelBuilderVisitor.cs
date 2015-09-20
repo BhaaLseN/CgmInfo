@@ -194,6 +194,12 @@ namespace CgmInfoGui.Traversal
             parameter.AddMetafileDescriptorNode("VDC TYPE: {0}", vdcType.Specification);
         }
 
+        public void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, MetafileContext parameter)
+        {
+            var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE ELEMENTS LIST [{0} entries]", metafileElementsList.Elements.Count());
+            metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry)));
+       }
+
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {
             parameter.AddDescriptorNode(new FontListViewModel(fontList));

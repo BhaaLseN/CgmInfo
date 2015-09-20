@@ -118,6 +118,11 @@ namespace CgmInfo.TextEncoding
             return new NamePrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger(), reader.ReadInteger()));
         }
 
+        public static MetafileElementsList MetafileElementsList(MetafileReader reader)
+        {
+            return new MetafileElementsList(reader.ReadToEndOfElement());
+        }
+
         public static FontList FontList(MetafileReader reader)
         {
             return new FontList(reader.ReadToEndOfElement());

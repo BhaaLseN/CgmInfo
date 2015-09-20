@@ -155,6 +155,14 @@ namespace CgmInfoCmd
                 parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
                     colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);
         }
+        public void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, PrintContext parameter)
+        {
+            parameter.WriteLine("Metafile Elements List: {0} entries", metafileElementsList.Elements.Count());
+            parameter.BeginLevel();
+            foreach (string metafileElement in metafileElementsList.Elements)
+                parameter.WriteLine(metafileElement);
+            parameter.EndLevel();
+        }
         public void AcceptMetafileDescriptorFontList(FontList fontList, PrintContext parameter)
         {
             parameter.WriteLine("Font List: {0} entries", fontList.Fonts.Count());

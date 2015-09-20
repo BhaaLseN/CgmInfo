@@ -123,6 +123,23 @@ namespace CgmInfo.BinaryEncoding
             return new NamePrecision(reader.ReadInteger());
         }
 
+        public static MetafileElementsList MetafileElementsList(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) number of elements specified [ISO/IEC 8632-3 8.3]
+            // P2: (index-pair array) List of metafile elements in this metafile. Each element is represented by two values:
+            //      the first is its element class code (as in Table 2)
+            //      the second is its element id code (as in Table 3 to Table 10).
+            int numberOfElements = reader.ReadInteger(); // unused
+            var elements = new List<string>();
+            while (reader.HasMoreData())
+            {
+                int elementClass = reader.ReadIndex();
+                int elementId = reader.ReadIndex();
+                elements.Add(GetMetafileElementsListName(elementClass, elementId));
+            }
+            return new MetafileElementsList(elements);
+        }
+
         public static FontList FontList(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1-Pn: (string fixed) n font names [ISO/IEC 8632-3 8.3]
@@ -164,6 +181,46 @@ namespace CgmInfo.BinaryEncoding
             //      2 extended 7 - bit
             //      3 extended 8 - bit
             return new CharacterCodingAnnouncer(reader.ReadEnum<CharacterCodingAnnouncerType>());
+        }
+
+        // returns a readable name for the given class/id.
+        // NOTE: only handles pseudo classes at this point; the rest seems to be uncommon.
+        // TODO: move elsewhere if other types should be supported (both from binary and text encoding)
+        private static string GetMetafileElementsListName(int elementClass, int elementId)
+        {
+            switch (elementClass)
+            {
+                case -1:
+                    {
+                        switch (elementId)
+                        {
+                            // drawing set: (-1,0)
+                            case 0:
+                                return "Drawing";
+                            // drawing-plus-control set: (-1,1)
+                            case 1:
+                                return "Drawing+Control";
+                            // version-2 set: (-1,2)
+                            case 2:
+                                return "Version 2";
+                            // extended-primitives set: (-1,3)
+                            case 3:
+                                return "Extended Primitives";
+                            // version-2-gksm set: (-1,4)
+                            case 4:
+                                return "Version 2 (GKSM)";
+                            // version-3 set: (-1,5)
+                            case 5:
+                                return "Version 3";
+                            // version-4 set: (-1,6)
+                            case 6:
+                                return "Version 4";
+                        }
+                        goto default;
+                    }
+                default:
+                    return string.Format("Class {0}, Id {1}", elementClass, elementId);
+            }
         }
     }
 }

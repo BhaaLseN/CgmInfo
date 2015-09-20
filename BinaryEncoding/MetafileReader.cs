@@ -292,6 +292,9 @@ namespace CgmInfo.BinaryEncoding
                 case 10: // COLOUR VALUE EXTENT
                     result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
                     break;
+                case 11: // METAFILE ELEMENTS LIST
+                    result = MetafileDescriptorReader.MetafileElementsList(this, commandHeader);
+                    break;
                 case 13: // FONT LIST
                     result = MetafileDescriptorReader.FontList(this, commandHeader);
                     break;
@@ -312,7 +315,6 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.ColorModel = colorModel.ColorModel;
                     result = colorModel;
                     break;
-                case 11: // METAFILE ELEMENT LIST
                 case 12: // METAFILE DEFAULTS REPLACEMENT
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION

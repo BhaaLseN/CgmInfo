@@ -332,6 +332,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Picture Descriptor elements

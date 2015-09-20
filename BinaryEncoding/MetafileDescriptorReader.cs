@@ -64,7 +64,7 @@ namespace CgmInfo.BinaryEncoding
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (colour index) maximum colour index that may be encountered in the metafile [ISO/IEC 8632-3 8.3]
-            return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new MaximumColorIndex(reader.ReadInteger(commandHeader.ParameterListLength, true));
         }
 
         public static ColorValueExtent ColorValueExtent(MetafileReader reader, CommandHeader commandHeader)
@@ -114,7 +114,7 @@ namespace CgmInfo.BinaryEncoding
             //      4 CMYK
             //      5 RGB - related
             //      > 5 reserved for registered values
-            return new ColorModelCommand(reader.ReadInteger(commandHeader.ParameterListLength));
+            return new ColorModelCommand(reader.ReadIndex());
         }
 
         public static NamePrecision NamePrecision(MetafileReader reader, CommandHeader commandHeader)

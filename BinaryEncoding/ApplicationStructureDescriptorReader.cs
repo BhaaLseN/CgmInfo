@@ -62,11 +62,11 @@ namespace CgmInfo.BinaryEncoding
                     // TODO: what exactly does reserved mean in terms of advancing position?
                     return null;
                 case DataTypeIndex.SignedInteger8bit:
-                    return reader.ReadInteger(1);
+                    return reader.ReadInteger(1, false);
                 case DataTypeIndex.SignedInteger16bit:
-                    return reader.ReadInteger(2);
+                    return reader.ReadInteger(2, false);
                 case DataTypeIndex.SignedInteger32bit:
-                    return reader.ReadInteger(4);
+                    return reader.ReadInteger(4, false);
                 case DataTypeIndex.Index:
                     return reader.ReadIndex();
                 case DataTypeIndex.Real:
@@ -84,11 +84,11 @@ namespace CgmInfo.BinaryEncoding
                 case DataTypeIndex.ColorComponent:
                     return reader.ReadColorValue();
                 case DataTypeIndex.UnsignedInteger8bit:
-                    return reader.ReadInteger(1);
+                    return reader.ReadInteger(1, true);
                 case DataTypeIndex.UnsignedInteger32Bit:
-                    return reader.ReadInteger(4);
+                    return reader.ReadInteger(4, true);
                 case DataTypeIndex.UnsignedInteger16bit:
-                    return reader.ReadInteger(2);
+                    return reader.ReadInteger(2, true);
                 case DataTypeIndex.BitStream:
                 case DataTypeIndex.ColorList:
                 default:

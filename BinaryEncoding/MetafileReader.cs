@@ -477,22 +477,27 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadInteger()
         {
             // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
-            return ReadInteger(Descriptor.IntegerPrecision / 8);
+            return ReadInteger(Descriptor.IntegerPrecision / 8, false);
         }
-        internal int ReadInteger(int numBytes)
+        internal int ReadInteger(int numBytes, bool unsigned)
         {
             if (numBytes < 1 || numBytes > 4)
                 throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
-            int ret = 0;
+            uint ret = 0;
+            int signBit = 1 << ((numBytes * 8) - 1);
+            int maxUnsignedValue = 1 << (numBytes * 8);
             while (numBytes --> 0)
                 ret = (ret << 8) | ReadByte();
-            return ret;
+            int signedRet = (int)ret;
+            if (!unsigned && (ret & signBit) > 0)
+                signedRet = signedRet - maxUnsignedValue;
+            return signedRet;
         }
 
         internal int ReadEnum()
         {
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
-            return ReadInteger(2);
+            return ReadInteger(2, false);
         }
         internal TEnum ReadEnum<TEnum>() where TEnum : struct
         {
@@ -507,7 +512,8 @@ namespace CgmInfo.BinaryEncoding
             // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-3 7, Table 1, Note 7]
             if (Descriptor.VdcType == VdcTypeSpecification.Integer)
             {
-                return ReadInteger(Descriptor.VdcIntegerPrecision / 8);
+                // value is a signed integer at VDC Integer Precision
+                return ReadInteger(Descriptor.VdcIntegerPrecision / 8, false);
             }
             else if (Descriptor.VdcType == VdcTypeSpecification.Real)
             {
@@ -549,15 +555,18 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadColorValue()
         {
             // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
-            return ReadInteger(Descriptor.ColorPrecision / 8);
+            // color components are unsigned integers at direct color precision
+            return ReadInteger(Descriptor.ColorPrecision / 8, true);
         }
         private double ReadFixedPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.4
             // real value is computed as "whole + (fraction / 2**exp)"
             // exp is the width of the fraction value
-            int whole = ReadInteger(numBytes / 2);
-            int fraction = ReadInteger(numBytes / 2);
+            // the "whole part" has the same form as a Signed Integer
+            int whole = ReadInteger(numBytes / 2, false);
+            // the "fractional part" has the same form as an Unsigned Integer
+            int fraction = ReadInteger(numBytes / 2, true);
             // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
             // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
             int exp = numBytes / 2 * 8;
@@ -609,7 +618,7 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadIndex()
         {
             // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
-            return ReadInteger(Descriptor.IndexPrecision / 8);
+            return ReadInteger(Descriptor.IndexPrecision / 8,  false);
         }
         internal ushort ReadWord()
         {

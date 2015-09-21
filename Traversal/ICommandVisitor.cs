@@ -55,6 +55,9 @@ namespace CgmInfo.Traversal
         // picture descriptor
         void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter);
         void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, T parameter);
+        void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, T parameter);
+        void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, T parameter);
+        void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, T parameter);
         void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
 
         // control

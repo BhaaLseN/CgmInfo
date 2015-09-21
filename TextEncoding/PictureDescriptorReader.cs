@@ -15,6 +15,21 @@ namespace CgmInfo.TextEncoding
             return new ColorSelectionMode(ParseColorMode(reader.ReadEnum()));
         }
 
+        public static LineWidthSpecificationMode LineWidthSpecificationMode(MetafileReader reader)
+        {
+            return new LineWidthSpecificationMode(ParseWidthSpecificationMode(reader.ReadEnum()));
+        }
+
+        public static MarkerSizeSpecificationMode MarkerSizeSpecificationMode(MetafileReader reader)
+        {
+            return new MarkerSizeSpecificationMode(ParseWidthSpecificationMode(reader.ReadEnum()));
+        }
+
+        public static EdgeWidthSpecificationMode EdgeWidthSpecificationMode(MetafileReader reader)
+        {
+            return new EdgeWidthSpecificationMode(ParseWidthSpecificationMode(reader.ReadEnum()));
+        }
+
         public static VdcExtent VdcExtent(MetafileReader reader)
         {
             var firstCorner = reader.ReadPoint();
@@ -35,6 +50,18 @@ namespace CgmInfo.TextEncoding
             if (token.ToUpperInvariant() == "DIRECT")
                 return ColorModeType.Direct;
             return ColorModeType.Indexed;
+        }
+        private static WidthSpecificationModeType ParseWidthSpecificationMode(string token)
+        {
+            // assume absolute unless it matches any of the others
+            token = token.ToUpperInvariant();
+            if (token == "SCALED")
+                return WidthSpecificationModeType.Scaled;
+            else if (token == "FRACTIONAL")
+                return WidthSpecificationModeType.Fractional;
+            else if (token == "MM")
+                return WidthSpecificationModeType.Millimeters;
+            return WidthSpecificationModeType.Absolute;
         }
     }
 }

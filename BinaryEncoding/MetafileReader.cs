@@ -343,6 +343,21 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
                     result = colorSelectionMode;
                     break;
+                case 3: // LINE WIDTH SPECIFICATION MODE
+                    var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(this, commandHeader);
+                    Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
+                    result = lineWidthSpecificationMode;
+                    break;
+                case 4: // MARKER SIZE SPECIFICATION MODE
+                    var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(this, commandHeader);
+                    Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
+                    result = markerSizeSpecificationMode;
+                    break;
+                case 5: // EDGE WIDTH SPECIFICATION MODE
+                    var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(this, commandHeader);
+                    Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
+                    result = edgeWidthSpecificationMode;
+                    break;
                 case 6: // VDC EXTENT
                     result = PictureDescriptorReader.VdcExtent(this, commandHeader);
                     break;

@@ -17,6 +17,10 @@ namespace CgmInfo
             VdcIntegerPrecision = 16;
             VdcRealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
             ColorSelectionMode = ColorModeType.Indexed;
+
+            LineWidthSpecificationMode = WidthSpecificationModeType.Scaled;
+            MarkerSizeSpecificationMode = WidthSpecificationModeType.Scaled;
+            EdgeWidthSpecificationMode = WidthSpecificationModeType.Scaled;
         }
 
         public ColorModel ColorModel { get; internal set; }
@@ -30,5 +34,9 @@ namespace CgmInfo
         public VdcTypeSpecification VdcType { get; internal set; }
         public int VdcIntegerPrecision { get; internal set; }
         public RealPrecisionSpecification VdcRealPrecision { get; internal set; }
+
+        public WidthSpecificationModeType LineWidthSpecificationMode { get; internal set; }
+        public WidthSpecificationModeType MarkerSizeSpecificationMode { get; internal set; }
+        public WidthSpecificationModeType EdgeWidthSpecificationMode { get; internal set; }
     }
 }

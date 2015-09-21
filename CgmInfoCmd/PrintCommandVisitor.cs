@@ -209,6 +209,18 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Color Selection Mode: {0}", colorSelectionMode.ColorMode);
         }
+        public void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Width Specification Mode: {0}", lineWidthSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Size Specification Mode: {0}", markerSizeSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Width Specification Mode: {0}", edgeWidthSpecificationMode.WidthSpecificationMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, PrintContext parameter)
         {
             parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);

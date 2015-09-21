@@ -350,6 +350,21 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter)
         {
             // intentionally left blank

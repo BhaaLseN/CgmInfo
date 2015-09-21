@@ -59,6 +59,9 @@ namespace CgmInfo.TextEncoding
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
             { "SCALEMODE", PictureDescriptorReader.ScalingMode },
             { "COLRMODE", ReadColorSelectionMode },
+            { "LINEWIDTHMODE", ReadLineWidthSpecificationMode },
+            { "MARKERSIZEMODE", ReadMarkerSizeSpecificationMode },
+            { "EDGEWIDTHMODE", ReadEdgeWidthSpecificationMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
 
             // control elements [ISO/IEC 8632-4 7.4]
@@ -177,6 +180,24 @@ namespace CgmInfo.TextEncoding
             var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(reader);
             reader.Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
             return colorSelectionMode;
+        }
+        private static Command ReadLineWidthSpecificationMode(MetafileReader reader)
+        {
+            var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(reader);
+            reader.Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
+            return lineWidthSpecificationMode;
+        }
+        private static Command ReadMarkerSizeSpecificationMode(MetafileReader reader)
+        {
+            var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(reader);
+            reader.Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
+            return markerSizeSpecificationMode;
+        }
+        private static Command ReadEdgeWidthSpecificationMode(MetafileReader reader)
+        {
+            var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(reader);
+            reader.Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
+            return edgeWidthSpecificationMode;
         }
         private static Command ReadVdcIntegerPrecision(MetafileReader reader)
         {

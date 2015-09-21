@@ -241,6 +241,18 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("COLOUR SELECTION MODE: {0}", colorSelectionMode.ColorMode);
         }
+        public void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE WIDTH SPECIFICATION MODE: {0}", lineWidthSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER SIZE SPECIFICATION MODE: {0}", markerSizeSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE WIDTH SPECIFICATION MODE: {0}", edgeWidthSpecificationMode.WidthSpecificationMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, MetafileContext parameter)
         {
             var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",

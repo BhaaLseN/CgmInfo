@@ -31,6 +31,36 @@ namespace CgmInfo.BinaryEncoding
             return new ColorSelectionMode(reader.ReadEnum<ColorModeType>());
         }
 
+        public static LineWidthSpecificationMode LineWidthSpecificationMode(MetafileReader reader, CommandHeader header)
+        {
+            //  P1: (enumerated) line width specification mode: valid values are
+            //      0 absolute
+            //      1 scaled
+            //      2 fractional
+            //      3 mm
+            return new LineWidthSpecificationMode(reader.ReadEnum<WidthSpecificationModeType>());
+        }
+
+        public static MarkerSizeSpecificationMode MarkerSizeSpecificationMode(MetafileReader reader, CommandHeader header)
+        {
+            //  P1: (enumerated) marker size specification mode: valid values are
+            //      0 absolute
+            //      1 scaled
+            //      2 fractional
+            //      3 mm
+            return new MarkerSizeSpecificationMode(reader.ReadEnum<WidthSpecificationModeType>());
+        }
+
+        public static EdgeWidthSpecificationMode EdgeWidthSpecificationMode(MetafileReader reader, CommandHeader header)
+        {
+            //  P1: (enumerated) edge width specification mode: valid values are
+            //      0 absolute
+            //      1 scaled
+            //      2 fractional
+            //      3 mm
+            return new EdgeWidthSpecificationMode(reader.ReadEnum<WidthSpecificationModeType>());
+        }
+
         public static VdcExtent VdcExtent(MetafileReader reader, CommandHeader header)
         {
             // P1: (point) first corner

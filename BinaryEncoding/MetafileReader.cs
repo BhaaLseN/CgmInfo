@@ -368,7 +368,7 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
                     result = vdcRealPrecision;
                     break;
-                // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+                // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
                 //case 3: // AUXILIARY COLOR
                 //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
                 //    break;
@@ -534,6 +534,17 @@ namespace CgmInfo.BinaryEncoding
         }
 
         internal Color ReadColor()
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor();
+            else
+                return ReadIndexedColor();
+        }
+        internal Color ReadIndexedColor()
+        {
+            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+        }
+        internal Color ReadDirectColor()
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {

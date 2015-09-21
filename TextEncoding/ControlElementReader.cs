@@ -33,9 +33,7 @@ namespace CgmInfo.TextEncoding
 
         public static AuxiliaryColor AuxiliaryColor(MetafileReader reader)
         {
-            // FIXME: implement COLOUR SELECTION MODE first; needs to select either color index or color value.
-            throw new System.NotSupportedException("Requires COLOUR SELECTION MODE to be implemented");
-            //return new AuxiliaryColor(reader.ReadColor());
+            return new AuxiliaryColor(reader.ReadColor());
         }
 
         public static Transparency Transparency(MetafileReader reader)

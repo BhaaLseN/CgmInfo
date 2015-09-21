@@ -64,7 +64,7 @@ namespace CgmInfo.TextEncoding
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
             { "VDCREALPREC", ReadVdcRealPrecision },
-            // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+            // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
             //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
             { "TRANSPARENCY", ControlElementReader.Transparency },
             { "CLIPRECT", ControlElementReader.ClipRectangle },
@@ -304,6 +304,17 @@ namespace CgmInfo.TextEncoding
             return new PointF((float)x, (float)y);
         }
         internal Color ReadColor()
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor();
+            else
+                return ReadIndexedColor();
+        }
+        internal Color ReadIndexedColor()
+        {
+            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+        }
+        internal Color ReadDirectColor()
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {

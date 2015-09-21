@@ -62,6 +62,7 @@
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
+    <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileElementsList.cs" />
+    <Compile Include="Commands\PictureDescriptor\ColorSelectionMode.cs" />
     <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
     <Compile Include="MetafileProperties.cs" />

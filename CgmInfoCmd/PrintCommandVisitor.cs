@@ -205,6 +205,10 @@ namespace CgmInfoCmd
             else
                 parameter.WriteLine("Scaling Mode: {0}", scalingMode.ScalingModeType);
         }
+        public void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Color Selection Mode: {0}", colorSelectionMode.ColorMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, PrintContext parameter)
         {
             parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);

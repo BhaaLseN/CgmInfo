@@ -58,6 +58,7 @@ namespace CgmInfo.TextEncoding
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
             { "SCALEMODE", PictureDescriptorReader.ScalingMode },
+            { "COLRMODE", PictureDescriptorReader.ColorSelectionMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
 
             // control elements [ISO/IEC 8632-4 7.4]

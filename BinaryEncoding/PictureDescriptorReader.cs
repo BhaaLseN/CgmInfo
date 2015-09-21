@@ -23,6 +23,14 @@ namespace CgmInfo.BinaryEncoding
             return new ScalingMode(reader.ReadEnum<ScalingModeType>(), reader.ReadFloatingPoint(numFloatBytes));
         }
 
+        public static ColorSelectionMode ColorSelectionMode(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (enumerated) colour selection mode:
+            //      0 indexed colour mode
+            //      1 direct colour mode
+            return new ColorSelectionMode(reader.ReadEnum<ColorModeType>());
+        }
+
         public static VdcExtent VdcExtent(MetafileReader reader, CommandHeader header)
         {
             // P1: (point) first corner

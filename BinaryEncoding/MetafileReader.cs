@@ -338,6 +338,9 @@ namespace CgmInfo.BinaryEncoding
                 case 1: // SCALING MODE
                     result = PictureDescriptorReader.ScalingMode(this, commandHeader);
                     break;
+                case 2: // COLOUR SELECTION MODE
+                    result = PictureDescriptorReader.ColorSelectionMode(this, commandHeader);
+                    break;
                 case 6: // VDC EXTENT
                     result = PictureDescriptorReader.VdcExtent(this, commandHeader);
                     break;

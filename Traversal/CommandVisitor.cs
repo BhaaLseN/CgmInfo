@@ -345,6 +345,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter)
         {
             // intentionally left blank

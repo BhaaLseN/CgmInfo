@@ -10,6 +10,11 @@ namespace CgmInfo.TextEncoding
             return new ScalingMode(ParseScalingMode(reader.ReadEnum()), reader.ReadReal());
         }
 
+        public static ColorSelectionMode ColorSelectionMode(MetafileReader reader)
+        {
+            return new ColorSelectionMode(ParseColorMode(reader.ReadEnum()));
+        }
+
         public static VdcExtent VdcExtent(MetafileReader reader)
         {
             var firstCorner = reader.ReadPoint();
@@ -23,6 +28,13 @@ namespace CgmInfo.TextEncoding
             if (token.ToUpperInvariant() == "METRIC")
                 return ScalingModeType.Metric;
             return ScalingModeType.Abstract;
+        }
+        private static ColorModeType ParseColorMode(string token)
+        {
+            // assume indexed; unless its direct
+            if (token.ToUpperInvariant() == "DIRECT")
+                return ColorModeType.Direct;
+            return ColorModeType.Indexed;
         }
     }
 }

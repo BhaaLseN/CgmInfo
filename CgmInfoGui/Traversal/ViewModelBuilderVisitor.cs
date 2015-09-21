@@ -237,6 +237,10 @@ namespace CgmInfoGui.Traversal
             if (scalingMode.ScalingModeType == ScalingModeType.Metric)
                 scalingModeNode.Add(new SimpleNode(string.Format("Factor: {0}", scalingMode.MetricScalingFactor)));
         }
+        public void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, MetafileContext parameter)
+        {
+            parameter.AddNode("COLOUR SELECTION MODE: {0}", colorSelectionMode.ColorMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, MetafileContext parameter)
         {
             var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",

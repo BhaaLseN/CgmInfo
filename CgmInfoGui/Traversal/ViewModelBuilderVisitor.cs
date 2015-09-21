@@ -231,6 +231,12 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, MetafileContext parameter)
+        {
+            var scalingModeNode = parameter.AddNode("SCALING MODE: {0}", scalingMode.ScalingModeType);
+            if (scalingMode.ScalingModeType == ScalingModeType.Metric)
+                scalingModeNode.Add(new SimpleNode(string.Format("Factor: {0}", scalingMode.MetricScalingFactor)));
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, MetafileContext parameter)
         {
             var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",

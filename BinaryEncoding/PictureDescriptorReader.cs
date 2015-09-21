@@ -1,9 +1,28 @@
+using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
 
 namespace CgmInfo.BinaryEncoding
 {
+    // [ISO/IEC 8632-3 8.4]
     internal static class PictureDescriptorReader
     {
+        public static ScalingMode ScalingMode(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (enumerated) scaling mode: valid values are
+            //      0 abstract scaling
+            //      1 metric scaling
+            // P2: (real) metric scaling factor, ignored if P1=0
+            //
+            // This parameter is always encoded as floating point, regardless of the value of the fixed/floating flag of
+            // REAL PRECISION. If a REAL PRECISION (floating, n, m) has preceded, then the precision used is n,m.
+            // If a REAL PRECISION element for floating point has not preceded, then a default precision of 9,23 (32-bit
+            // floating point) is used.
+            int numFloatBytes = 32 / 8;
+            if (reader.Descriptor.RealPrecision == RealPrecisionSpecification.FloatingPoint64Bit)
+                numFloatBytes = 64 / 8;
+            return new ScalingMode(reader.ReadEnum<ScalingModeType>(), reader.ReadFloatingPoint(numFloatBytes));
+        }
+
         public static VdcExtent VdcExtent(MetafileReader reader, CommandHeader header)
         {
             // P1: (point) first corner

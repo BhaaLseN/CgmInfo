@@ -53,6 +53,7 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
 
         // picture descriptor
+        void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter);
         void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
 
         // control

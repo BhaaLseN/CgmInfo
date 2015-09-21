@@ -335,6 +335,9 @@ namespace CgmInfo.BinaryEncoding
             // ISO/IEC 8632-3 8.4, Table 5
             switch (commandHeader.ElementId)
             {
+                case 1: // SCALING MODE
+                    result = PictureDescriptorReader.ScalingMode(this, commandHeader);
+                    break;
                 case 6: // VDC EXTENT
                     result = PictureDescriptorReader.VdcExtent(this, commandHeader);
                     break;
@@ -560,7 +563,7 @@ namespace CgmInfo.BinaryEncoding
             // color components are unsigned integers at direct color precision
             return ReadInteger(Descriptor.ColorPrecision / 8, true);
         }
-        private double ReadFixedPoint(int numBytes)
+        internal double ReadFixedPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.4
             // real value is computed as "whole + (fraction / 2**exp)"
@@ -574,7 +577,7 @@ namespace CgmInfo.BinaryEncoding
             int exp = numBytes / 2 * 8;
             return whole + fraction / Math.Pow(2, exp);
         }
-        private double ReadFloatingPoint(int numBytes)
+        internal double ReadFloatingPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.5
             // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;

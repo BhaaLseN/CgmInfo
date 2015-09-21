@@ -64,6 +64,7 @@
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
+    <Compile Include="Commands\Enums\ScalingModeType.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileElementsList.cs" />
+    <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />

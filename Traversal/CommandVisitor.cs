@@ -340,6 +340,11 @@ namespace CgmInfo.Traversal
         #endregion
 
         #region Picture Descriptor elements
+        public virtual void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter)
         {
             // intentionally left blank

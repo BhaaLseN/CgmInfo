@@ -198,6 +198,13 @@ namespace CgmInfoCmd
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
         }
 
+        public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, PrintContext parameter)
+        {
+            if (scalingMode.ScalingModeType == ScalingModeType.Metric)
+                parameter.WriteLine("Scaling Mode: {0} (Factor {1})", scalingMode.ScalingModeType, scalingMode.MetricScalingFactor);
+            else
+                parameter.WriteLine("Scaling Mode: {0}", scalingMode.ScalingModeType);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, PrintContext parameter)
         {
             parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);

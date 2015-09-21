@@ -57,6 +57,7 @@ namespace CgmInfo.TextEncoding
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
+            { "SCALEMODE", PictureDescriptorReader.ScalingMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
 
             // control elements [ISO/IEC 8632-4 7.4]

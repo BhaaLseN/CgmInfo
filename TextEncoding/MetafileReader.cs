@@ -58,7 +58,7 @@ namespace CgmInfo.TextEncoding
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
             { "SCALEMODE", PictureDescriptorReader.ScalingMode },
-            { "COLRMODE", PictureDescriptorReader.ColorSelectionMode },
+            { "COLRMODE", ReadColorSelectionMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
 
             // control elements [ISO/IEC 8632-4 7.4]
@@ -171,6 +171,12 @@ namespace CgmInfo.TextEncoding
             var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader);
             reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
+        }
+        private static Command ReadColorSelectionMode(MetafileReader reader)
+        {
+            var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(reader);
+            reader.Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
+            return colorSelectionMode;
         }
         private static Command ReadVdcIntegerPrecision(MetafileReader reader)
         {

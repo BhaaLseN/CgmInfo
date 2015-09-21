@@ -7,6 +7,7 @@ namespace CgmInfo
         public MetafileDescriptor()
         {
             // ISO/IEC 8632-3 9
+            // also ISO/IEC 8632-1 8
             ColorModel = ColorModel.RGB;
             ColorPrecision = 8;
             RealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
@@ -15,6 +16,7 @@ namespace CgmInfo
             VdcType = VdcTypeSpecification.Integer;
             VdcIntegerPrecision = 16;
             VdcRealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
+            ColorSelectionMode = ColorModeType.Indexed;
         }
 
         public ColorModel ColorModel { get; internal set; }
@@ -22,6 +24,8 @@ namespace CgmInfo
         public RealPrecisionSpecification RealPrecision { get; internal set; }
         public int IntegerPrecision { get; internal set; }
         public int IndexPrecision { get; internal set; }
+
+        public ColorModeType ColorSelectionMode { get; internal set; }
 
         public VdcTypeSpecification VdcType { get; internal set; }
         public int VdcIntegerPrecision { get; internal set; }

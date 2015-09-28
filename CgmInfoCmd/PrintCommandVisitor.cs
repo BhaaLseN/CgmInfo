@@ -225,6 +225,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);
         }
+        public void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Background Color: {0}", backgroundColor.Color);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

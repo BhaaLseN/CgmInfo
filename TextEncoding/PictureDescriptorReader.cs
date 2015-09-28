@@ -37,6 +37,11 @@ namespace CgmInfo.TextEncoding
             return new VdcExtent(firstCorner, secondCorner);
         }
 
+        public static BackgroundColor BackgroundColor(MetafileReader reader)
+        {
+            return new BackgroundColor(reader.ReadDirectColor());
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric

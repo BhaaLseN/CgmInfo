@@ -69,5 +69,11 @@ namespace CgmInfo.BinaryEncoding
             var secondCorner = reader.ReadPoint();
             return new VdcExtent(firstCorner, secondCorner);
         }
+
+        public static BackgroundColor BackgroundColor(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (direct colour) background colour.
+            return new BackgroundColor(reader.ReadDirectColor());
+        }
     }
 }

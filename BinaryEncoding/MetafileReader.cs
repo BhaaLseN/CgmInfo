@@ -361,6 +361,9 @@ namespace CgmInfo.BinaryEncoding
                 case 6: // VDC EXTENT
                     result = PictureDescriptorReader.VdcExtent(this, commandHeader);
                     break;
+                case 7: // BACKGROUND COLOUR
+                    result = PictureDescriptorReader.BackgroundColor(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -63,6 +63,7 @@ namespace CgmInfo.TextEncoding
             { "MARKERSIZEMODE", ReadMarkerSizeSpecificationMode },
             { "EDGEWIDTHMODE", ReadEdgeWidthSpecificationMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
+            { "BACKCOLR", PictureDescriptorReader.BackgroundColor },
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },

@@ -265,6 +265,11 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, MetafileContext parameter)
+        {
+            parameter.AddNode("BACKGROUND COLOUR: {0}", backgroundColor.Color);
+        }
+
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
         {
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);

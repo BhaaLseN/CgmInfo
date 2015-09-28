@@ -59,6 +59,7 @@ namespace CgmInfo.Traversal
         void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, T parameter);
         void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, T parameter);
         void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
+        void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, T parameter);
 
         // control
         void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);

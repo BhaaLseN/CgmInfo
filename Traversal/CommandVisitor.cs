@@ -379,6 +379,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         public virtual void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, T parameter)

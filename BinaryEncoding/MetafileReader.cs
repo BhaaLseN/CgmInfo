@@ -367,6 +367,11 @@ namespace CgmInfo.BinaryEncoding
                 case 8: // DEVICE VIEWPORT
                     result = PictureDescriptorReader.DeviceViewport(this, commandHeader);
                     break;
+                case 9: // DEVICE VIEWPORT SPECIFICATION MODE
+                    var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(this, commandHeader);
+                    Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
+                    result = deviceViewportSpecificationMode;
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

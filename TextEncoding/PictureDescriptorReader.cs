@@ -49,6 +49,11 @@ namespace CgmInfo.TextEncoding
             return new DeviceViewport(firstCorner, secondCorner);
         }
 
+        public static DeviceViewportSpecificationMode DeviceViewportSpecificationMode(MetafileReader reader)
+        {
+            return new DeviceViewportSpecificationMode(ParseDeviceViewportSpecificationMode(reader.ReadEnum()), reader.ReadReal());
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric
@@ -74,6 +79,16 @@ namespace CgmInfo.TextEncoding
             else if (token == "MM")
                 return WidthSpecificationModeType.Millimeters;
             return WidthSpecificationModeType.Absolute;
+        }
+        private static DeviceViewportSpecificationModeType ParseDeviceViewportSpecificationMode(string token)
+        {
+            // assume fraction unless it matches any of the others
+            token = token.ToUpperInvariant();
+            if (token == "MM")
+                return DeviceViewportSpecificationModeType.MillimetersWithScaleFactor;
+            else if (token == "PHYDEVCOORD")
+                return DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates;
+            return DeviceViewportSpecificationModeType.FractionOfDrawingSurface;
         }
     }
 }

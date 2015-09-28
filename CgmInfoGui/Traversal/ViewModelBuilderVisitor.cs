@@ -282,6 +282,13 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, MetafileContext parameter)
+        {
+            var specificationModeNode = parameter.AddNode("DEVICE VIEWPORT SPECIFICATION MODE: {0}", deviceViewportSpecificationMode.SpecificationMode);
+            if (deviceViewportSpecificationMode.SpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor)
+                specificationModeNode.Add(new SimpleNode(string.Format("Factor: {0}", deviceViewportSpecificationMode.ScaleFactor)));
+        }
+
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
         {
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);

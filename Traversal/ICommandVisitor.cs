@@ -61,6 +61,7 @@ namespace CgmInfo.Traversal
         void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
         void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, T parameter);
         void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, T parameter);
+        void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, T parameter);
 
         // control
         void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);

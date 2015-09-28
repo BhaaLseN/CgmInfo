@@ -65,6 +65,7 @@ namespace CgmInfo.TextEncoding
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
             { "BACKCOLR", PictureDescriptorReader.BackgroundColor },
             { "DEVVP", PictureDescriptorReader.DeviceViewport },
+            { "DEVVPMODE", ReadDeviceViewportSpecificationMode },
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
@@ -200,6 +201,12 @@ namespace CgmInfo.TextEncoding
             var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(reader);
             reader.Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
             return edgeWidthSpecificationMode;
+        }
+        private static Command ReadDeviceViewportSpecificationMode(MetafileReader reader)
+        {
+            var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(reader);
+            reader.Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
+            return deviceViewportSpecificationMode;
         }
         private static Command ReadVdcIntegerPrecision(MetafileReader reader)
         {

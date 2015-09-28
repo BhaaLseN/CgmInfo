@@ -80,6 +80,7 @@
     <Compile Include="Commands\PictureDescriptor\BackgroundColor.cs" />
     <Compile Include="Commands\PictureDescriptor\ColorSelectionMode.cs" />
     <Compile Include="Commands\PictureDescriptor\DeviceViewport.cs" />
+    <Compile Include="Commands\PictureDescriptor\DeviceViewportSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\EdgeWidthSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\LineWidthSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\MarkerSizeSpecificationMode.cs" />

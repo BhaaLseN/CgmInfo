@@ -84,5 +84,23 @@ namespace CgmInfo.BinaryEncoding
             var secondCorner = reader.ReadViewportPoint();
             return new DeviceViewport(firstCorner, secondCorner);
         }
+
+        public static DeviceViewportSpecificationMode DeviceViewportSpecificationMode(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (enumerated) VC specifier: valid values are
+            //      0 fraction of drawing surface
+            //      1 millimetres with scale factor
+            //      2 physical device coordinates
+            // P2: (real) metric scale factor, ignored if P1=0 or P1=2
+            //
+            // This parameter is always encoded as floating point, regardless of the value of the fixed/floating flag of
+            // REAL PRECISION. If a REAL PRECISION (floating, n, m) has preceded, then the precision used is n,m.
+            // If a REAL PRECISION element for floating point has not preceded, then a default precision of 9,23 (32-bit
+            // floating point) is used.
+            int numFloatBytes = 32 / 8;
+            if (reader.Descriptor.RealPrecision == RealPrecisionSpecification.FloatingPoint64Bit)
+                numFloatBytes = 64 / 8;
+            return new DeviceViewportSpecificationMode(reader.ReadEnum<DeviceViewportSpecificationModeType>(), reader.ReadFloatingPoint(numFloatBytes));
+        }
     }
 }

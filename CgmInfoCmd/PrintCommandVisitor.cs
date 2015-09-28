@@ -233,6 +233,13 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Device Viewport: {0} - {1}", deviceViewport.FirstCorner, deviceViewport.SecondCorner);
         }
+        public void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, PrintContext parameter)
+        {
+            if (deviceViewportSpecificationMode.SpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor)
+                parameter.WriteLine("Scaling Mode: {0} (Factor {1})", deviceViewportSpecificationMode.SpecificationMode, deviceViewportSpecificationMode.ScaleFactor);
+            else
+                parameter.WriteLine("Scaling Mode: {0}", deviceViewportSpecificationMode.SpecificationMode);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

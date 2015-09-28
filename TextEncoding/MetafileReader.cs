@@ -64,6 +64,7 @@ namespace CgmInfo.TextEncoding
             { "EDGEWIDTHMODE", ReadEdgeWidthSpecificationMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
             { "BACKCOLR", PictureDescriptorReader.BackgroundColor },
+            { "DEVVP", PictureDescriptorReader.DeviceViewport },
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
@@ -323,6 +324,27 @@ namespace CgmInfo.TextEncoding
         {
             double x = ReadVdc();
             double y = ReadVdc();
+            return new PointF((float)x, (float)y);
+        }
+        internal double ReadViewportCoordinate()
+        {
+            // a Viewport Coordinate (VC) is either an int or a double; depending on what DEVICE VIEWPORT SPECIFICATION MODE said [ISO/IEC 8632-4 6.3.5]
+            if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor ||
+                Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates)
+            {
+                return ReadInteger();
+            }
+            else if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.FractionOfDrawingSurface)
+            {
+                return ReadReal();
+            }
+
+            throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
+        }
+        internal PointF ReadViewportPoint()
+        {
+            double x = ReadViewportCoordinate();
+            double y = ReadViewportCoordinate();
             return new PointF((float)x, (float)y);
         }
         internal Color ReadColor()

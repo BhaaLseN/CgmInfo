@@ -75,5 +75,14 @@ namespace CgmInfo.BinaryEncoding
             // P1: (direct colour) background colour.
             return new BackgroundColor(reader.ReadDirectColor());
         }
+
+        public static DeviceViewport DeviceViewport(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (viewport point) first corner
+            // P2: (viewport point) second corner
+            var firstCorner = reader.ReadViewportPoint();
+            var secondCorner = reader.ReadViewportPoint();
+            return new DeviceViewport(firstCorner, secondCorner);
+        }
     }
 }

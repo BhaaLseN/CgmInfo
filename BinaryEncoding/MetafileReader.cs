@@ -364,6 +364,9 @@ namespace CgmInfo.BinaryEncoding
                 case 7: // BACKGROUND COLOUR
                     result = PictureDescriptorReader.BackgroundColor(this, commandHeader);
                     break;
+                case 8: // DEVICE VIEWPORT
+                    result = PictureDescriptorReader.DeviceViewport(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
@@ -551,6 +554,27 @@ namespace CgmInfo.BinaryEncoding
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
+        internal double ReadViewportCoordinate()
+        {
+            // a Viewport Coordinate (VC) is either an int or a double; depending on what DEVICE VIEWPORT SPECIFICATION MODE said [ISO/IEC 8632-3 7, Table 1, Note 13/14]
+            if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor ||
+                Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates)
+            {
+                return ReadInteger();
+            }
+            else if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.FractionOfDrawingSurface)
+            {
+                return ReadReal();
+            }
+
+            throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
+        }
+        internal PointF ReadViewportPoint()
+        {
+            double x = ReadViewportCoordinate();
+            double y = ReadViewportCoordinate();
+            return new PointF((float)x, (float)y);
+        }
         internal Color ReadColor()
         {
             if (Descriptor.ColorSelectionMode == ColorModeType.Direct)

@@ -17,6 +17,7 @@ namespace CgmInfo
             VdcIntegerPrecision = 16;
             VdcRealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
             ColorSelectionMode = ColorModeType.Indexed;
+            DeviceViewportSpecificationMode = DeviceViewportSpecificationModeType.FractionOfDrawingSurface;
 
             LineWidthSpecificationMode = WidthSpecificationModeType.Scaled;
             MarkerSizeSpecificationMode = WidthSpecificationModeType.Scaled;
@@ -30,6 +31,7 @@ namespace CgmInfo
         public int IndexPrecision { get; internal set; }
 
         public ColorModeType ColorSelectionMode { get; internal set; }
+        public DeviceViewportSpecificationModeType DeviceViewportSpecificationMode { get; internal set; }
 
         public VdcTypeSpecification VdcType { get; internal set; }
         public int VdcIntegerPrecision { get; internal set; }

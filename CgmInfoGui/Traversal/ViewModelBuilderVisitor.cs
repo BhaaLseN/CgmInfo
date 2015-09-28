@@ -270,6 +270,18 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("BACKGROUND COLOUR: {0}", backgroundColor.Color);
         }
 
+        public void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, MetafileContext parameter)
+        {
+            var deviceViewportNode = parameter.AddNode("DEVICE VIEWPORT: {0} by {1}",
+                Math.Abs(deviceViewport.SecondCorner.X - deviceViewport.FirstCorner.X),
+                Math.Abs(deviceViewport.SecondCorner.Y - deviceViewport.FirstCorner.Y));
+            deviceViewportNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", deviceViewport.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", deviceViewport.SecondCorner)),
+            });
+        }
+
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
         {
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);

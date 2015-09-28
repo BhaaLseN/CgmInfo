@@ -42,6 +42,13 @@ namespace CgmInfo.TextEncoding
             return new BackgroundColor(reader.ReadDirectColor());
         }
 
+        public static DeviceViewport DeviceViewport(MetafileReader reader)
+        {
+            var firstCorner = reader.ReadViewportPoint();
+            var secondCorner = reader.ReadViewportPoint();
+            return new DeviceViewport(firstCorner, secondCorner);
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric

@@ -229,6 +229,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Background Color: {0}", backgroundColor.Color);
         }
+        public void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, PrintContext parameter)
+        {
+            parameter.WriteLine("Device Viewport: {0} - {1}", deviceViewport.FirstCorner, deviceViewport.SecondCorner);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

@@ -377,6 +377,9 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
                     result = interiorStyleSpecificationMode;
                     break;
+                case 17: // LINE AND EDGE TYPE DEFINITION
+                    result = PictureDescriptorReader.LineAndEdgeTypeDefinition(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;
@@ -547,6 +550,16 @@ namespace CgmInfo.BinaryEncoding
         internal PointF ReadPoint()
         {
             return new PointF((float)ReadVdc(), (float)ReadVdc());
+        }
+        internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
+        {
+            // When the value is 'absolute', then an associated parameter of type SS
+            // resolves to the basic data type VDC. Otherwise, associated
+            // SS parameters resolve to the basic data type R. [ISO/IEC 8632-1 7.1, Table 11]
+            if (widthSpecificationMode == WidthSpecificationModeType.Absolute)
+                return ReadVdc();
+            else
+                return ReadReal();
         }
         internal double ReadVdc()
         {

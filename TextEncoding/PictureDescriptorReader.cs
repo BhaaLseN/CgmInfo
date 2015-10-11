@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
 
@@ -57,6 +58,16 @@ namespace CgmInfo.TextEncoding
         public static InteriorStyleSpecificationMode InteriorStyleSpecificationMode(MetafileReader reader)
         {
             return new InteriorStyleSpecificationMode(ParseWidthSpecificationMode(reader.ReadEnum()));
+        }
+
+        public static LineAndEdgeTypeDefinition LineAndEdgeTypeDefinition(MetafileReader reader)
+        {
+            int lineType = reader.ReadIndex();
+            double dashCycleRepeatLength = reader.ReadVdc();
+            var dashElements = new List<int>();
+            while (!reader.AtEndOfElement)
+                dashElements.Add(reader.ReadInteger());
+            return new LineAndEdgeTypeDefinition(lineType, dashCycleRepeatLength, dashElements.ToArray());
         }
 
         private static ScalingModeType ParseScalingMode(string token)

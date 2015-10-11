@@ -299,6 +299,19 @@ namespace CgmInfoGui.Traversal
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);
         }
 
+        public void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, MetafileContext parameter)
+        {
+            var lineAndEdgeTypeDefinitionNode = parameter.AddNode("LINE AND EDGE TYPE DEFINITION: {0}", lineAndEdgeTypeDefinition.LineType);
+            lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Line Type Index: {0}", lineAndEdgeTypeDefinition.LineType)),
+                new SimpleNode(string.Format("Dash Cycle Repeat Length: {0}", lineAndEdgeTypeDefinition.DashCycleRepeatLength)),
+            });
+            var entries = new SimpleNode(string.Format("Dash Elements [{0} elements]", lineAndEdgeTypeDefinition.DashElements.Length));
+            entries.Nodes.AddRange(lineAndEdgeTypeDefinition.DashElements.Select(i => new SimpleNode(i.ToString())));
+            lineAndEdgeTypeDefinitionNode.Nodes.Add(entries);
+        }
+
         public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
         {
             var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);

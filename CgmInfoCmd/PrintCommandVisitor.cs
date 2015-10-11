@@ -244,6 +244,11 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Interior Style Specification Mode: {0}", interiorStyleSpecificationMode.WidthSpecificationMode);
         }
+        public void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Line and Edge Type Definition: {0} (dash cycle repeat length: {1}, {2} elements)",
+                lineAndEdgeTypeDefinition.LineType, lineAndEdgeTypeDefinition.DashCycleRepeatLength, lineAndEdgeTypeDefinition.DashElements.Length);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

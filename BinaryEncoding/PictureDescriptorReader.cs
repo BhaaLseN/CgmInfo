@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
 
@@ -111,6 +112,20 @@ namespace CgmInfo.BinaryEncoding
             //      2 fractional
             //      3 mm
             return new InteriorStyleSpecificationMode(reader.ReadEnum<WidthSpecificationModeType>());
+        }
+
+        public static LineAndEdgeTypeDefinition LineAndEdgeTypeDefinition(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (index) line type, valid values are negative.
+            // P2: (size specification) dash cycle repeat length: see Part 1, subclause 7.1 for its form.
+            //      dash cycle repeat length is affected by LINE WIDTH SPECIFICATION MODE
+            // P3-P(n+2): (integer) list of n dash elements
+            int lineType = reader.ReadIndex();
+            double dashCycleRepeatLength = reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode);
+            var dashElements = new List<int>();
+            while (reader.HasMoreData())
+                dashElements.Add(reader.ReadInteger());
+            return new LineAndEdgeTypeDefinition(lineType, dashCycleRepeatLength, dashElements.ToArray());
         }
     }
 }

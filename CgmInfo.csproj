@@ -86,6 +86,7 @@
     <Compile Include="Commands\PictureDescriptor\LineWidthSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\MarkerSizeSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
+    <Compile Include="Commands\PictureDescriptor\LineAndEdgeTypeDefinition.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />

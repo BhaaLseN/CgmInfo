@@ -161,5 +161,18 @@ namespace CgmInfo.BinaryEncoding
                 new PointF((float)hatchDirectionEndX, (float)hatchDirectionEndY),
                 dutyCycleLength, gapWidths.ToArray(), lineTypes.ToArray());
         }
+
+        public static GeometricPatternDefinition GeometricPatternDefinition(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (index) geometric pattern index
+            // P2: (name) segment identifier
+            // P3: (point) first corner point
+            // P4: (point) second corner point
+            int patternIndex = reader.ReadIndex();
+            int segmentIdentifier = reader.ReadName();
+            var firstCornerPoint = reader.ReadPoint();
+            var secondCornerPoint = reader.ReadPoint();
+            return new GeometricPatternDefinition(patternIndex, segmentIdentifier, firstCornerPoint, secondCornerPoint);
+        }
     }
 }

@@ -93,6 +93,15 @@ namespace CgmInfo.TextEncoding
                 dutyCycleLength, gapWidths.ToArray(), lineTypes.ToArray());
         }
 
+        public static GeometricPatternDefinition GeometricPatternDefinition(MetafileReader reader)
+        {
+            int patternIndex = reader.ReadIndex();
+            int segmentIdentifier = reader.ReadName();
+            var firstCornerPoint = reader.ReadPoint();
+            var secondCornerPoint = reader.ReadPoint();
+            return new GeometricPatternDefinition(patternIndex, segmentIdentifier, firstCornerPoint, secondCornerPoint);
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric

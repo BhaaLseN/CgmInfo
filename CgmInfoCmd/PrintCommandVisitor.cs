@@ -255,6 +255,12 @@ namespace CgmInfoCmd
                 hatchStyleDefinition.HatchIndex, hatchStyleDefinition.DutyCycleLength, hatchStyleDefinition.GapWidths.Length,
                 hatchStyleDefinition.HatchDirectionStart, hatchStyleDefinition.HatchDirectionEnd);
         }
+        public void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Geometric Pattern Definition: {0} (segment {1}, from {2} to {3})",
+                geometricPatternDefinition.GeometricPatternIndex, geometricPatternDefinition.SegmentIdentifier,
+                geometricPatternDefinition.FirstCorner, geometricPatternDefinition.SecondCorner);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

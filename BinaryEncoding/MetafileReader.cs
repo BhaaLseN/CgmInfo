@@ -385,6 +385,9 @@ namespace CgmInfo.BinaryEncoding
                 case 18: // HATCH STYLE DEFINITION
                     result = PictureDescriptorReader.HatchStyleDefinition(this, commandHeader);
                     break;
+                case 19: // GEOMETRIC PATTERN DEFINITION
+                    result = PictureDescriptorReader.GeometricPatternDefinition(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

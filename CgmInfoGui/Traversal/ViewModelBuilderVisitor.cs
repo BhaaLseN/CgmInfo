@@ -331,6 +331,18 @@ namespace CgmInfoGui.Traversal
             hatchStyleDefinitionNode.Nodes.Add(lineTypes);
         }
 
+        public void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, MetafileContext parameter)
+        {
+            var lineAndEdgeTypeDefinitionNode = parameter.AddNode("GEOMETRIC PATTERN DEFINITION: {0}", geometricPatternDefinition.GeometricPatternIndex);
+            lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Geometric Pattern Index: {0}", geometricPatternDefinition.GeometricPatternIndex)),
+                new SimpleNode(string.Format("Segment Identifier: {0}", geometricPatternDefinition.SegmentIdentifier)),
+                new SimpleNode(string.Format("First Corner: {0}", geometricPatternDefinition.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", geometricPatternDefinition.SecondCorner)),
+            });
+        }
+
         public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
         {
             var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);

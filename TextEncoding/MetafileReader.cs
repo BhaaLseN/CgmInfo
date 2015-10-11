@@ -52,7 +52,7 @@ namespace CgmInfo.TextEncoding
             { "FONTLIST", MetafileDescriptorReader.FontList },
             { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
-            { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
+            { "NAMEPREC", ReadNamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
@@ -181,6 +181,12 @@ namespace CgmInfo.TextEncoding
             reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
         }
+        private static Command ReadNamePrecision(MetafileReader reader)
+        {
+            var namePrecision = MetafileDescriptorReader.NamePrecision(reader);
+            reader.Descriptor.NamePrecision = namePrecision.Precision;
+            return namePrecision;
+        }
         private static Command ReadColorSelectionMode(MetafileReader reader)
         {
             var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(reader);
@@ -265,6 +271,10 @@ namespace CgmInfo.TextEncoding
             return ReadToken();
         }
         internal int ReadIndex()
+        {
+            return ReadInteger();
+        }
+        internal int ReadName()
         {
             return ReadInteger();
         }

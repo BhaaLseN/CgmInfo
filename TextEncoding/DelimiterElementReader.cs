@@ -32,7 +32,7 @@ namespace CgmInfo.TextEncoding
 
         public static BeginSegment BeginSegment(MetafileReader reader)
         {
-            return new BeginSegment(reader.ReadString());
+            return new BeginSegment(reader.ReadName());
         }
 
         public static EndSegment EndSegment(MetafileReader reader)

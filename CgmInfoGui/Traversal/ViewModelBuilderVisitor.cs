@@ -198,7 +198,7 @@ namespace CgmInfoGui.Traversal
         {
             var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE ELEMENTS LIST [{0} entries]", metafileElementsList.Elements.Count());
             metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry)));
-       }
+        }
 
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {

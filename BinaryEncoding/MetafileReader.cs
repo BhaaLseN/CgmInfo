@@ -305,7 +305,9 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.CharacterCodingAnnouncer(this, commandHeader);
                     break;
                 case 16: // NAME PRECISION
-                    result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    var namePrecision = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    Descriptor.NamePrecision = namePrecision.Precision;
+                    result = namePrecision;
                     break;
                 case 17: // MAXIMUM VDC EXTENT
                     result = MetafileDescriptorReader.MaximumVdcExtent(this, commandHeader);
@@ -707,7 +709,12 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadIndex()
         {
             // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
-            return ReadInteger(Descriptor.IndexPrecision / 8,  false);
+            return ReadInteger(Descriptor.IndexPrecision / 8, false);
+        }
+        internal int ReadName()
+        {
+            // name is a signed integer at name precision [ISO/IEC 8632-3 7, Table 1, N]
+            return ReadInteger(Descriptor.NamePrecision / 8, false);
         }
         internal ushort ReadWord()
         {

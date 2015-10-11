@@ -13,6 +13,7 @@ namespace CgmInfo
             RealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
             IntegerPrecision = 16;
             IndexPrecision = 16;
+            NamePrecision = 16;
             VdcType = VdcTypeSpecification.Integer;
             VdcIntegerPrecision = 16;
             VdcRealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
@@ -30,6 +31,7 @@ namespace CgmInfo
         public RealPrecisionSpecification RealPrecision { get; internal set; }
         public int IntegerPrecision { get; internal set; }
         public int IndexPrecision { get; internal set; }
+        public int NamePrecision { get; internal set; }
 
         public ColorModeType ColorSelectionMode { get; internal set; }
         public DeviceViewportSpecificationModeType DeviceViewportSpecificationMode { get; internal set; }

@@ -86,13 +86,13 @@ namespace CgmInfo.BinaryEncoding
         public static SavePrimitiveContext SavePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (name) context name [ISO/IEC 8632-3 8.5]
-            return new SavePrimitiveContext(reader.ReadString());
+            return new SavePrimitiveContext(reader.ReadName());
         }
 
         public static RestorePrimitiveContext RestorePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (name) context name [ISO/IEC 8632-3 8.5]
-            return new RestorePrimitiveContext(reader.ReadString());
+            return new RestorePrimitiveContext(reader.ReadName());
         }
 
         public static ProtectionRegionIndicator ProtectionRegionIndicator(MetafileReader reader, CommandHeader commandHeader)

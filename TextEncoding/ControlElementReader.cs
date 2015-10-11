@@ -73,16 +73,16 @@ namespace CgmInfo.TextEncoding
 
         public static SavePrimitiveContext SavePrimitiveContext(MetafileReader reader)
         {
-            // TODO: spec says type "I", which is integer (for integers, coordinates, indices and names)
+            // TODO: spec says type "I", which is integer; even though there is a type for "N" (name)
             //       needs to be verified, I couldn't find any file that uses this yet.
-            return new SavePrimitiveContext(reader.ReadInteger().ToString());
+            return new SavePrimitiveContext(reader.ReadName());
         }
 
         public static RestorePrimitiveContext RestorePrimitiveContext(MetafileReader reader)
         {
-            // TODO: spec says type "I", which is integer (for integers, coordinates, indices and names)
+            // TODO: spec says type "I", which is integer; even though there is a type for "N" (name)
             //       needs to be verified, I couldn't find any file that uses this yet.
-            return new RestorePrimitiveContext(reader.ReadInteger().ToString());
+            return new RestorePrimitiveContext(reader.ReadName());
         }
 
         public static ProtectionRegionIndicator ProtectionRegionIndicator(MetafileReader reader)

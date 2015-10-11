@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
 
@@ -70,6 +71,28 @@ namespace CgmInfo.TextEncoding
             return new LineAndEdgeTypeDefinition(lineType, dashCycleRepeatLength, dashElements.ToArray());
         }
 
+        public static HatchStyleDefinition HatchStyleDefinition(MetafileReader reader)
+        {
+            int hatchIndex = reader.ReadIndex();
+            HatchStyleIndicator styleIndicator = ParseHatchStyleIndicator(reader.ReadEnum());
+            double hatchDirectionStartX = reader.ReadVdc();
+            double hatchDirectionStartY = reader.ReadVdc();
+            double hatchDirectionEndX = reader.ReadVdc();
+            double hatchDirectionEndY = reader.ReadVdc();
+            double dutyCycleLength = reader.ReadVdc();
+            int n = reader.ReadInteger();
+            var gapWidths = new List<int>();
+            for (int i = 0; i < n; i++)
+                gapWidths.Add(reader.ReadInteger());
+            var lineTypes = new List<int>();
+            for (int i = 0; i < n; i++)
+                lineTypes.Add(reader.ReadInteger());
+            return new HatchStyleDefinition(hatchIndex, styleIndicator,
+                new PointF((float)hatchDirectionStartX, (float)hatchDirectionStartY),
+                new PointF((float)hatchDirectionEndX, (float)hatchDirectionEndY),
+                dutyCycleLength, gapWidths.ToArray(), lineTypes.ToArray());
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric
@@ -105,6 +128,14 @@ namespace CgmInfo.TextEncoding
             else if (token == "PHYDEVCOORD")
                 return DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates;
             return DeviceViewportSpecificationModeType.FractionOfDrawingSurface;
+        }
+
+        private static HatchStyleIndicator ParseHatchStyleIndicator(string token)
+        {
+            // assume parallel unless its cross-hatch
+            if (token.ToUpperInvariant() == "CROSSHATCH")
+                return HatchStyleIndicator.CrossHatch;
+            return HatchStyleIndicator.Parallel;
         }
     }
 }

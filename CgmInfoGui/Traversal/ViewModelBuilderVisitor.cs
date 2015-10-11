@@ -312,6 +312,25 @@ namespace CgmInfoGui.Traversal
             lineAndEdgeTypeDefinitionNode.Nodes.Add(entries);
         }
 
+        public void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, MetafileContext parameter)
+        {
+            var hatchStyleDefinitionNode = parameter.AddNode("HATCH STYLE DEFINITION: {0}", hatchStyleDefinition.HatchIndex);
+            hatchStyleDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Hatch Index: {0}", hatchStyleDefinition.HatchIndex)),
+                new SimpleNode(string.Format("Style Indicator: {0}", hatchStyleDefinition.StyleIndicator)),
+                new SimpleNode(string.Format("Hatch Direction Start: {0}", hatchStyleDefinition.HatchDirectionStart)),
+                new SimpleNode(string.Format("Hatch Direction End: {0}", hatchStyleDefinition.HatchDirectionEnd)),
+                new SimpleNode(string.Format("Duty Cycle Length: {0}", hatchStyleDefinition.DutyCycleLength)),
+            });
+            var gapWidths = new SimpleNode(string.Format("Gap Widths [{0} elements]", hatchStyleDefinition.GapWidths.Length));
+            gapWidths.Nodes.AddRange(hatchStyleDefinition.GapWidths.Select(i => new SimpleNode(i.ToString())));
+            hatchStyleDefinitionNode.Nodes.Add(gapWidths);
+            var lineTypes = new SimpleNode(string.Format("Line Types [{0} elements]", hatchStyleDefinition.LineTypes.Length));
+            lineTypes.Nodes.AddRange(hatchStyleDefinition.LineTypes.Select(i => new SimpleNode(i.ToString())));
+            hatchStyleDefinitionNode.Nodes.Add(lineTypes);
+        }
+
         public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
         {
             var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);

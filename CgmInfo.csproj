@@ -64,6 +64,7 @@
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
+    <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Commands\PictureDescriptor\DeviceViewportSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\EdgeWidthSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\InteriorStyleSpecificationMode.cs" />
+    <Compile Include="Commands\PictureDescriptor\HatchStyleDefinition.cs" />
     <Compile Include="Commands\PictureDescriptor\LineWidthSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\MarkerSizeSpecificationMode.cs" />
     <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />

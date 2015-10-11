@@ -68,6 +68,7 @@ namespace CgmInfo.TextEncoding
             { "DEVVPMODE", ReadDeviceViewportSpecificationMode },
             { "INTSTYLEMODE", ReadInteriorStyleSpecificationMode },
             { "LINEEDGETYPEDEF", PictureDescriptorReader.LineAndEdgeTypeDefinition },
+            { "HATCHSTYLEDEF", PictureDescriptorReader.HatchStyleDefinition },
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },

@@ -249,6 +249,12 @@ namespace CgmInfoCmd
             parameter.WriteLine("Line and Edge Type Definition: {0} (dash cycle repeat length: {1}, {2} elements)",
                 lineAndEdgeTypeDefinition.LineType, lineAndEdgeTypeDefinition.DashCycleRepeatLength, lineAndEdgeTypeDefinition.DashElements.Length);
         }
+        public void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Hatch Style Definition: {0} (duty cycle length: {1}, {2} gaps, from {3} to {4})",
+                hatchStyleDefinition.HatchIndex, hatchStyleDefinition.DutyCycleLength, hatchStyleDefinition.GapWidths.Length,
+                hatchStyleDefinition.HatchDirectionStart, hatchStyleDefinition.HatchDirectionEnd);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

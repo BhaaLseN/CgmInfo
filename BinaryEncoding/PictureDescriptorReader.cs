@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
 
@@ -126,6 +127,39 @@ namespace CgmInfo.BinaryEncoding
             while (reader.HasMoreData())
                 dashElements.Add(reader.ReadInteger());
             return new LineAndEdgeTypeDefinition(lineType, dashCycleRepeatLength, dashElements.ToArray());
+        }
+
+        public static HatchStyleDefinition HatchStyleDefinition(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (index) hatch index, valid values are negative.
+            // P2: (enumerated) style indicator: valid values are
+            //      0 parallel
+            //      1 cross hatch
+            // P3: (4(size specification)) hatch direction vectors specifier (x,y,x,y): see Part 1, subclause 7.1 for its form.
+            //      hatch direction vectors specifier is affected by INTERIOR STYLE SPECIFICATION MODE
+            // P4: (size specification) duty cycle length: see Part 1, subclause 7.1 for its form.
+            //      duty cycle length is affected by INTERIOR STYLE SPECIFICATION MODE
+            // P5: (integer) number of hatch lines (=n)
+            // P6-P(5+n): (integers) list of n gap widths
+            // P(6+n)-P(5+2n): (integers) list of n line types
+            int hatchIndex = reader.ReadIndex();
+            HatchStyleIndicator styleIndicator = reader.ReadEnum<HatchStyleIndicator>();
+            double hatchDirectionStartX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionStartY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionEndX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionEndY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double dutyCycleLength = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            int n = reader.ReadInteger();
+            var gapWidths = new List<int>();
+            for (int i = 0; i < n; i++)
+                gapWidths.Add(reader.ReadInteger());
+            var lineTypes = new List<int>();
+            for (int i = 0; i < n; i++)
+                lineTypes.Add(reader.ReadInteger());
+            return new HatchStyleDefinition(hatchIndex, styleIndicator,
+                new PointF((float)hatchDirectionStartX, (float)hatchDirectionStartY),
+                new PointF((float)hatchDirectionEndX, (float)hatchDirectionEndY),
+                dutyCycleLength, gapWidths.ToArray(), lineTypes.ToArray());
         }
     }
 }

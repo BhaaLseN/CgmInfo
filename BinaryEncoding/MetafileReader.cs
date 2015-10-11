@@ -380,6 +380,9 @@ namespace CgmInfo.BinaryEncoding
                 case 17: // LINE AND EDGE TYPE DEFINITION
                     result = PictureDescriptorReader.LineAndEdgeTypeDefinition(this, commandHeader);
                     break;
+                case 18: // HATCH STYLE DEFINITION
+                    result = PictureDescriptorReader.HatchStyleDefinition(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

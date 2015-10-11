@@ -198,7 +198,7 @@ namespace CgmInfoGui.Traversal
         {
             var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE ELEMENTS LIST [{0} entries]", metafileElementsList.Elements.Count());
             metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry)));
-       }
+        }
 
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {
@@ -231,6 +231,28 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, MetafileContext parameter)
+        {
+            var scalingModeNode = parameter.AddNode("SCALING MODE: {0}", scalingMode.ScalingModeType);
+            if (scalingMode.ScalingModeType == ScalingModeType.Metric)
+                scalingModeNode.Add(new SimpleNode(string.Format("Factor: {0}", scalingMode.MetricScalingFactor)));
+        }
+        public void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, MetafileContext parameter)
+        {
+            parameter.AddNode("COLOUR SELECTION MODE: {0}", colorSelectionMode.ColorMode);
+        }
+        public void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE WIDTH SPECIFICATION MODE: {0}", lineWidthSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER SIZE SPECIFICATION MODE: {0}", markerSizeSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE WIDTH SPECIFICATION MODE: {0}", edgeWidthSpecificationMode.WidthSpecificationMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, MetafileContext parameter)
         {
             var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",
@@ -243,9 +265,82 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, MetafileContext parameter)
+        {
+            parameter.AddNode("BACKGROUND COLOUR: {0}", backgroundColor.Color);
+        }
+
+        public void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, MetafileContext parameter)
+        {
+            var deviceViewportNode = parameter.AddNode("DEVICE VIEWPORT: {0} by {1}",
+                Math.Abs(deviceViewport.SecondCorner.X - deviceViewport.FirstCorner.X),
+                Math.Abs(deviceViewport.SecondCorner.Y - deviceViewport.FirstCorner.Y));
+            deviceViewportNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("First Corner: {0}", deviceViewport.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", deviceViewport.SecondCorner)),
+            });
+        }
+
+        public void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, MetafileContext parameter)
+        {
+            var specificationModeNode = parameter.AddNode("DEVICE VIEWPORT SPECIFICATION MODE: {0}", deviceViewportSpecificationMode.SpecificationMode);
+            if (deviceViewportSpecificationMode.SpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor)
+                specificationModeNode.Add(new SimpleNode(string.Format("Factor: {0}", deviceViewportSpecificationMode.ScaleFactor)));
+        }
+
+        public void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("INTERIOR STYLE SPECIFICATION MODE: {0}", interiorStyleSpecificationMode.WidthSpecificationMode);
+        }
+
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
         {
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);
+        }
+
+        public void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, MetafileContext parameter)
+        {
+            var lineAndEdgeTypeDefinitionNode = parameter.AddNode("LINE AND EDGE TYPE DEFINITION: {0}", lineAndEdgeTypeDefinition.LineType);
+            lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Line Type Index: {0}", lineAndEdgeTypeDefinition.LineType)),
+                new SimpleNode(string.Format("Dash Cycle Repeat Length: {0}", lineAndEdgeTypeDefinition.DashCycleRepeatLength)),
+            });
+            var entries = new SimpleNode(string.Format("Dash Elements [{0} elements]", lineAndEdgeTypeDefinition.DashElements.Length));
+            entries.Nodes.AddRange(lineAndEdgeTypeDefinition.DashElements.Select(i => new SimpleNode(i.ToString())));
+            lineAndEdgeTypeDefinitionNode.Nodes.Add(entries);
+        }
+
+        public void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, MetafileContext parameter)
+        {
+            var hatchStyleDefinitionNode = parameter.AddNode("HATCH STYLE DEFINITION: {0}", hatchStyleDefinition.HatchIndex);
+            hatchStyleDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Hatch Index: {0}", hatchStyleDefinition.HatchIndex)),
+                new SimpleNode(string.Format("Style Indicator: {0}", hatchStyleDefinition.StyleIndicator)),
+                new SimpleNode(string.Format("Hatch Direction Start: {0}", hatchStyleDefinition.HatchDirectionStart)),
+                new SimpleNode(string.Format("Hatch Direction End: {0}", hatchStyleDefinition.HatchDirectionEnd)),
+                new SimpleNode(string.Format("Duty Cycle Length: {0}", hatchStyleDefinition.DutyCycleLength)),
+            });
+            var gapWidths = new SimpleNode(string.Format("Gap Widths [{0} elements]", hatchStyleDefinition.GapWidths.Length));
+            gapWidths.Nodes.AddRange(hatchStyleDefinition.GapWidths.Select(i => new SimpleNode(i.ToString())));
+            hatchStyleDefinitionNode.Nodes.Add(gapWidths);
+            var lineTypes = new SimpleNode(string.Format("Line Types [{0} elements]", hatchStyleDefinition.LineTypes.Length));
+            lineTypes.Nodes.AddRange(hatchStyleDefinition.LineTypes.Select(i => new SimpleNode(i.ToString())));
+            hatchStyleDefinitionNode.Nodes.Add(lineTypes);
+        }
+
+        public void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, MetafileContext parameter)
+        {
+            var lineAndEdgeTypeDefinitionNode = parameter.AddNode("GEOMETRIC PATTERN DEFINITION: {0}", geometricPatternDefinition.GeometricPatternIndex);
+            lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Geometric Pattern Index: {0}", geometricPatternDefinition.GeometricPatternIndex)),
+                new SimpleNode(string.Format("Segment Identifier: {0}", geometricPatternDefinition.SegmentIdentifier)),
+                new SimpleNode(string.Format("First Corner: {0}", geometricPatternDefinition.FirstCorner)),
+                new SimpleNode(string.Format("Second Corner: {0}", geometricPatternDefinition.SecondCorner)),
+            });
         }
 
         public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)

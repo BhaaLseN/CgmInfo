@@ -198,9 +198,68 @@ namespace CgmInfoCmd
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
         }
 
+        public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, PrintContext parameter)
+        {
+            if (scalingMode.ScalingModeType == ScalingModeType.Metric)
+                parameter.WriteLine("Scaling Mode: {0} (Factor {1})", scalingMode.ScalingModeType, scalingMode.MetricScalingFactor);
+            else
+                parameter.WriteLine("Scaling Mode: {0}", scalingMode.ScalingModeType);
+        }
+        public void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Color Selection Mode: {0}", colorSelectionMode.ColorMode);
+        }
+        public void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Width Specification Mode: {0}", lineWidthSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Size Specification Mode: {0}", markerSizeSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Width Specification Mode: {0}", edgeWidthSpecificationMode.WidthSpecificationMode);
+        }
         public void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, PrintContext parameter)
         {
             parameter.WriteLine("VDC Extent: {0} - {1}", vdcExtent.FirstCorner, vdcExtent.SecondCorner);
+        }
+        public void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Background Color: {0}", backgroundColor.Color);
+        }
+        public void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, PrintContext parameter)
+        {
+            parameter.WriteLine("Device Viewport: {0} - {1}", deviceViewport.FirstCorner, deviceViewport.SecondCorner);
+        }
+        public void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, PrintContext parameter)
+        {
+            if (deviceViewportSpecificationMode.SpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor)
+                parameter.WriteLine("Scaling Mode: {0} (Factor {1})", deviceViewportSpecificationMode.SpecificationMode, deviceViewportSpecificationMode.ScaleFactor);
+            else
+                parameter.WriteLine("Scaling Mode: {0}", deviceViewportSpecificationMode.SpecificationMode);
+        }
+        public void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Interior Style Specification Mode: {0}", interiorStyleSpecificationMode.WidthSpecificationMode);
+        }
+        public void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Line and Edge Type Definition: {0} (dash cycle repeat length: {1}, {2} elements)",
+                lineAndEdgeTypeDefinition.LineType, lineAndEdgeTypeDefinition.DashCycleRepeatLength, lineAndEdgeTypeDefinition.DashElements.Length);
+        }
+        public void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Hatch Style Definition: {0} (duty cycle length: {1}, {2} gaps, from {3} to {4})",
+                hatchStyleDefinition.HatchIndex, hatchStyleDefinition.DutyCycleLength, hatchStyleDefinition.GapWidths.Length,
+                hatchStyleDefinition.HatchDirectionStart, hatchStyleDefinition.HatchDirectionEnd);
+        }
+        public void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, PrintContext parameter)
+        {
+            parameter.WriteLine("Geometric Pattern Definition: {0} (segment {1}, from {2} to {3})",
+                geometricPatternDefinition.GeometricPatternIndex, geometricPatternDefinition.SegmentIdentifier,
+                geometricPatternDefinition.FirstCorner, geometricPatternDefinition.SecondCorner);
         }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)

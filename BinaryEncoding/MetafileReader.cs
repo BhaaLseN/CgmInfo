@@ -305,7 +305,9 @@ namespace CgmInfo.BinaryEncoding
                     result = MetafileDescriptorReader.CharacterCodingAnnouncer(this, commandHeader);
                     break;
                 case 16: // NAME PRECISION
-                    result = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    var namePrecision = MetafileDescriptorReader.NamePrecision(this, commandHeader);
+                    Descriptor.NamePrecision = namePrecision.Precision;
+                    result = namePrecision;
                     break;
                 case 17: // MAXIMUM VDC EXTENT
                     result = MetafileDescriptorReader.MaximumVdcExtent(this, commandHeader);
@@ -335,8 +337,56 @@ namespace CgmInfo.BinaryEncoding
             // ISO/IEC 8632-3 8.4, Table 5
             switch (commandHeader.ElementId)
             {
+                case 1: // SCALING MODE
+                    result = PictureDescriptorReader.ScalingMode(this, commandHeader);
+                    break;
+                case 2: // COLOUR SELECTION MODE
+                    var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(this, commandHeader);
+                    Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
+                    result = colorSelectionMode;
+                    break;
+                case 3: // LINE WIDTH SPECIFICATION MODE
+                    var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(this, commandHeader);
+                    Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
+                    result = lineWidthSpecificationMode;
+                    break;
+                case 4: // MARKER SIZE SPECIFICATION MODE
+                    var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(this, commandHeader);
+                    Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
+                    result = markerSizeSpecificationMode;
+                    break;
+                case 5: // EDGE WIDTH SPECIFICATION MODE
+                    var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(this, commandHeader);
+                    Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
+                    result = edgeWidthSpecificationMode;
+                    break;
                 case 6: // VDC EXTENT
                     result = PictureDescriptorReader.VdcExtent(this, commandHeader);
+                    break;
+                case 7: // BACKGROUND COLOUR
+                    result = PictureDescriptorReader.BackgroundColor(this, commandHeader);
+                    break;
+                case 8: // DEVICE VIEWPORT
+                    result = PictureDescriptorReader.DeviceViewport(this, commandHeader);
+                    break;
+                case 9: // DEVICE VIEWPORT SPECIFICATION MODE
+                    var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(this, commandHeader);
+                    Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
+                    result = deviceViewportSpecificationMode;
+                    break;
+                case 16: // INTERIOR STYLE SPECIFICATION MODE
+                    var interiorStyleSpecificationMode = PictureDescriptorReader.InteriorStyleSpecificationMode(this, commandHeader);
+                    Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
+                    result = interiorStyleSpecificationMode;
+                    break;
+                case 17: // LINE AND EDGE TYPE DEFINITION
+                    result = PictureDescriptorReader.LineAndEdgeTypeDefinition(this, commandHeader);
+                    break;
+                case 18: // HATCH STYLE DEFINITION
+                    result = PictureDescriptorReader.HatchStyleDefinition(this, commandHeader);
+                    break;
+                case 19: // GEOMETRIC PATTERN DEFINITION
+                    result = PictureDescriptorReader.GeometricPatternDefinition(this, commandHeader);
                     break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
@@ -360,7 +410,7 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
                     result = vdcRealPrecision;
                     break;
-                // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+                // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
                 //case 3: // AUXILIARY COLOR
                 //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
                 //    break;
@@ -509,6 +559,16 @@ namespace CgmInfo.BinaryEncoding
         {
             return new PointF((float)ReadVdc(), (float)ReadVdc());
         }
+        internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
+        {
+            // When the value is 'absolute', then an associated parameter of type SS
+            // resolves to the basic data type VDC. Otherwise, associated
+            // SS parameters resolve to the basic data type R. [ISO/IEC 8632-1 7.1, Table 11]
+            if (widthSpecificationMode == WidthSpecificationModeType.Absolute)
+                return ReadVdc();
+            else
+                return ReadReal();
+        }
         internal double ReadVdc()
         {
             // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-3 7, Table 1, Note 7]
@@ -525,7 +585,39 @@ namespace CgmInfo.BinaryEncoding
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
+        internal double ReadViewportCoordinate()
+        {
+            // a Viewport Coordinate (VC) is either an int or a double; depending on what DEVICE VIEWPORT SPECIFICATION MODE said [ISO/IEC 8632-3 7, Table 1, Note 13/14]
+            if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor ||
+                Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates)
+            {
+                return ReadInteger();
+            }
+            else if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.FractionOfDrawingSurface)
+            {
+                return ReadReal();
+            }
+
+            throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
+        }
+        internal PointF ReadViewportPoint()
+        {
+            double x = ReadViewportCoordinate();
+            double y = ReadViewportCoordinate();
+            return new PointF((float)x, (float)y);
+        }
         internal Color ReadColor()
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor();
+            else
+                return ReadIndexedColor();
+        }
+        internal Color ReadIndexedColor()
+        {
+            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+        }
+        internal Color ReadDirectColor()
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {
@@ -560,7 +652,7 @@ namespace CgmInfo.BinaryEncoding
             // color components are unsigned integers at direct color precision
             return ReadInteger(Descriptor.ColorPrecision / 8, true);
         }
-        private double ReadFixedPoint(int numBytes)
+        internal double ReadFixedPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.4
             // real value is computed as "whole + (fraction / 2**exp)"
@@ -574,7 +666,7 @@ namespace CgmInfo.BinaryEncoding
             int exp = numBytes / 2 * 8;
             return whole + fraction / Math.Pow(2, exp);
         }
-        private double ReadFloatingPoint(int numBytes)
+        internal double ReadFloatingPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.5
             // C# float/double conform to ANSI/IEEE 754 and have the same format as the specification wants;
@@ -620,7 +712,12 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadIndex()
         {
             // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
-            return ReadInteger(Descriptor.IndexPrecision / 8,  false);
+            return ReadInteger(Descriptor.IndexPrecision / 8, false);
+        }
+        internal int ReadName()
+        {
+            // name is a signed integer at name precision [ISO/IEC 8632-3 7, Table 1, N]
+            return ReadInteger(Descriptor.NamePrecision / 8, false);
         }
         internal ushort ReadWord()
         {

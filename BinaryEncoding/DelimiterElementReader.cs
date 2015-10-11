@@ -38,7 +38,7 @@ namespace CgmInfo.BinaryEncoding
         public static BeginSegment BeginSegment(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (name) segment identifier [ISO/IEC 8632-3 8.2]
-            return new BeginSegment(reader.ReadString());
+            return new BeginSegment(reader.ReadName());
         }
 
         public static EndSegment EndSegment(MetafileReader reader, CommandHeader commandHeader)

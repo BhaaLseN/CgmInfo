@@ -23,10 +23,8 @@ namespace CgmInfo.BinaryEncoding
 
         public static AuxiliaryColor AuxiliaryColor(MetafileReader reader, CommandHeader commandHeader)
         {
-            // FIXME: implement COLOUR SELECTION MODE first; needs to select either color index or color value.
-            throw new System.NotSupportedException("Requires COLOUR SELECTION MODE to be implemented");
             // P1: (colour) auxiliary colour [ISO/IEC 8632-3 8.5]
-            //return new AuxiliaryColor(reader.ReadColor());
+            return new AuxiliaryColor(reader.ReadColor());
         }
 
         public static Transparency Transparency(MetafileReader reader, CommandHeader commandHeader)
@@ -88,13 +86,13 @@ namespace CgmInfo.BinaryEncoding
         public static SavePrimitiveContext SavePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (name) context name [ISO/IEC 8632-3 8.5]
-            return new SavePrimitiveContext(reader.ReadString());
+            return new SavePrimitiveContext(reader.ReadName());
         }
 
         public static RestorePrimitiveContext RestorePrimitiveContext(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (name) context name [ISO/IEC 8632-3 8.5]
-            return new RestorePrimitiveContext(reader.ReadString());
+            return new RestorePrimitiveContext(reader.ReadName());
         }
 
         public static ProtectionRegionIndicator ProtectionRegionIndicator(MetafileReader reader, CommandHeader commandHeader)

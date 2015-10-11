@@ -52,17 +52,29 @@ namespace CgmInfo.TextEncoding
             { "FONTLIST", MetafileDescriptorReader.FontList },
             { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
-            { "NAMEPREC", MetafileDescriptorReader.NamePrecision },
+            { "NAMEPREC", ReadNamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
+            { "SCALEMODE", PictureDescriptorReader.ScalingMode },
+            { "COLRMODE", ReadColorSelectionMode },
+            { "LINEWIDTHMODE", ReadLineWidthSpecificationMode },
+            { "MARKERSIZEMODE", ReadMarkerSizeSpecificationMode },
+            { "EDGEWIDTHMODE", ReadEdgeWidthSpecificationMode },
             { "VDCEXT", PictureDescriptorReader.VdcExtent },
+            { "BACKCOLR", PictureDescriptorReader.BackgroundColor },
+            { "DEVVP", PictureDescriptorReader.DeviceViewport },
+            { "DEVVPMODE", ReadDeviceViewportSpecificationMode },
+            { "INTSTYLEMODE", ReadInteriorStyleSpecificationMode },
+            { "LINEEDGETYPEDEF", PictureDescriptorReader.LineAndEdgeTypeDefinition },
+            { "HATCHSTYLEDEF", PictureDescriptorReader.HatchStyleDefinition },
+            { "GEOPATDEF", PictureDescriptorReader.GeometricPatternDefinition },
 
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
             { "VDCREALPREC", ReadVdcRealPrecision },
-            // FIXME: disabled for now (at least until COLOUR SELECTION MODE is implemented)
+            // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
             //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
             { "TRANSPARENCY", ControlElementReader.Transparency },
             { "CLIPRECT", ControlElementReader.ClipRectangle },
@@ -170,6 +182,48 @@ namespace CgmInfo.TextEncoding
             reader.Descriptor.ColorPrecision = colorPrecision.Precision;
             return colorPrecision;
         }
+        private static Command ReadNamePrecision(MetafileReader reader)
+        {
+            var namePrecision = MetafileDescriptorReader.NamePrecision(reader);
+            reader.Descriptor.NamePrecision = namePrecision.Precision;
+            return namePrecision;
+        }
+        private static Command ReadColorSelectionMode(MetafileReader reader)
+        {
+            var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(reader);
+            reader.Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
+            return colorSelectionMode;
+        }
+        private static Command ReadLineWidthSpecificationMode(MetafileReader reader)
+        {
+            var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(reader);
+            reader.Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
+            return lineWidthSpecificationMode;
+        }
+        private static Command ReadMarkerSizeSpecificationMode(MetafileReader reader)
+        {
+            var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(reader);
+            reader.Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
+            return markerSizeSpecificationMode;
+        }
+        private static Command ReadEdgeWidthSpecificationMode(MetafileReader reader)
+        {
+            var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(reader);
+            reader.Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
+            return edgeWidthSpecificationMode;
+        }
+        private static Command ReadDeviceViewportSpecificationMode(MetafileReader reader)
+        {
+            var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(reader);
+            reader.Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
+            return deviceViewportSpecificationMode;
+        }
+        private static Command ReadInteriorStyleSpecificationMode(MetafileReader reader)
+        {
+            var interiorStyleSpecificationMode = PictureDescriptorReader.InteriorStyleSpecificationMode(reader);
+            reader.Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
+            return interiorStyleSpecificationMode;
+        }
         private static Command ReadVdcIntegerPrecision(MetafileReader reader)
         {
             var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(reader);
@@ -218,6 +272,10 @@ namespace CgmInfo.TextEncoding
             return ReadToken();
         }
         internal int ReadIndex()
+        {
+            return ReadInteger();
+        }
+        internal int ReadName()
         {
             return ReadInteger();
         }
@@ -295,7 +353,39 @@ namespace CgmInfo.TextEncoding
             double y = ReadVdc();
             return new PointF((float)x, (float)y);
         }
+        internal double ReadViewportCoordinate()
+        {
+            // a Viewport Coordinate (VC) is either an int or a double; depending on what DEVICE VIEWPORT SPECIFICATION MODE said [ISO/IEC 8632-4 6.3.5]
+            if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.MillimetersWithScaleFactor ||
+                Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.PhysicalDeviceCoordinates)
+            {
+                return ReadInteger();
+            }
+            else if (Descriptor.DeviceViewportSpecificationMode == DeviceViewportSpecificationModeType.FractionOfDrawingSurface)
+            {
+                return ReadReal();
+            }
+
+            throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
+        }
+        internal PointF ReadViewportPoint()
+        {
+            double x = ReadViewportCoordinate();
+            double y = ReadViewportCoordinate();
+            return new PointF((float)x, (float)y);
+        }
         internal Color ReadColor()
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor();
+            else
+                return ReadIndexedColor();
+        }
+        internal Color ReadIndexedColor()
+        {
+            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+        }
+        internal Color ReadDirectColor()
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {

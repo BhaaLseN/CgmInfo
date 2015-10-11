@@ -50,7 +50,7 @@ namespace CgmInfo.BinaryEncoding
                 case DataTypeIndex.ColorIndex:
                     return reader.ReadIndex();
                 case DataTypeIndex.ColorDirect:
-                    return reader.ReadColor();
+                    return reader.ReadDirectColor();
                 case DataTypeIndex.Name:
                     // TODO: ReadName?
                     return reader.ReadString();

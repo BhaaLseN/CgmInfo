@@ -79,14 +79,14 @@ namespace CgmInfo.BinaryEncoding
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
-                Color min = reader.ReadColor();
-                Color max = reader.ReadColor();
+                Color min = reader.ReadDirectColor();
+                Color max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.RGB, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
             {
-                Color min = reader.ReadColor();
-                Color max = reader.ReadColor();
+                Color min = reader.ReadDirectColor();
+                Color max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.CMYK, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)

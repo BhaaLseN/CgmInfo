@@ -2,18 +2,18 @@ namespace CgmInfoGui.ViewModels.Nodes
 {
     public class SegmentViewModel : NodeBase
     {
-        public SegmentViewModel(string name)
+        public SegmentViewModel(int identifier)
         {
-            Name = name;
+            Identifier = identifier;
             Descriptor = new SimpleNode("SEGMENT DESCRIPTOR");
             Nodes.Add(Descriptor);
         }
-        public string Name { get; }
+        public int Identifier { get; }
         public SimpleNode Descriptor { get; }
 
         public override string DisplayName
         {
-            get { return string.Format("BEGIN SEGMENT: '{0}'", Name); }
+            get { return string.Format("BEGIN SEGMENT: {0}", Identifier); }
         }
     }
 }

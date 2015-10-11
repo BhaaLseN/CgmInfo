@@ -340,7 +340,67 @@ namespace CgmInfo.Traversal
         #endregion
 
         #region Picture Descriptor elements
+        public virtual void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, T parameter)
         {
             // intentionally left blank
         }

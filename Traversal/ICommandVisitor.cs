@@ -53,7 +53,19 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
 
         // picture descriptor
+        void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter);
+        void AcceptPictureDescriptorColorSelectionMode(ColorSelectionMode colorSelectionMode, T parameter);
+        void AcceptPictureDescriptorLineWidthSpecificationMode(LineWidthSpecificationMode lineWidthSpecificationMode, T parameter);
+        void AcceptPictureDescriptorMarkerSizeSpecificationMode(MarkerSizeSpecificationMode markerSizeSpecificationMode, T parameter);
+        void AcceptPictureDescriptorEdgeWidthSpecificationMode(EdgeWidthSpecificationMode edgeWidthSpecificationMode, T parameter);
         void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, T parameter);
+        void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, T parameter);
+        void AcceptPictureDescriptorDeviceViewport(DeviceViewport deviceViewport, T parameter);
+        void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, T parameter);
+        void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, T parameter);
+        void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, T parameter);
+        void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, T parameter);
+        void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, T parameter);
 
         // control
         void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, T parameter);

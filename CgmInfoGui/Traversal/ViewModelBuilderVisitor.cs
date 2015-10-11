@@ -289,6 +289,11 @@ namespace CgmInfoGui.Traversal
                 specificationModeNode.Add(new SimpleNode(string.Format("Factor: {0}", deviceViewportSpecificationMode.ScaleFactor)));
         }
 
+        public void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, MetafileContext parameter)
+        {
+            parameter.AddNode("INTERIOR STYLE SPECIFICATION MODE: {0}", interiorStyleSpecificationMode.WidthSpecificationMode);
+        }
+
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, MetafileContext parameter)
         {
             parameter.AddNode("VDC INTEGER PRECISION: {0} bit", vdcIntegerPrecision.Precision);

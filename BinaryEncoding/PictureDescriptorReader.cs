@@ -102,5 +102,15 @@ namespace CgmInfo.BinaryEncoding
                 numFloatBytes = 64 / 8;
             return new DeviceViewportSpecificationMode(reader.ReadEnum<DeviceViewportSpecificationModeType>(), reader.ReadFloatingPoint(numFloatBytes));
         }
+
+        public static InteriorStyleSpecificationMode InteriorStyleSpecificationMode(MetafileReader reader, CommandHeader header)
+        {
+            // P1: (enumerated) valid values are
+            //      0 absolute
+            //      1 scaled
+            //      2 fractional
+            //      3 mm
+            return new InteriorStyleSpecificationMode(reader.ReadEnum<WidthSpecificationModeType>());
+        }
     }
 }

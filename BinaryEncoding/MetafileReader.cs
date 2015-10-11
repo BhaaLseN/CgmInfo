@@ -372,6 +372,11 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
                     result = deviceViewportSpecificationMode;
                     break;
+                case 16: // INTERIOR STYLE SPECIFICATION MODE
+                    var interiorStyleSpecificationMode = PictureDescriptorReader.InteriorStyleSpecificationMode(this, commandHeader);
+                    Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
+                    result = interiorStyleSpecificationMode;
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -240,6 +240,10 @@ namespace CgmInfoCmd
             else
                 parameter.WriteLine("Scaling Mode: {0}", deviceViewportSpecificationMode.SpecificationMode);
         }
+        public void AcceptPictureDescriptorInteriorStyleSpecificationMode(InteriorStyleSpecificationMode interiorStyleSpecificationMode, PrintContext parameter)
+        {
+            parameter.WriteLine("Interior Style Specification Mode: {0}", interiorStyleSpecificationMode.WidthSpecificationMode);
+        }
 
         public void AcceptControlVdcIntegerPrecision(VdcIntegerPrecision vdcIntegerPrecision, PrintContext parameter)
         {

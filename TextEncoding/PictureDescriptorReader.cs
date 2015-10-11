@@ -54,6 +54,11 @@ namespace CgmInfo.TextEncoding
             return new DeviceViewportSpecificationMode(ParseDeviceViewportSpecificationMode(reader.ReadEnum()), reader.ReadReal());
         }
 
+        public static InteriorStyleSpecificationMode InteriorStyleSpecificationMode(MetafileReader reader)
+        {
+            return new InteriorStyleSpecificationMode(ParseWidthSpecificationMode(reader.ReadEnum()));
+        }
+
         private static ScalingModeType ParseScalingMode(string token)
         {
             // assume abstract; unless its metric

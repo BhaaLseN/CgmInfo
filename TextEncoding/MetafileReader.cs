@@ -75,8 +75,7 @@ namespace CgmInfo.TextEncoding
             // control elements [ISO/IEC 8632-4 7.4]
             { "VDCINTEGERPREC", ReadVdcIntegerPrecision },
             { "VDCREALPREC", ReadVdcRealPrecision },
-            // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
-            //{ "AUXCOLR", ControlElementReader.AuxiliaryColor },
+            { "AUXCOLR", ControlElementReader.AuxiliaryColor },
             { "TRANSPARENCY", ControlElementReader.Transparency },
             { "CLIPRECT", ControlElementReader.ClipRectangle },
             { "CLIP", ControlElementReader.ClipIndicator },

@@ -411,10 +411,9 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
                     result = vdcRealPrecision;
                     break;
-                // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
-                //case 3: // AUXILIARY COLOR
-                //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
-                //    break;
+                case 3: // AUXILIARY COLOR
+                    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
+                    break;
                 case 4: // TRANSPARENCY
                     result = ControlElementReader.Transparency(this, commandHeader);
                     break;

@@ -52,8 +52,7 @@ namespace CgmInfo.BinaryEncoding
                 case DataTypeIndex.ColorDirect:
                     return reader.ReadDirectColor();
                 case DataTypeIndex.Name:
-                    // TODO: ReadName?
-                    return reader.ReadString();
+                    return reader.ReadName();
                 case DataTypeIndex.Enumerated:
                     return reader.ReadEnum();
                 case DataTypeIndex.Integer:
@@ -76,9 +75,7 @@ namespace CgmInfo.BinaryEncoding
                     // TODO: difference between S and SF? charset/escape code handling? 
                     return reader.ReadString();
                 case DataTypeIndex.ViewportCoordinate:
-                    // FIXME: this depends on DEVICE VIEWPORT SPECIFICATION MODE,
-                    //        lets simply hope this wont come up as frequently until its implemented...
-                    return reader.ReadVdc();
+                    return reader.ReadViewportCoordinate();
                 case DataTypeIndex.VDC:
                     return reader.ReadVdc();
                 case DataTypeIndex.ColorComponent:

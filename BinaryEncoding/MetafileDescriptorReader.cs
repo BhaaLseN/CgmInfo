@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -79,14 +79,14 @@ namespace CgmInfo.BinaryEncoding
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
-                Color min = reader.ReadDirectColor();
-                Color max = reader.ReadDirectColor();
+                MetafileColor min = reader.ReadDirectColor();
+                MetafileColor max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.RGB, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
             {
-                Color min = reader.ReadDirectColor();
-                Color max = reader.ReadDirectColor();
+                MetafileColor min = reader.ReadDirectColor();
+                MetafileColor max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.CMYK, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)

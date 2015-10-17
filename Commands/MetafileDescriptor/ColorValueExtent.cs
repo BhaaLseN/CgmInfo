@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             : base(1, 10)
         {
         }
-        public ColorValueExtent(ColorSpace colorSpace, Color minimum, Color maximum)
+        public ColorValueExtent(ColorSpace colorSpace, MetafileColor minimum, MetafileColor maximum)
             : this()
         {
             if (colorSpace != ColorSpace.RGB && colorSpace != ColorSpace.CMYK)
@@ -39,8 +39,8 @@ namespace CgmInfo.Commands.MetafileDescriptor
 
         public ColorSpace ColorSpace { get; private set; }
         // for RGB and CMYK
-        public Color Minimum { get; private set; }
-        public Color Maximum { get; private set; }
+        public MetafileColor Minimum { get; private set; }
+        public MetafileColor Maximum { get; private set; }
         // for CIE*
         public double FirstScale { get; set; }
         public double SecondScale { get; set; }

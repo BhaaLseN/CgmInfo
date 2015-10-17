@@ -1,17 +1,17 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
     public class BackgroundColor : Command
     {
-        public BackgroundColor(Color color)
+        public BackgroundColor(MetafileColor color)
             : base(2, 7)
         {
             Color = color;
         }
 
-        public Color Color { get; private set; }
+        public MetafileColor Color { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

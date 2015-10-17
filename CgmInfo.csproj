@@ -165,6 +165,11 @@
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
     <Compile Include="Traversal\MetafilePropertyVisitor.cs" />
+    <Compile Include="Utilities\MetafileColor.cs" />
+    <Compile Include="Utilities\MetafileColorCIE.cs" />
+    <Compile Include="Utilities\MetafileColorCMYK.cs" />
+    <Compile Include="Utilities\MetafileColorIndexed.cs" />
+    <Compile Include="Utilities\MetafileColorRGB.cs" />
     <Compile Include="Utilities\MetafileDescriptionParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

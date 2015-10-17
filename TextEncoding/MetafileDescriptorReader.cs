@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.TextEncoding
 {
@@ -81,22 +81,25 @@ namespace CgmInfo.TextEncoding
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
-                Color min = reader.ReadDirectColor();
-                Color max = reader.ReadDirectColor();
+                MetafileColor min = reader.ReadDirectColor();
+                MetafileColor max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.RGB, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
             {
-                Color min = reader.ReadDirectColor();
-                Color max = reader.ReadDirectColor();
+                MetafileColor min = reader.ReadDirectColor();
+                MetafileColor max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.CMYK, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)
             {
-                double first = reader.ReadReal();
-                double second = reader.ReadReal();
-                double third = reader.ReadReal();
-                result = new ColorValueExtent(ColorSpace.CIE, first, second, third);
+                double firstScale = reader.ReadReal();
+                double firstOffset = reader.ReadReal();
+                double secondScale = reader.ReadReal();
+                double secondOffset = reader.ReadReal();
+                double thirdScale = reader.ReadReal();
+                double thirdOffset = reader.ReadReal();
+                result = new ColorValueExtent(ColorSpace.CIE, firstScale, firstOffset, secondScale, secondOffset, thirdScale, thirdOffset);
             }
             else
             {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Utilities;
 using BaseMetafileReader = CgmInfo.MetafileReader;
 
 namespace CgmInfo.BinaryEncoding
@@ -410,10 +411,9 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
                     result = vdcRealPrecision;
                     break;
-                // FIXME: disabled for now (at least until COLOUR TABLE is implemented)
-                //case 3: // AUXILIARY COLOR
-                //    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
-                //    break;
+                case 3: // AUXILIARY COLOR
+                    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
+                    break;
                 case 4: // TRANSPARENCY
                     result = ControlElementReader.Transparency(this, commandHeader);
                     break;
@@ -606,25 +606,25 @@ namespace CgmInfo.BinaryEncoding
             double y = ReadViewportCoordinate();
             return new PointF((float)x, (float)y);
         }
-        internal Color ReadColor()
+        internal MetafileColor ReadColor()
         {
             if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
                 return ReadDirectColor();
             else
                 return ReadIndexedColor();
         }
-        internal Color ReadIndexedColor()
+        internal MetafileColor ReadIndexedColor()
         {
-            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+            return new MetafileColorIndexed(ReadIndex());
         }
-        internal Color ReadDirectColor()
+        internal MetafileColor ReadDirectColor()
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {
                 int r = ReadColorValue();
                 int g = ReadColorValue();
                 int b = ReadColorValue();
-                return Color.FromArgb(r, g, b);
+                return new MetafileColorRGB(r, g, b);
             }
             else if (Descriptor.ColorModel == ColorModel.CMYK)
             {
@@ -632,17 +632,14 @@ namespace CgmInfo.BinaryEncoding
                 int m = ReadColorValue();
                 int y = ReadColorValue();
                 int k = ReadColorValue();
-                return ColorFromCMYK(c, m, y, k);
+                return new MetafileColorCMYK(c, m, y, k);
             }
             else
             {
-                // CIELAB/CIELUV/RGB-related are not exactly .NET Color values, but we'll return them anyways.
-                // TODO: actually convert them to RGB (using CIEXYZ for example, [ISO/IEC 8632-1 Annex G])
                 double first = ReadReal();
                 double second = ReadReal();
                 double third = ReadReal();
-
-                return Color.FromArgb((int)(first / 255), (int)(second / 255), (int)(third / 255));
+                return new MetafileColorCIE(Descriptor.ColorModel, first, second, third);
             }
         }
 
@@ -783,28 +780,6 @@ namespace CgmInfo.BinaryEncoding
                 result += ReadString();
 
             return result;
-        }
-
-        internal static Color ColorFromCMYK(int cyan, int magenta, int yellow, int black)
-        {
-            double c = cyan / 255.0;
-            double m = magenta / 255.0;
-            double y = yellow / 255.0;
-            double k = black / 255.0;
-
-            double r = c * (1.0 - k) + k;
-            double g = m * (1.0 - k) + k;
-            double b = y * (1.0 - k) + k;
-
-            r = (1.0 - r) * 255.0 + 0.5;
-            g = (1.0 - g) * 255.0 + 0.5;
-            b = (1.0 - b) * 255.0 + 0.5;
-
-            int red = (int)r;
-            int green = (int)g;
-            int blue = (int)b;
-
-            return Color.FromArgb(red, green, blue);
         }
 
         protected override void Dispose(bool disposing)

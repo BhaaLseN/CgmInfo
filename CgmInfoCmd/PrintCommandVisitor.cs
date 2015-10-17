@@ -149,8 +149,10 @@ namespace CgmInfoCmd
             if (colorValueExtent.ColorSpace == ColorSpace.Unknown)
                 parameter.WriteLine("Color Value Extent: Unknown Color Space");
             else if (colorValueExtent.ColorSpace == ColorSpace.CIE)
-                parameter.WriteLine("Color Value Extent: CIE {0}/{1}/{2}",
-                    colorValueExtent.FirstComponent, colorValueExtent.SecondComponent, colorValueExtent.ThirdComponent);
+                parameter.WriteLine("Color Value Extent: CIE {0}+{1}/{2}+{3}/{4}+{5}",
+                    colorValueExtent.FirstScale, colorValueExtent.FirstOffset,
+                    colorValueExtent.SecondScale, colorValueExtent.SecondOffset,
+                    colorValueExtent.ThirdScale, colorValueExtent.ThirdOffset);
             else // RGB or CMYK
                 parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
                     colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);

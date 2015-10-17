@@ -1,0 +1,45 @@
+using System.Drawing;
+
+namespace CgmInfo.Utilities
+{
+    public class MetafileColorCMYK : MetafileColor
+    {
+        public int Cyan { get; private set; }
+        public int Magenta { get; private set; }
+        public int Yellow { get; private set; }
+        public int Black { get; private set; }
+
+        public MetafileColorCMYK(int cyan, int magenta, int yellow, int black)
+        {
+            Cyan = cyan;
+            Magenta = magenta;
+            Yellow = yellow;
+            Black = black;
+        }
+        public override Color GetColor()
+        {
+            double c = Cyan / 255.0;
+            double m = Magenta / 255.0;
+            double y = Yellow / 255.0;
+            double k = Black / 255.0;
+
+            double r = c * (1.0 - k) + k;
+            double g = m * (1.0 - k) + k;
+            double b = y * (1.0 - k) + k;
+
+            r = (1.0 - r) * 255.0 + 0.5;
+            g = (1.0 - g) * 255.0 + 0.5;
+            b = (1.0 - b) * 255.0 + 0.5;
+
+            int red = (int)r;
+            int green = (int)g;
+            int blue = (int)b;
+
+            return Color.FromArgb(red, green, blue);
+        }
+        protected override string GetStringValue()
+        {
+            return string.Format("C={0} M={1} Y={2} K={3}", Cyan, Magenta, Yellow, Black);
+        }
+    }
+}

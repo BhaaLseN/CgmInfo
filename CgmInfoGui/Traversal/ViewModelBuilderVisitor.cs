@@ -134,9 +134,12 @@ namespace CgmInfoGui.Traversal
             {
                 extentNode.Nodes.AddRange(new[]
                 {
-                    new SimpleNode(string.Format("First Component: {0}", colorValueExtent.FirstComponent)),
-                    new SimpleNode(string.Format("Second Component: {0}", colorValueExtent.SecondComponent)),
-                    new SimpleNode(string.Format("Third Component: {0}", colorValueExtent.ThirdComponent)),
+                    new SimpleNode(string.Format("First Scale: {0}", colorValueExtent.FirstScale)),
+                    new SimpleNode(string.Format("First Offset: {0}", colorValueExtent.FirstOffset)),
+                    new SimpleNode(string.Format("Second Scale: {0}", colorValueExtent.SecondScale)),
+                    new SimpleNode(string.Format("Second Offset: {0}", colorValueExtent.SecondOffset)),
+                    new SimpleNode(string.Format("Third Scale: {0}", colorValueExtent.ThirdScale)),
+                    new SimpleNode(string.Format("Third Offset: {0}", colorValueExtent.ThirdOffset)),
                 });
             }
             else if (colorValueExtent.ColorSpace != ColorSpace.Unknown) // RGB or CMYK

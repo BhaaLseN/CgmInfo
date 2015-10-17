@@ -20,15 +20,21 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Minimum = minimum;
             Maximum = maximum;
         }
-        public ColorValueExtent(ColorSpace colorSpace, double firstComponent, double secondComponent, double thirdComponent)
+        public ColorValueExtent(ColorSpace colorSpace,
+            double firstScale, double firstOffset,
+            double secondScale, double secondOffset,
+            double thirdScale, double thirdOffset)
             : this()
         {
             if (colorSpace != ColorSpace.CIE)
                 throw new ArgumentOutOfRangeException("colorSpace", colorSpace, "Color Space must be CIE for use with this constructor");
             ColorSpace = colorSpace;
-            FirstComponent = firstComponent;
-            SecondComponent = secondComponent;
-            ThirdComponent = thirdComponent;
+            FirstScale = firstScale;
+            SecondScale = secondScale;
+            ThirdScale = thirdScale;
+            FirstOffset = firstOffset;
+            SecondOffset = secondOffset;
+            ThirdOffset = thirdOffset;
         }
 
         public ColorSpace ColorSpace { get; private set; }
@@ -36,9 +42,12 @@ namespace CgmInfo.Commands.MetafileDescriptor
         public Color Minimum { get; private set; }
         public Color Maximum { get; private set; }
         // for CIE*
-        public double FirstComponent { get; set; }
-        public double SecondComponent { get; set; }
-        public double ThirdComponent { get; set; }
+        public double FirstScale { get; set; }
+        public double SecondScale { get; set; }
+        public double ThirdScale { get; set; }
+        public double FirstOffset { get; set; }
+        public double SecondOffset { get; set; }
+        public double ThirdOffset { get; set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

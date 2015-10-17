@@ -616,7 +616,7 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            throw new NotImplementedException("This requires COLOUR TABLE to be read and stored for later use.");
+            return new MetafileColorIndexed(ReadIndex());
         }
         internal MetafileColor ReadDirectColor()
         {

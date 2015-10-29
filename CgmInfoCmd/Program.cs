@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using CgmInfo;
 using CgmInfo.Commands;
@@ -9,26 +10,43 @@ namespace CgmInfoCmd
     {
         static void Main(string[] args)
         {
-            string fileName = args.Length >= 1 ? args[0] : @"D:\_dev\_work\standards\webcgm20-ts\static10\ALLELM01.cgm";
-            if (!File.Exists(fileName))
+            string target = args.Length >= 1 ? args[0] : @"D:\_dev\_work\standards\webcgm20-ts\static10\ALLELM01.cgm";
+            var fileNames = new List<string>();
+
+            if (File.Exists(target))
             {
-                Console.WriteLine("File '{0}' does not exist.", fileName);
+                fileNames.Add(target);
+            }
+            else if (Directory.Exists(target))
+            {
+                fileNames.AddRange(Directory.GetFiles(target, "*.cgm"));
+            }
+            else
+            {
+                Console.WriteLine("Target '{0}' does not exist or is neither file nor folder.", target);
                 return;
             }
 
-            using (var reader = MetafileReader.Create(fileName))
+            var statsProxy = new StatsReplaceProxy<PrintCommandVisitor, PrintContext>(fileNames.Count > 1);
+            var printVisitor = statsProxy.GetTransparentProxy();
+            foreach (string fileName in fileNames)
             {
-                var printVisitor = new PrintCommandVisitor();
-                var printContext = new PrintContext(fileName);
-                Command command;
-                do
+                statsProxy.Reset();
+                using (var reader = MetafileReader.Create(fileName))
                 {
-                    command = reader.Read();
-                    if (command != null)
+                    var printContext = new PrintContext(fileName);
+                    Command command;
+                    do
                     {
-                        command.Accept(printVisitor, printContext);
-                    }
-                } while (command != null);
+                        command = reader.Read();
+                        if (command != null)
+                        {
+                            command.Accept(printVisitor, printContext);
+                        }
+                    } while (command != null);
+                }
+                statsProxy.Print(fileName);
+                statsProxy.SaveTo(Path.ChangeExtension(fileName, ".stats.txt"));
             }
         }
     }

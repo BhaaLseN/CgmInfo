@@ -27,11 +27,13 @@ namespace CgmInfoCmd
                 return;
             }
 
+            var statsProxy = new StatsReplaceProxy<PrintCommandVisitor, PrintContext>(fileNames.Count > 1);
+            var printVisitor = statsProxy.GetTransparentProxy();
             foreach (string fileName in fileNames)
             {
+                statsProxy.Reset();
                 using (var reader = MetafileReader.Create(fileName))
                 {
-                    var printVisitor = new PrintCommandVisitor();
                     var printContext = new PrintContext(fileName);
                     Command command;
                     do
@@ -43,6 +45,8 @@ namespace CgmInfoCmd
                         }
                     } while (command != null);
                 }
+                statsProxy.Print(fileName);
+                statsProxy.SaveTo(Path.ChangeExtension(fileName, ".stats.txt"));
             }
         }
     }

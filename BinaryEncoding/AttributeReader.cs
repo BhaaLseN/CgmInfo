@@ -30,5 +30,11 @@ namespace CgmInfo.BinaryEncoding
             //      line width is affected by LINE WIDTH SPECIFICATION MODE
             return new LineWidth(reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode));
         }
+
+        public static LineColor LineColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour) line colour
+            return new LineColor(reader.ReadColor());
+        }
     }
 }

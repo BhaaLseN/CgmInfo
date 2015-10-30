@@ -393,6 +393,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Width: {0}", lineWidth.Width);
         }
+        public void AcceptAttributeLineColor(LineColor lineColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Color: {0}", lineColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

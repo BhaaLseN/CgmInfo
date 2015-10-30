@@ -48,6 +48,7 @@
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\LineColor.cs" />
     <Compile Include="Commands\Attributes\LineType.cs" />
     <Compile Include="Commands\Attributes\LineWidth.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />

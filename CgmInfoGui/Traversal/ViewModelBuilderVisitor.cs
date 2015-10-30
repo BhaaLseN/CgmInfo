@@ -547,6 +547,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE WIDTH: {0}", lineWidth.Width);
         }
+        public void AcceptAttributeLineColor(LineColor lineColor, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE COLOUR: {0}", lineColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

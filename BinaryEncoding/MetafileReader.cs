@@ -520,6 +520,9 @@ namespace CgmInfo.BinaryEncoding
                 case 2: // LINE TYPE
                     result = AttributeReader.LineType(this, commandHeader);
                     break;
+                case 3: // LINE WIDTH
+                    result = AttributeReader.LineWidth(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

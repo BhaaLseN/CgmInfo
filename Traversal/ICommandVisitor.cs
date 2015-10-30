@@ -101,6 +101,7 @@ namespace CgmInfo.Traversal
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);
         void AcceptAttributeLineType(LineType lineType, T parameter);
+        void AcceptAttributeLineWidth(LineWidth lineWidth, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

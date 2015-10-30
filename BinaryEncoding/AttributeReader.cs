@@ -23,5 +23,12 @@ namespace CgmInfo.BinaryEncoding
             //      negative for private use
             return new LineType(reader.ReadIndex());
         }
+
+        public static LineWidth LineWidth(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (size specification) line width: see Part 1, subclause 7.1 for its form.
+            //      line width is affected by LINE WIDTH SPECIFICATION MODE
+            return new LineWidth(reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode));
+        }
     }
 }

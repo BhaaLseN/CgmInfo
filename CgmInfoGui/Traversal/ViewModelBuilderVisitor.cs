@@ -543,6 +543,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE TYPE: {0} ({1})", lineType.Index, lineType.Name);
         }
+        public void AcceptAttributeLineWidth(LineWidth lineWidth, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE WIDTH: {0}", lineWidth.Width);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

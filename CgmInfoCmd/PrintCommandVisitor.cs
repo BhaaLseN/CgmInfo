@@ -389,6 +389,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Type: {0} ({1})", lineType.Index, lineType.Name);
         }
+        public void AcceptAttributeLineWidth(LineWidth lineWidth, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Width: {0}", lineWidth.Width);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

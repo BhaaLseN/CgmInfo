@@ -13,5 +13,10 @@ namespace CgmInfo.TextEncoding
         {
             return new LineType(reader.ReadIndex());
         }
+
+        public static LineWidth LineWidth(MetafileReader reader)
+        {
+            return new LineWidth(reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode));
+        }
     }
 }

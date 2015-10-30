@@ -285,7 +285,9 @@ namespace CgmInfo.BinaryEncoding
                     result = colorPrecision;
                     break;
                 case 8: // COLOUR INDEX PRECISION
-                    result = MetafileDescriptorReader.ColorIndexPrecision(this, commandHeader);
+                    var colorIndexPrecision = MetafileDescriptorReader.ColorIndexPrecision(this, commandHeader);
+                    Descriptor.ColorIndexPrecision = colorIndexPrecision.Precision;
+                    result = colorIndexPrecision;
                     break;
                 case 9: // MAXIMUM COLOUR INDEX
                     result = MetafileDescriptorReader.MaximumColorIndex(this, commandHeader);
@@ -615,7 +617,7 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadIndex());
+            return new MetafileColorIndexed(ReadInteger(Descriptor.ColorIndexPrecision / 8, true));
         }
         internal MetafileColor ReadDirectColor()
         {

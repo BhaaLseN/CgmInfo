@@ -10,6 +10,7 @@ namespace CgmInfo
             // also ISO/IEC 8632-1 8
             ColorModel = ColorModel.RGB;
             ColorPrecision = 8;
+            ColorIndexPrecision = 8;
             RealPrecision = RealPrecisionSpecification.FixedPoint32Bit;
             IntegerPrecision = 16;
             IndexPrecision = 16;
@@ -28,6 +29,7 @@ namespace CgmInfo
 
         public ColorModel ColorModel { get; internal set; }
         public int ColorPrecision { get; internal set; }
+        public int ColorIndexPrecision { get; internal set; }
         public RealPrecisionSpecification RealPrecision { get; internal set; }
         public int IntegerPrecision { get; internal set; }
         public int IndexPrecision { get; internal set; }

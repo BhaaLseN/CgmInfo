@@ -8,5 +8,10 @@ namespace CgmInfo.TextEncoding
         {
             return new LineBundleIndex(reader.ReadIndex());
         }
+
+        public static LineType LineType(MetafileReader reader)
+        {
+            return new LineType(reader.ReadIndex());
+        }
     }
 }

@@ -517,6 +517,9 @@ namespace CgmInfo.BinaryEncoding
                 case 1: // LINE BUNDLE INDEX
                     result = AttributeReader.LineBundleIndex(this, commandHeader);
                     break;
+                case 2: // LINE TYPE
+                    result = AttributeReader.LineType(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

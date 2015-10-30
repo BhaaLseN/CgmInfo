@@ -385,6 +385,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Bundle Index: {0}", lineBundleIndex.Index);
         }
+        public void AcceptAttributeLineType(LineType lineType, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type: {0} ({1})", lineType.Index, lineType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

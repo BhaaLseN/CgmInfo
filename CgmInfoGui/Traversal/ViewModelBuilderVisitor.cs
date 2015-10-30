@@ -539,6 +539,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE BUNDLE INDEX: {0}", lineBundleIndex.Index);
         }
+        public void AcceptAttributeLineType(LineType lineType, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE: {0} ({1})", lineType.Index, lineType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

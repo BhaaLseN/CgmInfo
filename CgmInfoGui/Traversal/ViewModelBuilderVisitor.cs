@@ -2,6 +2,7 @@
 using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -532,6 +533,11 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Start: {0}", ellipticalArc.Start)),
                 new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
             });
+        }
+
+        public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE BUNDLE INDEX: {0}", lineBundleIndex.Index);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

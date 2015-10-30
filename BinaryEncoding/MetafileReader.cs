@@ -69,10 +69,12 @@ namespace CgmInfo.BinaryEncoding
                 case 4: // graphical primitive
                     result = ReadGraphicalPrimitive(commandHeader);
                     break;
+                case 5: // attribute
+                    result = ReadAttribute(commandHeader);
+                    break;
                 case 9: // application structure descriptor
                     result = ReadApplicationStructureDescriptor(commandHeader);
                     break;
-                case 5: // attribute
                 case 6: // escape
                 case 7: // external
                 case 8: // segment control/segment attribute
@@ -498,6 +500,22 @@ namespace CgmInfo.BinaryEncoding
                     break;
                 case 18: // ELLIPTICAL ARC
                     result = GraphicalPrimitiveReader.EllipticalArc(this, commandHeader);
+                    break;
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
+        private Command ReadAttribute(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.11, Table 8
+            switch (commandHeader.ElementId)
+            {
+                case 1: // LINE BUNDLE INDEX
+                    result = AttributeReader.LineBundleIndex(this, commandHeader);
                     break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);

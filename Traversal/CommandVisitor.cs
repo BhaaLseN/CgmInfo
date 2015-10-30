@@ -1,5 +1,6 @@
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -247,6 +248,13 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Attribute elements
+        public virtual void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter)
         {
             // intentionally left blank
         }

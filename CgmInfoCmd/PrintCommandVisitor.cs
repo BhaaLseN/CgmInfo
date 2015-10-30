@@ -1,6 +1,7 @@
 using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -378,6 +379,11 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Elliptical Arc: {0} @ {1} - {2} ({3} to {4})",
                 ellipticalArc.Center, ellipticalArc.FirstConjugateDiameter, ellipticalArc.SecondConjugateDiameter, ellipticalArc.Start, ellipticalArc.End);
+        }
+
+        public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Bundle Index: {0}", lineBundleIndex.Index);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)

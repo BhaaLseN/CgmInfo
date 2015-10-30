@@ -1,5 +1,6 @@
 ﻿using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -96,6 +97,9 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);
         void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter);
         void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter);
+
+        // attributes
+        void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

@@ -555,6 +555,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("MARKER BUNDLE INDEX: {0}", markerBundleIndex.Index);
         }
+        public void AcceptAttributeMarkerType(MarkerType markerType, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER TYPE: {0} ({1})", markerType.Index, markerType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -42,5 +42,18 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) marker bundle index
             return new MarkerBundleIndex(reader.ReadIndex());
         }
+
+        public static MarkerType MarkerType(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) marker type: the following values are standardized:
+            //      1 dot
+            //      2 plus
+            //      3 asterisk
+            //      4 circle
+            //      5 cross
+            //      >5 reserved for registered values
+            //      negative for private use
+            return new MarkerType(reader.ReadIndex());
+        }
     }
 }

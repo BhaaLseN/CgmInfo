@@ -28,5 +28,10 @@ namespace CgmInfo.TextEncoding
         {
             return new MarkerBundleIndex(reader.ReadIndex());
         }
+
+        public static MarkerType MarkerType(MetafileReader reader)
+        {
+            return new MarkerType(reader.ReadIndex());
+        }
     }
 }

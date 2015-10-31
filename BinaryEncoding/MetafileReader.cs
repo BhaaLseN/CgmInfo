@@ -529,6 +529,9 @@ namespace CgmInfo.BinaryEncoding
                 case 5: // MARKER BUNDLE INDEX
                     result = AttributeReader.MarkerBundleIndex(this, commandHeader);
                     break;
+                case 6: // MARKER TYPE
+                    result = AttributeReader.MarkerType(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

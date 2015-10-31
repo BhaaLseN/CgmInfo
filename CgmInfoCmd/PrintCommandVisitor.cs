@@ -401,6 +401,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Marker Bundle Index: {0}", markerBundleIndex.Index);
         }
+        public void AcceptAttributeMarkerType(MarkerType markerType, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Type: {0} ({1})", markerType.Index, markerType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

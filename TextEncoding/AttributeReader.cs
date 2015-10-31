@@ -33,5 +33,10 @@ namespace CgmInfo.TextEncoding
         {
             return new MarkerType(reader.ReadIndex());
         }
+
+        public static MarkerSize MarkerSize(MetafileReader reader)
+        {
+            return new MarkerSize(reader.ReadSizeSpecification(reader.Descriptor.MarkerSizeSpecificationMode));
+        }
     }
 }

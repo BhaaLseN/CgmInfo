@@ -55,5 +55,12 @@ namespace CgmInfo.BinaryEncoding
             //      negative for private use
             return new MarkerType(reader.ReadIndex());
         }
+
+        public static MarkerSize MarkerSize(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (size specification) marker size: see Part 1, subclause 7.1 for its form.
+            //      marker size is affected by MARKER SIZE SPECIFICATION MODE
+            return new MarkerSize(reader.ReadSizeSpecification(reader.Descriptor.MarkerSizeSpecificationMode));
+        }
     }
 }

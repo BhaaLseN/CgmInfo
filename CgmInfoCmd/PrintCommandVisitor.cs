@@ -405,6 +405,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Marker Type: {0} ({1})", markerType.Index, markerType.Name);
         }
+        public void AcceptAttributeMarkerSize(MarkerSize markerSize, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Size: {0}", markerSize.Size);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

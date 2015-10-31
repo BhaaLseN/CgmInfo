@@ -409,6 +409,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Marker Size: {0}", markerSize.Size);
         }
+        public void AcceptAttributeMarkerColor(MarkerColor markerColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Color: {0}", markerColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

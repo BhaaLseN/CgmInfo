@@ -106,6 +106,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, T parameter);
         void AcceptAttributeMarkerType(MarkerType markerType, T parameter);
         void AcceptAttributeMarkerSize(MarkerSize markerSize, T parameter);
+        void AcceptAttributeMarkerColor(MarkerColor markerColor, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

@@ -535,6 +535,9 @@ namespace CgmInfo.BinaryEncoding
                 case 7: // MARKER SIZE
                     result = AttributeReader.MarkerSize(this, commandHeader);
                     break;
+                case 8: // MARKER COLOUR
+                    result = AttributeReader.MarkerColor(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

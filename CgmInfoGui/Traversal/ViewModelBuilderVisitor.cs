@@ -563,6 +563,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("MARKER SIZE: {0}", markerSize.Size);
         }
+        public void AcceptAttributeMarkerColor(MarkerColor markerColor, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER COLOUR: {0}", markerColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

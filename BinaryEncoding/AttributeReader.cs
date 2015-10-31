@@ -62,5 +62,11 @@ namespace CgmInfo.BinaryEncoding
             //      marker size is affected by MARKER SIZE SPECIFICATION MODE
             return new MarkerSize(reader.ReadSizeSpecification(reader.Descriptor.MarkerSizeSpecificationMode));
         }
+
+        public static MarkerColor MarkerColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour) marker colour
+            return new MarkerColor(reader.ReadColor());
+        }
     }
 }

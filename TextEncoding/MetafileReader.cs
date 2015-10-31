@@ -118,6 +118,7 @@ namespace CgmInfo.TextEncoding
             { "MARKERCOLR", AttributeReader.MarkerColor },
             { "TEXTINDEX", AttributeReader.TextBundleIndex },
             { "TEXTFONTINDEX", AttributeReader.TextFontIndex },
+            { "TEXTPREC", AttributeReader.TextPrecision },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

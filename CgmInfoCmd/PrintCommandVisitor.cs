@@ -421,6 +421,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Font Index: {0}", textFontIndex.Index);
         }
+        public void AcceptAttributeTextPrecision(TextPrecision textPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Precision: {0}", textPrecision.Precision);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

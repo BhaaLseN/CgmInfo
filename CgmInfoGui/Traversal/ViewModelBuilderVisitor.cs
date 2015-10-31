@@ -575,6 +575,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("TEXT FONT INDEX: {0}", textFontIndex.Index);
         }
+        public void AcceptAttributeTextPrecision(TextPrecision textPrecision, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT PRECISION: {0}", textPrecision.Precision);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

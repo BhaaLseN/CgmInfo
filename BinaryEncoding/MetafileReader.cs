@@ -544,6 +544,9 @@ namespace CgmInfo.BinaryEncoding
                 case 10: // TEXT FONT INDEX
                     result = AttributeReader.TextFontIndex(this, commandHeader);
                     break;
+                case 11: // TEXT PRECISION
+                    result = AttributeReader.TextPrecision(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

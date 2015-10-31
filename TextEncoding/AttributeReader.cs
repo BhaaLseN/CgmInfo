@@ -1,4 +1,5 @@
 using CgmInfo.Commands.Attributes;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.TextEncoding
 {
@@ -52,6 +53,22 @@ namespace CgmInfo.TextEncoding
         public static TextFontIndex TextFontIndex(MetafileReader reader)
         {
             return new TextFontIndex(reader.ReadIndex());
+        }
+
+        public static TextPrecision TextPrecision(MetafileReader reader)
+        {
+            return new TextPrecision(ParseTextPrecision(reader.ReadEnum()));
+        }
+
+        private static TextPrecisionType ParseTextPrecision(string token)
+        {
+            // assume string unless it matches any of the other possibilities
+            token = token.ToUpperInvariant();
+            if (token == "CHAR")
+                return TextPrecisionType.Character;
+            else if (token == "STROKE")
+                return TextPrecisionType.Stroke;
+            return TextPrecisionType.String;
         }
     }
 }

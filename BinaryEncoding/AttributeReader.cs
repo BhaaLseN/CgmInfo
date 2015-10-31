@@ -1,4 +1,5 @@
 using CgmInfo.Commands.Attributes;
+using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -79,6 +80,15 @@ namespace CgmInfo.BinaryEncoding
         {
             // P1: (index) text font index
             return new TextFontIndex(reader.ReadIndex());
+        }
+
+        public static TextPrecision TextPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) text precision: valid values are
+            //      0 string
+            //      1 character
+            //      2 stroke
+            return new TextPrecision(reader.ReadEnum<TextPrecisionType>());
         }
     }
 }

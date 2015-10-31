@@ -57,6 +57,7 @@
     <Compile Include="Commands\Attributes\MarkerType.cs" />
     <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
     <Compile Include="Commands\Attributes\TextFontIndex.cs" />
+    <Compile Include="Commands\Attributes\TextPrecision.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />
     <Compile Include="Commands\Control\GeneralizedTextPathMode.cs" />
     <Compile Include="Commands\Control\MarkerClippingMode.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
+    <Compile Include="Commands\Enums\TextPrecisionType.cs" />
     <Compile Include="Commands\Enums\WidthSpecificationModeType.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />

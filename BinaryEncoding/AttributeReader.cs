@@ -68,5 +68,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (colour) marker colour
             return new MarkerColor(reader.ReadColor());
         }
+
+        public static TextBundleIndex TextBundleIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) text bundle index
+            return new TextBundleIndex(reader.ReadIndex());
+        }
     }
 }

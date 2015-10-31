@@ -43,5 +43,10 @@ namespace CgmInfo.TextEncoding
         {
             return new MarkerColor(reader.ReadColor());
         }
+
+        public static TextBundleIndex TextBundleIndex(MetafileReader reader)
+        {
+            return new TextBundleIndex(reader.ReadIndex());
+        }
     }
 }

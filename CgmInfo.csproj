@@ -55,6 +55,7 @@
     <Compile Include="Commands\Attributes\MarkerColor.cs" />
     <Compile Include="Commands\Attributes\MarkerSize.cs" />
     <Compile Include="Commands\Attributes\MarkerType.cs" />
+    <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />
     <Compile Include="Commands\Control\GeneralizedTextPathMode.cs" />
     <Compile Include="Commands\Control\MarkerClippingMode.cs" />

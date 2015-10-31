@@ -538,6 +538,9 @@ namespace CgmInfo.BinaryEncoding
                 case 8: // MARKER COLOUR
                     result = AttributeReader.MarkerColor(this, commandHeader);
                     break;
+                case 9: // TEXT BUNDLE INDEX
+                    result = AttributeReader.TextBundleIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

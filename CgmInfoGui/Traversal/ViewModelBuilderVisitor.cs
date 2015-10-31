@@ -571,6 +571,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("TEXT BUNDLE INDEX: {0}", textBundleIndex.Index);
         }
+        public void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT FONT INDEX: {0}", textFontIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -74,5 +74,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) text bundle index
             return new TextBundleIndex(reader.ReadIndex());
         }
+
+        public static TextFontIndex TextFontIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) text font index
+            return new TextFontIndex(reader.ReadIndex());
+        }
     }
 }

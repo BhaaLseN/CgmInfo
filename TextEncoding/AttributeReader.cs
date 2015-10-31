@@ -48,5 +48,10 @@ namespace CgmInfo.TextEncoding
         {
             return new TextBundleIndex(reader.ReadIndex());
         }
+
+        public static TextFontIndex TextFontIndex(MetafileReader reader)
+        {
+            return new TextFontIndex(reader.ReadIndex());
+        }
     }
 }

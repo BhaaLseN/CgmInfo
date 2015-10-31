@@ -417,6 +417,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Bundle Index: {0}", textBundleIndex.Index);
         }
+        public void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Font Index: {0}", textFontIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

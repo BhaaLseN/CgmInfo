@@ -541,6 +541,9 @@ namespace CgmInfo.BinaryEncoding
                 case 9: // TEXT BUNDLE INDEX
                     result = AttributeReader.TextBundleIndex(this, commandHeader);
                     break;
+                case 10: // TEXT FONT INDEX
+                    result = AttributeReader.TextFontIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

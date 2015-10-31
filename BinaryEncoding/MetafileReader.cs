@@ -526,6 +526,9 @@ namespace CgmInfo.BinaryEncoding
                 case 4: // LINE COLOUR
                     result = AttributeReader.LineColor(this, commandHeader);
                     break;
+                case 5: // MARKER BUNDLE INDEX
+                    result = AttributeReader.MarkerBundleIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

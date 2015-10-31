@@ -397,6 +397,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Color: {0}", lineColor.Color);
         }
+        public void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Bundle Index: {0}", markerBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

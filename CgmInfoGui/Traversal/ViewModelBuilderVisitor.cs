@@ -551,6 +551,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE COLOUR: {0}", lineColor.Color);
         }
+        public void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER BUNDLE INDEX: {0}", markerBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

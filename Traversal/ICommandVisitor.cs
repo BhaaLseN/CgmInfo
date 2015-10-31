@@ -103,6 +103,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeLineType(LineType lineType, T parameter);
         void AcceptAttributeLineWidth(LineWidth lineWidth, T parameter);
         void AcceptAttributeLineColor(LineColor lineColor, T parameter);
+        void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

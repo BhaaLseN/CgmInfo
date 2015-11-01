@@ -54,6 +54,7 @@
     <Compile Include="Commands\Attributes\CharacterSetIndex.cs" />
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
     <Compile Include="Commands\Attributes\FillBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\FillColor.cs" />
     <Compile Include="Commands\Attributes\InteriorStyle.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
     <Compile Include="Commands\Attributes\LineColor.cs" />

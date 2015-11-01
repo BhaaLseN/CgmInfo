@@ -637,6 +637,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("INTERIOR STYLE: {0}", interiorStyle.Style);
         }
+        public void AcceptAttributeFillColor(FillColor fillColor, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL COLOUR: {0}", fillColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

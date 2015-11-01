@@ -580,6 +580,9 @@ namespace CgmInfo.BinaryEncoding
                 case 22: // INTERIOR STYLE
                     result = AttributeReader.InteriorStyle(this, commandHeader);
                     break;
+                case 23: // FILL COLOUR
+                    result = AttributeReader.FillColor(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

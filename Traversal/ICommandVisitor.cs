@@ -121,6 +121,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, T parameter);
         void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, T parameter);
         void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, T parameter);
+        void AcceptAttributeFillColor(FillColor fillColor, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

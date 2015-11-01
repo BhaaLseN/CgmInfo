@@ -130,6 +130,7 @@ namespace CgmInfo.TextEncoding
             { "ALTCHARSETINDEX", AttributeReader.AlternateCharacterSetIndex },
             { "FILLINDEX", AttributeReader.FillBundleIndex },
             { "INTSTYLE", AttributeReader.InteriorStyle },
+            { "FILLCOLR", AttributeReader.FillColor },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

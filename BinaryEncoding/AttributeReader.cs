@@ -185,5 +185,11 @@ namespace CgmInfo.BinaryEncoding
             //      6 interpolated
             return new InteriorStyle(reader.ReadEnum<InteriorStyleType>());
         }
+
+        public static FillColor FillColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour) fill colour
+            return new FillColor(reader.ReadColor());
+        }
     }
 }

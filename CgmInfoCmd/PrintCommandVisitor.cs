@@ -469,6 +469,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Interior Style: {0}", interiorStyle.Style);
         }
+        public void AcceptAttributeFillColor(FillColor fillColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Color: {0}", fillColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

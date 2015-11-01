@@ -473,6 +473,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Fill Color: {0}", fillColor.Color);
         }
+        public void AcceptAttributeHatchIndex(HatchIndex hatchIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Hatch Index: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

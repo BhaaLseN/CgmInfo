@@ -120,6 +120,11 @@ namespace CgmInfo.TextEncoding
             return new FillColor(reader.ReadColor());
         }
 
+        public static HatchIndex HatchIndex(MetafileReader reader)
+        {
+            return new HatchIndex(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

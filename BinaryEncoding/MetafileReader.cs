@@ -583,6 +583,9 @@ namespace CgmInfo.BinaryEncoding
                 case 23: // FILL COLOUR
                     result = AttributeReader.FillColor(this, commandHeader);
                     break;
+                case 24: // HATCH INDEX
+                    result = AttributeReader.HatchIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

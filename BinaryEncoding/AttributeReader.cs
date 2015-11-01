@@ -191,5 +191,19 @@ namespace CgmInfo.BinaryEncoding
             // P1: (colour) fill colour
             return new FillColor(reader.ReadColor());
         }
+
+        public static HatchIndex HatchIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) hatch index: the following values are standardized:
+            //      1 horizontal
+            //      2 vertical
+            //      3 positive slope
+            //      4 negative slope
+            //      5 horizontal/vertical crosshatch
+            //      6 positive/negative slope crosshatch
+            //      >6 reserved for registered values
+            //      negative for private use
+            return new HatchIndex(reader.ReadIndex());
+        }
     }
 }

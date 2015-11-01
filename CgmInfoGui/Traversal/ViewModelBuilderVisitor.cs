@@ -641,6 +641,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("FILL COLOUR: {0}", fillColor.Color);
         }
+        public void AcceptAttributeHatchIndex(HatchIndex hatchIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("HATCH INDEX: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

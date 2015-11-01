@@ -65,6 +65,11 @@ namespace CgmInfo.TextEncoding
             return new CharacterExpansionFactor(reader.ReadReal());
         }
 
+        public static CharacterSpacing CharacterSpacing(MetafileReader reader)
+        {
+            return new CharacterSpacing(reader.ReadReal());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

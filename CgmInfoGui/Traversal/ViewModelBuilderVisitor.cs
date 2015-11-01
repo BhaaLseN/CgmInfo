@@ -583,6 +583,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("CHARACTER EXPANSION FACTOR: {0}", characterExpansionFactor.Factor);
         }
+        public void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER SPACING: {0}", characterSpacing.AdditionalIntercharacterSpace);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

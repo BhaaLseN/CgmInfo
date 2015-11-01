@@ -429,6 +429,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Character Expansion Factor: {0}", characterExpansionFactor.Factor);
         }
+        public void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Spacing: {0}", characterSpacing.AdditionalIntercharacterSpace);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

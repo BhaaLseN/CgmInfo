@@ -96,5 +96,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (real) character expansion factor
             return new CharacterExpansionFactor(reader.ReadReal());
         }
+
+        public static CharacterSpacing CharacterSpacing(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (real) additional inter-character space
+            return new CharacterSpacing(reader.ReadReal());
+        }
     }
 }

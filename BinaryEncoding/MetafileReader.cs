@@ -550,6 +550,9 @@ namespace CgmInfo.BinaryEncoding
                 case 12: // CHARACTER EXPANSION FACTOR
                     result = AttributeReader.CharacterExpansionFactor(this, commandHeader);
                     break;
+                case 13: // CHARACTER SPACING
+                    result = AttributeReader.CharacterSpacing(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

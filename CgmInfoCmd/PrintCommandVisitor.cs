@@ -441,6 +441,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Character Height: {0}", characterHeight.Height);
         }
+        public void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Orientation: up {0}, base {1}", characterOrientation.Up, characterOrientation.Base);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

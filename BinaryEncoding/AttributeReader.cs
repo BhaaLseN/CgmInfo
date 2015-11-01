@@ -114,5 +114,14 @@ namespace CgmInfo.BinaryEncoding
             // P1: (vdc) character height
             return new CharacterHeight(reader.ReadVdc());
         }
+
+        public static CharacterOrientation CharacterOrientation(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (vdc) X character up component
+            // P2: (vdc) Y character up component
+            // P3: (vdc) X character base component
+            // P4: (vdc) Y character base component
+            return new CharacterOrientation(reader.ReadPoint(), reader.ReadPoint());
+        }
     }
 }

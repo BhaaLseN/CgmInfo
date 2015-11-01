@@ -559,6 +559,9 @@ namespace CgmInfo.BinaryEncoding
                 case 15: // CHARACTER HEIGHT
                     result = AttributeReader.CharacterHeight(this, commandHeader);
                     break;
+                case 16: // CHARACTER ORIENTATION
+                    result = AttributeReader.CharacterOrientation(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

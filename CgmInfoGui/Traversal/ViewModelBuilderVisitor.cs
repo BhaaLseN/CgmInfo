@@ -595,6 +595,15 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("CHARACTER HEIGHT: {0}", characterHeight.Height);
         }
+        public void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, MetafileContext parameter)
+        {
+            var charOrientNode = parameter.AddNode("CHARACTER ORIENTATION: {0}/{1}", characterOrientation.Up, characterOrientation.Base);
+            charOrientNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Up: {0}", characterOrientation.Up)),
+                new SimpleNode(string.Format("Base: {0}", characterOrientation.Base)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

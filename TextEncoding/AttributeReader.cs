@@ -80,6 +80,11 @@ namespace CgmInfo.TextEncoding
             return new CharacterHeight(reader.ReadVdc());
         }
 
+        public static CharacterOrientation CharacterOrientation(MetafileReader reader)
+        {
+            return new CharacterOrientation(reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

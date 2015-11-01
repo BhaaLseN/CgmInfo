@@ -358,6 +358,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

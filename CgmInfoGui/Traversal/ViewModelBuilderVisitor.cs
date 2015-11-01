@@ -633,6 +633,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("FILL BUNDLE INDEX: {0}", fillBundleIndex.Index);
         }
+        public void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, MetafileContext parameter)
+        {
+            parameter.AddNode("INTERIOR STYLE: {0}", interiorStyle.Style);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

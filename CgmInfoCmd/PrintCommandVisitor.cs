@@ -465,6 +465,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Fill Bundle Index: {0}", fillBundleIndex.Index);
         }
+        public void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, PrintContext parameter)
+        {
+            parameter.WriteLine("Interior Style: {0}", interiorStyle.Style);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

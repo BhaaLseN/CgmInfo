@@ -54,6 +54,7 @@
     <Compile Include="Commands\Attributes\CharacterSetIndex.cs" />
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
     <Compile Include="Commands\Attributes\FillBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\InteriorStyle.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
     <Compile Include="Commands\Attributes\LineColor.cs" />
     <Compile Include="Commands\Attributes\LineType.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
     <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
     <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
+    <Compile Include="Commands\Enums\InteriorStyleType.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />

@@ -172,5 +172,18 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) fill bundle index
             return new FillBundleIndex(reader.ReadIndex());
         }
+
+        public static InteriorStyle InteriorStyle(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) interior style: valid values are
+            //      0 hollow
+            //      1 solid
+            //      2 pattern
+            //      3 hatch
+            //      4 empty
+            //      5 geometric pattern
+            //      6 interpolated
+            return new InteriorStyle(reader.ReadEnum<InteriorStyleType>());
+        }
     }
 }

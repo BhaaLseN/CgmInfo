@@ -577,6 +577,9 @@ namespace CgmInfo.BinaryEncoding
                 case 21: // FILL BUNDLE INDEX
                     result = AttributeReader.FillBundleIndex(this, commandHeader);
                     break;
+                case 22: // INTERIOR STYLE
+                    result = AttributeReader.InteriorStyle(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

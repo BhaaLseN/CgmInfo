@@ -110,6 +110,11 @@ namespace CgmInfo.TextEncoding
             return new FillBundleIndex(reader.ReadIndex());
         }
 
+        public static InteriorStyle InteriorStyle(MetafileReader reader)
+        {
+            return new InteriorStyle(ParseInteriorStyle(reader.ReadEnum()));
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities
@@ -161,6 +166,24 @@ namespace CgmInfo.TextEncoding
             else if (token == "CONTVERT")
                 return VerticalTextAlignment.Continuous;
             return VerticalTextAlignment.Normal;
+        }
+        private static InteriorStyleType ParseInteriorStyle(string token)
+        {
+            // assume hollow unless it matches any of the other possibilities
+            token = token.ToUpperInvariant();
+            if (token == "SOLID")
+                return InteriorStyleType.Solid;
+            else if (token == "PAT")
+                return InteriorStyleType.Pattern;
+            else if (token == "HATCH")
+                return InteriorStyleType.Hatch;
+            else if (token == "EMPTY")
+                return InteriorStyleType.Empty;
+            else if (token == "GEOPAT")
+                return InteriorStyleType.GeometricPattern;
+            else if (token == "INTERP")
+                return InteriorStyleType.Interpolated;
+            return InteriorStyleType.Hollow;
         }
     }
 }

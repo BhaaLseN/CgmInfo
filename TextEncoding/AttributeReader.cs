@@ -140,6 +140,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeType(reader.ReadIndex());
         }
 
+        public static EdgeWidth EdgeWidth(MetafileReader reader)
+        {
+            return new EdgeWidth(reader.ReadSizeSpecification(reader.Descriptor.EdgeWidthSpecificationMode));
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

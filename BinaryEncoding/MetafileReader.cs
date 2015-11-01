@@ -595,6 +595,9 @@ namespace CgmInfo.BinaryEncoding
                 case 27: // EDGE TYPE
                     result = AttributeReader.EdgeType(this, commandHeader);
                     break;
+                case 28: // EDGE WIDTH
+                    result = AttributeReader.EdgeWidth(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

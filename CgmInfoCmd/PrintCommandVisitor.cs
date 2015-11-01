@@ -489,6 +489,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Type Index: {0} ({1})", edgeType.Index, edgeType.Name);
         }
+        public void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Width: {0}", edgeWidth.Width);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

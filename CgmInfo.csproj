@@ -55,6 +55,7 @@
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
     <Compile Include="Commands\Attributes\EdgeBundleIndex.cs" />
     <Compile Include="Commands\Attributes\EdgeType.cs" />
+    <Compile Include="Commands\Attributes\EdgeWidth.cs" />
     <Compile Include="Commands\Attributes\FillBundleIndex.cs" />
     <Compile Include="Commands\Attributes\FillColor.cs" />
     <Compile Include="Commands\Attributes\HatchIndex.cs" />

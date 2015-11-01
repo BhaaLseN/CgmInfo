@@ -657,6 +657,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE TYPE: {0} ({1})", edgeType.Index, edgeType.Name);
         }
+        public void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE WIDTH: {0}", edgeWidth.Width);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

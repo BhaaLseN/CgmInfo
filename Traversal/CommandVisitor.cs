@@ -388,6 +388,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

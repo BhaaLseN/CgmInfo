@@ -231,5 +231,12 @@ namespace CgmInfo.BinaryEncoding
             // TODO: all other enumerated types use index, but this one uses integer. typo in spec?
             return new EdgeType(reader.ReadIndex());
         }
+
+        public static EdgeWidth EdgeWidth(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (size specification) edge width: see part 1, subclause 7.1 for its form.
+            //      edge width is affected by EDGE WIDTH SPECIFICATION MODE
+            return new EdgeWidth(reader.ReadSizeSpecification(reader.Descriptor.EdgeWidthSpecificationMode));
+        }
     }
 }

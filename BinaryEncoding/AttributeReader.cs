@@ -90,5 +90,11 @@ namespace CgmInfo.BinaryEncoding
             //      2 stroke
             return new TextPrecision(reader.ReadEnum<TextPrecisionType>());
         }
+
+        public static CharacterExpansionFactor CharacterExpansionFactor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (real) character expansion factor
+            return new CharacterExpansionFactor(reader.ReadReal());
+        }
     }
 }

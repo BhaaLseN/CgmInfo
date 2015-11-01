@@ -579,6 +579,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("TEXT PRECISION: {0}", textPrecision.Precision);
         }
+        public void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER EXPANSION FACTOR: {0}", characterExpansionFactor.Factor);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

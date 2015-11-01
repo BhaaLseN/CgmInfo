@@ -119,6 +119,7 @@ namespace CgmInfo.TextEncoding
             { "TEXTINDEX", AttributeReader.TextBundleIndex },
             { "TEXTFONTINDEX", AttributeReader.TextFontIndex },
             { "TEXTPREC", AttributeReader.TextPrecision },
+            { "CHAREXPAN", AttributeReader.CharacterExpansionFactor },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

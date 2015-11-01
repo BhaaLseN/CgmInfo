@@ -60,6 +60,11 @@ namespace CgmInfo.TextEncoding
             return new TextPrecision(ParseTextPrecision(reader.ReadEnum()));
         }
 
+        public static CharacterExpansionFactor CharacterExpansionFactor(MetafileReader reader)
+        {
+            return new CharacterExpansionFactor(reader.ReadReal());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

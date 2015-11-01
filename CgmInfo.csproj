@@ -47,6 +47,7 @@
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
+    <Compile Include="Commands\Attributes\CharacterExpansionFactor.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
     <Compile Include="Commands\Attributes\LineColor.cs" />
     <Compile Include="Commands\Attributes\LineType.cs" />

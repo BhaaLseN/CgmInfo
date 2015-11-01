@@ -547,6 +547,9 @@ namespace CgmInfo.BinaryEncoding
                 case 11: // TEXT PRECISION
                     result = AttributeReader.TextPrecision(this, commandHeader);
                     break;
+                case 12: // CHARACTER EXPANSION FACTOR
+                    result = AttributeReader.CharacterExpansionFactor(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

@@ -425,6 +425,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Precision: {0}", textPrecision.Precision);
         }
+        public void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Expansion Factor: {0}", characterExpansionFactor.Factor);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

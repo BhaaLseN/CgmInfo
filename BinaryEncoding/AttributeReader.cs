@@ -123,5 +123,15 @@ namespace CgmInfo.BinaryEncoding
             // P4: (vdc) Y character base component
             return new CharacterOrientation(reader.ReadPoint(), reader.ReadPoint());
         }
+
+        public static TextPath TextPath(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) text path: valid values are:
+            //      0 right
+            //      1 left
+            //      2 up
+            //      3 down
+            return new TextPath(reader.ReadEnum<TextPathType>());
+        }
     }
 }

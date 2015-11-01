@@ -562,6 +562,9 @@ namespace CgmInfo.BinaryEncoding
                 case 16: // CHARACTER ORIENTATION
                     result = AttributeReader.CharacterOrientation(this, commandHeader);
                     break;
+                case 17: // TEXT PATH
+                    result = AttributeReader.TextPath(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

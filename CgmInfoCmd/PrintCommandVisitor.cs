@@ -445,6 +445,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Character Orientation: up {0}, base {1}", characterOrientation.Up, characterOrientation.Base);
         }
+        public void AcceptAttributeTextPath(TextPath textPath, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Path: {0}", textPath.Path);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

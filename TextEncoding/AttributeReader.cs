@@ -85,6 +85,11 @@ namespace CgmInfo.TextEncoding
             return new CharacterOrientation(reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static TextPath TextPath(MetafileReader reader)
+        {
+            return new TextPath(ParseTextPath(reader.ReadEnum()));
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities
@@ -94,6 +99,18 @@ namespace CgmInfo.TextEncoding
             else if (token == "STROKE")
                 return TextPrecisionType.Stroke;
             return TextPrecisionType.String;
+        }
+        private static TextPathType ParseTextPath(string token)
+        {
+            // assume right unless it matches any of the other possibilities
+            token = token.ToUpperInvariant();
+            if (token == "LEFT")
+                return TextPathType.Left;
+            else if (token == "UP")
+                return TextPathType.Up;
+            else if (token == "DOWN")
+                return TextPathType.Down;
+            return TextPathType.Right;
         }
     }
 }

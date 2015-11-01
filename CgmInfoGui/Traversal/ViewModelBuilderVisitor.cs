@@ -604,6 +604,10 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Base: {0}", characterOrientation.Base)),
             });
         }
+        public void AcceptAttributeTextPath(TextPath textPath, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT PATH: {0}", textPath.Path);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

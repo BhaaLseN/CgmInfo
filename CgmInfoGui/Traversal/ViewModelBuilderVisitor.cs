@@ -649,6 +649,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("PATTERN INDEX: {0}", patternIndex.Index);
         }
+        public void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE BUNDLE INDEX: {0}", edgeBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

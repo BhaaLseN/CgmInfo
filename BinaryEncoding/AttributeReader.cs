@@ -211,5 +211,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) pattern index
             return new PatternIndex(reader.ReadIndex());
         }
+
+        public static EdgeBundleIndex EdgeBundleIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) edge bundle index
+            return new EdgeBundleIndex(reader.ReadIndex());
+        }
     }
 }

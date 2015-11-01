@@ -378,6 +378,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

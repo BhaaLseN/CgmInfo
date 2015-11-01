@@ -130,6 +130,11 @@ namespace CgmInfo.TextEncoding
             return new PatternIndex(reader.ReadIndex());
         }
 
+        public static EdgeBundleIndex EdgeBundleIndex(MetafileReader reader)
+        {
+            return new EdgeBundleIndex(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

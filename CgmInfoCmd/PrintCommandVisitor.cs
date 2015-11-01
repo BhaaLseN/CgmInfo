@@ -481,6 +481,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Pattern Index: {0}", patterIndex.Index);
         }
+        public void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Bundle Index: {0}", edgeBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

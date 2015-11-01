@@ -133,6 +133,7 @@ namespace CgmInfo.TextEncoding
             { "FILLCOLR", AttributeReader.FillColor },
             { "HATCHINDEX", AttributeReader.HatchIndex },
             { "PATINDEX", AttributeReader.PatternIndex },
+            { "EDGEINDEX", AttributeReader.EdgeBundleIndex },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

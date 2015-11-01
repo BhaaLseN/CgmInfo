@@ -621,6 +621,14 @@ namespace CgmInfoGui.Traversal
             if (textAlignment.Vertical == VerticalTextAlignment.Continuous)
                 textAlignNode.Add(new SimpleNode(string.Format("Vertical Continuous Alignment: {0}", textAlignment.VerticalContinuousAlignment)));
         }
+        public void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER SET INDEX: {0}", characterSetIndex.Index);
+        }
+        public void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("ALTERNATE CHARACTER SET INDEX: {0}", alternateCharacterSetIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

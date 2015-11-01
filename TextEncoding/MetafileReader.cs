@@ -126,6 +126,8 @@ namespace CgmInfo.TextEncoding
             { "CHARORI", AttributeReader.CharacterOrientation },
             { "TEXTPATH", AttributeReader.TextPath },
             { "TEXTALIGN", AttributeReader.TextAlignment },
+            { "CHARSETINDEX", AttributeReader.CharacterSetIndex },
+            { "ALTCHARSETINDEX", AttributeReader.AlternateCharacterSetIndex },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

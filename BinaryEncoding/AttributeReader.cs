@@ -154,5 +154,17 @@ namespace CgmInfo.BinaryEncoding
             // P4: (real) continuous vertical alignment
             return new TextAlignment(reader.ReadEnum<HorizontalTextAlignment>(), reader.ReadEnum<VerticalTextAlignment>(), reader.ReadReal(), reader.ReadReal());
         }
+
+        public static CharacterSetIndex CharacterSetIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) character set index
+            return new CharacterSetIndex(reader.ReadIndex());
+        }
+
+        public static AlternateCharacterSetIndex AlternateCharacterSetIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) alternate character set index
+            return new AlternateCharacterSetIndex(reader.ReadIndex());
+        }
     }
 }

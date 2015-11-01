@@ -568,6 +568,12 @@ namespace CgmInfo.BinaryEncoding
                 case 18: // TEXT ALIGNMENT
                     result = AttributeReader.TextAlignment(this, commandHeader);
                     break;
+                case 19: // CHARACTER SET INDEX
+                    result = AttributeReader.CharacterSetIndex(this, commandHeader);
+                    break;
+                case 20: // ALTERNATE CHARACTER SET INDEX
+                    result = AttributeReader.AlternateCharacterSetIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

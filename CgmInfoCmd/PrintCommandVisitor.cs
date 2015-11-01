@@ -453,6 +453,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Alignment: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
         }
+        public void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Set Index: {0}", characterSetIndex.Index);
+        }
+        public void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Alternate Character Set Index: {0}", alternateCharacterSetIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

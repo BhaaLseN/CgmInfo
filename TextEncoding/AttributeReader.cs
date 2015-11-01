@@ -95,6 +95,16 @@ namespace CgmInfo.TextEncoding
             return new TextAlignment(ParseHorizontalAlignment(reader.ReadEnum()), ParseVerticalAlignment(reader.ReadEnum()), reader.ReadReal(), reader.ReadReal());
         }
 
+        public static CharacterSetIndex CharacterSetIndex(MetafileReader reader)
+        {
+            return new CharacterSetIndex(reader.ReadIndex());
+        }
+
+        public static AlternateCharacterSetIndex AlternateCharacterSetIndex(MetafileReader reader)
+        {
+            return new AlternateCharacterSetIndex(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

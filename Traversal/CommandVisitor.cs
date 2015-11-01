@@ -343,6 +343,16 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

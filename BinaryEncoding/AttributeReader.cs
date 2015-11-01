@@ -244,5 +244,13 @@ namespace CgmInfo.BinaryEncoding
             // P1: (colour) edge colour
             return new EdgeColor(reader.ReadColor());
         }
+
+        public static EdgeVisibility EdgeVisibility(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) edge visibility: valid values are
+            //      0 off
+            //      1 on
+            return new EdgeVisibility(reader.ReadEnum<OnOffIndicator>());
+        }
     }
 }

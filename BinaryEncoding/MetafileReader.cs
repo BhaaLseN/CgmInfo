@@ -601,6 +601,9 @@ namespace CgmInfo.BinaryEncoding
                 case 29: // EDGE COLOUR
                     result = AttributeReader.EdgeColor(this, commandHeader);
                     break;
+                case 30: // EDGE VISIBILITY
+                    result = AttributeReader.EdgeVisibility(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

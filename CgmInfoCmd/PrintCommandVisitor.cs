@@ -497,6 +497,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Color: {0}", edgeColor.Color);
         }
+        public void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Visibility: {0}", edgeVisibility.Visibility);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

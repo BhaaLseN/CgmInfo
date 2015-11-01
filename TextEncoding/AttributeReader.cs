@@ -150,6 +150,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeColor(reader.ReadColor());
         }
 
+        public static EdgeVisibility EdgeVisibility(MetafileReader reader)
+        {
+            return new EdgeVisibility(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

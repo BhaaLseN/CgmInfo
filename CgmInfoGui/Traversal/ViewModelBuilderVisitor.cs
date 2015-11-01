@@ -629,6 +629,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("ALTERNATE CHARACTER SET INDEX: {0}", alternateCharacterSetIndex.Index);
         }
+        public void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL BUNDLE INDEX: {0}", fillBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

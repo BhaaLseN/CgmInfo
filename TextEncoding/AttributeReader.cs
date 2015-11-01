@@ -105,6 +105,11 @@ namespace CgmInfo.TextEncoding
             return new AlternateCharacterSetIndex(reader.ReadIndex());
         }
 
+        public static FillBundleIndex FillBundleIndex(MetafileReader reader)
+        {
+            return new FillBundleIndex(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

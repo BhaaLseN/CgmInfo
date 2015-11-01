@@ -461,6 +461,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Alternate Character Set Index: {0}", alternateCharacterSetIndex.Index);
         }
+        public void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Bundle Index: {0}", fillBundleIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

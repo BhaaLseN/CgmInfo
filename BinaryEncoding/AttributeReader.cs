@@ -166,5 +166,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) alternate character set index
             return new AlternateCharacterSetIndex(reader.ReadIndex());
         }
+
+        public static FillBundleIndex FillBundleIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) fill bundle index
+            return new FillBundleIndex(reader.ReadIndex());
+        }
     }
 }

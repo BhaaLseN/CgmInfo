@@ -574,6 +574,9 @@ namespace CgmInfo.BinaryEncoding
                 case 20: // ALTERNATE CHARACTER SET INDEX
                     result = AttributeReader.AlternateCharacterSetIndex(this, commandHeader);
                     break;
+                case 21: // FILL BUNDLE INDEX
+                    result = AttributeReader.FillBundleIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

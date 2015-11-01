@@ -477,6 +477,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Hatch Index: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
         }
+        public void AcceptAttributePatternIndex(PatternIndex patterIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Index: {0}", patterIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

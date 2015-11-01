@@ -205,5 +205,11 @@ namespace CgmInfo.BinaryEncoding
             //      negative for private use
             return new HatchIndex(reader.ReadIndex());
         }
+
+        public static PatternIndex PatternIndex(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) pattern index
+            return new PatternIndex(reader.ReadIndex());
+        }
     }
 }

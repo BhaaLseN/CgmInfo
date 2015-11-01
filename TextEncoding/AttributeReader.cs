@@ -125,6 +125,11 @@ namespace CgmInfo.TextEncoding
             return new HatchIndex(reader.ReadIndex());
         }
 
+        public static PatternIndex PatternIndex(MetafileReader reader)
+        {
+            return new PatternIndex(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

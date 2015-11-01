@@ -645,6 +645,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("HATCH INDEX: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
         }
+        public void AcceptAttributePatternIndex(PatternIndex patternIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("PATTERN INDEX: {0}", patternIndex.Index);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

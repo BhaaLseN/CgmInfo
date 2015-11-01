@@ -123,6 +123,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, T parameter);
         void AcceptAttributeFillColor(FillColor fillColor, T parameter);
         void AcceptAttributeHatchIndex(HatchIndex hatchIndex, T parameter);
+        void AcceptAttributePatternIndex(PatternIndex patternIndex, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

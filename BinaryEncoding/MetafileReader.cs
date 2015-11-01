@@ -586,6 +586,9 @@ namespace CgmInfo.BinaryEncoding
                 case 24: // HATCH INDEX
                     result = AttributeReader.HatchIndex(this, commandHeader);
                     break;
+                case 25: // PATTERN INDEX
+                    result = AttributeReader.PatternIndex(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

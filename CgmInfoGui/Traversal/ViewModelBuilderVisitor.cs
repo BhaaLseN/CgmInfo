@@ -591,6 +591,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("TEXT COLOUR: {0}", textColor.Color);
         }
+        public void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER HEIGHT: {0}", characterHeight.Height);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

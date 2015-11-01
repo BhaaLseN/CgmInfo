@@ -48,6 +48,7 @@
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
     <Compile Include="Commands\Attributes\CharacterExpansionFactor.cs" />
+    <Compile Include="Commands\Attributes\CharacterHeight.cs" />
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
     <Compile Include="Commands\Attributes\LineColor.cs" />

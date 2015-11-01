@@ -556,6 +556,9 @@ namespace CgmInfo.BinaryEncoding
                 case 14: // TEXT COLOUR
                     result = AttributeReader.TextColor(this, commandHeader);
                     break;
+                case 15: // CHARACTER HEIGHT
+                    result = AttributeReader.CharacterHeight(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

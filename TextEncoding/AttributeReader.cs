@@ -75,6 +75,11 @@ namespace CgmInfo.TextEncoding
             return new TextColor(reader.ReadColor());
         }
 
+        public static CharacterHeight CharacterHeight(MetafileReader reader)
+        {
+            return new CharacterHeight(reader.ReadVdc());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

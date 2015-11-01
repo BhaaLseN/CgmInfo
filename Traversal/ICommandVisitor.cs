@@ -113,6 +113,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, T parameter);
         void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, T parameter);
         void AcceptAttributeTextColor(TextColor textColor, T parameter);
+        void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

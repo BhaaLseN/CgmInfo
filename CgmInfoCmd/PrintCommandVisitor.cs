@@ -437,6 +437,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Color: {0}", textColor.Color);
         }
+        public void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Height: {0}", characterHeight.Height);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

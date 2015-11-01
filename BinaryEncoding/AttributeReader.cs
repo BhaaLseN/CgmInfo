@@ -108,5 +108,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (colour) text colour
             return new TextColor(reader.ReadColor());
         }
+
+        public static CharacterHeight CharacterHeight(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (vdc) character height
+            return new CharacterHeight(reader.ReadVdc());
+        }
     }
 }

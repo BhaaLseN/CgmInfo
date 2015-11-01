@@ -90,6 +90,11 @@ namespace CgmInfo.TextEncoding
             return new TextPath(ParseTextPath(reader.ReadEnum()));
         }
 
+        public static TextAlignment TextAlignment(MetafileReader reader)
+        {
+            return new TextAlignment(ParseHorizontalAlignment(reader.ReadEnum()), ParseVerticalAlignment(reader.ReadEnum()), reader.ReadReal(), reader.ReadReal());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities
@@ -111,6 +116,36 @@ namespace CgmInfo.TextEncoding
             else if (token == "DOWN")
                 return TextPathType.Down;
             return TextPathType.Right;
+        }
+        private static HorizontalTextAlignment ParseHorizontalAlignment(string token)
+        {
+            // assume normal unless it matches any of the other possibilities
+            token = token.ToUpperInvariant();
+            if (token == "LEFT")
+                return HorizontalTextAlignment.Left;
+            else if (token == "CTR")
+                return HorizontalTextAlignment.Center;
+            else if (token == "RIGHT")
+                return HorizontalTextAlignment.Right;
+            else if (token == "CONTHORIZ")
+                return HorizontalTextAlignment.Continuous;
+            return HorizontalTextAlignment.Normal;
+        }
+        private static VerticalTextAlignment ParseVerticalAlignment(string token)
+        {
+            // assume normal unless it matches any of the other possibilities
+            token = token.ToUpperInvariant();
+            if (token == "TOP")
+                return VerticalTextAlignment.Top;
+            else if (token == "HALF")
+                return VerticalTextAlignment.Half;
+            else if (token == "BASE")
+                return VerticalTextAlignment.Base;
+            else if (token == "BOTTOM")
+                return VerticalTextAlignment.Bottom;
+            else if (token == "CONTVERT")
+                return VerticalTextAlignment.Continuous;
+            return VerticalTextAlignment.Normal;
         }
     }
 }

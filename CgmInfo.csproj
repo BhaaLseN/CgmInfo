@@ -59,6 +59,7 @@
     <Compile Include="Commands\Attributes\MarkerColor.cs" />
     <Compile Include="Commands\Attributes\MarkerSize.cs" />
     <Compile Include="Commands\Attributes\MarkerType.cs" />
+    <Compile Include="Commands\Attributes\TextAlignment.cs" />
     <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
     <Compile Include="Commands\Attributes\TextColor.cs" />
     <Compile Include="Commands\Attributes\TextFontIndex.cs" />
@@ -83,12 +84,14 @@
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
     <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
+    <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="Commands\Enums\TextPathType.cs" />
     <Compile Include="Commands\Enums\TextPrecisionType.cs" />
+    <Compile Include="Commands\Enums\VerticalTextAlignment.cs" />
     <Compile Include="Commands\Enums\WidthSpecificationModeType.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />

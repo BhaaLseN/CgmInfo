@@ -449,6 +449,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Text Path: {0}", textPath.Path);
         }
+        public void AcceptAttributeTextAlignment(TextAlignment textAlignment, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Alignment: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

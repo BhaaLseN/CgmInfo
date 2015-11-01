@@ -608,6 +608,19 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("TEXT PATH: {0}", textPath.Path);
         }
+        public void AcceptAttributeTextAlignment(TextAlignment textAlignment, MetafileContext parameter)
+        {
+            var textAlignNode = parameter.AddNode("TEXT ALIGNMENT: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
+            textAlignNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Horizontal: {0}", textAlignment.Horizontal)),
+                new SimpleNode(string.Format("Vertical: {0}", textAlignment.Vertical)),
+            });
+            if (textAlignment.Horizontal == HorizontalTextAlignment.Continuous)
+                textAlignNode.Add(new SimpleNode(string.Format("Horizontal Continuous Alignment: {0}", textAlignment.HorizontalContinuousAlignment)));
+            if (textAlignment.Vertical == VerticalTextAlignment.Continuous)
+                textAlignNode.Add(new SimpleNode(string.Format("Vertical Continuous Alignment: {0}", textAlignment.VerticalContinuousAlignment)));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

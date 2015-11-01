@@ -125,6 +125,7 @@ namespace CgmInfo.TextEncoding
             { "CHARHEIGHT", AttributeReader.CharacterHeight },
             { "CHARORI", AttributeReader.CharacterOrientation },
             { "TEXTPATH", AttributeReader.TextPath },
+            { "TEXTALIGN", AttributeReader.TextAlignment },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

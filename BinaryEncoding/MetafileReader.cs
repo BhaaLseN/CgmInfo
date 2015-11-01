@@ -565,6 +565,9 @@ namespace CgmInfo.BinaryEncoding
                 case 17: // TEXT PATH
                     result = AttributeReader.TextPath(this, commandHeader);
                     break;
+                case 18: // TEXT ALIGNMENT
+                    result = AttributeReader.TextAlignment(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

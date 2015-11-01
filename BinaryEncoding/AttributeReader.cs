@@ -133,5 +133,26 @@ namespace CgmInfo.BinaryEncoding
             //      3 down
             return new TextPath(reader.ReadEnum<TextPathType>());
         }
+
+        public static TextAlignment TextAlignment(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) horizontal alignment: valid values are:
+            //      0 normal horizontal
+            //      1 left
+            //      2 centre
+            //      3 right
+            //      4 continuous horizontal
+            // P2: (enumerated) vertical alignment
+            //      0 normal vertical
+            //      1 top
+            //      2 cap
+            //      3 half
+            //      4 base
+            //      5 bottom
+            //      6 continuous vertical
+            // P3: (real) continuous horizontal alignment
+            // P4: (real) continuous vertical alignment
+            return new TextAlignment(reader.ReadEnum<HorizontalTextAlignment>(), reader.ReadEnum<VerticalTextAlignment>(), reader.ReadReal(), reader.ReadReal());
+        }
     }
 }

@@ -592,6 +592,9 @@ namespace CgmInfo.BinaryEncoding
                 case 26: // EDGE BUNDLE INDEX
                     result = AttributeReader.EdgeBundleIndex(this, commandHeader);
                     break;
+                case 27: // EDGE TYPE
+                    result = AttributeReader.EdgeType(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

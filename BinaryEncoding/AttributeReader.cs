@@ -217,5 +217,19 @@ namespace CgmInfo.BinaryEncoding
             // P1: (index) edge bundle index
             return new EdgeBundleIndex(reader.ReadIndex());
         }
+
+        public static EdgeType EdgeType(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) edge type: the following values are standardized:
+            //      1 solid
+            //      2 dash
+            //      3 dot
+            //      4 dash-dot
+            //      5 dash-dot-dot
+            //      >5 reserved for registered values
+            //      negative for private use
+            // TODO: all other enumerated types use index, but this one uses integer. typo in spec?
+            return new EdgeType(reader.ReadIndex());
+        }
     }
 }

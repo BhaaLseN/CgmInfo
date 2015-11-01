@@ -653,6 +653,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE BUNDLE INDEX: {0}", edgeBundleIndex.Index);
         }
+        public void AcceptAttributeEdgeType(EdgeType edgeType, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE: {0} ({1})", edgeType.Index, edgeType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

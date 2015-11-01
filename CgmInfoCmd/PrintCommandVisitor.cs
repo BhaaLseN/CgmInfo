@@ -485,6 +485,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Bundle Index: {0}", edgeBundleIndex.Index);
         }
+        public void AcceptAttributeEdgeType(EdgeType edgeType, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Index: {0} ({1})", edgeType.Index, edgeType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

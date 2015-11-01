@@ -661,6 +661,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE WIDTH: {0}", edgeWidth.Width);
         }
+        public void AcceptAttributeEdgeColor(EdgeColor edgeColor, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE COLOUR: {0}", edgeColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

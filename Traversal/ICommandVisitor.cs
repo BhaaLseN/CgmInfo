@@ -127,6 +127,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, T parameter);
         void AcceptAttributeEdgeType(EdgeType edgeType, T parameter);
         void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, T parameter);
+        void AcceptAttributeEdgeColor(EdgeColor edgeColor, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

@@ -493,6 +493,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Width: {0}", edgeWidth.Width);
         }
+        public void AcceptAttributeEdgeColor(EdgeColor edgeColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Color: {0}", edgeColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

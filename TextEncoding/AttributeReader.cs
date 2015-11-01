@@ -145,6 +145,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeWidth(reader.ReadSizeSpecification(reader.Descriptor.EdgeWidthSpecificationMode));
         }
 
+        public static EdgeColor EdgeColor(MetafileReader reader)
+        {
+            return new EdgeColor(reader.ReadColor());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

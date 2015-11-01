@@ -238,5 +238,11 @@ namespace CgmInfo.BinaryEncoding
             //      edge width is affected by EDGE WIDTH SPECIFICATION MODE
             return new EdgeWidth(reader.ReadSizeSpecification(reader.Descriptor.EdgeWidthSpecificationMode));
         }
+
+        public static EdgeColor EdgeColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour) edge colour
+            return new EdgeColor(reader.ReadColor());
+        }
     }
 }

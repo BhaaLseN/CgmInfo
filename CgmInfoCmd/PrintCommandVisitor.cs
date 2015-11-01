@@ -433,6 +433,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Character Spacing: {0}", characterSpacing.AdditionalIntercharacterSpace);
         }
+        public void AcceptAttributeTextColor(TextColor textColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Color: {0}", textColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

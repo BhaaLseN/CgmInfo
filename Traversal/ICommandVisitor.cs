@@ -112,6 +112,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeTextPrecision(TextPrecision textPrecision, T parameter);
         void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, T parameter);
         void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, T parameter);
+        void AcceptAttributeTextColor(TextColor textColor, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

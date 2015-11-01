@@ -58,6 +58,7 @@
     <Compile Include="Commands\Attributes\MarkerSize.cs" />
     <Compile Include="Commands\Attributes\MarkerType.cs" />
     <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\TextColor.cs" />
     <Compile Include="Commands\Attributes\TextFontIndex.cs" />
     <Compile Include="Commands\Attributes\TextPrecision.cs" />
     <Compile Include="Commands\Control\AuxiliaryColor.cs" />

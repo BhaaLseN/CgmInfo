@@ -102,5 +102,11 @@ namespace CgmInfo.BinaryEncoding
             // P1: (real) additional inter-character space
             return new CharacterSpacing(reader.ReadReal());
         }
+
+        public static TextColor TextColor(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour) text colour
+            return new TextColor(reader.ReadColor());
+        }
     }
 }

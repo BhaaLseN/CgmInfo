@@ -121,6 +121,7 @@ namespace CgmInfo.TextEncoding
             { "TEXTPREC", AttributeReader.TextPrecision },
             { "CHAREXPAN", AttributeReader.CharacterExpansionFactor },
             { "CHARSPACE", AttributeReader.CharacterSpacing },
+            { "TEXTCOLR", AttributeReader.TextColor },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

@@ -70,6 +70,11 @@ namespace CgmInfo.TextEncoding
             return new CharacterSpacing(reader.ReadReal());
         }
 
+        public static TextColor TextColor(MetafileReader reader)
+        {
+            return new TextColor(reader.ReadColor());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

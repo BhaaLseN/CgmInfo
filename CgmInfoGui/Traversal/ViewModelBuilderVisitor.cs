@@ -587,6 +587,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("CHARACTER SPACING: {0}", characterSpacing.AdditionalIntercharacterSpace);
         }
+        public void AcceptAttributeTextColor(TextColor textColor, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT COLOUR: {0}", textColor.Color);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

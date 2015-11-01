@@ -553,6 +553,9 @@ namespace CgmInfo.BinaryEncoding
                 case 13: // CHARACTER SPACING
                     result = AttributeReader.CharacterSpacing(this, commandHeader);
                     break;
+                case 14: // TEXT COLOUR
+                    result = AttributeReader.TextColor(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

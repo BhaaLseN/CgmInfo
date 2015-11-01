@@ -60,6 +60,7 @@
     <Compile Include="Commands\Attributes\EdgeWidth.cs" />
     <Compile Include="Commands\Attributes\FillBundleIndex.cs" />
     <Compile Include="Commands\Attributes\FillColor.cs" />
+    <Compile Include="Commands\Attributes\FillReferencePoint.cs" />
     <Compile Include="Commands\Attributes\HatchIndex.cs" />
     <Compile Include="Commands\Attributes\InteriorStyle.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />

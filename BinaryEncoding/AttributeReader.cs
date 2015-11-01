@@ -252,5 +252,11 @@ namespace CgmInfo.BinaryEncoding
             //      1 on
             return new EdgeVisibility(reader.ReadEnum<OnOffIndicator>());
         }
+
+        public static FillReferencePoint FillReferencePoint(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) fill reference point
+            return new FillReferencePoint(reader.ReadPoint());
+        }
     }
 }

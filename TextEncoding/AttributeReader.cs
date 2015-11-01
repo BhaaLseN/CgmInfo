@@ -155,6 +155,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeVisibility(TextEncodingHelper.GetOnOffValue(reader.ReadEnum()));
         }
 
+        public static FillReferencePoint FillReferencePoint(MetafileReader reader)
+        {
+            return new FillReferencePoint(reader.ReadPoint());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

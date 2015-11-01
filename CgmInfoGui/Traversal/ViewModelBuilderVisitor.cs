@@ -669,6 +669,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE VISIBILITY: {0}", edgeVisibility.Visibility);
         }
+        public void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL REFERENCE POINT: {0}", fillReferencePoint.ReferencePoint);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

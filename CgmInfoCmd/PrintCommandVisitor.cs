@@ -501,6 +501,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Visibility: {0}", edgeVisibility.Visibility);
         }
+        public void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Reference Point: {0}", fillReferencePoint.ReferencePoint);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

@@ -129,6 +129,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, T parameter);
         void AcceptAttributeEdgeColor(EdgeColor edgeColor, T parameter);
         void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, T parameter);
+        void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

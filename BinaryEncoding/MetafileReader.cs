@@ -604,6 +604,9 @@ namespace CgmInfo.BinaryEncoding
                 case 30: // EDGE VISIBILITY
                     result = AttributeReader.EdgeVisibility(this, commandHeader);
                     break;
+                case 31: // FILL REFERENCE POINT
+                    result = AttributeReader.FillReferencePoint(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

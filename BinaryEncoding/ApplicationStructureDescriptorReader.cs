@@ -48,7 +48,7 @@ namespace CgmInfo.BinaryEncoding
                 case DataTypeIndex.StructuredDataRecord:
                     return ReadStructuredDataRecord(reader);
                 case DataTypeIndex.ColorIndex:
-                    return reader.ReadIndex();
+                    return reader.ReadIndexedColor();
                 case DataTypeIndex.ColorDirect:
                     return reader.ReadDirectColor();
                 case DataTypeIndex.Name:

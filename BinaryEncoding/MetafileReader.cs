@@ -607,6 +607,9 @@ namespace CgmInfo.BinaryEncoding
                 case 31: // FILL REFERENCE POINT
                     result = AttributeReader.FillReferencePoint(this, commandHeader);
                     break;
+                case 32: // PATTERN TABLE
+                    result = AttributeReader.PatternTable(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

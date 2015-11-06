@@ -139,6 +139,7 @@ namespace CgmInfo.TextEncoding
             { "EDGECOLR", AttributeReader.EdgeColor },
             { "EDGEVIS", AttributeReader.EdgeVisibility },
             { "FILLREFPT", AttributeReader.FillReferencePoint },
+            { "PATTABLE", AttributeReader.PatternTable },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

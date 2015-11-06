@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.TextEncoding
 {
@@ -158,6 +160,23 @@ namespace CgmInfo.TextEncoding
         public static FillReferencePoint FillReferencePoint(MetafileReader reader)
         {
             return new FillReferencePoint(reader.ReadPoint());
+        }
+
+        public static PatternTable PatternTable(MetafileReader reader)
+        {
+            int index = reader.ReadIndex();
+            int nx = reader.ReadInteger();
+            int ny = reader.ReadInteger();
+            // TODO: not really used in text encoding; but in case we ever need it,
+            //       the same check for zero as in binary encoding needs to happen.
+            //       intentionally unused until that time comes.
+            int localColorPrecision = reader.ReadInteger();
+            var colors = new List<MetafileColor>();
+            int count = nx * ny;
+            while (reader.HasMoreData(3) && count --> 0)
+                colors.Add(reader.ReadColor());
+
+            return new PatternTable(index, nx, ny, colors.ToArray());
         }
 
         private static TextPrecisionType ParseTextPrecision(string token)

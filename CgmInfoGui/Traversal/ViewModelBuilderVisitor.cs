@@ -673,6 +673,12 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("FILL REFERENCE POINT: {0}", fillReferencePoint.ReferencePoint);
         }
+        public void AcceptAttributePatternTable(PatternTable patternTable, MetafileContext parameter)
+        {
+            var patternTableNode = parameter.AddNode("PATTERN TABLE: {0} ({1} by {2})",
+                patternTable.Index, patternTable.Height, patternTable.Width);
+            patternTableNode.Nodes.AddRange(patternTable.Colors.Select(c => new SimpleNode(c.ToString())));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -257,6 +259,36 @@ namespace CgmInfo.BinaryEncoding
         {
             // P1: (point) fill reference point
             return new FillReferencePoint(reader.ReadPoint());
+        }
+
+        public static PatternTable PatternTable(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) pattern table index
+            // P2: (integer) nx, the dimension of colour array in the direction of the PATTERN SIZE width vector
+            // P3: (integer) ny, the dimension of colour array in the direction of the PATTERN SIZE height vector
+            // P4: (integer) local colour precision: valid values are as for the local colour precision parameter of CELL ARRAY.
+            // P5: (colour array) pattern definition
+            int index = reader.ReadIndex();
+            int nx = reader.ReadInteger();
+            int ny = reader.ReadInteger();
+            int localColorPrecision = reader.ReadInteger();
+            if (localColorPrecision == 0)
+            {
+                if (reader.Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                    localColorPrecision = reader.Descriptor.ColorPrecision;
+                else
+                    localColorPrecision = reader.Descriptor.ColorIndexPrecision;
+            }
+            // might be either 1/2/4 or 8/16/32 here; but we want byte-sizes in ReadColor
+            if (localColorPrecision >= 8)
+                localColorPrecision /= 8;
+
+            var colors = new List<MetafileColor>();
+            int count = nx * ny;
+            while (reader.HasMoreData() && count --> 0)
+                colors.Add(reader.ReadColor(localColorPrecision));
+
+            return new PatternTable(index, nx, ny, colors.ToArray());
         }
     }
 }

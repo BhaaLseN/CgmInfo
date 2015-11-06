@@ -505,6 +505,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Fill Reference Point: {0}", fillReferencePoint.ReferencePoint);
         }
+        public void AcceptAttributePatternTable(PatternTable patternTable, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Table: {0} ({1} by {2})", patternTable.Index, patternTable.Width, patternTable.Height);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

@@ -679,6 +679,15 @@ namespace CgmInfoGui.Traversal
                 patternTable.Index, patternTable.Height, patternTable.Width);
             patternTableNode.Nodes.AddRange(patternTable.Colors.Select(c => new SimpleNode(c.ToString())));
         }
+        public void AcceptAttributePatternSize(PatternSize patternSize, MetafileContext parameter)
+        {
+            var patternSizeNode = parameter.AddNode("PATTERN SIZE: {0} by {1}", patternSize.Height, patternSize.Width);
+            patternSizeNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Height: {0}", patternSize.Height)),
+                new SimpleNode(string.Format("Width: {0}", patternSize.Width)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

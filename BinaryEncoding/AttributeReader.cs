@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Utilities;
@@ -289,6 +290,21 @@ namespace CgmInfo.BinaryEncoding
                 colors.Add(reader.ReadColor(localColorPrecision));
 
             return new PatternTable(index, nx, ny, colors.ToArray());
+        }
+
+        public static PatternSize PatternSize(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (size specification) pattern height vector, x component: see part 1, subclause 7.1 for its form.
+            // P2: (size specification) pattern height vector, y component: see part 1, subclause 7.1 for its form.
+            // P3: (size specification) pattern width vector, x component: see part 1, subclause 7.1 for its form.
+            // P4: (size specification) pattern width vector, y component: see part 1, subclause 7.1 for its form.
+
+            // NOTE: Pattern size may only be 'absolute' (VDC) in Version 1 and 2 metafiles. In Version 3 and 4 metafiles it may be
+            //       expressed in any of the modes which can be selected with INTERIOR STYLE SPECIFICATION MODE.
+            var specificationMode = reader.Properties.Version < 3 ? WidthSpecificationModeType.Absolute : reader.Descriptor.InteriorStyleSpecificationMode;
+            return new PatternSize(
+                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)),
+                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)));
         }
     }
 }

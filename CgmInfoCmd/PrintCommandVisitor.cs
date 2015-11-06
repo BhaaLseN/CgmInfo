@@ -509,6 +509,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Pattern Table: {0} ({1} by {2})", patternTable.Index, patternTable.Width, patternTable.Height);
         }
+        public void AcceptAttributePatternSize(PatternSize patternSize, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Size: {0} by {1}", patternSize.Width, patternSize.Height);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

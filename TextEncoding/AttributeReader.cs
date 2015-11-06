@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Utilities;
@@ -177,6 +178,16 @@ namespace CgmInfo.TextEncoding
                 colors.Add(reader.ReadColor());
 
             return new PatternTable(index, nx, ny, colors.ToArray());
+        }
+
+        public static PatternSize PatternSize(MetafileReader reader)
+        {
+            // NOTE: Pattern size may only be 'absolute' (VDC) in Version 1 and 2 metafiles. In Version 3 and 4 metafiles it may be
+            //       expressed in any of the modes which can be selected with INTERIOR STYLE SPECIFICATION MODE.
+            var specificationMode = reader.Properties.Version < 3 ? WidthSpecificationModeType.Absolute : reader.Descriptor.InteriorStyleSpecificationMode;
+            return new PatternSize(
+                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)),
+                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)));
         }
 
         private static TextPrecisionType ParseTextPrecision(string token)

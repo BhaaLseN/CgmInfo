@@ -741,6 +741,13 @@ namespace CgmInfo.BinaryEncoding
             double y = ReadViewportCoordinate();
             return new PointF((float)x, (float)y);
         }
+        internal MetafileColor ReadColor(int colorPrecision)
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor(colorPrecision);
+            else
+                return ReadIndexedColor(colorPrecision);
+        }
         internal MetafileColor ReadColor()
         {
             if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
@@ -750,23 +757,32 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadInteger(Descriptor.ColorIndexPrecision / 8, true));
+            return ReadIndexedColor(Descriptor.ColorIndexPrecision / 8);
         }
+        internal MetafileColor ReadIndexedColor(int colorIndexPrecision)
+        {
+            return new MetafileColorIndexed(ReadInteger(colorIndexPrecision, true));
+        }
+
         internal MetafileColor ReadDirectColor()
+        {
+            return ReadDirectColor(Descriptor.ColorPrecision / 8);
+        }
+        internal MetafileColor ReadDirectColor(int colorDirectPrecision)
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {
-                int r = ReadColorValue();
-                int g = ReadColorValue();
-                int b = ReadColorValue();
+                int r = ReadColorValue(colorDirectPrecision);
+                int g = ReadColorValue(colorDirectPrecision);
+                int b = ReadColorValue(colorDirectPrecision);
                 return new MetafileColorRGB(r, g, b);
             }
             else if (Descriptor.ColorModel == ColorModel.CMYK)
             {
-                int c = ReadColorValue();
-                int m = ReadColorValue();
-                int y = ReadColorValue();
-                int k = ReadColorValue();
+                int c = ReadColorValue(colorDirectPrecision);
+                int m = ReadColorValue(colorDirectPrecision);
+                int y = ReadColorValue(colorDirectPrecision);
+                int k = ReadColorValue(colorDirectPrecision);
                 return new MetafileColorCMYK(c, m, y, k);
             }
             else
@@ -780,10 +796,15 @@ namespace CgmInfo.BinaryEncoding
 
         internal int ReadColorValue()
         {
+            return ReadColorValue(Descriptor.ColorPrecision / 8);
+        }
+        internal int ReadColorValue(int colorPrecision)
+        {
             // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
             // color components are unsigned integers at direct color precision
-            return ReadInteger(Descriptor.ColorPrecision / 8, true);
+            return ReadInteger(colorPrecision, true);
         }
+
         internal double ReadFixedPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.4

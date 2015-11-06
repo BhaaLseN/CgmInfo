@@ -767,7 +767,16 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor(int colorIndexPrecision)
         {
-            return new MetafileColorIndexed(ReadInteger(colorIndexPrecision, true));
+            return new MetafileColorIndexed(ReadColorIndex(colorIndexPrecision));
+        }
+
+        internal int ReadColorIndex()
+        {
+            return ReadColorIndex(Descriptor.ColorIndexPrecision / 8);
+        }
+        internal int ReadColorIndex(int colorIndexPrecision)
+        {
+            return ReadInteger(colorIndexPrecision, true);
         }
 
         internal MetafileColor ReadDirectColor()

@@ -444,7 +444,11 @@ namespace CgmInfo.TextEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadIndex());
+            return new MetafileColorIndexed(ReadColorIndex());
+        }
+        internal int ReadColorIndex()
+        {
+            return ReadIndex();
         }
         internal MetafileColor ReadDirectColor()
         {

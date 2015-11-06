@@ -520,12 +520,12 @@ namespace CgmInfo.BinaryEncoding
 
         internal bool HasMoreData()
         {
-            return HasMoreData(0);
+            return HasMoreData(1);
         }
 
         internal bool HasMoreData(int minimumLeft)
         {
-            return _reader != null && _reader.BaseStream.Position + minimumLeft < _reader.BaseStream.Length;
+            return _reader != null && _reader.BaseStream.Position + minimumLeft <= _reader.BaseStream.Length;
         }
 
         internal int ReadInteger()

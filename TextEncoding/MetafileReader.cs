@@ -141,7 +141,7 @@ namespace CgmInfo.TextEncoding
             { "FILLREFPT", AttributeReader.FillReferencePoint },
             { "PATTABLE", AttributeReader.PatternTable },
             { "PATSIZE", AttributeReader.PatternSize },
-            { "COLRTABLE", AttributeReader.ColorTable },
+            { "COLRTABLE", ReadColorTable },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
@@ -306,6 +306,12 @@ namespace CgmInfo.TextEncoding
             reader.Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
             return vdcRealPrecision;
         }
+        private static Command ReadColorTable(MetafileReader reader)
+        {
+            var colorTable = AttributeReader.ColorTable(reader);
+            reader.Descriptor.UpdateColorTable(colorTable);
+            return colorTable;
+        }
 
         internal string ReadString()
         {
@@ -445,7 +451,8 @@ namespace CgmInfo.TextEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadColorIndex());
+            int colorIndex = ReadColorIndex();
+            return new MetafileColorIndexed(colorIndex, Descriptor.GetIndexedColor(colorIndex));
         }
         internal int ReadColorIndex()
         {

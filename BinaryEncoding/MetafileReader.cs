@@ -614,7 +614,9 @@ namespace CgmInfo.BinaryEncoding
                     result = AttributeReader.PatternSize(this, commandHeader);
                     break;
                 case 34: // COLOUR TABLE
-                    result = AttributeReader.ColorTable(this, commandHeader);
+                    var colorTable = AttributeReader.ColorTable(this, commandHeader);
+                    Descriptor.UpdateColorTable(colorTable);
+                    result = colorTable;
                     break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
@@ -770,7 +772,8 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor(int colorIndexPrecision)
         {
-            return new MetafileColorIndexed(ReadColorIndex(colorIndexPrecision));
+            int colorIndex = ReadColorIndex(colorIndexPrecision);
+            return new MetafileColorIndexed(colorIndex, Descriptor.GetIndexedColor(colorIndex));
         }
 
         internal int ReadColorIndex()

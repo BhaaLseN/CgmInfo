@@ -64,7 +64,7 @@ namespace CgmInfo.TextEncoding
         public static LineAndEdgeTypeDefinition LineAndEdgeTypeDefinition(MetafileReader reader)
         {
             int lineType = reader.ReadIndex();
-            double dashCycleRepeatLength = reader.ReadVdc();
+            double dashCycleRepeatLength = reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode);
             var dashElements = new List<int>();
             while (!reader.AtEndOfElement)
                 dashElements.Add(reader.ReadInteger());
@@ -75,11 +75,11 @@ namespace CgmInfo.TextEncoding
         {
             int hatchIndex = reader.ReadIndex();
             HatchStyleIndicator styleIndicator = ParseHatchStyleIndicator(reader.ReadEnum());
-            double hatchDirectionStartX = reader.ReadVdc();
-            double hatchDirectionStartY = reader.ReadVdc();
-            double hatchDirectionEndX = reader.ReadVdc();
-            double hatchDirectionEndY = reader.ReadVdc();
-            double dutyCycleLength = reader.ReadVdc();
+            double hatchDirectionStartX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionStartY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionEndX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double hatchDirectionEndY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+            double dutyCycleLength = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
             int n = reader.ReadInteger();
             var gapWidths = new List<int>();
             for (int i = 0; i < n; i++)

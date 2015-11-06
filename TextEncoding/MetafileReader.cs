@@ -339,6 +339,16 @@ namespace CgmInfo.TextEncoding
 
             return double.Parse(number, CultureInfo.GetCultureInfo("en"));
         }
+        internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
+        {
+            // When the value is 'absolute', then an associated parameter of type SS
+            // resolves to the basic data type VDC. Otherwise, associated
+            // SS parameters resolve to the basic data type R. [ISO/IEC 8632-1 7.1, Table 11]
+            if (widthSpecificationMode == WidthSpecificationModeType.Absolute)
+                return ReadVdc();
+            else
+                return ReadReal();
+        }
         internal double ReadVdc()
         {
             // a VDC is either an int or a double; depending on what VDC TYPE said [ISO/IEC 8632-4 6.3.5]

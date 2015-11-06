@@ -190,6 +190,15 @@ namespace CgmInfo.TextEncoding
                 new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)));
         }
 
+        public static ColorTable ColorTable(MetafileReader reader)
+        {
+            int startIndex = reader.ReadColorIndex();
+            var colors = new List<MetafileColor>();
+            while (reader.HasMoreData())
+                colors.Add(reader.ReadDirectColor());
+            return new ColorTable(startIndex, colors.ToArray());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

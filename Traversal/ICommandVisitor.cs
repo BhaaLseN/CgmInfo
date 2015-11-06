@@ -132,6 +132,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, T parameter);
         void AcceptAttributePatternTable(PatternTable patternTable, T parameter);
         void AcceptAttributePatternSize(PatternSize patternSize, T parameter);
+        void AcceptAttributeColorTable(ColorTable colorTable, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

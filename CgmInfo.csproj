@@ -53,6 +53,7 @@
     <Compile Include="Commands\Attributes\CharacterOrientation.cs" />
     <Compile Include="Commands\Attributes\CharacterSetIndex.cs" />
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
+    <Compile Include="Commands\Attributes\ColorTable.cs" />
     <Compile Include="Commands\Attributes\EdgeBundleIndex.cs" />
     <Compile Include="Commands\Attributes\EdgeColor.cs" />
     <Compile Include="Commands\Attributes\EdgeType.cs" />

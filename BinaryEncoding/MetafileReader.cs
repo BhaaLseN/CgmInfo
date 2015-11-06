@@ -613,6 +613,9 @@ namespace CgmInfo.BinaryEncoding
                 case 33: // PATTERN SIZE
                     result = AttributeReader.PatternSize(this, commandHeader);
                     break;
+                case 34: // COLOUR TABLE
+                    result = AttributeReader.ColorTable(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

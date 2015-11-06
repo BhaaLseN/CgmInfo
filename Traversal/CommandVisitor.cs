@@ -418,6 +418,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeColorTable(ColorTable colorTable, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

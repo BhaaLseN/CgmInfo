@@ -513,6 +513,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Pattern Size: {0} by {1}", patternSize.Width, patternSize.Height);
         }
+        public void AcceptAttributeColorTable(ColorTable colorTable, PrintContext parameter)
+        {
+            parameter.WriteLine("Color Table: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

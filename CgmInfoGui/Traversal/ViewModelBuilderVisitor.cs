@@ -688,6 +688,11 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Width: {0}", patternSize.Width)),
             });
         }
+        public void AcceptAttributeColorTable(ColorTable colorTable, MetafileContext parameter)
+        {
+            var colorTableNode = parameter.AddNode("COLOUR TABLE: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
+            colorTableNode.Nodes.AddRange(colorTable.Colors.Select((c, i) => new SimpleNode(string.Format("{0}: {1}", colorTable.StartIndex + i, c))));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

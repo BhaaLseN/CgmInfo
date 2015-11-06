@@ -306,5 +306,16 @@ namespace CgmInfo.BinaryEncoding
                 new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)),
                 new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)));
         }
+
+        public static ColorTable ColorTable(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (colour index) starting colour table index
+            // P2: (direct colour list) list of direct colour values (>3-tuples or 4-tuples of direct colour components (CCO))
+            int startIndex = reader.ReadColorIndex();
+            var colors = new List<MetafileColor>();
+            while (reader.HasMoreData(3)) // at least 3 color components with at least 1 byte each
+                colors.Add(reader.ReadDirectColor());
+            return new ColorTable(startIndex, colors.ToArray());
+        }
     }
 }

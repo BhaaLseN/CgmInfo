@@ -209,6 +209,11 @@ namespace CgmInfo.TextEncoding
             return new AspectSourceFlags(asf);
         }
 
+        public static PickIdentifier PickIdentifier(MetafileReader reader)
+        {
+            return new PickIdentifier(reader.ReadName());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

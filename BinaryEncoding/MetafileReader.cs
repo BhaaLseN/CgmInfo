@@ -621,6 +621,9 @@ namespace CgmInfo.BinaryEncoding
                 case 35: // ASPECT SOURCE FLAGS
                     result = AttributeReader.AspectSourceFlags(this, commandHeader);
                     break;
+                case 36: // PICK IDENTIFIER
+                    result = AttributeReader.PickIdentifier(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

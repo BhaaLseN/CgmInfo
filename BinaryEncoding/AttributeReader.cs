@@ -349,5 +349,11 @@ namespace CgmInfo.BinaryEncoding
                 asf[reader.ReadEnum<AspectSourceFlagsType>()] = reader.ReadEnum<AspectSourceFlagsValue>();
             return new AspectSourceFlags(asf);
         }
+
+        public static PickIdentifier PickIdentifier(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) pick identifier
+            return new PickIdentifier(reader.ReadName());
+        }
     }
 }

@@ -525,6 +525,10 @@ namespace CgmInfoCmd
                 parameter.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
             parameter.EndLevel();
         }
+        public void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, PrintContext parameter)
+        {
+            parameter.WriteLine("Pick Identifier: {0}", pickIdentifier.Identifier);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

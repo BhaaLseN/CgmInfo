@@ -698,6 +698,10 @@ namespace CgmInfoGui.Traversal
             var asfNode = parameter.AddNode("ASPECT SOURCE FLAGS [{0} entries]", aspectSourceFlags.Values.Count);
             asfNode.Nodes.AddRange(aspectSourceFlags.Values.Select(kvp => new SimpleNode(string.Format("{0}: {1}", kvp.Key, kvp.Value))));
         }
+        public void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, MetafileContext parameter)
+        {
+            parameter.AddNode("PICK IDENTIFIER: {0}", pickIdentifier.Identifier);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

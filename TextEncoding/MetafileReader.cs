@@ -143,6 +143,7 @@ namespace CgmInfo.TextEncoding
             { "PATSIZE", AttributeReader.PatternSize },
             { "COLRTABLE", ReadColorTable },
             { "ASF", AttributeReader.AspectSourceFlags },
+            { "PICKID", AttributeReader.PickIdentifier },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

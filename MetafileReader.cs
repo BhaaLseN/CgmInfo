@@ -13,7 +13,7 @@ namespace CgmInfo
         private readonly MetafileProperties _properties;
         private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
 
-        protected readonly FileStream _fileStream;
+        private readonly FileStream _fileStream;
 
         public MetafileDescriptor Descriptor
         {
@@ -32,13 +32,13 @@ namespace CgmInfo
 
         public Command Read()
         {
-            var command = ReadCommand();
+            var command = ReadCommand(_fileStream);
             if (command != null)
                 command.Accept(_propertyVisitor, _properties);
             return command;
         }
 
-        protected abstract Command ReadCommand();
+        protected abstract Command ReadCommand(Stream stream);
 
         public static MetafileReader Create(string fileName)
         {

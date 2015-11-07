@@ -10,10 +10,10 @@ namespace CgmInfo.TextEncoding
         public static Polyline Polyline(MetafileReader reader)
         {
             var points = new List<PointF>();
-            do
+            while (reader.HasMoreData(2))
             {
                 points.Add(reader.ReadPoint());
-            } while (!reader.AtEndOfElement);
+            }
             return new Polyline(points.ToArray());
         }
 
@@ -22,15 +22,13 @@ namespace CgmInfo.TextEncoding
             var points = new List<PointF>();
             var lastPoint = reader.ReadPoint();
             points.Add(lastPoint);
-            do
+            while (reader.HasMoreData(2))
             {
                 double deltaX = reader.ReadVdc();
-                if (reader.AtEndOfElement)
-                    break;
                 double deltaY = reader.ReadVdc();
                 lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
                 points.Add(lastPoint);
-            } while (!reader.AtEndOfElement);
+            }
             return new Polyline(points.ToArray());
         }
 
@@ -52,10 +50,10 @@ namespace CgmInfo.TextEncoding
         public static Polygon Polygon(MetafileReader reader)
         {
             var points = new List<PointF>();
-            do
+            while (reader.HasMoreData(2))
             {
                 points.Add(reader.ReadPoint());
-            } while (!reader.AtEndOfElement);
+            }
             return new Polygon(points.ToArray());
         }
 
@@ -64,15 +62,13 @@ namespace CgmInfo.TextEncoding
             var points = new List<PointF>();
             var lastPoint = reader.ReadPoint();
             points.Add(lastPoint);
-            do
+            while (reader.HasMoreData(2))
             {
                 double deltaX = reader.ReadVdc();
-                if (reader.AtEndOfElement)
-                    break;
                 double deltaY = reader.ReadVdc();
                 lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
                 points.Add(lastPoint);
-            } while (!reader.AtEndOfElement);
+            }
             return new Polygon(points.ToArray());
         }
 

@@ -45,6 +45,7 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorMaximumColorIndex(MaximumColorIndex maximumColorIndex, T parameter);
         void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, T parameter);
         void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, T parameter);
+        void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, T parameter);
         void AcceptMetafileDescriptorFontList(FontList fontList, T parameter);
         void AcceptMetafileDescriptorCharacterSetList(CharacterSetList characterSetList, T parameter);
         void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, T parameter);

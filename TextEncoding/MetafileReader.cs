@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CgmInfo.Commands;
@@ -112,44 +113,49 @@ namespace CgmInfo.TextEncoding
         {
         }
 
+        private long _commandPosition;
+        private int _currentTokenIndex;
+        private List<string> _currentTokens;
+
         protected override Command ReadCommand()
         {
-            string token;
-            TokenState state = ReadToken(out token);
+            // remember the current position for error feedback.
+            // this always signifies the beginning of the command; not the token.
+            _commandPosition = _fileStream.Position;
+            // read all tokens until end of either command or file
+            TokenState state;
+            var tokens = new List<string>();
+            do
+            {
+                string token;
+                state = ReadToken(_fileStream, out token);
+                tokens.Add(token);
+            } while (state == TokenState.EndOfToken);
 
             if (state == TokenState.EndOfFile)
                 return null;
 
-            Func<MetafileReader, Command> commandHandler;
-            if (!_commandTable.TryGetValue(token.ToUpperInvariant(), out commandHandler))
+            try
             {
-                if (state == TokenState.EndOfToken)
-                    commandHandler = r => UnsupportedCommand(token);
-                else
-                    commandHandler = r => UnsupportedCommandNoParameters(token);
-            }
+                _currentTokens = tokens;
+                _currentTokenIndex = 0;
 
-            return commandHandler(this);
+                string elementName = ReadToken();
+                Func<MetafileReader, Command> commandHandler;
+                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out commandHandler))
+                    commandHandler = r => UnsupportedCommand(elementName);
+
+                return commandHandler(this);
+            }
+            finally
+            {
+                _currentTokens = null;
+            }
         }
 
         private Command UnsupportedCommand(string elementName)
         {
-            var rawParameters = new StringBuilder();
-
-            TokenState state;
-            do
-            {
-                string token;
-                state = ReadToken(out token);
-
-                rawParameters.Append(token).Append(' ');
-            } while (state == TokenState.EndOfToken);
-
-            return new UnsupportedCommand(elementName, rawParameters.ToString().Trim());
-        }
-        private Command UnsupportedCommandNoParameters(string elementName)
-        {
-            return new UnsupportedCommand(elementName, null);
+            return new UnsupportedCommand(elementName, string.Join(" ", _currentTokens.Skip(1)));
         }
 
         private static Command ReadVdcType(MetafileReader reader)
@@ -250,9 +256,9 @@ namespace CgmInfo.TextEncoding
 
         private string ReadToken()
         {
-            string token;
-            ReadToken(out token);
-            return token;
+            if (_currentTokens == null || _currentTokenIndex >= _currentTokens.Count)
+                return null;
+            return _currentTokens[_currentTokenIndex++];
         }
 
         /// <summary>
@@ -262,16 +268,9 @@ namespace CgmInfo.TextEncoding
         /// <returns>List of tokens, encoded as string</returns>
         internal IEnumerable<string> ReadToEndOfElement()
         {
-            string token;
-            TokenState state;
-            var ret = new List<string>();
-            do
-            {
-                state = ReadToken(out token);
-                ret.Add(token);
-            } while (state == TokenState.EndOfToken);
-
-            return ret;
+            var result = _currentTokens.Skip(_currentTokenIndex);
+            _currentTokenIndex = _currentTokens.Count;
+            return result;
         }
         internal string ReadEnum()
         {
@@ -296,7 +295,7 @@ namespace CgmInfo.TextEncoding
             {
                 int num;
                 if (!int.TryParse(match.Groups["digits"].Value, out num))
-                    throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                    throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at command position {1}", number, _commandPosition));
                 if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
                     num = -num;
                 return num;
@@ -307,7 +306,7 @@ namespace CgmInfo.TextEncoding
             {
                 int radix;
                 if (!int.TryParse(match.Groups["radix"].Value, out radix))
-                    throw new FormatException(string.Format("Invalid Based Integer radix '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                    throw new FormatException(string.Format("Invalid Based Integer radix '{0}' at command position {1}", number, _commandPosition));
                 int num = 0;
                 string digits = match.Groups["digits"].Value.ToUpperInvariant();
                 for (int i = 0; i < digits.Length; i++)
@@ -315,7 +314,7 @@ namespace CgmInfo.TextEncoding
                     int charValue = ExtendedDigits.IndexOf(digits[i]);
                     if (charValue < 0 || charValue >= radix)
                         throw new ArgumentOutOfRangeException("BasedInteger", digits[charValue],
-                            string.Format("Invalid Based Integer digits '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                            string.Format("Invalid Based Integer digits '{0}' at command position {1}", number, _commandPosition));
 
                     num = num * radix + charValue;
                 }
@@ -324,7 +323,7 @@ namespace CgmInfo.TextEncoding
                 return num;
             }
 
-            throw new FormatException(string.Format("Unsupported Integer Format '{0}' at position {1}", number, _fileStream.Position - number.Length));
+            throw new FormatException(string.Format("Unsupported Integer Format '{0}' at command position {1}", number, _commandPosition));
         }
         // according to spec, explicit point must have either 1 digit integer or 1 digit fraction. lets hope we can get away with that...[ISO/IEC 8632-4 6.3.2]
         private static readonly Regex ExplicitPointNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)\.(?<fraction>[0-9]*)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
@@ -335,7 +334,7 @@ namespace CgmInfo.TextEncoding
 
             // all 3 formats can be parsed by double.Parse, so simply throw if the number itself doesn't match either.
             if (!ExplicitPointNumber.IsMatch(number) && !ScaledRealNumber.IsMatch(number) && !DecimalInteger.IsMatch(number))
-                throw new FormatException(string.Format("Invalid Real number '{0}' at position {1}", number, _fileStream.Position - number.Length));
+                throw new FormatException(string.Format("Invalid Real number '{0}' at command position {1}", number, _commandPosition));
 
             return double.Parse(number, CultureInfo.GetCultureInfo("en"));
         }
@@ -432,26 +431,18 @@ namespace CgmInfo.TextEncoding
             return ReadInteger();
         }
 
-        private TokenState _lastState;
         internal bool AtEndOfElement
         {
-            // consider EOF also as EOE
-            get { return _lastState != TokenState.EndOfToken; }
+            get { return _currentTokens == null || _currentTokenIndex >= _currentTokens.Count; }
         }
-        private TokenState ReadToken(out string token)
-        {
-            var state = DoReadToken(out token);
-            _lastState = state;
-            return state;
-        }
-        private TokenState DoReadToken(out string token)
+        private static TokenState ReadToken(Stream stream, out string token)
         {
             var sb = new StringBuilder();
             try
             {
-                while (_fileStream.Position < _fileStream.Length)
+                while (stream.Position < stream.Length)
                 {
-                    char c = (char)_fileStream.ReadByte();
+                    char c = (char)stream.ReadByte();
                     switch (c)
                     {
                         // null characters; skip them [ISO/IEC 8632-4 6.1]
@@ -488,16 +479,16 @@ namespace CgmInfo.TextEncoding
                             char stringDelimiter = c;
                             do
                             {
-                                c = (char)_fileStream.ReadByte();
+                                c = (char)stream.ReadByte();
 
                                 // in case the delimiter appears:
                                 // either end of string, or double the delimiter to include a literal one
                                 if (c == stringDelimiter)
                                 {
-                                    if (_fileStream.Position >= _fileStream.Length)
+                                    if (stream.Position >= stream.Length)
                                         return TokenState.EndOfFile;
 
-                                    char nextChar = (char)_fileStream.ReadByte();
+                                    char nextChar = (char)stream.ReadByte();
                                     if (nextChar == stringDelimiter)
                                     {
                                         // literal delimiter; append it once
@@ -506,7 +497,7 @@ namespace CgmInfo.TextEncoding
                                     else
                                     {
                                         // end of string; reset back by the one character read ahead
-                                        _fileStream.Seek(-1, SeekOrigin.Current);
+                                        stream.Seek(-1, SeekOrigin.Current);
                                         break;
                                     }
                                 }
@@ -516,7 +507,7 @@ namespace CgmInfo.TextEncoding
                                     sb.Append(c);
                                 }
 
-                                if (_fileStream.Position >= _fileStream.Length)
+                                if (stream.Position >= stream.Length)
                                     return TokenState.EndOfFile;
                             } while (c != stringDelimiter);
 
@@ -529,8 +520,8 @@ namespace CgmInfo.TextEncoding
                         case '%':
                             do
                             {
-                                c = (char)_fileStream.ReadByte();
-                                if (_fileStream.Position >= _fileStream.Length)
+                                c = (char)stream.ReadByte();
+                                if (stream.Position >= stream.Length)
                                     return TokenState.EndOfFile;
                             } while (c != '%');
                             // Comments may be included any place that a separator may be used, and are equivalent to a <SOFTSEP>; they

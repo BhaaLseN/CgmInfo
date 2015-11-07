@@ -517,6 +517,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Color Table: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
         }
+        public void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, PrintContext parameter)
+        {
+            parameter.WriteLine("Aspect Source Flags: {0} entries", aspectSourceFlags.Values.Count);
+            parameter.BeginLevel();
+            foreach (var kvp in aspectSourceFlags.Values)
+                parameter.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
+            parameter.EndLevel();
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

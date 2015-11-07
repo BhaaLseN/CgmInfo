@@ -693,6 +693,11 @@ namespace CgmInfoGui.Traversal
             var colorTableNode = parameter.AddNode("COLOUR TABLE: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
             colorTableNode.Nodes.AddRange(colorTable.Colors.Select((c, i) => new SimpleNode(string.Format("{0}: {1}", colorTable.StartIndex + i, c))));
         }
+        public void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, MetafileContext parameter)
+        {
+            var asfNode = parameter.AddNode("ASPECT SOURCE FLAGS [{0} entries]", aspectSourceFlags.Values.Count);
+            asfNode.Nodes.AddRange(aspectSourceFlags.Values.Select(kvp => new SimpleNode(string.Format("{0}: {1}", kvp.Key, kvp.Value))));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -317,5 +317,37 @@ namespace CgmInfo.BinaryEncoding
                 colors.Add(reader.ReadDirectColor());
             return new ColorTable(startIndex, colors.ToArray());
         }
+
+        public static AspectSourceFlags AspectSourceFlags(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // ASPECT SOURCE FLAGS: has up to 18 parameter-pairs, corresponding to each attribute that may be
+            // bundled; each parameter-pair contains the ASF type and the ASF value:
+            // (enumerated) ASF type; valid values are
+            //      0 line type ASF
+            //      1 line width ASF
+            //      2 line colour ASF
+            //      3 marker type ASF
+            //      4 markersizeASF
+            //      5 marker colour ASF
+            //      6 text font index ASF
+            //      7 text precision ASF
+            //      8 character expansion factor ASF
+            //      9 character spacing ASF
+            //      10 text colour ASF
+            //      11 interior style ASF
+            //      12 fill colour ASF
+            //      13 hatch index ASF
+            //      14 pattern index ASF
+            //      15 edge type ASF
+            //      16 edge width ASF
+            //      17 edge colour ASF
+            // (enumerated) ASF value; valid values are
+            //      0 individual
+            //      1 bundled
+            var asf = new Dictionary<AspectSourceFlagsType, AspectSourceFlagsValue>();
+            while (reader.HasMoreData(2))
+                asf[reader.ReadEnum<AspectSourceFlagsType>()] = reader.ReadEnum<AspectSourceFlagsValue>();
+            return new AspectSourceFlags(asf);
+        }
     }
 }

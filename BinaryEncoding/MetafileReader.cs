@@ -618,6 +618,9 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.UpdateColorTable(colorTable);
                     result = colorTable;
                     break;
+                case 35: // ASPECT SOURCE FLAGS
+                    result = AttributeReader.AspectSourceFlags(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

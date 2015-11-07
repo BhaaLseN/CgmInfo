@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Utilities;
@@ -199,6 +201,14 @@ namespace CgmInfo.TextEncoding
             return new ColorTable(startIndex, colors.ToArray());
         }
 
+        public static AspectSourceFlags AspectSourceFlags(MetafileReader reader)
+        {
+            var asf = new Dictionary<AspectSourceFlagsType, AspectSourceFlagsValue>();
+            while (reader.HasMoreData(2))
+                SetASFValue(asf, reader.ReadEnum(), reader.ReadEnum());
+            return new AspectSourceFlags(asf);
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities
@@ -268,6 +278,85 @@ namespace CgmInfo.TextEncoding
             else if (token == "INTERP")
                 return InteriorStyleType.Interpolated;
             return InteriorStyleType.Hollow;
+        }
+
+        private static readonly Dictionary<string, AspectSourceFlagsType[]> ASFMapping = new Dictionary<string, AspectSourceFlagsType[]>
+        {
+            // single values
+            { "LINETYPE", new[] { AspectSourceFlagsType.LineType } },
+            { "LINEWIDTH", new[] { AspectSourceFlagsType.LineWidth } },
+            { "LINECOLR", new[] { AspectSourceFlagsType.LineColor } },
+            { "MARKERTYPE", new[] { AspectSourceFlagsType.MarkerType } },
+            { "MARKERSIZE", new[] { AspectSourceFlagsType.MarkerSize } },
+            { "MARKERCOLR", new[] { AspectSourceFlagsType.MarkerColor } },
+            { "TEXTFONTINDEX", new[] { AspectSourceFlagsType.TextFontIndex } },
+            { "TEXTPREC", new[] { AspectSourceFlagsType.TextPrecision } },
+            { "CHAREXPAN", new[] { AspectSourceFlagsType.CharacterExpansionFactor } },
+            { "CHARSPACE", new[] { AspectSourceFlagsType.CharacterSpacing } },
+            { "TEXTCOLR", new[] { AspectSourceFlagsType.TextColor } },
+            { "INTSTYLE", new[] { AspectSourceFlagsType.InteriorStyle } },
+            { "FILLCOLR", new[] { AspectSourceFlagsType.FillColor } },
+            { "HATCHINDEX", new[] { AspectSourceFlagsType.HatchIndex } },
+            { "PATINDEX", new[] { AspectSourceFlagsType.PatternIndex } },
+            { "EDGETYPE", new[] { AspectSourceFlagsType.EdgeType } },
+            { "EDGEWIDTH", new[] { AspectSourceFlagsType.EdgeWidth } },
+            { "EDGECOLR", new[] { AspectSourceFlagsType.EdgeColor } },
+
+            // pseudo ASF classes; they set a range of ASF at the same time
+            // NOTE: The pseudo-ASFs are a shorthand convenience for setting a number of ASFs at once.
+
+            // ALL: set all ASFs as indicated.
+            { "ALL", Enum.GetValues(typeof(AspectSourceFlagsType)).Cast<AspectSourceFlagsType>().ToArray() },
+
+            // ALLLINE: set LINETYPE, LINEWIDTH, and LINECOLR ASFs as indicated.
+            { "ALLLINE", new[]
+                {
+                    AspectSourceFlagsType.LineType, AspectSourceFlagsType.LineWidth, AspectSourceFlagsType.LineColor,
+                }
+            },
+
+            // ALLMARKER: set MARKERTYPE, MARKERSIZE, and MARKERCOLR ASFs as indicated.
+            { "ALLMARKER", new[]
+                {
+                    AspectSourceFlagsType.MarkerType, AspectSourceFlagsType.MarkerSize, AspectSourceFlagsType.MarkerColor,
+                }
+            },
+
+            // ALLTEXT: set TEXTFONTINDEX, TEXTPREC, CHAREXPAN, CHARSPACE, and TEXTCOLR ASFs as indicated.
+            { "ALLTEXT", new[]
+                {
+                    AspectSourceFlagsType.TextFontIndex, AspectSourceFlagsType.TextPrecision, AspectSourceFlagsType.CharacterExpansionFactor,
+                    AspectSourceFlagsType.CharacterSpacing, AspectSourceFlagsType.TextColor,
+                }
+            },
+
+            // ALLFILL: set INTSTYLE, FILLCOLR, HATCHINDEX, and PATINDEX ASFs as indicated.
+            { "ALLFILL", new[]
+                {
+                    AspectSourceFlagsType.InteriorStyle, AspectSourceFlagsType.FillColor, AspectSourceFlagsType.HatchIndex,
+                    AspectSourceFlagsType.PatternIndex,
+                }
+            },
+
+            // ALLEDGE: set EDGETYPE, EDGEWIDTH, and EDGECOLR as indicated.
+            { "ALLEDG", new[]
+                {
+                    AspectSourceFlagsType.EdgeType, AspectSourceFlagsType.EdgeWidth, AspectSourceFlagsType.EdgeColor,
+                }
+            },
+        };
+        private static void SetASFValue(Dictionary<AspectSourceFlagsType, AspectSourceFlagsValue> asf, string typeToken, string valueToken)
+        {
+            AspectSourceFlagsType[] asfTypes;
+            if (ASFMapping.TryGetValue(typeToken.ToUpperInvariant(), out asfTypes))
+            {
+                AspectSourceFlagsValue asfValue = valueToken.ToUpperInvariant() == "BUNDLED"
+                    ? AspectSourceFlagsValue.Bundled
+                    : AspectSourceFlagsValue.Individual;
+
+                foreach (AspectSourceFlagsType asfType in asfTypes)
+                    asf[asfType] = asfValue;
+            }
         }
     }
 }

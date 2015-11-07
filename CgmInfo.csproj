@@ -48,6 +48,7 @@
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
     <Compile Include="Commands\Attributes\AlternateCharacterSetIndex.cs" />
+    <Compile Include="Commands\Attributes\AspectSourceFlags.cs" />
     <Compile Include="Commands\Attributes\CharacterExpansionFactor.cs" />
     <Compile Include="Commands\Attributes\CharacterHeight.cs" />
     <Compile Include="Commands\Attributes\CharacterOrientation.cs" />
@@ -96,6 +97,8 @@
     <Compile Include="Commands\Control\Transparency.cs" />
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
+    <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
+    <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />

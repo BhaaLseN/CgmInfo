@@ -66,6 +66,7 @@
     <Compile Include="Commands\Attributes\HatchIndex.cs" />
     <Compile Include="Commands\Attributes\InteriorStyle.cs" />
     <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\LineCap.cs" />
     <Compile Include="Commands\Attributes\LineColor.cs" />
     <Compile Include="Commands\Attributes\LineType.cs" />
     <Compile Include="Commands\Attributes\LineWidth.cs" />

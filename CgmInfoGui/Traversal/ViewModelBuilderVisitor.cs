@@ -702,6 +702,17 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("PICK IDENTIFIER: {0}", pickIdentifier.Identifier);
         }
+        public void AcceptAttributeLineCap(LineCap lineCap, MetafileContext parameter)
+        {
+            var lineCapNode = parameter.AddNode("LINE CAP: line {0} ({1}), dash {2} ({3})",
+                lineCap.LineCapIndicator, lineCap.LineCapName,
+                lineCap.DashCapIndicator, lineCap.DashCapName);
+            lineCapNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Line Cap Indicator: {0} ({1})", lineCap.LineCapIndicator, lineCap.LineCapName)),
+                new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", lineCap.DashCapIndicator, lineCap.DashCapName)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

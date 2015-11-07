@@ -355,5 +355,22 @@ namespace CgmInfo.BinaryEncoding
             // P1: (name) pick identifier
             return new PickIdentifier(reader.ReadName());
         }
+
+        public static LineCap LineCap(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) line cap indicator: the following values are standardized:
+            //      1 unspecified
+            //      2 butt
+            //      3 round
+            //      4 projecting square
+            //      5 triangle
+            //      >5 reserved for registered values
+            // P2: (index) dash cap indicator: valid values are
+            //      1 unspecified
+            //      2 butt
+            //      3 match
+            //      >3 reserved for registered values
+            return new LineCap(reader.ReadIndex(), reader.ReadIndex());
+        }
     }
 }

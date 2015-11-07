@@ -529,6 +529,12 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Pick Identifier: {0}", pickIdentifier.Identifier);
         }
+        public void AcceptAttributeLineCap(LineCap lineCap, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Cap: line {0} ({1}), dash {2} ({3})",
+                lineCap.LineCapIndicator, lineCap.LineCapName,
+                lineCap.DashCapIndicator, lineCap.DashCapName);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

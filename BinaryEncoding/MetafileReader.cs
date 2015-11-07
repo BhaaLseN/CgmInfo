@@ -624,6 +624,9 @@ namespace CgmInfo.BinaryEncoding
                 case 36: // PICK IDENTIFIER
                     result = AttributeReader.PickIdentifier(this, commandHeader);
                     break;
+                case 37: // LINE CAP
+                    result = AttributeReader.LineCap(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

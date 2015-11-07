@@ -144,6 +144,7 @@ namespace CgmInfo.TextEncoding
             { "COLRTABLE", ReadColorTable },
             { "ASF", AttributeReader.AspectSourceFlags },
             { "PICKID", AttributeReader.PickIdentifier },
+            { "LINECAP", AttributeReader.LineCap },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

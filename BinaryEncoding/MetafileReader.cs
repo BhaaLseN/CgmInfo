@@ -36,9 +36,8 @@ namespace CgmInfo.BinaryEncoding
             // check whether the first two bytes are 0/1 (BEGIN METAFILE)
             return elementClass == 0 && elementId == 1;
         }
-        protected override Command ReadCommand()
+        protected override Command ReadCommand(Stream stream)
         {
-            Stream stream = _fileStream;
             // stop at EOF; or when we cannot at least read another command header
             if (stream.Position + 2 > stream.Length)
                 return null;

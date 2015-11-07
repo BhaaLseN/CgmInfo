@@ -117,18 +117,18 @@ namespace CgmInfo.TextEncoding
         private int _currentTokenIndex;
         private List<string> _currentTokens;
 
-        protected override Command ReadCommand()
+        protected override Command ReadCommand(Stream stream)
         {
             // remember the current position for error feedback.
             // this always signifies the beginning of the command; not the token.
-            _commandPosition = _fileStream.Position;
+            _commandPosition = stream.Position;
             // read all tokens until end of either command or file
             TokenState state;
             var tokens = new List<string>();
             do
             {
                 string token;
-                state = ReadToken(_fileStream, out token);
+                state = ReadToken(stream, out token);
                 tokens.Add(token);
             } while (state == TokenState.EndOfToken);
 

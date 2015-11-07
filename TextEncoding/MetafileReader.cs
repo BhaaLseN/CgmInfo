@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
 using BaseMetafileReader = CgmInfo.MetafileReader;
 
@@ -51,6 +52,8 @@ namespace CgmInfo.TextEncoding
             { "MAXCOLRINDEX", MetafileDescriptorReader.MaximumColorIndex },
             { "COLRVALUEEXT", MetafileDescriptorReader.ColorValueExtent },
             { "MFELEMLIST", MetafileDescriptorReader.MetafileElementsList },
+            { "BEGMFDEFAULTS", BeginMetafileDefaultsReplacement },
+            { "ENDMFDEFAULTS", EndMetafileDefaultsReplacement },
             { "FONTLIST", MetafileDescriptorReader.FontList },
             { "CHARSETLIST", MetafileDescriptorReader.CharacterSetList },
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
@@ -156,6 +159,25 @@ namespace CgmInfo.TextEncoding
         private Command UnsupportedCommand(string elementName)
         {
             return new UnsupportedCommand(elementName, string.Join(" ", _currentTokens.Skip(1)));
+        }
+
+        private static Command BeginMetafileDefaultsReplacement(MetafileReader reader)
+        {
+            var commands = new List<Command>();
+            while (true)
+            {
+                var command = reader.Read();
+                if (command == null)
+                    break;
+                commands.Add(command);
+            }
+            return new MetafileDefaultsReplacement(commands.ToArray());
+        }
+        private static Command EndMetafileDefaultsReplacement(MetafileReader reader)
+        {
+            // null signals end-of-file, but since ENDMFDEFAULTS must have a corresponding BEDMFDEFAULTS,
+            // we'll just use it to end the loop in there in the same manner.
+            return null;
         }
 
         private static Command ReadVdcType(MetafileReader reader)

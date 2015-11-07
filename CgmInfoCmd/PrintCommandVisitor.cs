@@ -165,6 +165,14 @@ namespace CgmInfoCmd
                 parameter.WriteLine(metafileElement);
             parameter.EndLevel();
         }
+        public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, PrintContext parameter)
+        {
+            parameter.WriteLine("Metafile Defaults Replacement: {0} entries", metafileDefaultsReplacement.Commands.Count());
+            parameter.BeginLevel();
+            foreach (var command in metafileDefaultsReplacement.Commands)
+                command.Accept(this, parameter);
+            parameter.EndLevel();
+        }
         public void AcceptMetafileDescriptorFontList(FontList fontList, PrintContext parameter)
         {
             parameter.WriteLine("Font List: {0} entries", fontList.Fonts.Count());

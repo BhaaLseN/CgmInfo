@@ -203,6 +203,15 @@ namespace CgmInfoGui.Traversal
             metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry)));
         }
 
+        public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, MetafileContext parameter)
+        {
+            var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE DEFAULTS REPLACEMENT [{0} entries]", metafileDefaultsReplacement.Commands.Count());
+            parameter.BeginLevel(metafileElementsListNode, true);
+            foreach (var command in metafileDefaultsReplacement.Commands)
+                command.Accept(this, parameter);
+            parameter.EndLevel();
+        }
+
         public void AcceptMetafileDescriptorFontList(FontList fontList, MetafileContext parameter)
         {
             parameter.AddDescriptorNode(new FontListViewModel(fontList));

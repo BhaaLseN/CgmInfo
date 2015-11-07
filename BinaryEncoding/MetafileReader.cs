@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
 using BaseMetafileReader = CgmInfo.MetafileReader;
 
@@ -298,6 +300,9 @@ namespace CgmInfo.BinaryEncoding
                 case 11: // METAFILE ELEMENTS LIST
                     result = MetafileDescriptorReader.MetafileElementsList(this, commandHeader);
                     break;
+                case 12: // METAFILE DEFAULTS REPLACEMENT
+                    result = ReadMetafileDefaultsReplacement(commandHeader);
+                    break;
                 case 13: // FONT LIST
                     result = MetafileDescriptorReader.FontList(this, commandHeader);
                     break;
@@ -320,7 +325,6 @@ namespace CgmInfo.BinaryEncoding
                     Descriptor.ColorModel = colorModel.ColorModel;
                     result = colorModel;
                     break;
-                case 12: // METAFILE DEFAULTS REPLACEMENT
                 case 18: // SEGMENT PRIORITY EXTENT
                 case 20: // COLOUR CALIBRATION
                 case 21: // FONT PROPERTIES
@@ -516,6 +520,27 @@ namespace CgmInfo.BinaryEncoding
                     break;
             }
             return result;
+        }
+
+        private MetafileDefaultsReplacement ReadMetafileDefaultsReplacement(CommandHeader commandHeader)
+        {
+            // this is a memory stream set by ReadCommandHeader, which contains 1..n commands itself.
+            // however, _reader is disposed after every run, so we need to keep this buffer around another way.
+            using (var replacementsStream = new MemoryStream())
+            {
+                _reader.BaseStream.CopyTo(replacementsStream);
+                replacementsStream.Position = 0;
+
+                var commands = new List<Command>();
+                while (true)
+                {
+                    var command = ReadCommand(replacementsStream);
+                    if (command == null)
+                        break;
+                    commands.Add(command);
+                }
+                return new MetafileDefaultsReplacement(commands.ToArray());
+            }
         }
 
         internal bool HasMoreData()

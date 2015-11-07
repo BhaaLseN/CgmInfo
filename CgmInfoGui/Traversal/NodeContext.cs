@@ -42,7 +42,12 @@ namespace CgmInfoGui.Traversal
         }
         public void BeginLevel(NodeBase levelNode)
         {
-            AddNode(levelNode);
+            BeginLevel(levelNode, false);
+        }
+        public void BeginLevel(NodeBase levelNode, bool doNotAddTheNode)
+        {
+            if (!doNotAddTheNode)
+                AddNode(levelNode);
             if (_currentLevel != null)
                 _levelStack.Push(_currentLevel);
             _currentLevel = levelNode;

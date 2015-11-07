@@ -123,12 +123,18 @@ namespace CgmInfo.TextEncoding
 
         public static MetafileElementsList MetafileElementsList(MetafileReader reader)
         {
-            return new MetafileElementsList(reader.ReadToEndOfElement());
+            var elements = new List<string>();
+            while (reader.HasMoreData())
+                elements.Add(reader.ReadString());
+            return new MetafileElementsList(elements);
         }
 
         public static FontList FontList(MetafileReader reader)
         {
-            return new FontList(reader.ReadToEndOfElement());
+            var fonts = new List<string>();
+            while (reader.HasMoreData())
+                fonts.Add(reader.ReadString());
+            return new FontList(fonts);
         }
 
         public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader)
@@ -140,18 +146,9 @@ namespace CgmInfo.TextEncoding
 
         public static CharacterSetList CharacterSetList(MetafileReader reader)
         {
-            var tokens = reader.ReadToEndOfElement();
-            var pairs = tokens
-                .Select((t, i) => new { Token = t, Index = i })
-                .GroupBy(a => a.Index / 2)
-                .Where(g => g.Count() == 2) // drop half entries; which shouldn't be in there anyways
-                .Select(g => new { CharacterSetType = g.First().Token, Tail = g.Skip(1).First().Token });
-
             var entries = new List<CharacterSetListEntry>();
-            foreach (var pair in pairs)
-            {
-                entries.Add(new CharacterSetListEntry(ParseCharacterSetType(pair.CharacterSetType), pair.Tail));
-            }
+            while (reader.HasMoreData(2))
+                entries.Add(new CharacterSetListEntry(ParseCharacterSetType(reader.ReadEnum()), reader.ReadString()));
             return new CharacterSetList(entries);
         }
         private static CharacterSetType ParseCharacterSetType(string token)

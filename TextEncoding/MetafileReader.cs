@@ -261,17 +261,6 @@ namespace CgmInfo.TextEncoding
             return _currentTokens[_currentTokenIndex++];
         }
 
-        /// <summary>
-        /// Reads tokens until the end of the current element (or end of file)
-        /// and returns a list of read tokens.
-        /// </summary>
-        /// <returns>List of tokens, encoded as string</returns>
-        internal IEnumerable<string> ReadToEndOfElement()
-        {
-            var result = _currentTokens.Skip(_currentTokenIndex);
-            _currentTokenIndex = _currentTokens.Count;
-            return result;
-        }
         internal string ReadEnum()
         {
             return ReadToken();

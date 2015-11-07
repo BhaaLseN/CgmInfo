@@ -453,17 +453,18 @@ namespace CgmInfo.TextEncoding
                         case '\r':
                         case '\n':
                         case '\t':
+                        // point values might be enclosed in parentheses for readability [ISO/IEC 8632-4 6.3.5]
+                        // TODO: spec says there must be exactly two numbers inside the parentheses, or the file is non-conforming.
+                        //       this isn't validated at this point, and would require rewriting ReadPoint (and possibly others).
+                        // instead, we treat them as soft separators (ie.: return content if there is any, but keep parsing if there is not)
+                        case '(':
+                        case ')':
                             if (sb.Length > 0)
                                 return TokenState.EndOfToken;
                             break;
 
                         // comma counts as a hard separator [ISO/IEC 8632-4 6.2.2]
                         case ',':
-                        // point values might be enclosed in parentheses for readability [ISO/IEC 8632-4 6.3.5]
-                        // TODO: spec says there must be exactly two numbers inside the parentheses, or the file is non-conforming.
-                        //       this isn't validated at this point, and would require rewriting ReadPoint (and possibly others).
-                        case '(':
-                        case ')':
                             return TokenState.EndOfToken;
 
                         // strings; fully read and return them as they are [ISO/IEC 8632-4 6.3.3]

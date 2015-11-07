@@ -38,12 +38,13 @@ namespace CgmInfo.BinaryEncoding
         }
         protected override Command ReadCommand()
         {
+            Stream stream = _fileStream;
             // stop at EOF; or when we cannot at least read another command header
-            if (_fileStream.Position + 2 > _fileStream.Length)
+            if (stream.Position + 2 > stream.Length)
                 return null;
 
             Command result;
-            CommandHeader commandHeader = ReadCommandHeader();
+            CommandHeader commandHeader = ReadCommandHeader(stream);
             // special case: we might encounter a no-op after END METAFILE, which leads into EOF.
             // ReadCommandHeader will return null in that case, and we should simply pass this on here.
             if (commandHeader == null)
@@ -88,10 +89,10 @@ namespace CgmInfo.BinaryEncoding
                 if (result.ElementId == 2)
                 {
                     // the Metafile should end at END METAFILE and EOF; +/- a padding byte
-                    if (_fileStream.Position < _fileStream.Length - 2)
+                    if (stream.Position < stream.Length - 2)
                         throw new FormatException(string.Format(
                             "Found Element Id 2 (END METAFILE), but got {0} bytes left to read. Multiple Metafiles within a single file are not supported.",
-                            _fileStream.Length - _fileStream.Position - 1));
+                            stream.Length - stream.Position - 1));
                 }
                 else if (result.ElementId != 1)
                     throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
@@ -100,13 +101,13 @@ namespace CgmInfo.BinaryEncoding
             return result;
         }
 
-        private CommandHeader ReadCommandHeader()
+        private CommandHeader ReadCommandHeader(Stream stream)
         {
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
-            if (_fileStream.Position % 2 == 1)
-                _fileStream.Seek(1, SeekOrigin.Current);
+            if (stream.Position % 2 == 1)
+                stream.Seek(1, SeekOrigin.Current);
 
-            ushort commandHeader = _fileStream.ReadWord();
+            ushort commandHeader = stream.ReadWord();
             int elementClass = (commandHeader >> 12) & 0xF;
             int elementId = (commandHeader >> 5) & 0x7F;
             int parameterListLength = commandHeader & 0x1F;
@@ -123,7 +124,7 @@ namespace CgmInfo.BinaryEncoding
                 do
                 {
                     // first comes the length; 2 octets
-                    ushort longFormCommandHeader = _fileStream.ReadWord();
+                    ushort longFormCommandHeader = stream.ReadWord();
                     // top-most bit indicates whether more partitions follow or not
                     int partitionFlag = (longFormCommandHeader >> 15) & 0x1;
                     isLastPartition = partitionFlag == 0;
@@ -133,7 +134,7 @@ namespace CgmInfo.BinaryEncoding
 
                     // directly after the length, data follows
                     byte[] buffer = new byte[partitionLength];
-                    _fileStream.Read(buffer, 0, buffer.Length);
+                    stream.Read(buffer, 0, buffer.Length);
                     readBuffer.Write(buffer, 0, buffer.Length);
 
                 } while (!isLastPartition);
@@ -142,7 +143,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 // short command form; buffer the contents directly
                 byte[] buffer = new byte[parameterListLength];
-                _fileStream.Read(buffer, 0, buffer.Length);
+                stream.Read(buffer, 0, buffer.Length);
                 readBuffer.Write(buffer, 0, buffer.Length);
             }
 
@@ -157,9 +158,9 @@ namespace CgmInfo.BinaryEncoding
             {
                 // no need to seek here anymore; the whole no-op has been read into the temporary buffer already anyways
                 // however, if we reached EOF, we simply caught a padding no-op...lets say we reached EOF right away, and be done.
-                if (_fileStream.Position >= _fileStream.Length)
+                if (stream.Position >= stream.Length)
                     return null;
-                return ReadCommandHeader();
+                return ReadCommandHeader(stream);
             }
 
             return new CommandHeader(elementClass, elementId, parameterListLength);

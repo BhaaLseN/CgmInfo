@@ -485,8 +485,9 @@ namespace CgmInfo.TextEncoding
                                     char nextChar = (char)stream.ReadByte();
                                     if (nextChar == stringDelimiter)
                                     {
-                                        // literal delimiter; append it once
+                                        // literal delimiter; append it once, then reset the character to keep the loop going
                                         sb.Append(c);
+                                        c = '\x00';
                                     }
                                     else
                                     {

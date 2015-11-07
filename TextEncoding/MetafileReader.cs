@@ -431,9 +431,13 @@ namespace CgmInfo.TextEncoding
             return ReadInteger();
         }
 
-        internal bool AtEndOfElement
+        internal bool HasMoreData()
         {
-            get { return _currentTokens == null || _currentTokenIndex >= _currentTokens.Count; }
+            return HasMoreData(1);
+        }
+        internal bool HasMoreData(int minimumLeft)
+        {
+            return _currentTokens == null || _currentTokenIndex + minimumLeft <= _currentTokens.Count;
         }
         private static TokenState ReadToken(Stream stream, out string token)
         {

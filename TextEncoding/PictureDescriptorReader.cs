@@ -66,7 +66,7 @@ namespace CgmInfo.TextEncoding
             int lineType = reader.ReadIndex();
             double dashCycleRepeatLength = reader.ReadSizeSpecification(reader.Descriptor.LineWidthSpecificationMode);
             var dashElements = new List<int>();
-            while (!reader.AtEndOfElement)
+            while (reader.HasMoreData())
                 dashElements.Add(reader.ReadInteger());
             return new LineAndEdgeTypeDefinition(lineType, dashCycleRepeatLength, dashElements.ToArray());
         }

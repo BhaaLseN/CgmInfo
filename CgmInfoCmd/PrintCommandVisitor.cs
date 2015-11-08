@@ -539,6 +539,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Join: {0} ({1})", lineJoin.Index, lineJoin.Name);
         }
+        public void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type Continuation: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

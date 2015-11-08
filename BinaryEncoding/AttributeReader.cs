@@ -383,5 +383,16 @@ namespace CgmInfo.BinaryEncoding
             //      >4 reserved for registered values
             return new LineJoin(reader.ReadIndex());
         }
+
+        public static LineTypeContinuation LineTypeContinuation(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) continuation mode: the following values are standardized:
+            //      1 unspecified
+            //      2 continue
+            //      3 restart
+            //      4 adaptive continue
+            //      >4 reserved for registered values
+            return new LineTypeContinuation(reader.ReadIndex());
+        }
     }
 }

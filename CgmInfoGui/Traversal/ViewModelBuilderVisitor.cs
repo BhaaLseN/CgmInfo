@@ -717,6 +717,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE JOIN: {0} ({1})", lineJoin.Index, lineJoin.Name);
         }
+        public void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE CONTINUATION: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

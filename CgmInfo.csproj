@@ -70,6 +70,7 @@
     <Compile Include="Commands\Attributes\LineColor.cs" />
     <Compile Include="Commands\Attributes\LineJoin.cs" />
     <Compile Include="Commands\Attributes\LineType.cs" />
+    <Compile Include="Commands\Attributes\LineTypeContinuation.cs" />
     <Compile Include="Commands\Attributes\LineWidth.cs" />
     <Compile Include="Commands\Attributes\MarkerBundleIndex.cs" />
     <Compile Include="Commands\Attributes\MarkerColor.cs" />

@@ -630,6 +630,9 @@ namespace CgmInfo.BinaryEncoding
                 case 38: // LINE JOIN
                     result = AttributeReader.LineJoin(this, commandHeader);
                     break;
+                case 39: // LINE TYPE CONTINUATION
+                    result = AttributeReader.LineTypeContinuation(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

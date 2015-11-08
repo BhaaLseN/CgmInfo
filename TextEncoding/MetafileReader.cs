@@ -146,6 +146,7 @@ namespace CgmInfo.TextEncoding
             { "PICKID", AttributeReader.PickIdentifier },
             { "LINECAP", AttributeReader.LineCap },
             { "LINEJOIN", AttributeReader.LineJoin },
+            { "LINETYPECONT", AttributeReader.LineTypeContinuation },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

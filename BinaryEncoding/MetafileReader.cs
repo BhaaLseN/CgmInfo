@@ -69,10 +69,12 @@ namespace CgmInfo.BinaryEncoding
                 case 4: // graphical primitive
                     result = ReadGraphicalPrimitive(commandHeader);
                     break;
+                case 5: // attribute
+                    result = ReadAttribute(commandHeader);
+                    break;
                 case 9: // application structure descriptor
                     result = ReadApplicationStructureDescriptor(commandHeader);
                     break;
-                case 5: // attribute
                 case 6: // escape
                 case 7: // external
                 case 8: // segment control/segment attribute
@@ -506,6 +508,159 @@ namespace CgmInfo.BinaryEncoding
             return result;
         }
 
+        private Command ReadAttribute(CommandHeader commandHeader)
+        {
+            Command result;
+            // ISO/IEC 8632-3 8.11, Table 8
+            switch (commandHeader.ElementId)
+            {
+                case 1: // LINE BUNDLE INDEX
+                    result = AttributeReader.LineBundleIndex(this, commandHeader);
+                    break;
+                case 2: // LINE TYPE
+                    result = AttributeReader.LineType(this, commandHeader);
+                    break;
+                case 3: // LINE WIDTH
+                    result = AttributeReader.LineWidth(this, commandHeader);
+                    break;
+                case 4: // LINE COLOUR
+                    result = AttributeReader.LineColor(this, commandHeader);
+                    break;
+                case 5: // MARKER BUNDLE INDEX
+                    result = AttributeReader.MarkerBundleIndex(this, commandHeader);
+                    break;
+                case 6: // MARKER TYPE
+                    result = AttributeReader.MarkerType(this, commandHeader);
+                    break;
+                case 7: // MARKER SIZE
+                    result = AttributeReader.MarkerSize(this, commandHeader);
+                    break;
+                case 8: // MARKER COLOUR
+                    result = AttributeReader.MarkerColor(this, commandHeader);
+                    break;
+                case 9: // TEXT BUNDLE INDEX
+                    result = AttributeReader.TextBundleIndex(this, commandHeader);
+                    break;
+                case 10: // TEXT FONT INDEX
+                    result = AttributeReader.TextFontIndex(this, commandHeader);
+                    break;
+                case 11: // TEXT PRECISION
+                    result = AttributeReader.TextPrecision(this, commandHeader);
+                    break;
+                case 12: // CHARACTER EXPANSION FACTOR
+                    result = AttributeReader.CharacterExpansionFactor(this, commandHeader);
+                    break;
+                case 13: // CHARACTER SPACING
+                    result = AttributeReader.CharacterSpacing(this, commandHeader);
+                    break;
+                case 14: // TEXT COLOUR
+                    result = AttributeReader.TextColor(this, commandHeader);
+                    break;
+                case 15: // CHARACTER HEIGHT
+                    result = AttributeReader.CharacterHeight(this, commandHeader);
+                    break;
+                case 16: // CHARACTER ORIENTATION
+                    result = AttributeReader.CharacterOrientation(this, commandHeader);
+                    break;
+                case 17: // TEXT PATH
+                    result = AttributeReader.TextPath(this, commandHeader);
+                    break;
+                case 18: // TEXT ALIGNMENT
+                    result = AttributeReader.TextAlignment(this, commandHeader);
+                    break;
+                case 19: // CHARACTER SET INDEX
+                    result = AttributeReader.CharacterSetIndex(this, commandHeader);
+                    break;
+                case 20: // ALTERNATE CHARACTER SET INDEX
+                    result = AttributeReader.AlternateCharacterSetIndex(this, commandHeader);
+                    break;
+                case 21: // FILL BUNDLE INDEX
+                    result = AttributeReader.FillBundleIndex(this, commandHeader);
+                    break;
+                case 22: // INTERIOR STYLE
+                    result = AttributeReader.InteriorStyle(this, commandHeader);
+                    break;
+                case 23: // FILL COLOUR
+                    result = AttributeReader.FillColor(this, commandHeader);
+                    break;
+                case 24: // HATCH INDEX
+                    result = AttributeReader.HatchIndex(this, commandHeader);
+                    break;
+                case 25: // PATTERN INDEX
+                    result = AttributeReader.PatternIndex(this, commandHeader);
+                    break;
+                case 26: // EDGE BUNDLE INDEX
+                    result = AttributeReader.EdgeBundleIndex(this, commandHeader);
+                    break;
+                case 27: // EDGE TYPE
+                    result = AttributeReader.EdgeType(this, commandHeader);
+                    break;
+                case 28: // EDGE WIDTH
+                    result = AttributeReader.EdgeWidth(this, commandHeader);
+                    break;
+                case 29: // EDGE COLOUR
+                    result = AttributeReader.EdgeColor(this, commandHeader);
+                    break;
+                case 30: // EDGE VISIBILITY
+                    result = AttributeReader.EdgeVisibility(this, commandHeader);
+                    break;
+                case 31: // FILL REFERENCE POINT
+                    result = AttributeReader.FillReferencePoint(this, commandHeader);
+                    break;
+                case 32: // PATTERN TABLE
+                    result = AttributeReader.PatternTable(this, commandHeader);
+                    break;
+                case 33: // PATTERN SIZE
+                    result = AttributeReader.PatternSize(this, commandHeader);
+                    break;
+                case 34: // COLOUR TABLE
+                    var colorTable = AttributeReader.ColorTable(this, commandHeader);
+                    Descriptor.UpdateColorTable(colorTable);
+                    result = colorTable;
+                    break;
+                case 35: // ASPECT SOURCE FLAGS
+                    result = AttributeReader.AspectSourceFlags(this, commandHeader);
+                    break;
+                case 36: // PICK IDENTIFIER
+                    result = AttributeReader.PickIdentifier(this, commandHeader);
+                    break;
+                case 37: // LINE CAP
+                    result = AttributeReader.LineCap(this, commandHeader);
+                    break;
+                case 38: // LINE JOIN
+                    result = AttributeReader.LineJoin(this, commandHeader);
+                    break;
+                case 39: // LINE TYPE CONTINUATION
+                    result = AttributeReader.LineTypeContinuation(this, commandHeader);
+                    break;
+                case 40: // LINE TYPE INITIAL OFFSET
+                    result = AttributeReader.LineTypeInitialOffset(this, commandHeader);
+                    break;
+                case 42: // RESTRICTED TEXT TYPE
+                    result = AttributeReader.RestrictedTextType(this, commandHeader);
+                    break;
+                case 43: // INTERPOLATED INTERIOR
+                    result = AttributeReader.InterpolatedInterior(this, commandHeader);
+                    break;
+                case 44: // EDGE CAP
+                    result = AttributeReader.EdgeCap(this, commandHeader);
+                    break;
+                case 45: // EDGE JOIN
+                    result = AttributeReader.EdgeJoin(this, commandHeader);
+                    break;
+                case 46: // EDGE TYPE CONTINUATION
+                    result = AttributeReader.EdgeTypeContinuation(this, commandHeader);
+                    break;
+                case 47: // EDGE TYPE INITIAL OFFSET
+                    result = AttributeReader.EdgeTypeInitialOffset(this, commandHeader);
+                    break;
+                default:
+                    result = ReadUnsupportedElement(commandHeader);
+                    break;
+            }
+            return result;
+        }
+
         private Command ReadApplicationStructureDescriptor(CommandHeader commandHeader)
         {
             Command result;
@@ -633,6 +788,13 @@ namespace CgmInfo.BinaryEncoding
             double y = ReadViewportCoordinate();
             return new PointF((float)x, (float)y);
         }
+        internal MetafileColor ReadColor(int colorPrecision)
+        {
+            if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                return ReadDirectColor(colorPrecision);
+            else
+                return ReadIndexedColor(colorPrecision);
+        }
         internal MetafileColor ReadColor()
         {
             if (Descriptor.ColorSelectionMode == ColorModeType.Direct)
@@ -642,23 +804,42 @@ namespace CgmInfo.BinaryEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadInteger(Descriptor.ColorIndexPrecision / 8, true));
+            return ReadIndexedColor(Descriptor.ColorIndexPrecision / 8);
         }
+        internal MetafileColor ReadIndexedColor(int colorIndexPrecision)
+        {
+            int colorIndex = ReadColorIndex(colorIndexPrecision);
+            return new MetafileColorIndexed(colorIndex, Descriptor.GetIndexedColor(colorIndex));
+        }
+
+        internal int ReadColorIndex()
+        {
+            return ReadColorIndex(Descriptor.ColorIndexPrecision / 8);
+        }
+        internal int ReadColorIndex(int colorIndexPrecision)
+        {
+            return ReadInteger(colorIndexPrecision, true);
+        }
+
         internal MetafileColor ReadDirectColor()
+        {
+            return ReadDirectColor(Descriptor.ColorPrecision / 8);
+        }
+        internal MetafileColor ReadDirectColor(int colorDirectPrecision)
         {
             if (Descriptor.ColorModel == ColorModel.RGB)
             {
-                int r = ReadColorValue();
-                int g = ReadColorValue();
-                int b = ReadColorValue();
+                int r = ReadColorValue(colorDirectPrecision);
+                int g = ReadColorValue(colorDirectPrecision);
+                int b = ReadColorValue(colorDirectPrecision);
                 return new MetafileColorRGB(r, g, b);
             }
             else if (Descriptor.ColorModel == ColorModel.CMYK)
             {
-                int c = ReadColorValue();
-                int m = ReadColorValue();
-                int y = ReadColorValue();
-                int k = ReadColorValue();
+                int c = ReadColorValue(colorDirectPrecision);
+                int m = ReadColorValue(colorDirectPrecision);
+                int y = ReadColorValue(colorDirectPrecision);
+                int k = ReadColorValue(colorDirectPrecision);
                 return new MetafileColorCMYK(c, m, y, k);
             }
             else
@@ -672,10 +853,15 @@ namespace CgmInfo.BinaryEncoding
 
         internal int ReadColorValue()
         {
+            return ReadColorValue(Descriptor.ColorPrecision / 8);
+        }
+        internal int ReadColorValue(int colorPrecision)
+        {
             // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
             // color components are unsigned integers at direct color precision
-            return ReadInteger(Descriptor.ColorPrecision / 8, true);
+            return ReadInteger(colorPrecision, true);
         }
+
         internal double ReadFixedPoint(int numBytes)
         {
             // ISO/IEC 8632-3 6.4

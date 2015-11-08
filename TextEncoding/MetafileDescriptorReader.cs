@@ -73,7 +73,7 @@ namespace CgmInfo.TextEncoding
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)
         {
-            return new MaximumColorIndex(reader.ReadInteger());
+            return new MaximumColorIndex(reader.ReadColorIndex());
         }
 
         public static ColorValueExtent ColorValueExtent(MetafileReader reader)

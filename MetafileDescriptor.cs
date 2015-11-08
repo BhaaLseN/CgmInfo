@@ -1,4 +1,7 @@
+using System;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Utilities;
 
 namespace CgmInfo
 {
@@ -25,6 +28,36 @@ namespace CgmInfo
             MarkerSizeSpecificationMode = WidthSpecificationModeType.Scaled;
             EdgeWidthSpecificationMode = WidthSpecificationModeType.Scaled;
             InteriorStyleSpecificationMode = WidthSpecificationModeType.Absolute;
+        }
+
+        internal void UpdateColorTable(ColorTable colorTable)
+        {
+            // easiest case first: whole color table is updated, and it's larger than the current one
+            if (colorTable.StartIndex == 0 && colorTable.Colors.Length >= ColorTable.Length)
+            {
+                _colorTable = colorTable.Colors;
+            }
+            else
+            {
+                // partial update; make sure we can fit the whole changes
+                if (ColorTable.Length < colorTable.StartIndex + colorTable.Colors.Length)
+                    Array.Resize(ref _colorTable, colorTable.StartIndex + colorTable.Colors.Length);
+
+                // update the fields specified by COLOUR TABLE; leave everything else as-is
+                colorTable.Colors.CopyTo(_colorTable, colorTable.StartIndex);
+            }
+        }
+        public MetafileColor GetIndexedColor(int colorIndex)
+        {
+            if (colorIndex < 0 || colorIndex >= ColorTable.Length)
+                return null;
+            return ColorTable[colorIndex];
+        }
+
+        private MetafileColor[] _colorTable = new MetafileColor[0];
+        public MetafileColor[] ColorTable
+        {
+            get { return _colorTable; }
         }
 
         public ColorModel ColorModel { get; internal set; }

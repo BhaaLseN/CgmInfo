@@ -1,5 +1,6 @@
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -247,6 +248,238 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Attribute elements
+        public virtual void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineType(LineType lineType, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineWidth(LineWidth lineWidth, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineColor(LineColor lineColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeMarkerType(MarkerType markerType, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeMarkerSize(MarkerSize markerSize, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeMarkerColor(MarkerColor markerColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextBundleIndex(TextBundleIndex textBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextPrecision(TextPrecision textPrecision, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextColor(TextColor textColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextPath(TextPath textPath, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeTextAlignment(TextAlignment textAlignment, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeFillColor(FillColor fillColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeHatchIndex(HatchIndex hatchIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributePatternIndex(PatternIndex patternIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeType(EdgeType edgeType, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeColor(EdgeColor edgeColor, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributePatternTable(PatternTable patternTable, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributePatternSize(PatternSize patternSize, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeColorTable(ColorTable colorTable, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineCap(LineCap lineCap, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineJoin(LineJoin lineJoin, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeCap(EdgeCap edgeCap, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, T parameter)
         {
             // intentionally left blank
         }

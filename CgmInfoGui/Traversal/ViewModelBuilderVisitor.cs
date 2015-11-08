@@ -2,6 +2,7 @@
 using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -532,6 +533,241 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Start: {0}", ellipticalArc.Start)),
                 new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
             });
+        }
+
+        public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE BUNDLE INDEX: {0}", lineBundleIndex.Index);
+        }
+        public void AcceptAttributeLineType(LineType lineType, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE: {0} ({1})", lineType.Index, lineType.Name);
+        }
+        public void AcceptAttributeLineWidth(LineWidth lineWidth, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE WIDTH: {0}", lineWidth.Width);
+        }
+        public void AcceptAttributeLineColor(LineColor lineColor, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE COLOUR: {0}", lineColor.Color);
+        }
+        public void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER BUNDLE INDEX: {0}", markerBundleIndex.Index);
+        }
+        public void AcceptAttributeMarkerType(MarkerType markerType, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER TYPE: {0} ({1})", markerType.Index, markerType.Name);
+        }
+        public void AcceptAttributeMarkerSize(MarkerSize markerSize, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER SIZE: {0}", markerSize.Size);
+        }
+        public void AcceptAttributeMarkerColor(MarkerColor markerColor, MetafileContext parameter)
+        {
+            parameter.AddNode("MARKER COLOUR: {0}", markerColor.Color);
+        }
+        public void AcceptAttributeTextBundleIndex(TextBundleIndex textBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT BUNDLE INDEX: {0}", textBundleIndex.Index);
+        }
+        public void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT FONT INDEX: {0}", textFontIndex.Index);
+        }
+        public void AcceptAttributeTextPrecision(TextPrecision textPrecision, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT PRECISION: {0}", textPrecision.Precision);
+        }
+        public void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER EXPANSION FACTOR: {0}", characterExpansionFactor.Factor);
+        }
+        public void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER SPACING: {0}", characterSpacing.AdditionalIntercharacterSpace);
+        }
+        public void AcceptAttributeTextColor(TextColor textColor, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT COLOUR: {0}", textColor.Color);
+        }
+        public void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER HEIGHT: {0}", characterHeight.Height);
+        }
+        public void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, MetafileContext parameter)
+        {
+            var charOrientNode = parameter.AddNode("CHARACTER ORIENTATION: {0}/{1}", characterOrientation.Up, characterOrientation.Base);
+            charOrientNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Up: {0}", characterOrientation.Up)),
+                new SimpleNode(string.Format("Base: {0}", characterOrientation.Base)),
+            });
+        }
+        public void AcceptAttributeTextPath(TextPath textPath, MetafileContext parameter)
+        {
+            parameter.AddNode("TEXT PATH: {0}", textPath.Path);
+        }
+        public void AcceptAttributeTextAlignment(TextAlignment textAlignment, MetafileContext parameter)
+        {
+            var textAlignNode = parameter.AddNode("TEXT ALIGNMENT: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
+            textAlignNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Horizontal: {0}", textAlignment.Horizontal)),
+                new SimpleNode(string.Format("Vertical: {0}", textAlignment.Vertical)),
+            });
+            if (textAlignment.Horizontal == HorizontalTextAlignment.Continuous)
+                textAlignNode.Add(new SimpleNode(string.Format("Horizontal Continuous Alignment: {0}", textAlignment.HorizontalContinuousAlignment)));
+            if (textAlignment.Vertical == VerticalTextAlignment.Continuous)
+                textAlignNode.Add(new SimpleNode(string.Format("Vertical Continuous Alignment: {0}", textAlignment.VerticalContinuousAlignment)));
+        }
+        public void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("CHARACTER SET INDEX: {0}", characterSetIndex.Index);
+        }
+        public void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("ALTERNATE CHARACTER SET INDEX: {0}", alternateCharacterSetIndex.Index);
+        }
+        public void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL BUNDLE INDEX: {0}", fillBundleIndex.Index);
+        }
+        public void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, MetafileContext parameter)
+        {
+            parameter.AddNode("INTERIOR STYLE: {0}", interiorStyle.Style);
+        }
+        public void AcceptAttributeFillColor(FillColor fillColor, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL COLOUR: {0}", fillColor.Color);
+        }
+        public void AcceptAttributeHatchIndex(HatchIndex hatchIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("HATCH INDEX: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
+        }
+        public void AcceptAttributePatternIndex(PatternIndex patternIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("PATTERN INDEX: {0}", patternIndex.Index);
+        }
+        public void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE BUNDLE INDEX: {0}", edgeBundleIndex.Index);
+        }
+        public void AcceptAttributeEdgeType(EdgeType edgeType, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE: {0} ({1})", edgeType.Index, edgeType.Name);
+        }
+        public void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE WIDTH: {0}", edgeWidth.Width);
+        }
+        public void AcceptAttributeEdgeColor(EdgeColor edgeColor, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE COLOUR: {0}", edgeColor.Color);
+        }
+        public void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE VISIBILITY: {0}", edgeVisibility.Visibility);
+        }
+        public void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, MetafileContext parameter)
+        {
+            parameter.AddNode("FILL REFERENCE POINT: {0}", fillReferencePoint.ReferencePoint);
+        }
+        public void AcceptAttributePatternTable(PatternTable patternTable, MetafileContext parameter)
+        {
+            var patternTableNode = parameter.AddNode("PATTERN TABLE: {0} ({1} by {2})",
+                patternTable.Index, patternTable.Height, patternTable.Width);
+            patternTableNode.Nodes.AddRange(patternTable.Colors.Select(c => new SimpleNode(c.ToString())));
+        }
+        public void AcceptAttributePatternSize(PatternSize patternSize, MetafileContext parameter)
+        {
+            var patternSizeNode = parameter.AddNode("PATTERN SIZE: {0} by {1}", patternSize.Height, patternSize.Width);
+            patternSizeNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Height: {0}", patternSize.Height)),
+                new SimpleNode(string.Format("Width: {0}", patternSize.Width)),
+            });
+        }
+        public void AcceptAttributeColorTable(ColorTable colorTable, MetafileContext parameter)
+        {
+            var colorTableNode = parameter.AddNode("COLOUR TABLE: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
+            colorTableNode.Nodes.AddRange(colorTable.Colors.Select((c, i) => new SimpleNode(string.Format("{0}: {1}", colorTable.StartIndex + i, c))));
+        }
+        public void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, MetafileContext parameter)
+        {
+            var asfNode = parameter.AddNode("ASPECT SOURCE FLAGS [{0} entries]", aspectSourceFlags.Values.Count);
+            asfNode.Nodes.AddRange(aspectSourceFlags.Values.Select(kvp => new SimpleNode(string.Format("{0}: {1}", kvp.Key, kvp.Value))));
+        }
+        public void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, MetafileContext parameter)
+        {
+            parameter.AddNode("PICK IDENTIFIER: {0}", pickIdentifier.Identifier);
+        }
+        public void AcceptAttributeLineCap(LineCap lineCap, MetafileContext parameter)
+        {
+            var lineCapNode = parameter.AddNode("LINE CAP: line {0} ({1}), dash {2} ({3})",
+                lineCap.LineCapIndicator, lineCap.LineCapName,
+                lineCap.DashCapIndicator, lineCap.DashCapName);
+            lineCapNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Line Cap Indicator: {0} ({1})", lineCap.LineCapIndicator, lineCap.LineCapName)),
+                new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", lineCap.DashCapIndicator, lineCap.DashCapName)),
+            });
+        }
+        public void AcceptAttributeLineJoin(LineJoin lineJoin, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE JOIN: {0} ({1})", lineJoin.Index, lineJoin.Name);
+        }
+        public void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE CONTINUATION: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
+        }
+        public void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE INITIAL OFFSET: {0}", lineTypeInitialOffset.Offset);
+        }
+        public void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTRICTED TEXT TYPE: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
+        }
+        public void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, MetafileContext parameter)
+        {
+            var interpolatedInteriorNode = parameter.AddNode("INTERPOLATED INTERIOR: {0} ({1})",
+                interpolatedInterior.Index, interpolatedInterior.Name);
+            var referenceGeometryNode = new SimpleNode(string.Format("Reference Geometry: [{0} entries]", interpolatedInterior.ReferenceGeometry.Length));
+            referenceGeometryNode.Nodes.AddRange(interpolatedInterior.ReferenceGeometry.Select(rg => new SimpleNode(rg.ToString())));
+            var stageDesignatorsNode = new SimpleNode(string.Format("Stage Designators [{0} entries]", interpolatedInterior.StageDesignators.Length));
+            stageDesignatorsNode.Nodes.AddRange(interpolatedInterior.StageDesignators.Select(d => new SimpleNode(d.ToString())));
+            var colorSpecifiersNode = new SimpleNode(string.Format("Color Specifiers [{0} entries]", interpolatedInterior.ColorSpecifiers.Length));
+            colorSpecifiersNode.Nodes.AddRange(interpolatedInterior.ColorSpecifiers.Select(c => new SimpleNode(c.ToString())));
+            interpolatedInteriorNode.Nodes.AddRange(new[]
+            {
+                referenceGeometryNode,
+                stageDesignatorsNode,
+                colorSpecifiersNode,
+            });
+        }
+        public void AcceptAttributeEdgeCap(EdgeCap edgeCap, MetafileContext parameter)
+        {
+            var edgeCapNode = parameter.AddNode("EDGE CAP: line {0} ({1}), dash {2} ({3})",
+                edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
+                edgeCap.DashCapIndicator, edgeCap.DashCapName);
+            edgeCapNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Edge Cap Indicator: {0} ({1})", edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName)),
+                new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", edgeCap.DashCapIndicator, edgeCap.DashCapName)),
+            });
+        }
+        public void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE JOIN: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
+        }
+        public void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE CONTINUATION: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
+        }
+        public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE INITIAL OFFSET: {0}", edgeTypeInitialOffset.Offset);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

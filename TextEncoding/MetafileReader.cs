@@ -107,6 +107,54 @@ namespace CgmInfo.TextEncoding
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
             { "ELLIPARC", GraphicalPrimitiveReader.EllipticalArc },
 
+            // attribute elements [ISO/IEC 8632-4 7.6]
+            { "LINEINDEX", AttributeReader.LineBundleIndex },
+            { "LINETYPE", AttributeReader.LineType },
+            { "LINEWIDTH", AttributeReader.LineWidth },
+            { "LINECOLR", AttributeReader.LineColor },
+            { "MARKERINDEX", AttributeReader.MarkerBundleIndex },
+            { "MARKERTYPE", AttributeReader.MarkerType },
+            { "MARKERSIZE", AttributeReader.MarkerSize },
+            { "MARKERCOLR", AttributeReader.MarkerColor },
+            { "TEXTINDEX", AttributeReader.TextBundleIndex },
+            { "TEXTFONTINDEX", AttributeReader.TextFontIndex },
+            { "TEXTPREC", AttributeReader.TextPrecision },
+            { "CHAREXPAN", AttributeReader.CharacterExpansionFactor },
+            { "CHARSPACE", AttributeReader.CharacterSpacing },
+            { "TEXTCOLR", AttributeReader.TextColor },
+            { "CHARHEIGHT", AttributeReader.CharacterHeight },
+            { "CHARORI", AttributeReader.CharacterOrientation },
+            { "TEXTPATH", AttributeReader.TextPath },
+            { "TEXTALIGN", AttributeReader.TextAlignment },
+            { "CHARSETINDEX", AttributeReader.CharacterSetIndex },
+            { "ALTCHARSETINDEX", AttributeReader.AlternateCharacterSetIndex },
+            { "FILLINDEX", AttributeReader.FillBundleIndex },
+            { "INTSTYLE", AttributeReader.InteriorStyle },
+            { "FILLCOLR", AttributeReader.FillColor },
+            { "HATCHINDEX", AttributeReader.HatchIndex },
+            { "PATINDEX", AttributeReader.PatternIndex },
+            { "EDGEINDEX", AttributeReader.EdgeBundleIndex },
+            { "EDGETYPE", AttributeReader.EdgeType },
+            { "EDGEWIDTH", AttributeReader.EdgeWidth },
+            { "EDGECOLR", AttributeReader.EdgeColor },
+            { "EDGEVIS", AttributeReader.EdgeVisibility },
+            { "FILLREFPT", AttributeReader.FillReferencePoint },
+            { "PATTABLE", AttributeReader.PatternTable },
+            { "PATSIZE", AttributeReader.PatternSize },
+            { "COLRTABLE", ReadColorTable },
+            { "ASF", AttributeReader.AspectSourceFlags },
+            { "PICKID", AttributeReader.PickIdentifier },
+            { "LINECAP", AttributeReader.LineCap },
+            { "LINEJOIN", AttributeReader.LineJoin },
+            { "LINETYPECONT", AttributeReader.LineTypeContinuation },
+            { "LINETYPEINITOFFSET", AttributeReader.LineTypeInitialOffset },
+            { "RESTRTEXTTYPE", AttributeReader.RestrictedTextType },
+            { "INTERPINT", AttributeReader.InterpolatedInterior },
+            { "EDGECAP", AttributeReader.EdgeCap },
+            { "EDGEJOIN", AttributeReader.EdgeJoin },
+            { "EDGETYPECONT", AttributeReader.EdgeTypeContinuation },
+            { "EDGETYPEINITOFFSET", AttributeReader.EdgeTypeInitialOffset },
+
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };
@@ -270,6 +318,12 @@ namespace CgmInfo.TextEncoding
             reader.Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
             return vdcRealPrecision;
         }
+        private static Command ReadColorTable(MetafileReader reader)
+        {
+            var colorTable = AttributeReader.ColorTable(reader);
+            reader.Descriptor.UpdateColorTable(colorTable);
+            return colorTable;
+        }
 
         internal string ReadString()
         {
@@ -409,7 +463,12 @@ namespace CgmInfo.TextEncoding
         }
         internal MetafileColor ReadIndexedColor()
         {
-            return new MetafileColorIndexed(ReadIndex());
+            int colorIndex = ReadColorIndex();
+            return new MetafileColorIndexed(colorIndex, Descriptor.GetIndexedColor(colorIndex));
+        }
+        internal int ReadColorIndex()
+        {
+            return ReadIndex();
         }
         internal MetafileColor ReadDirectColor()
         {

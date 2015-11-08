@@ -1,6 +1,7 @@
 using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
@@ -378,6 +379,204 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Elliptical Arc: {0} @ {1} - {2} ({3} to {4})",
                 ellipticalArc.Center, ellipticalArc.FirstConjugateDiameter, ellipticalArc.SecondConjugateDiameter, ellipticalArc.Start, ellipticalArc.End);
+        }
+
+        public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Bundle Index: {0}", lineBundleIndex.Index);
+        }
+        public void AcceptAttributeLineType(LineType lineType, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type: {0} ({1})", lineType.Index, lineType.Name);
+        }
+        public void AcceptAttributeLineWidth(LineWidth lineWidth, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Width: {0}", lineWidth.Width);
+        }
+        public void AcceptAttributeLineColor(LineColor lineColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Color: {0}", lineColor.Color);
+        }
+        public void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Bundle Index: {0}", markerBundleIndex.Index);
+        }
+        public void AcceptAttributeMarkerType(MarkerType markerType, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Type: {0} ({1})", markerType.Index, markerType.Name);
+        }
+        public void AcceptAttributeMarkerSize(MarkerSize markerSize, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Size: {0}", markerSize.Size);
+        }
+        public void AcceptAttributeMarkerColor(MarkerColor markerColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Marker Color: {0}", markerColor.Color);
+        }
+        public void AcceptAttributeTextBundleIndex(TextBundleIndex textBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Bundle Index: {0}", textBundleIndex.Index);
+        }
+        public void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Font Index: {0}", textFontIndex.Index);
+        }
+        public void AcceptAttributeTextPrecision(TextPrecision textPrecision, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Precision: {0}", textPrecision.Precision);
+        }
+        public void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Expansion Factor: {0}", characterExpansionFactor.Factor);
+        }
+        public void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Spacing: {0}", characterSpacing.AdditionalIntercharacterSpace);
+        }
+        public void AcceptAttributeTextColor(TextColor textColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Color: {0}", textColor.Color);
+        }
+        public void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Height: {0}", characterHeight.Height);
+        }
+        public void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Orientation: up {0}, base {1}", characterOrientation.Up, characterOrientation.Base);
+        }
+        public void AcceptAttributeTextPath(TextPath textPath, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Path: {0}", textPath.Path);
+        }
+        public void AcceptAttributeTextAlignment(TextAlignment textAlignment, PrintContext parameter)
+        {
+            parameter.WriteLine("Text Alignment: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
+        }
+        public void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Character Set Index: {0}", characterSetIndex.Index);
+        }
+        public void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Alternate Character Set Index: {0}", alternateCharacterSetIndex.Index);
+        }
+        public void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Bundle Index: {0}", fillBundleIndex.Index);
+        }
+        public void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, PrintContext parameter)
+        {
+            parameter.WriteLine("Interior Style: {0}", interiorStyle.Style);
+        }
+        public void AcceptAttributeFillColor(FillColor fillColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Color: {0}", fillColor.Color);
+        }
+        public void AcceptAttributeHatchIndex(HatchIndex hatchIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Hatch Index: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
+        }
+        public void AcceptAttributePatternIndex(PatternIndex patterIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Index: {0}", patterIndex.Index);
+        }
+        public void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Bundle Index: {0}", edgeBundleIndex.Index);
+        }
+        public void AcceptAttributeEdgeType(EdgeType edgeType, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Index: {0} ({1})", edgeType.Index, edgeType.Name);
+        }
+        public void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Width: {0}", edgeWidth.Width);
+        }
+        public void AcceptAttributeEdgeColor(EdgeColor edgeColor, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Color: {0}", edgeColor.Color);
+        }
+        public void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Visibility: {0}", edgeVisibility.Visibility);
+        }
+        public void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, PrintContext parameter)
+        {
+            parameter.WriteLine("Fill Reference Point: {0}", fillReferencePoint.ReferencePoint);
+        }
+        public void AcceptAttributePatternTable(PatternTable patternTable, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Table: {0} ({1} by {2})", patternTable.Index, patternTable.Width, patternTable.Height);
+        }
+        public void AcceptAttributePatternSize(PatternSize patternSize, PrintContext parameter)
+        {
+            parameter.WriteLine("Pattern Size: {0} by {1}", patternSize.Width, patternSize.Height);
+        }
+        public void AcceptAttributeColorTable(ColorTable colorTable, PrintContext parameter)
+        {
+            parameter.WriteLine("Color Table: update from {0} with {1} colors", colorTable.StartIndex, colorTable.Colors.Length);
+        }
+        public void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, PrintContext parameter)
+        {
+            parameter.WriteLine("Aspect Source Flags: {0} entries", aspectSourceFlags.Values.Count);
+            parameter.BeginLevel();
+            foreach (var kvp in aspectSourceFlags.Values)
+                parameter.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
+            parameter.EndLevel();
+        }
+        public void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, PrintContext parameter)
+        {
+            parameter.WriteLine("Pick Identifier: {0}", pickIdentifier.Identifier);
+        }
+        public void AcceptAttributeLineCap(LineCap lineCap, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Cap: line {0} ({1}), dash {2} ({3})",
+                lineCap.LineCapIndicator, lineCap.LineCapName,
+                lineCap.DashCapIndicator, lineCap.DashCapName);
+        }
+        public void AcceptAttributeLineJoin(LineJoin lineJoin, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Join: {0} ({1})", lineJoin.Index, lineJoin.Name);
+        }
+        public void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type Continuation: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
+        }
+        public void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type Initial Offset: {0}", lineTypeInitialOffset.Offset);
+        }
+        public void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, PrintContext parameter)
+        {
+            parameter.WriteLine("Restricted Text Type: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
+        }
+        public void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, PrintContext parameter)
+        {
+            parameter.WriteLine("Interpolated Interior: {0} ({1})", interpolatedInterior.Index, interpolatedInterior.Name);
+            parameter.BeginLevel();
+            parameter.WriteLine("Reference Geometry: {0}", string.Join(" ", interpolatedInterior.ReferenceGeometry));
+            parameter.WriteLine("Stage Designators: {0}", string.Join(" ", interpolatedInterior.StageDesignators));
+            parameter.WriteLine("Color Specifiers: {0}", string.Join(" ", interpolatedInterior.ColorSpecifiers.Select(c => c.ToString())));
+            parameter.EndLevel();
+        }
+        public void AcceptAttributeEdgeCap(EdgeCap edgeCap, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Cap: line {0} ({1}), dash {2} ({3})",
+                edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
+                edgeCap.DashCapIndicator, edgeCap.DashCapName);
+        }
+        public void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Join: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
+        }
+        public void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Continuation: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
+        }
+        public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Initial Offset: {0}", edgeTypeInitialOffset.Offset);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)

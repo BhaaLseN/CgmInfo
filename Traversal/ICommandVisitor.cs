@@ -1,5 +1,6 @@
 ﻿using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -96,6 +97,54 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);
         void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter);
         void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter);
+
+        // attributes
+        void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);
+        void AcceptAttributeLineType(LineType lineType, T parameter);
+        void AcceptAttributeLineWidth(LineWidth lineWidth, T parameter);
+        void AcceptAttributeLineColor(LineColor lineColor, T parameter);
+        void AcceptAttributeMarkerBundleIndex(MarkerBundleIndex markerBundleIndex, T parameter);
+        void AcceptAttributeMarkerType(MarkerType markerType, T parameter);
+        void AcceptAttributeMarkerSize(MarkerSize markerSize, T parameter);
+        void AcceptAttributeMarkerColor(MarkerColor markerColor, T parameter);
+        void AcceptAttributeTextBundleIndex(TextBundleIndex textBundleIndex, T parameter);
+        void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, T parameter);
+        void AcceptAttributeTextPrecision(TextPrecision textPrecision, T parameter);
+        void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, T parameter);
+        void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, T parameter);
+        void AcceptAttributeTextColor(TextColor textColor, T parameter);
+        void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, T parameter);
+        void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, T parameter);
+        void AcceptAttributeTextPath(TextPath textPath, T parameter);
+        void AcceptAttributeTextAlignment(TextAlignment textAlignment, T parameter);
+        void AcceptAttributeCharacterSetIndex(CharacterSetIndex characterSetIndex, T parameter);
+        void AcceptAttributeAlternateCharacterSetIndex(AlternateCharacterSetIndex alternateCharacterSetIndex, T parameter);
+        void AcceptAttributeFillBundleIndex(FillBundleIndex fillBundleIndex, T parameter);
+        void AcceptAttributeInteriorStyle(InteriorStyle interiorStyle, T parameter);
+        void AcceptAttributeFillColor(FillColor fillColor, T parameter);
+        void AcceptAttributeHatchIndex(HatchIndex hatchIndex, T parameter);
+        void AcceptAttributePatternIndex(PatternIndex patternIndex, T parameter);
+        void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, T parameter);
+        void AcceptAttributeEdgeType(EdgeType edgeType, T parameter);
+        void AcceptAttributeEdgeWidth(EdgeWidth edgeWidth, T parameter);
+        void AcceptAttributeEdgeColor(EdgeColor edgeColor, T parameter);
+        void AcceptAttributeEdgeVisibility(EdgeVisibility edgeVisibility, T parameter);
+        void AcceptAttributeFillReferencePoint(FillReferencePoint fillReferencePoint, T parameter);
+        void AcceptAttributePatternTable(PatternTable patternTable, T parameter);
+        void AcceptAttributePatternSize(PatternSize patternSize, T parameter);
+        void AcceptAttributeColorTable(ColorTable colorTable, T parameter);
+        void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, T parameter);
+        void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, T parameter);
+        void AcceptAttributeLineCap(LineCap lineCap, T parameter);
+        void AcceptAttributeLineJoin(LineJoin lineJoin, T parameter);
+        void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, T parameter);
+        void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, T parameter);
+        void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, T parameter);
+        void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, T parameter);
+        void AcceptAttributeEdgeCap(EdgeCap edgeCap, T parameter);
+        void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter);
+        void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter);
+        void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

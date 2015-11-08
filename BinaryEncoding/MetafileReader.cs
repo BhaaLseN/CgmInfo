@@ -639,6 +639,9 @@ namespace CgmInfo.BinaryEncoding
                 case 42: // RESTRICTED TEXT TYPE
                     result = AttributeReader.RestrictedTextType(this, commandHeader);
                     break;
+                case 43: // INTERPOLATED INTERIOR
+                    result = AttributeReader.InterpolatedInterior(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

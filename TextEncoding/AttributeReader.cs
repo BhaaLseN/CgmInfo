@@ -239,6 +239,54 @@ namespace CgmInfo.TextEncoding
             return new RestrictedTextType(reader.ReadIndex());
         }
 
+        public static InterpolatedInterior InterpolatedInterior(MetafileReader reader)
+        {
+            int style = reader.ReadIndex();
+            var referenceGeometry = new List<PointF>();
+            var stageDesignators = new List<double>();
+            var colorSpecifiers = new List<MetafileColor>();
+
+            // Legal values of the style parameter are positive integers. [ISO/IEC 8632-1 7.7.43]
+            // Values greater than 3 are reserved for future standardization and registration.
+            if (style >= 1 && style <= 3)
+            {
+                // parallel: the number of scalars shall be 2. The FILL REFERENCE POINT is one defining
+                //      point of a reference line. A second defining point of the reference line is defined by
+                //      the 2 scalars, which are respectively the x and y offset of the second point from the
+                //      FILL REFERENCE POINT.
+                // elliptical: the number of scalars shall be 4. The FILL REFERENCE POINT is the centre of a
+                //      reference ellipse. The first pair of scalars are respectively the x and y offset from
+                //      the FILL REFERENCE POINT to the first CDP of ellipse and the second pair are
+                //      respectively the x and y offset from the FILL REFERENCE POINT to the second
+                //      CDP of ellipse.
+                // triangular: the number of scalars shall be 4. The first pair of scalars are respectively the x and
+                //      y offset from the FILL REFERENCE POINT to the second corner of a reference
+                //      triangle and the second pair are respectively the x and y offset from the FILL
+                //      REFERENCE POINT to the third corner of the reference triangle. The number of
+                //      stages shall be 0 and the list of stage designators shall be empty.
+                int geoCount;
+                if (style == 1)
+                    geoCount = 2;
+                else
+                    geoCount = 4;
+                for (int i = 0; i < geoCount / 2; i++)
+                {
+                    double rgX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+                    double rgY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
+                    referenceGeometry.Add(new PointF((float)rgX, (float)rgY));
+                }
+
+                int numberOfStages = reader.ReadInteger();
+                for (int i = 0; i < numberOfStages; i++)
+                    stageDesignators.Add(reader.ReadReal());
+
+                int numberOfColors = style == 3 ? 3 : numberOfStages + 1;
+                for (int i = 0; i < numberOfColors; i++)
+                    colorSpecifiers.Add(reader.ReadColor());
+            }
+            return new InterpolatedInterior(style, referenceGeometry.ToArray(), stageDesignators.ToArray(), colorSpecifiers.ToArray());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

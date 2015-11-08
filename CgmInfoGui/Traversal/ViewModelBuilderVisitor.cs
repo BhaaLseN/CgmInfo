@@ -729,6 +729,23 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("RESTRICTED TEXT TYPE: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
         }
+        public void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, MetafileContext parameter)
+        {
+            var interpolatedInteriorNode = parameter.AddNode("INTERPOLATED INTERIOR: {0} ({1})",
+                interpolatedInterior.Index, interpolatedInterior.Name);
+            var referenceGeometryNode = new SimpleNode(string.Format("Reference Geometry: [{0} entries]", interpolatedInterior.ReferenceGeometry.Length));
+            referenceGeometryNode.Nodes.AddRange(interpolatedInterior.ReferenceGeometry.Select(rg => new SimpleNode(rg.ToString())));
+            var stageDesignatorsNode = new SimpleNode(string.Format("Stage Designators [{0} entries]", interpolatedInterior.StageDesignators.Length));
+            stageDesignatorsNode.Nodes.AddRange(interpolatedInterior.StageDesignators.Select(d => new SimpleNode(d.ToString())));
+            var colorSpecifiersNode = new SimpleNode(string.Format("Color Specifiers [{0} entries]", interpolatedInterior.ColorSpecifiers.Length));
+            colorSpecifiersNode.Nodes.AddRange(interpolatedInterior.ColorSpecifiers.Select(c => new SimpleNode(c.ToString())));
+            interpolatedInteriorNode.Nodes.AddRange(new[]
+            {
+                referenceGeometryNode,
+                stageDesignatorsNode,
+                colorSpecifiersNode,
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

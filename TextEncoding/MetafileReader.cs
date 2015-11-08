@@ -149,6 +149,7 @@ namespace CgmInfo.TextEncoding
             { "LINETYPECONT", AttributeReader.LineTypeContinuation },
             { "LINETYPEINITOFFSET", AttributeReader.LineTypeInitialOffset },
             { "RESTRTEXTTYPE", AttributeReader.RestrictedTextType },
+            { "INTERPINT", AttributeReader.InterpolatedInterior },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

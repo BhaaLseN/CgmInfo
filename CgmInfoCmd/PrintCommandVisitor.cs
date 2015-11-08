@@ -551,6 +551,15 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Restricted Text Type: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
         }
+        public void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, PrintContext parameter)
+        {
+            parameter.WriteLine("Interpolated Interior: {0} ({1})", interpolatedInterior.Index, interpolatedInterior.Name);
+            parameter.BeginLevel();
+            parameter.WriteLine("Reference Geometry: {0}", string.Join(" ", interpolatedInterior.ReferenceGeometry));
+            parameter.WriteLine("Stage Designators: {0}", string.Join(" ", interpolatedInterior.StageDesignators));
+            parameter.WriteLine("Color Specifiers: {0}", string.Join(" ", interpolatedInterior.ColorSpecifiers.Select(c => c.ToString())));
+            parameter.EndLevel();
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

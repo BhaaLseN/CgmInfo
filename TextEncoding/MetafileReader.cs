@@ -147,6 +147,7 @@ namespace CgmInfo.TextEncoding
             { "LINECAP", AttributeReader.LineCap },
             { "LINEJOIN", AttributeReader.LineJoin },
             { "LINETYPECONT", AttributeReader.LineTypeContinuation },
+            { "LINETYPEINITOFFSET", AttributeReader.LineTypeInitialOffset },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

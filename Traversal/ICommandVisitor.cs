@@ -138,6 +138,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeLineCap(LineCap lineCap, T parameter);
         void AcceptAttributeLineJoin(LineJoin lineJoin, T parameter);
         void AcceptAttributeLineTypeContinuation(LineTypeContinuation lineTypeContinuation, T parameter);
+        void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

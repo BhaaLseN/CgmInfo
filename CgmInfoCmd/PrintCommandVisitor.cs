@@ -543,6 +543,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Type Continuation: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
         }
+        public void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Type Initial Offset: {0}", lineTypeInitialOffset.Offset);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

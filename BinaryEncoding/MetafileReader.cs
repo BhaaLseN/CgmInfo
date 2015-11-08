@@ -633,6 +633,9 @@ namespace CgmInfo.BinaryEncoding
                 case 39: // LINE TYPE CONTINUATION
                     result = AttributeReader.LineTypeContinuation(this, commandHeader);
                     break;
+                case 40: // LINE TYPE INITIAL OFFSET
+                    result = AttributeReader.LineTypeInitialOffset(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

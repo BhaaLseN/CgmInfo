@@ -721,6 +721,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE TYPE CONTINUATION: {0} ({1})", lineTypeContinuation.Index, lineTypeContinuation.Name);
         }
+        public void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE TYPE INITIAL OFFSET: {0}", lineTypeInitialOffset.Offset);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

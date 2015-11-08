@@ -394,5 +394,11 @@ namespace CgmInfo.BinaryEncoding
             //      >4 reserved for registered values
             return new LineTypeContinuation(reader.ReadIndex());
         }
+
+        public static LineTypeInitialOffset LineTypeInitialOffset(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (real) line pattern offset
+            return new LineTypeInitialOffset(reader.ReadReal());
+        }
     }
 }

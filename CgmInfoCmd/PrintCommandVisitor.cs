@@ -566,6 +566,10 @@ namespace CgmInfoCmd
                 edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
                 edgeCap.DashCapIndicator, edgeCap.DashCapName);
         }
+        public void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Join: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

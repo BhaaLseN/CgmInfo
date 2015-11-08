@@ -645,6 +645,9 @@ namespace CgmInfo.BinaryEncoding
                 case 44: // EDGE CAP
                     result = AttributeReader.EdgeCap(this, commandHeader);
                     break;
+                case 45: // EDGE JOIN
+                    result = AttributeReader.EdgeJoin(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

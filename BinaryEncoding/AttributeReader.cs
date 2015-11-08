@@ -488,5 +488,16 @@ namespace CgmInfo.BinaryEncoding
             //      >3 reserved for registered values
             return new EdgeCap(reader.ReadIndex(), reader.ReadIndex());
         }
+
+        public static EdgeJoin EdgeJoin(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) edge join indicator: the following values are standardized:
+            //      1 unspecified
+            //      2 mitre
+            //      3 round
+            //      4 bevel
+            //      >4 reserved for registered values
+            return new EdgeJoin(reader.ReadIndex());
+        }
     }
 }

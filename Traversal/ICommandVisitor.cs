@@ -142,6 +142,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, T parameter);
         void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, T parameter);
         void AcceptAttributeEdgeCap(EdgeCap edgeCap, T parameter);
+        void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

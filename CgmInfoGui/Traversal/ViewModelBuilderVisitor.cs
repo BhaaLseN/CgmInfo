@@ -757,6 +757,10 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", edgeCap.DashCapIndicator, edgeCap.DashCapName)),
             });
         }
+        public void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE JOIN: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -151,6 +151,7 @@ namespace CgmInfo.TextEncoding
             { "RESTRTEXTTYPE", AttributeReader.RestrictedTextType },
             { "INTERPINT", AttributeReader.InterpolatedInterior },
             { "EDGECAP", AttributeReader.EdgeCap },
+            { "EDGEJOIN", AttributeReader.EdgeJoin },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

@@ -765,6 +765,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE TYPE CONTINUATION: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
         }
+        public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE INITIAL OFFSET: {0}", edgeTypeInitialOffset.Offset);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

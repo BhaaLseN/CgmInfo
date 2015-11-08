@@ -574,6 +574,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Type Continuation: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
         }
+        public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Initial Offset: {0}", edgeTypeInitialOffset.Offset);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

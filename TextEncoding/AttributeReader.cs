@@ -302,6 +302,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeTypeContinuation(reader.ReadIndex());
         }
 
+        public static EdgeTypeInitialOffset EdgeTypeInitialOffset(MetafileReader reader)
+        {
+            return new EdgeTypeInitialOffset(reader.ReadReal());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

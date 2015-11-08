@@ -144,6 +144,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeEdgeCap(EdgeCap edgeCap, T parameter);
         void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter);
         void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter);
+        void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

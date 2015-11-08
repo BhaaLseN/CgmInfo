@@ -510,5 +510,11 @@ namespace CgmInfo.BinaryEncoding
             //      >4 reserved for registered values
             return new EdgeTypeContinuation(reader.ReadIndex());
         }
+
+        public static EdgeTypeInitialOffset EdgeTypeInitialOffset(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (real) edge pattern offset
+            return new EdgeTypeInitialOffset(reader.ReadReal());
+        }
     }
 }

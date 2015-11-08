@@ -651,6 +651,9 @@ namespace CgmInfo.BinaryEncoding
                 case 46: // EDGE TYPE CONTINUATION
                     result = AttributeReader.EdgeTypeContinuation(this, commandHeader);
                     break;
+                case 47: // EDGE TYPE INITIAL OFFSET
+                    result = AttributeReader.EdgeTypeInitialOffset(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

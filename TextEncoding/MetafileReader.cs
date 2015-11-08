@@ -153,6 +153,7 @@ namespace CgmInfo.TextEncoding
             { "EDGECAP", AttributeReader.EdgeCap },
             { "EDGEJOIN", AttributeReader.EdgeJoin },
             { "EDGETYPECONT", AttributeReader.EdgeTypeContinuation },
+            { "EDGETYPEINITOFFSET", AttributeReader.EdgeTypeInitialOffset },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

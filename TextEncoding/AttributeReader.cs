@@ -219,6 +219,11 @@ namespace CgmInfo.TextEncoding
             return new LineCap(reader.ReadIndex(), reader.ReadIndex());
         }
 
+        public static LineJoin LineJoin(MetafileReader reader)
+        {
+            return new LineJoin(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

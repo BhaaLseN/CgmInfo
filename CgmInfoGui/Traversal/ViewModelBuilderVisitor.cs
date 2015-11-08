@@ -713,6 +713,10 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", lineCap.DashCapIndicator, lineCap.DashCapName)),
             });
         }
+        public void AcceptAttributeLineJoin(LineJoin lineJoin, MetafileContext parameter)
+        {
+            parameter.AddNode("LINE JOIN: {0} ({1})", lineJoin.Index, lineJoin.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -627,6 +627,9 @@ namespace CgmInfo.BinaryEncoding
                 case 37: // LINE CAP
                     result = AttributeReader.LineCap(this, commandHeader);
                     break;
+                case 38: // LINE JOIN
+                    result = AttributeReader.LineJoin(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

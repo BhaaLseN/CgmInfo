@@ -136,6 +136,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeAspectSourceFlags(AspectSourceFlags aspectSourceFlags, T parameter);
         void AcceptAttributePickIdentifier(PickIdentifier pickIdentifier, T parameter);
         void AcceptAttributeLineCap(LineCap lineCap, T parameter);
+        void AcceptAttributeLineJoin(LineJoin lineJoin, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

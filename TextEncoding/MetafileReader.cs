@@ -145,6 +145,7 @@ namespace CgmInfo.TextEncoding
             { "ASF", AttributeReader.AspectSourceFlags },
             { "PICKID", AttributeReader.PickIdentifier },
             { "LINECAP", AttributeReader.LineCap },
+            { "LINEJOIN", AttributeReader.LineJoin },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

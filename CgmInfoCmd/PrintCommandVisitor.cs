@@ -535,6 +535,10 @@ namespace CgmInfoCmd
                 lineCap.LineCapIndicator, lineCap.LineCapName,
                 lineCap.DashCapIndicator, lineCap.DashCapName);
         }
+        public void AcceptAttributeLineJoin(LineJoin lineJoin, PrintContext parameter)
+        {
+            parameter.WriteLine("Line Join: {0} ({1})", lineJoin.Index, lineJoin.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

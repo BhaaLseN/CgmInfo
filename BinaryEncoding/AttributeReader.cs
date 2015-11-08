@@ -372,5 +372,16 @@ namespace CgmInfo.BinaryEncoding
             //      >3 reserved for registered values
             return new LineCap(reader.ReadIndex(), reader.ReadIndex());
         }
+
+        public static LineJoin LineJoin(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) line join indicator: the following values are standardized:
+            //      1 unspecified
+            //      2 mitre
+            //      3 round
+            //      4 bevel
+            //      >4 reserved for registered values
+            return new LineJoin(reader.ReadIndex());
+        }
     }
 }

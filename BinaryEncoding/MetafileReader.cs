@@ -636,6 +636,9 @@ namespace CgmInfo.BinaryEncoding
                 case 40: // LINE TYPE INITIAL OFFSET
                     result = AttributeReader.LineTypeInitialOffset(this, commandHeader);
                     break;
+                case 42: // RESTRICTED TEXT TYPE
+                    result = AttributeReader.RestrictedTextType(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

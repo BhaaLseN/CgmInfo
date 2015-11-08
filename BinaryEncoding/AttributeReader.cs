@@ -400,5 +400,18 @@ namespace CgmInfo.BinaryEncoding
             // P1: (real) line pattern offset
             return new LineTypeInitialOffset(reader.ReadReal());
         }
+
+        public static RestrictedTextType RestrictedTextType(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) restriction type: the following values are standardized:
+            //      1 basic
+            //      2 boxed-cap
+            //      3 boxed-all
+            //      4 isotropic-cap
+            //      5 isotropic-all
+            //      6 justified
+            //      >6 reserved for registered values
+            return new RestrictedTextType(reader.ReadIndex());
+        }
     }
 }

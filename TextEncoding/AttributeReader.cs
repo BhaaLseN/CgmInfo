@@ -234,6 +234,11 @@ namespace CgmInfo.TextEncoding
             return new LineTypeInitialOffset(reader.ReadReal());
         }
 
+        public static RestrictedTextType RestrictedTextType(MetafileReader reader)
+        {
+            return new RestrictedTextType(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

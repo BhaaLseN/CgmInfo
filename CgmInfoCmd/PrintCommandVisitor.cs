@@ -547,6 +547,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Line Type Initial Offset: {0}", lineTypeInitialOffset.Offset);
         }
+        public void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, PrintContext parameter)
+        {
+            parameter.WriteLine("Restricted Text Type: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

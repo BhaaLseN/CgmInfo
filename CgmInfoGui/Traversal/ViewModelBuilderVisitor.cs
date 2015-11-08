@@ -725,6 +725,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("LINE TYPE INITIAL OFFSET: {0}", lineTypeInitialOffset.Offset);
         }
+        public void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, MetafileContext parameter)
+        {
+            parameter.AddNode("RESTRICTED TEXT TYPE: {0} ({1})", restrictedTextType.Index, restrictedTextType.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

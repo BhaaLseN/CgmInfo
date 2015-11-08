@@ -81,6 +81,7 @@
     <Compile Include="Commands\Attributes\PatternSize.cs" />
     <Compile Include="Commands\Attributes\PatternTable.cs" />
     <Compile Include="Commands\Attributes\PickIdentifier.cs" />
+    <Compile Include="Commands\Attributes\RestrictedTextType.cs" />
     <Compile Include="Commands\Attributes\TextAlignment.cs" />
     <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
     <Compile Include="Commands\Attributes\TextColor.cs" />

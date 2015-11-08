@@ -560,6 +560,12 @@ namespace CgmInfoCmd
             parameter.WriteLine("Color Specifiers: {0}", string.Join(" ", interpolatedInterior.ColorSpecifiers.Select(c => c.ToString())));
             parameter.EndLevel();
         }
+        public void AcceptAttributeEdgeCap(EdgeCap edgeCap, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Cap: line {0} ({1}), dash {2} ({3})",
+                edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
+                edgeCap.DashCapIndicator, edgeCap.DashCapName);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

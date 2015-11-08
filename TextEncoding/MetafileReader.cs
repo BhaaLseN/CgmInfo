@@ -150,6 +150,7 @@ namespace CgmInfo.TextEncoding
             { "LINETYPEINITOFFSET", AttributeReader.LineTypeInitialOffset },
             { "RESTRTEXTTYPE", AttributeReader.RestrictedTextType },
             { "INTERPINT", AttributeReader.InterpolatedInterior },
+            { "EDGECAP", AttributeReader.EdgeCap },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

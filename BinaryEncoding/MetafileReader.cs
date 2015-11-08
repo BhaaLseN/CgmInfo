@@ -642,6 +642,9 @@ namespace CgmInfo.BinaryEncoding
                 case 43: // INTERPOLATED INTERIOR
                     result = AttributeReader.InterpolatedInterior(this, commandHeader);
                     break;
+                case 44: // EDGE CAP
+                    result = AttributeReader.EdgeCap(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

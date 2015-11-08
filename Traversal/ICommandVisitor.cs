@@ -141,6 +141,7 @@ namespace CgmInfo.Traversal
         void AcceptAttributeLineTypeInitialOffset(LineTypeInitialOffset lineTypeInitialOffset, T parameter);
         void AcceptAttributeRestrictedTextType(RestrictedTextType restrictedTextType, T parameter);
         void AcceptAttributeInterpolatedInterior(InterpolatedInterior interpolatedInterior, T parameter);
+        void AcceptAttributeEdgeCap(EdgeCap edgeCap, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

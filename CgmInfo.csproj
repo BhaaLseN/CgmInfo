@@ -56,6 +56,7 @@
     <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
     <Compile Include="Commands\Attributes\ColorTable.cs" />
     <Compile Include="Commands\Attributes\EdgeBundleIndex.cs" />
+    <Compile Include="Commands\Attributes\EdgeCap.cs" />
     <Compile Include="Commands\Attributes\EdgeColor.cs" />
     <Compile Include="Commands\Attributes\EdgeType.cs" />
     <Compile Include="Commands\Attributes\EdgeVisibility.cs" />

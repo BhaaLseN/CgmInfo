@@ -471,5 +471,22 @@ namespace CgmInfo.BinaryEncoding
             }
             return new InterpolatedInterior(style, referenceGeometry.ToArray(), stageDesignators.ToArray(), colorSpecifiers.ToArray());
         }
+
+        public static EdgeCap EdgeCap(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) edge cap indicator: the following values are standardized:
+            //      1 unspecified
+            //      2 butt
+            //      3 round
+            //      4 projected square
+            //      5 triangle
+            //      >5 reserved for registered values
+            // P2: (index) dash cap indicator: valid values are
+            //      1 unspecified
+            //      2 butt
+            //      3 match
+            //      >3 reserved for registered values
+            return new EdgeCap(reader.ReadIndex(), reader.ReadIndex());
+        }
     }
 }

@@ -287,6 +287,11 @@ namespace CgmInfo.TextEncoding
             return new InterpolatedInterior(style, referenceGeometry.ToArray(), stageDesignators.ToArray(), colorSpecifiers.ToArray());
         }
 
+        public static EdgeCap EdgeCap(MetafileReader reader)
+        {
+            return new EdgeCap(reader.ReadIndex(), reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

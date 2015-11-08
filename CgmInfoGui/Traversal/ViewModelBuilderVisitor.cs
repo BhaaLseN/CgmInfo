@@ -746,6 +746,17 @@ namespace CgmInfoGui.Traversal
                 colorSpecifiersNode,
             });
         }
+        public void AcceptAttributeEdgeCap(EdgeCap edgeCap, MetafileContext parameter)
+        {
+            var edgeCapNode = parameter.AddNode("EDGE CAP: line {0} ({1}), dash {2} ({3})",
+                edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
+                edgeCap.DashCapIndicator, edgeCap.DashCapName);
+            edgeCapNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Edge Cap Indicator: {0} ({1})", edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName)),
+                new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", edgeCap.DashCapIndicator, edgeCap.DashCapName)),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -499,5 +499,16 @@ namespace CgmInfo.BinaryEncoding
             //      >4 reserved for registered values
             return new EdgeJoin(reader.ReadIndex());
         }
+
+        public static EdgeTypeContinuation EdgeTypeContinuation(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) continuation mode: the following values are standardized:
+            //      1 unspecified
+            //      2 continue
+            //      3 restart
+            //      4 adaptive continue
+            //      >4 reserved for registered values
+            return new EdgeTypeContinuation(reader.ReadIndex());
+        }
     }
 }

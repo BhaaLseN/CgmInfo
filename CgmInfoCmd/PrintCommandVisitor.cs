@@ -570,6 +570,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Edge Join: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
         }
+        public void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, PrintContext parameter)
+        {
+            parameter.WriteLine("Edge Type Continuation: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

@@ -648,6 +648,9 @@ namespace CgmInfo.BinaryEncoding
                 case 45: // EDGE JOIN
                     result = AttributeReader.EdgeJoin(this, commandHeader);
                     break;
+                case 46: // EDGE TYPE CONTINUATION
+                    result = AttributeReader.EdgeTypeContinuation(this, commandHeader);
+                    break;
                 default:
                     result = ReadUnsupportedElement(commandHeader);
                     break;

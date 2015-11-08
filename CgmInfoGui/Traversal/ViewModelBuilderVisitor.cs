@@ -761,6 +761,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("EDGE JOIN: {0} ({1})", edgeJoin.Index, edgeJoin.Name);
         }
+        public void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, MetafileContext parameter)
+        {
+            parameter.AddNode("EDGE TYPE CONTINUATION: {0} ({1})", edgeTypeContinuation.Index, edgeTypeContinuation.Name);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

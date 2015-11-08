@@ -60,6 +60,7 @@
     <Compile Include="Commands\Attributes\EdgeColor.cs" />
     <Compile Include="Commands\Attributes\EdgeJoin.cs" />
     <Compile Include="Commands\Attributes\EdgeType.cs" />
+    <Compile Include="Commands\Attributes\EdgeTypeContinuation.cs" />
     <Compile Include="Commands\Attributes\EdgeVisibility.cs" />
     <Compile Include="Commands\Attributes\EdgeWidth.cs" />
     <Compile Include="Commands\Attributes\FillBundleIndex.cs" />

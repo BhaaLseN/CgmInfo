@@ -473,6 +473,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Metafile Descriptor elements

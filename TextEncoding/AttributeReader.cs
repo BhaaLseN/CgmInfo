@@ -297,6 +297,11 @@ namespace CgmInfo.TextEncoding
             return new EdgeJoin(reader.ReadIndex());
         }
 
+        public static EdgeTypeContinuation EdgeTypeContinuation(MetafileReader reader)
+        {
+            return new EdgeTypeContinuation(reader.ReadIndex());
+        }
+
         private static TextPrecisionType ParseTextPrecision(string token)
         {
             // assume string unless it matches any of the other possibilities

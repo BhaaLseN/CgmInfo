@@ -193,7 +193,7 @@ namespace CgmInfo.TextEncoding
 
                 string elementName = ReadToken();
                 Func<MetafileReader, Command> commandHandler;
-                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out commandHandler))
+                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out commandHandler) || commandHandler == null)
                     commandHandler = r => UnsupportedCommand(elementName);
 
                 return commandHandler(this);

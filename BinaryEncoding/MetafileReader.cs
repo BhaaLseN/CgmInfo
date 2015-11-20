@@ -13,6 +13,235 @@ namespace CgmInfo.BinaryEncoding
 {
     public class MetafileReader : BaseMetafileReader
     {
+        // ISO/IEC 8632-3 8.1, Table 2
+        private readonly Dictionary<int, Dictionary<int, Func<MetafileReader, CommandHeader, Command>>> _commandTable = new Dictionary<int, Dictionary<int, Func<MetafileReader, CommandHeader, Command>>>
+        {
+            // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
+            { 0, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    // { 0, ReadNoop }, // no-op; these are skipped already while reading the command header
+                    { 1, ReadBeginMetafile },
+                    { 2, ReadEndMetafile },
+                    { 3, DelimiterElementReader.BeginPicture },
+                    { 4, DelimiterElementReader.BeginPictureBody },
+                    { 5, DelimiterElementReader.EndPicture },
+                    { 6, DelimiterElementReader.BeginSegment },
+                    { 7, DelimiterElementReader.EndSegment },
+                    { 8, DelimiterElementReader.BeginFigure },
+                    { 9, DelimiterElementReader.EndFigure },
+                    // entries 10, 11 and 12 do not exist in ISO/IEC 8632-3
+                    { 13, DelimiterElementReader.BeginProtectionRegion },
+                    { 14, DelimiterElementReader.EndProtectionRegion },
+                    { 15, DelimiterElementReader.BeginCompoundLine },
+                    { 16, DelimiterElementReader.EndCompoundLine },
+                    { 17, DelimiterElementReader.BeginCompoundTextPath },
+                    { 18, DelimiterElementReader.EndCompoundTextPath },
+                    { 19, DelimiterElementReader.BeginTileArray },
+                    { 20, DelimiterElementReader.EndTileArray },
+                    { 21, DelimiterElementReader.BeginApplicationStructure },
+                    { 22, DelimiterElementReader.BeginApplicationStructureBody },
+                    { 23, DelimiterElementReader.EndApplicationStructure },
+                }
+            },
+            // metafile descriptor elements [ISO/IEC 8632-3 8.3, Table 4]
+            { 1, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, MetafileDescriptorReader.MetafileVersion },
+                    { 2, MetafileDescriptorReader.MetafileDescription },
+                    { 3, ReadVdcType },
+                    { 4, ReadIntegerPrecision },
+                    { 5, ReadRealPrecision },
+                    { 6, ReadIndexPrecision },
+                    { 7, ReadColorPrecision },
+                    { 8, ReadColorIndexPrecision },
+                    { 9, MetafileDescriptorReader.MaximumColorIndex },
+                    { 10, MetafileDescriptorReader.ColorValueExtent },
+                    { 11, MetafileDescriptorReader.MetafileElementsList },
+                    { 12, ReadMetafileDefaultsReplacement },
+                    { 13, MetafileDescriptorReader.FontList },
+                    { 14, MetafileDescriptorReader.CharacterSetList },
+                    { 15, MetafileDescriptorReader.CharacterCodingAnnouncer },
+                    { 16, ReadNamePrecision },
+                    { 17, MetafileDescriptorReader.MaximumVdcExtent },
+                    //{ 18, MetafileDescriptorReader.SegmentPriorityExtent },
+                    { 19, ReadColorModel },
+                    //{ 20, MetafileDescriptorReader.ColorCalibration },
+                    //{ 21, MetafileDescriptorReader.FontProperties },
+                    //{ 22, MetafileDescriptorReader.GlyphMapping },
+                    //{ 23, MetafileDescriptorReader.SymbolLibraryList },
+                    //{ 24, MetafileDescriptorReader.PictureDirectory },
+                }
+            },
+            // picture descriptor elements [ISO/IEC 8632-3 8.4, Table 5]
+            { 2, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, PictureDescriptorReader.ScalingMode },
+                    { 2, ReadColorSelectionMode },
+                    { 3, ReadLineWidthSpecificationMode },
+                    { 4, ReadMarkerSizeSpecificationMode },
+                    { 5, ReadEdgeWidthSpecificationMode },
+                    { 6, PictureDescriptorReader.VdcExtent },
+                    { 7, PictureDescriptorReader.BackgroundColor },
+                    { 8, PictureDescriptorReader.DeviceViewport },
+                    { 9, ReadDeviceViewportSpecificationMode },
+                    //{ 10, PictureDescriptorReader.DeviceViewportMapping },
+                    //{ 11, PictureDescriptorReader.LineRepresentation },
+                    //{ 12, PictureDescriptorReader.MarkerRepresentation },
+                    //{ 13, PictureDescriptorReader.TextRepresentation },
+                    //{ 14, PictureDescriptorReader.FillRepresentation },
+                    //{ 15, PictureDescriptorReader.EdgeRepresentation },
+                    { 16, ReadInteriorStyleSpecificationMode },
+                    { 17, PictureDescriptorReader.LineAndEdgeTypeDefinition },
+                    { 18, PictureDescriptorReader.HatchStyleDefinition },
+                    { 19, PictureDescriptorReader.GeometricPatternDefinition },
+                    //{ 20, PictureDescriptorReader.ApplicationStructureDirectory },
+                }
+            },
+            // control elements [ISO/IEC 8632-3 8.5, Table 6]
+            { 3, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, ReadVdcIntegerPrecision },
+                    { 2, ReadVdcRealPrecision },
+                    { 3, ControlElementReader.AuxiliaryColor },
+                    { 4, ControlElementReader.Transparency },
+                    { 5, ControlElementReader.ClipRectangle },
+                    { 6, ControlElementReader.ClipIndicator },
+                    { 7, ControlElementReader.LineClippingMode },
+                    { 8, ControlElementReader.MarkerClippingMode },
+                    { 9, ControlElementReader.EdgeClippingMode },
+                    { 10, ControlElementReader.NewRegion },
+                    { 11, ControlElementReader.SavePrimitiveContext },
+                    { 12, ControlElementReader.RestorePrimitiveContext },
+                    // entries 13 until 16 do not exist in ISO/IEC 8632-3
+                    { 17, ControlElementReader.ProtectionRegionIndicator },
+                    { 18, ControlElementReader.GeneralizedTextPathMode },
+                    { 19, ControlElementReader.MiterLimit },
+                    //{ 20, ControlElementReader.TransparentCellColor },
+                }
+            },
+            // graphical primitive elements [ISO/IEC 8632-3 8.6, Table 7]
+            { 4, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, GraphicalPrimitiveReader.Polyline },
+                    //{ 2, GraphicalPrimitiveReader.DisjointPolyline },
+                    //{ 3, GraphicalPrimitiveReader.Polymarker },
+                    { 4, GraphicalPrimitiveReader.Text },
+                    { 5, GraphicalPrimitiveReader.RestrictedText },
+                    { 6, GraphicalPrimitiveReader.AppendText },
+                    { 7, GraphicalPrimitiveReader.Polygon },
+                    //{ 8, GraphicalPrimitiveReader.PolygonSet },
+                    //{ 9, GraphicalPrimitiveReader.CellArray },
+                    //{ 10, GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
+                    { 11, GraphicalPrimitiveReader.Rectangle },
+                    { 12, GraphicalPrimitiveReader.Circle },
+                    //{ 13, GraphicalPrimitiveReader.CircularArcPoint },
+                    //{ 14, GraphicalPrimitiveReader.CirculeArc3PointClose },
+                    { 15, GraphicalPrimitiveReader.CircularArcCenter },
+                    //{ 16, GraphicalPrimitiveReader.CircularArcCenterClose },
+                    { 17, GraphicalPrimitiveReader.Ellipse },
+                    { 18, GraphicalPrimitiveReader.EllipticalArc },
+                    //{ 19, GraphicalPrimitiveReader.EllipticalArcClose },
+                    //{ 20, GraphicalPrimitiveReader.CircularArcCenterReversed },
+                    //{ 21, GraphicalPrimitiveReader.ConnectingEdge },
+                    //{ 22, GraphicalPrimitiveReader.HyperbolicArc },
+                    //{ 23, GraphicalPrimitiveReader.ParabolicArc },
+                    //{ 24, GraphicalPrimitiveReader.NonUniformBSpline },
+                    //{ 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
+                    //{ 26, GraphicalPrimitiveReader.Polybezier },
+                    //{ 27, GraphicalPrimitiveReader.Polysymbol },
+                    //{ 28, GraphicalPrimitiveReader.BitonalTile },
+                    //{ 29, GraphicalPrimitiveReader.Tile },
+                }
+            },
+            // attribute elements [ISO/IEC 8632-3 8.7, Table 8]
+            { 5, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, AttributeReader.LineBundleIndex },
+                    { 2, AttributeReader.LineType },
+                    { 3, AttributeReader.LineWidth },
+                    { 4, AttributeReader.LineColor },
+                    { 5, AttributeReader.MarkerBundleIndex },
+                    { 6, AttributeReader.MarkerType },
+                    { 7, AttributeReader.MarkerSize },
+                    { 8, AttributeReader.MarkerColor },
+                    { 9, AttributeReader.TextBundleIndex },
+                    { 10, AttributeReader.TextFontIndex },
+                    { 11, AttributeReader.TextPrecision },
+                    { 12, AttributeReader.CharacterExpansionFactor },
+                    { 13, AttributeReader.CharacterSpacing },
+                    { 14, AttributeReader.TextColor },
+                    { 15, AttributeReader.CharacterHeight },
+                    { 16, AttributeReader.CharacterOrientation },
+                    { 17, AttributeReader.TextPath },
+                    { 18, AttributeReader.TextAlignment },
+                    { 19, AttributeReader.CharacterSetIndex },
+                    { 20, AttributeReader.AlternateCharacterSetIndex },
+                    { 21, AttributeReader.FillBundleIndex },
+                    { 22, AttributeReader.InteriorStyle },
+                    { 23, AttributeReader.FillColor },
+                    { 24, AttributeReader.HatchIndex },
+                    { 25, AttributeReader.PatternIndex },
+                    { 26, AttributeReader.EdgeBundleIndex },
+                    { 27, AttributeReader.EdgeType },
+                    { 28, AttributeReader.EdgeWidth },
+                    { 29, AttributeReader.EdgeColor },
+                    { 30, AttributeReader.EdgeVisibility },
+                    { 31, AttributeReader.FillReferencePoint },
+                    { 32, AttributeReader.PatternTable },
+                    { 33, AttributeReader.PatternSize },
+                    { 34, ReadColorTable },
+                    { 35, AttributeReader.AspectSourceFlags },
+                    { 36, AttributeReader.PickIdentifier },
+                    { 37, AttributeReader.LineCap },
+                    { 38, AttributeReader.LineJoin },
+                    { 39, AttributeReader.LineTypeContinuation },
+                    { 40, AttributeReader.LineTypeInitialOffset },
+                    //{ 41, ControlElementReader.TextScoreType },
+                    { 42, AttributeReader.RestrictedTextType },
+                    { 43, AttributeReader.InterpolatedInterior },
+                    { 44, AttributeReader.EdgeCap },
+                    { 45, AttributeReader.EdgeJoin },
+                    { 46, AttributeReader.EdgeTypeContinuation },
+                    { 47, AttributeReader.EdgeTypeInitialOffset },
+                    //{ 48, ControlElementReader.SymbolLibraryIndex },
+                    //{ 49, ControlElementReader.SymbolColor },
+                    //{ 50, ControlElementReader.SymbolSize },
+                    //{ 51, ControlElementReader.SymbolOrientation },
+                }
+            },
+            // escape elements [ISO/IEC 8632-3 8.8, Table 9]
+            { 6, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    //{ 1, EscapeReader.Escape },
+                }
+            },
+            // external elements [ISO/IEC 8632-3 8.9, Table 10]
+            { 7, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    //{ 1, ExternalReader.Message },
+                    //{ 2, ExternalReader.ApplicationData },
+                }
+            },
+            // segment control/segment attribute elements [ISO/IEC 8632-3 8.10, Table 11]
+            { 8, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    //{ 1, SegmentReader.CopySegment },
+                    //{ 2, SegmentReader.InheritanceFilter },
+                    //{ 3, SegmentReader.ClipInheritance },
+                    //{ 4, SegmentReader.SegmentTransformation },
+                    //{ 5, SegmentReader.SegmentHighlighting },
+                    //{ 6, SegmentReader.SegmentDisplayPriority },
+                    //{ 7, SegmentReader.SegmentPickPriority },
+                }
+            },
+            // application structure descriptor elements [ISO/IEC 8632-3 8.11, Table 12]
+            { 9, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
+                {
+                    { 1, ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
+                }
+            },
+        };
+
         private BinaryReader _reader;
         private bool _insideMetafile;
         // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
@@ -51,38 +280,13 @@ namespace CgmInfo.BinaryEncoding
             if (commandHeader == null)
                 return null;
 
-            // ISO/IEC 8632-3 8.1, Table 2
-            switch (commandHeader.ElementClass)
-            {
-                case 0: // delimiter
-                    result = ReadDelimiterElement(commandHeader);
-                    break;
-                case 1: // metafile descriptor
-                    result = ReadMetafileDescriptorElement(commandHeader);
-                    break;
-                case 2: // picture descriptor
-                    result = ReadPictureDescriptorElement(commandHeader);
-                    break;
-                case 3: // control
-                    result = ReadControlElement(commandHeader);
-                    break;
-                case 4: // graphical primitive
-                    result = ReadGraphicalPrimitive(commandHeader);
-                    break;
-                case 5: // attribute
-                    result = ReadAttribute(commandHeader);
-                    break;
-                case 9: // application structure descriptor
-                    result = ReadApplicationStructureDescriptor(commandHeader);
-                    break;
-                case 6: // escape
-                case 7: // external
-                case 8: // segment control/segment attribute
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
+            Func<MetafileReader, CommandHeader, Command> commandHandler;
+            Dictionary<int, Func<MetafileReader, CommandHeader, Command>> elementClassMap;
+            if (!_commandTable.TryGetValue(commandHeader.ElementClass, out elementClassMap) || elementClassMap == null ||
+                !elementClassMap.TryGetValue(commandHeader.ElementId, out commandHandler) || commandHandler == null)
+                commandHandler = ReadUnsupportedElement;
 
+            result = commandHandler(this, commandHeader);
             // the only case where _insideMetafile is allowed to be false is at the end of the file (0/2 END METAFILE)
             if (result != null && !_insideMetafile)
             {
@@ -169,527 +373,144 @@ namespace CgmInfo.BinaryEncoding
             return new CommandHeader(elementClass, elementId, parameterListLength);
         }
 
-        private Command ReadUnsupportedElement(CommandHeader commandHeader)
+        private static Command ReadUnsupportedElement(MetafileReader reader, CommandHeader commandHeader)
         {
             // no need to seek here anymore; the whole unsupported element has been read into the temporary buffer already anyways
             return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId);
         }
 
-        private Command ReadDelimiterElement(CommandHeader commandHeader)
+        private static Command ReadBeginMetafile(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            // ISO/IEC 8632-3 8.2, Table 3
-            switch (commandHeader.ElementId)
-            {
-                //case 0: // no-op; these are skipped already while reading the command header
-                case 1: // BEGIN METAFILE
-                    result = DelimiterElementReader.BeginMetafile(this, commandHeader);
-                    _insideMetafile = result != null;
-                    break;
-                case 2: // END METAFILE
-                    result = DelimiterElementReader.EndMetafile(this, commandHeader);
-                    _insideMetafile = false;
-                    break;
-                case 3: // BEGIN PICTURE
-                    result = DelimiterElementReader.BeginPicture(this, commandHeader);
-                    break;
-                case 4: // BEGIN PICTURE BODY
-                    result = DelimiterElementReader.BeginPictureBody(this, commandHeader);
-                    break;
-                case 5: // END PICTURE
-                    result = DelimiterElementReader.EndPicture(this, commandHeader);
-                    break;
-                case 6: // BEGIN SEGMENT
-                    result = DelimiterElementReader.BeginSegment(this, commandHeader);
-                    break;
-                case 7: // END SEGMENT
-                    result = DelimiterElementReader.EndSegment(this, commandHeader);
-                    break;
-                case 8: // BEGIN FIGURE
-                    result = DelimiterElementReader.BeginFigure(this, commandHeader);
-                    break;
-                case 9: // END FIGURE
-                    result = DelimiterElementReader.EndFigure(this, commandHeader);
-                    break;
-                case 13: // BEGIN PROTECTION REGION
-                    result = DelimiterElementReader.BeginProtectionRegion(this, commandHeader);
-                    break;
-                case 14: // END PROTECTION REGION
-                    result = DelimiterElementReader.EndProtectionRegion(this, commandHeader);
-                    break;
-                case 15: // BEGIN COMPOUND LINE
-                    result = DelimiterElementReader.BeginCompoundLine(this, commandHeader);
-                    break;
-                case 16: // END COMPOUND LINE
-                    result = DelimiterElementReader.EndCompoundLine(this, commandHeader);
-                    break;
-                case 17: // BEGIN COMPOUND TEXT PATH
-                    result = DelimiterElementReader.BeginCompoundTextPath(this, commandHeader);
-                    break;
-                case 18: // END COMPOUND TEXT PATH
-                    result = DelimiterElementReader.EndCompoundTextPath(this, commandHeader);
-                    break;
-                case 19: // BEGIN TILE ARRAY
-                    result = DelimiterElementReader.BeginTileArray(this, commandHeader);
-                    break;
-                case 20: // END TILE ARRAY
-                    result = DelimiterElementReader.EndTileArray(this, commandHeader);
-                    break;
-                case 21: // BEGIN APPLICATION STRUCTURE
-                    result = DelimiterElementReader.BeginApplicationStructure(this, commandHeader);
-                    break;
-                case 22: // BEGIN APPLICATION STRUCTURE BODY
-                    result = DelimiterElementReader.BeginApplicationStructureBody(this, commandHeader);
-                    break;
-                case 23: // END APPLICATION STRUCTURE
-                    result = DelimiterElementReader.EndApplicationStructure(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
+            var result = DelimiterElementReader.BeginMetafile(reader, commandHeader);
+            reader._insideMetafile = result != null;
             return result;
         }
-
-        private Command ReadMetafileDescriptorElement(CommandHeader commandHeader)
+        private static Command ReadEndMetafile(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            // ISO/IEC 8632-3 8.3, Table 4
-            switch (commandHeader.ElementId)
-            {
-                case 1: // METAFILE VERSION
-                    result = MetafileDescriptorReader.MetafileVersion(this, commandHeader);
-                    break;
-                case 2: // METAFILE DESCRIPTION
-                    result = MetafileDescriptorReader.MetafileDescription(this, commandHeader);
-                    break;
-                case 3: // VDC TYPE
-                    var vdcType = MetafileDescriptorReader.VdcType(this, commandHeader);
-                    Descriptor.VdcType = vdcType.Specification;
-                    result = vdcType;
-                    break;
-                case 4: // INTEGER PRECISION
-                    var integerPrecision = MetafileDescriptorReader.IntegerPrecision(this, commandHeader);
-                    Descriptor.IntegerPrecision = integerPrecision.Precision;
-                    result = integerPrecision;
-                    break;
-                case 5: // REAL PRECISION
-                    var realPrecision = MetafileDescriptorReader.RealPrecision(this, commandHeader);
-                    Descriptor.RealPrecision = realPrecision.Specification;
-                    result = realPrecision;
-                    break;
-                case 6: // INDEX PRECISION
-                    var indexPrecision = MetafileDescriptorReader.IndexPrecision(this, commandHeader);
-                    Descriptor.IndexPrecision = indexPrecision.Precision;
-                    result = indexPrecision;
-                    break;
-                case 7: // COLOUR PRECISION
-                    var colorPrecision = MetafileDescriptorReader.ColorPrecision(this, commandHeader);
-                    Descriptor.ColorPrecision = colorPrecision.Precision;
-                    result = colorPrecision;
-                    break;
-                case 8: // COLOUR INDEX PRECISION
-                    var colorIndexPrecision = MetafileDescriptorReader.ColorIndexPrecision(this, commandHeader);
-                    Descriptor.ColorIndexPrecision = colorIndexPrecision.Precision;
-                    result = colorIndexPrecision;
-                    break;
-                case 9: // MAXIMUM COLOUR INDEX
-                    result = MetafileDescriptorReader.MaximumColorIndex(this, commandHeader);
-                    break;
-                case 10: // COLOUR VALUE EXTENT
-                    result = MetafileDescriptorReader.ColorValueExtent(this, commandHeader);
-                    break;
-                case 11: // METAFILE ELEMENTS LIST
-                    result = MetafileDescriptorReader.MetafileElementsList(this, commandHeader);
-                    break;
-                case 12: // METAFILE DEFAULTS REPLACEMENT
-                    result = ReadMetafileDefaultsReplacement(commandHeader);
-                    break;
-                case 13: // FONT LIST
-                    result = MetafileDescriptorReader.FontList(this, commandHeader);
-                    break;
-                case 14: // CHARACTER SET LIST
-                    result = MetafileDescriptorReader.CharacterSetList(this, commandHeader);
-                    break;
-                case 15: // CHARACTER CODING ANNOUNCER
-                    result = MetafileDescriptorReader.CharacterCodingAnnouncer(this, commandHeader);
-                    break;
-                case 16: // NAME PRECISION
-                    var namePrecision = MetafileDescriptorReader.NamePrecision(this, commandHeader);
-                    Descriptor.NamePrecision = namePrecision.Precision;
-                    result = namePrecision;
-                    break;
-                case 17: // MAXIMUM VDC EXTENT
-                    result = MetafileDescriptorReader.MaximumVdcExtent(this, commandHeader);
-                    break;
-                case 19: // COLOUR MODEL
-                    var colorModel = MetafileDescriptorReader.ColorModelCommand(this, commandHeader);
-                    Descriptor.ColorModel = colorModel.ColorModel;
-                    result = colorModel;
-                    break;
-                case 18: // SEGMENT PRIORITY EXTENT
-                case 20: // COLOUR CALIBRATION
-                case 21: // FONT PROPERTIES
-                case 22: // GLYPH MAPPING
-                case 23: // SYMBOL LIBRARY LIST
-                case 24: // PICTURE DIRECTORY
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
+            var result = DelimiterElementReader.EndMetafile(reader, commandHeader);
+            reader._insideMetafile = false;
             return result;
         }
-
-        private Command ReadPictureDescriptorElement(CommandHeader commandHeader)
+        
+        private static Command ReadVdcType(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            // ISO/IEC 8632-3 8.4, Table 5
-            switch (commandHeader.ElementId)
-            {
-                case 1: // SCALING MODE
-                    result = PictureDescriptorReader.ScalingMode(this, commandHeader);
-                    break;
-                case 2: // COLOUR SELECTION MODE
-                    var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(this, commandHeader);
-                    Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
-                    result = colorSelectionMode;
-                    break;
-                case 3: // LINE WIDTH SPECIFICATION MODE
-                    var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(this, commandHeader);
-                    Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
-                    result = lineWidthSpecificationMode;
-                    break;
-                case 4: // MARKER SIZE SPECIFICATION MODE
-                    var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(this, commandHeader);
-                    Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
-                    result = markerSizeSpecificationMode;
-                    break;
-                case 5: // EDGE WIDTH SPECIFICATION MODE
-                    var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(this, commandHeader);
-                    Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
-                    result = edgeWidthSpecificationMode;
-                    break;
-                case 6: // VDC EXTENT
-                    result = PictureDescriptorReader.VdcExtent(this, commandHeader);
-                    break;
-                case 7: // BACKGROUND COLOUR
-                    result = PictureDescriptorReader.BackgroundColor(this, commandHeader);
-                    break;
-                case 8: // DEVICE VIEWPORT
-                    result = PictureDescriptorReader.DeviceViewport(this, commandHeader);
-                    break;
-                case 9: // DEVICE VIEWPORT SPECIFICATION MODE
-                    var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(this, commandHeader);
-                    Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
-                    result = deviceViewportSpecificationMode;
-                    break;
-                case 16: // INTERIOR STYLE SPECIFICATION MODE
-                    var interiorStyleSpecificationMode = PictureDescriptorReader.InteriorStyleSpecificationMode(this, commandHeader);
-                    Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
-                    result = interiorStyleSpecificationMode;
-                    break;
-                case 17: // LINE AND EDGE TYPE DEFINITION
-                    result = PictureDescriptorReader.LineAndEdgeTypeDefinition(this, commandHeader);
-                    break;
-                case 18: // HATCH STYLE DEFINITION
-                    result = PictureDescriptorReader.HatchStyleDefinition(this, commandHeader);
-                    break;
-                case 19: // GEOMETRIC PATTERN DEFINITION
-                    result = PictureDescriptorReader.GeometricPatternDefinition(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
-            return result;
+            var vdcType = MetafileDescriptorReader.VdcType(reader, commandHeader);
+            reader.Descriptor.VdcType = vdcType.Specification;
+            return vdcType;
+        }
+        private static Command ReadIntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var integerPrecision = MetafileDescriptorReader.IntegerPrecision(reader, commandHeader);
+            reader.Descriptor.IntegerPrecision = integerPrecision.Precision;
+            return integerPrecision;
+        }
+        private static Command ReadRealPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var realPrecision = MetafileDescriptorReader.RealPrecision(reader, commandHeader);
+            reader.Descriptor.RealPrecision = realPrecision.Specification;
+            return realPrecision;
+        }
+        private static Command ReadIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var indexPrecision = MetafileDescriptorReader.IndexPrecision(reader, commandHeader);
+            reader.Descriptor.IndexPrecision = indexPrecision.Precision;
+            return indexPrecision;
+        }
+        private static Command ReadColorPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var colorPrecision = MetafileDescriptorReader.ColorPrecision(reader, commandHeader);
+            reader.Descriptor.ColorPrecision = colorPrecision.Precision;
+            return colorPrecision;
+        }
+        private static Command ReadColorIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var colorIndexPrecision = MetafileDescriptorReader.ColorIndexPrecision(reader, commandHeader);
+            reader.Descriptor.ColorIndexPrecision = colorIndexPrecision.Precision;
+            return colorIndexPrecision;
+        }
+        private static Command ReadNamePrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var namePrecision = MetafileDescriptorReader.NamePrecision(reader, commandHeader);
+            reader.Descriptor.NamePrecision = namePrecision.Precision;
+            return namePrecision;
+        }
+        private static Command ReadColorModel(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var colorModel = MetafileDescriptorReader.ColorModelCommand(reader, commandHeader);
+            reader.Descriptor.ColorModel = colorModel.ColorModel;
+            return colorModel;
         }
 
-        private Command ReadControlElement(CommandHeader commandHeader)
+        private static Command ReadColorSelectionMode(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            switch (commandHeader.ElementId)
-            {
-                case 1: // VDC INTEGER PRECISION
-                    var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(this, commandHeader);
-                    Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
-                    result = vdcIntegerPrecision;
-                    break;
-                case 2: // VDC REAL PRECISION
-                    var vdcRealPrecision = ControlElementReader.VdcRealPrecision(this, commandHeader);
-                    Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
-                    result = vdcRealPrecision;
-                    break;
-                case 3: // AUXILIARY COLOR
-                    result = ControlElementReader.AuxiliaryColor(this, commandHeader);
-                    break;
-                case 4: // TRANSPARENCY
-                    result = ControlElementReader.Transparency(this, commandHeader);
-                    break;
-                case 5: // CLIP RECTANGLE
-                    result = ControlElementReader.ClipRectangle(this, commandHeader);
-                    break;
-                case 6: // CLIP INDICATOR
-                    result = ControlElementReader.ClipIndicator(this, commandHeader);
-                    break;
-                case 7: // LINE CLIPPING MODE
-                    result = ControlElementReader.LineClippingMode(this, commandHeader);
-                    break;
-                case 8: // MARKER CLIPPING MODE
-                    result = ControlElementReader.MarkerClippingMode(this, commandHeader);
-                    break;
-                case 9: // EDGE CLIPPING MODE
-                    result = ControlElementReader.EdgeClippingMode(this, commandHeader);
-                    break;
-                case 10: // NEW REGION
-                    result = ControlElementReader.NewRegion(this, commandHeader);
-                    break;
-                case 11: // SAVE PRIMITIVE CONTEXT
-                    result = ControlElementReader.SavePrimitiveContext(this, commandHeader);
-                    break;
-                case 12: // RESTORE PRIMITIVE CONTEXT
-                    result = ControlElementReader.RestorePrimitiveContext(this, commandHeader);
-                    break;
-                case 17: // PROTECTION REGION INDICATOR
-                    result = ControlElementReader.ProtectionRegionIndicator(this, commandHeader);
-                    break;
-                case 18: // GENERALIZED TEXT PATH MODE
-                    result = ControlElementReader.GeneralizedTextPathMode(this, commandHeader);
-                    break;
-                case 19: // MITRE LIMIT
-                    result = ControlElementReader.MiterLimit(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
-            return result;
+            var colorSelectionMode = PictureDescriptorReader.ColorSelectionMode(reader, commandHeader);
+            reader.Descriptor.ColorSelectionMode = colorSelectionMode.ColorMode;
+            return colorSelectionMode;
+        }
+        private static Command ReadLineWidthSpecificationMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var lineWidthSpecificationMode = PictureDescriptorReader.LineWidthSpecificationMode(reader, commandHeader);
+            reader.Descriptor.LineWidthSpecificationMode = lineWidthSpecificationMode.WidthSpecificationMode;
+            return lineWidthSpecificationMode;
+        }
+        private static Command ReadMarkerSizeSpecificationMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var markerSizeSpecificationMode = PictureDescriptorReader.MarkerSizeSpecificationMode(reader, commandHeader);
+            reader.Descriptor.MarkerSizeSpecificationMode = markerSizeSpecificationMode.WidthSpecificationMode;
+            return markerSizeSpecificationMode;
+        }
+        private static Command ReadEdgeWidthSpecificationMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var edgeWidthSpecificationMode = PictureDescriptorReader.EdgeWidthSpecificationMode(reader, commandHeader);
+            reader.Descriptor.EdgeWidthSpecificationMode = edgeWidthSpecificationMode.WidthSpecificationMode;
+            return edgeWidthSpecificationMode;
+        }
+        private static Command ReadDeviceViewportSpecificationMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var deviceViewportSpecificationMode = PictureDescriptorReader.DeviceViewportSpecificationMode(reader, commandHeader);
+            reader.Descriptor.DeviceViewportSpecificationMode = deviceViewportSpecificationMode.SpecificationMode;
+            return deviceViewportSpecificationMode;
+        }
+        private static Command ReadInteriorStyleSpecificationMode(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var interiorStyleSpecificationMode = PictureDescriptorReader.InteriorStyleSpecificationMode(reader, commandHeader);
+            reader.Descriptor.InteriorStyleSpecificationMode = interiorStyleSpecificationMode.WidthSpecificationMode;
+            return interiorStyleSpecificationMode;
         }
 
-        private Command ReadGraphicalPrimitive(CommandHeader commandHeader)
+        private static Command ReadVdcIntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            // ISO/IEC 8632-3 8.6, Table 7
-            switch (commandHeader.ElementId)
-            {
-                case 1: // POLYLINE
-                    result = GraphicalPrimitiveReader.Polyline(this, commandHeader);
-                    break;
-                case 4: // TEXT
-                    result = GraphicalPrimitiveReader.Text(this, commandHeader);
-                    break;
-                case 5: // RESTRICTED TEXT
-                    result = GraphicalPrimitiveReader.RestrictedText(this, commandHeader);
-                    break;
-                case 6: // APPEND TEXT
-                    result = GraphicalPrimitiveReader.AppendText(this, commandHeader);
-                    break;
-                case 7: // POLYGON
-                    result = GraphicalPrimitiveReader.Polygon(this, commandHeader);
-                    break;
-                case 11: // RECTANGLE
-                    result = GraphicalPrimitiveReader.Rectangle(this, commandHeader);
-                    break;
-                case 12: // CIRCLE
-                    result = GraphicalPrimitiveReader.Circle(this, commandHeader);
-                    break;
-                case 15: // CIRCULAR ARC CENTER
-                    result = GraphicalPrimitiveReader.CircularArcCenter(this, commandHeader);
-                    break;
-                case 17: // ELLIPSE
-                    result = GraphicalPrimitiveReader.Ellipse(this, commandHeader);
-                    break;
-                case 18: // ELLIPTICAL ARC
-                    result = GraphicalPrimitiveReader.EllipticalArc(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
-            return result;
+            var vdcIntegerPrecision = ControlElementReader.VdcIntegerPrecision(reader, commandHeader);
+            reader.Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
+            return vdcIntegerPrecision;
+        }
+        private static Command ReadVdcRealPrecision(MetafileReader reader, CommandHeader commandHeader)
+        {
+            var vdcRealPrecision = ControlElementReader.VdcRealPrecision(reader, commandHeader);
+            reader.Descriptor.VdcRealPrecision = vdcRealPrecision.Specification;
+            return vdcRealPrecision;
         }
 
-        private Command ReadAttribute(CommandHeader commandHeader)
+        private static Command ReadColorTable(MetafileReader reader, CommandHeader commandHeader)
         {
-            Command result;
-            // ISO/IEC 8632-3 8.11, Table 8
-            switch (commandHeader.ElementId)
-            {
-                case 1: // LINE BUNDLE INDEX
-                    result = AttributeReader.LineBundleIndex(this, commandHeader);
-                    break;
-                case 2: // LINE TYPE
-                    result = AttributeReader.LineType(this, commandHeader);
-                    break;
-                case 3: // LINE WIDTH
-                    result = AttributeReader.LineWidth(this, commandHeader);
-                    break;
-                case 4: // LINE COLOUR
-                    result = AttributeReader.LineColor(this, commandHeader);
-                    break;
-                case 5: // MARKER BUNDLE INDEX
-                    result = AttributeReader.MarkerBundleIndex(this, commandHeader);
-                    break;
-                case 6: // MARKER TYPE
-                    result = AttributeReader.MarkerType(this, commandHeader);
-                    break;
-                case 7: // MARKER SIZE
-                    result = AttributeReader.MarkerSize(this, commandHeader);
-                    break;
-                case 8: // MARKER COLOUR
-                    result = AttributeReader.MarkerColor(this, commandHeader);
-                    break;
-                case 9: // TEXT BUNDLE INDEX
-                    result = AttributeReader.TextBundleIndex(this, commandHeader);
-                    break;
-                case 10: // TEXT FONT INDEX
-                    result = AttributeReader.TextFontIndex(this, commandHeader);
-                    break;
-                case 11: // TEXT PRECISION
-                    result = AttributeReader.TextPrecision(this, commandHeader);
-                    break;
-                case 12: // CHARACTER EXPANSION FACTOR
-                    result = AttributeReader.CharacterExpansionFactor(this, commandHeader);
-                    break;
-                case 13: // CHARACTER SPACING
-                    result = AttributeReader.CharacterSpacing(this, commandHeader);
-                    break;
-                case 14: // TEXT COLOUR
-                    result = AttributeReader.TextColor(this, commandHeader);
-                    break;
-                case 15: // CHARACTER HEIGHT
-                    result = AttributeReader.CharacterHeight(this, commandHeader);
-                    break;
-                case 16: // CHARACTER ORIENTATION
-                    result = AttributeReader.CharacterOrientation(this, commandHeader);
-                    break;
-                case 17: // TEXT PATH
-                    result = AttributeReader.TextPath(this, commandHeader);
-                    break;
-                case 18: // TEXT ALIGNMENT
-                    result = AttributeReader.TextAlignment(this, commandHeader);
-                    break;
-                case 19: // CHARACTER SET INDEX
-                    result = AttributeReader.CharacterSetIndex(this, commandHeader);
-                    break;
-                case 20: // ALTERNATE CHARACTER SET INDEX
-                    result = AttributeReader.AlternateCharacterSetIndex(this, commandHeader);
-                    break;
-                case 21: // FILL BUNDLE INDEX
-                    result = AttributeReader.FillBundleIndex(this, commandHeader);
-                    break;
-                case 22: // INTERIOR STYLE
-                    result = AttributeReader.InteriorStyle(this, commandHeader);
-                    break;
-                case 23: // FILL COLOUR
-                    result = AttributeReader.FillColor(this, commandHeader);
-                    break;
-                case 24: // HATCH INDEX
-                    result = AttributeReader.HatchIndex(this, commandHeader);
-                    break;
-                case 25: // PATTERN INDEX
-                    result = AttributeReader.PatternIndex(this, commandHeader);
-                    break;
-                case 26: // EDGE BUNDLE INDEX
-                    result = AttributeReader.EdgeBundleIndex(this, commandHeader);
-                    break;
-                case 27: // EDGE TYPE
-                    result = AttributeReader.EdgeType(this, commandHeader);
-                    break;
-                case 28: // EDGE WIDTH
-                    result = AttributeReader.EdgeWidth(this, commandHeader);
-                    break;
-                case 29: // EDGE COLOUR
-                    result = AttributeReader.EdgeColor(this, commandHeader);
-                    break;
-                case 30: // EDGE VISIBILITY
-                    result = AttributeReader.EdgeVisibility(this, commandHeader);
-                    break;
-                case 31: // FILL REFERENCE POINT
-                    result = AttributeReader.FillReferencePoint(this, commandHeader);
-                    break;
-                case 32: // PATTERN TABLE
-                    result = AttributeReader.PatternTable(this, commandHeader);
-                    break;
-                case 33: // PATTERN SIZE
-                    result = AttributeReader.PatternSize(this, commandHeader);
-                    break;
-                case 34: // COLOUR TABLE
-                    var colorTable = AttributeReader.ColorTable(this, commandHeader);
-                    Descriptor.UpdateColorTable(colorTable);
-                    result = colorTable;
-                    break;
-                case 35: // ASPECT SOURCE FLAGS
-                    result = AttributeReader.AspectSourceFlags(this, commandHeader);
-                    break;
-                case 36: // PICK IDENTIFIER
-                    result = AttributeReader.PickIdentifier(this, commandHeader);
-                    break;
-                case 37: // LINE CAP
-                    result = AttributeReader.LineCap(this, commandHeader);
-                    break;
-                case 38: // LINE JOIN
-                    result = AttributeReader.LineJoin(this, commandHeader);
-                    break;
-                case 39: // LINE TYPE CONTINUATION
-                    result = AttributeReader.LineTypeContinuation(this, commandHeader);
-                    break;
-                case 40: // LINE TYPE INITIAL OFFSET
-                    result = AttributeReader.LineTypeInitialOffset(this, commandHeader);
-                    break;
-                case 42: // RESTRICTED TEXT TYPE
-                    result = AttributeReader.RestrictedTextType(this, commandHeader);
-                    break;
-                case 43: // INTERPOLATED INTERIOR
-                    result = AttributeReader.InterpolatedInterior(this, commandHeader);
-                    break;
-                case 44: // EDGE CAP
-                    result = AttributeReader.EdgeCap(this, commandHeader);
-                    break;
-                case 45: // EDGE JOIN
-                    result = AttributeReader.EdgeJoin(this, commandHeader);
-                    break;
-                case 46: // EDGE TYPE CONTINUATION
-                    result = AttributeReader.EdgeTypeContinuation(this, commandHeader);
-                    break;
-                case 47: // EDGE TYPE INITIAL OFFSET
-                    result = AttributeReader.EdgeTypeInitialOffset(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
-            return result;
+            var colorTable = AttributeReader.ColorTable(reader, commandHeader);
+            reader.Descriptor.UpdateColorTable(colorTable);
+            return colorTable;
         }
 
-        private Command ReadApplicationStructureDescriptor(CommandHeader commandHeader)
-        {
-            Command result;
-            // ISO/IEC 8632-3 8.11, Table 12
-            switch (commandHeader.ElementId)
-            {
-                case 1: // APPLICATION STRUCTURE ATTRIBUTE
-                    result = ApplicationStructureDescriptorReader.ApplicationStructureAttribute(this, commandHeader);
-                    break;
-                default:
-                    result = ReadUnsupportedElement(commandHeader);
-                    break;
-            }
-            return result;
-        }
-
-        private MetafileDefaultsReplacement ReadMetafileDefaultsReplacement(CommandHeader commandHeader)
+        private static MetafileDefaultsReplacement ReadMetafileDefaultsReplacement(MetafileReader reader, CommandHeader commandHeader)
         {
             // this is a memory stream set by ReadCommandHeader, which contains 1..n commands itself.
             // however, _reader is disposed after every run, so we need to keep this buffer around another way.
             using (var replacementsStream = new MemoryStream())
             {
-                _reader.BaseStream.CopyTo(replacementsStream);
+                reader._reader.BaseStream.CopyTo(replacementsStream);
                 replacementsStream.Position = 0;
 
                 var commands = new List<Command>();
                 while (true)
                 {
-                    var command = ReadCommand(replacementsStream);
+                    var command = reader.ReadCommand(replacementsStream);
                     if (command == null)
                         break;
                     commands.Add(command);
@@ -720,7 +541,7 @@ namespace CgmInfo.BinaryEncoding
             uint ret = 0;
             int signBit = 1 << ((numBytes * 8) - 1);
             int maxUnsignedValue = 1 << (numBytes * 8);
-            while (numBytes --> 0)
+            while (numBytes-- > 0)
                 ret = (ret << 8) | ReadByte();
             int signedRet = (int)ret;
             if (!unsigned && (ret & signBit) > 0)

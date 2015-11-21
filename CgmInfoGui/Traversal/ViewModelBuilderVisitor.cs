@@ -818,6 +818,19 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("CLIP INHERITANCE: {0}", clipInheritance.InheritanceType);
         }
+        public void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, MetafileContext parameter)
+        {
+            var segmentTransformationNode = parameter.AddNode("SEGMENT TRANSFORMATION: {0}", segmentTransformation.SegmentIdentifier);
+            segmentTransformationNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("X Scale: {0}", segmentTransformation.Matrix.Elements[0])),
+                new SimpleNode(string.Format("X Rotation: {0}", segmentTransformation.Matrix.Elements[1])),
+                new SimpleNode(string.Format("Y Rotation: {0}", segmentTransformation.Matrix.Elements[2])),
+                new SimpleNode(string.Format("Y Scale: {0}", segmentTransformation.Matrix.Elements[3])),
+                new SimpleNode(string.Format("X Translation: {0}", segmentTransformation.Matrix.Elements[4])),
+                new SimpleNode(string.Format("Y Translation: {0}", segmentTransformation.Matrix.Elements[5])),
+            });
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

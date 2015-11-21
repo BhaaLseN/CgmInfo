@@ -167,6 +167,7 @@ namespace CgmInfo.TextEncoding
             { "COPYSEG", SegmentReader.CopySegment },
             { "INHFILTER", SegmentReader.InheritanceFilter },
             { "CLIPINH", SegmentReader.ClipInheritance },
+            { "SEGTRAN", SegmentReader.SegmentTransformation },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

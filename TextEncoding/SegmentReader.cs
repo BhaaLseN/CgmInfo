@@ -25,6 +25,10 @@ namespace CgmInfo.TextEncoding
         {
             return new ClipInheritance(ParseInheritanceType(reader.ReadEnum()));
         }
+        public static SegmentTransformation SegmentTransformation(MetafileReader reader)
+        {
+            return new SegmentTransformation(reader.ReadName(), reader.ReadMatrix());
+        }
 
         private static SegmentTransformationApplication ParseTransformationApplication(string token)
         {

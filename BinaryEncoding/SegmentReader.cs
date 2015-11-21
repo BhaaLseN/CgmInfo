@@ -46,5 +46,19 @@ namespace CgmInfo.BinaryEncoding
             //      1 intersection
             return new ClipInheritance(reader.ReadEnum<ClipInheritanceType>());
         }
+        public static SegmentTransformation SegmentTransformation(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) segment identifier
+            // P2: The next 6 values are components of a transformation matrix consisting of a scaling and rotation portion
+            // (2 x 2 R) and a translation portion (2 x 1 VDC). In the binary encoding this is expressed as a 2 x 3 matrix of
+            // the form:
+            //      a11: (real) x scale component
+            //      a12: (real) x rotation component
+            //      a21: (real) y rotation component
+            //      a22: (real) y scale component
+            //      a13: (vdc) x translation component
+            //      a23: (vdc) y translation component
+            return new SegmentTransformation(reader.ReadName(), reader.ReadMatrix());
+        }
     }
 }

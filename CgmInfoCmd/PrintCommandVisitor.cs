@@ -612,6 +612,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Clip Inheritance: {0}", clipInheritance.InheritanceType);
         }
+        public void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Transformation: {0} -> {1}", segmentTransformation.SegmentIdentifier, segmentTransformation.Matrix);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

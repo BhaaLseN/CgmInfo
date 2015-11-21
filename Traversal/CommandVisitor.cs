@@ -681,6 +681,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         public virtual void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, T parameter)

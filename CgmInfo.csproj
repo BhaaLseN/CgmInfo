@@ -161,6 +161,7 @@
     <Compile Include="Commands\Segment\CopySegment.cs" />
     <Compile Include="Commands\Segment\InheritanceFilter.cs" />
     <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
+    <Compile Include="Commands\Segment\SegmentTransformation.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />

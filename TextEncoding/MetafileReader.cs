@@ -166,6 +166,7 @@ namespace CgmInfo.TextEncoding
             // segment control and segment attribute elements [ISO/IEC 8632-4 7.9]
             { "COPYSEG", SegmentReader.CopySegment },
             { "INHFILTER", SegmentReader.InheritanceFilter },
+            { "CLIPINH", SegmentReader.ClipInheritance },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

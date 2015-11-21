@@ -608,6 +608,10 @@ namespace CgmInfoCmd
                 parameter.WriteLine("{0}: {1}", item.Designator, item.Setting);
             parameter.EndLevel();
         }
+        public void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Inheritance: {0}", clipInheritance.InheritanceType);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

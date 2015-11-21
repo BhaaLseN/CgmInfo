@@ -814,6 +814,10 @@ namespace CgmInfoGui.Traversal
             var inheritanceFilterNode = parameter.AddNode("INHERITANCE FILTER [{0} entries]", inheritanceFilter.Items.Length);
             inheritanceFilterNode.Nodes.AddRange(inheritanceFilter.Items.Select(i => new SimpleNode(string.Format("{0}: {1}", i.Designator, i.Setting))));
         }
+        public void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, MetafileContext parameter)
+        {
+            parameter.AddNode("CLIP INHERITANCE: {0}", clipInheritance.InheritanceType);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -114,6 +114,7 @@
     <Compile Include="Commands\Enums\ActionRequired.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
+    <Compile Include="Commands\Enums\ClipInheritanceType.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
     <Compile Include="Commands\PictureDescriptor\LineAndEdgeTypeDefinition.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
+    <Compile Include="Commands\Segment\ClipInheritance.cs" />
     <Compile Include="Commands\Segment\CopySegment.cs" />
     <Compile Include="Commands\Segment\InheritanceFilter.cs" />
     <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />

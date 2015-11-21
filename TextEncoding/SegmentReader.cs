@@ -21,6 +21,10 @@ namespace CgmInfo.TextEncoding
             }
             return new InheritanceFilter(items.ToArray());
         }
+        public static ClipInheritance ClipInheritance(MetafileReader reader)
+        {
+            return new ClipInheritance(ParseInheritanceType(reader.ReadEnum()));
+        }
 
         private static SegmentTransformationApplication ParseTransformationApplication(string token)
         {
@@ -134,6 +138,13 @@ namespace CgmInfo.TextEncoding
             if (token.ToUpperInvariant() == "SEG")
                 return InheritanceFilterSetting.Segment;
             return InheritanceFilterSetting.StateList;
+        }
+        private static ClipInheritanceType ParseInheritanceType(string token)
+        {
+            // assume "state list" unless its "intersection"
+            if (token.ToUpperInvariant() == "INTERSECTION")
+                return ClipInheritanceType.Intersection;
+            return ClipInheritanceType.StateList;
         }
     }
 }

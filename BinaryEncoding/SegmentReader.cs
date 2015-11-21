@@ -39,5 +39,12 @@ namespace CgmInfo.BinaryEncoding
             }
             return new InheritanceFilter(items.ToArray());
         }
+        public static ClipInheritance ClipInheritance(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated) clip inheritance: valid values are
+            //      0 state list
+            //      1 intersection
+            return new ClipInheritance(reader.ReadEnum<ClipInheritanceType>());
+        }
     }
 }

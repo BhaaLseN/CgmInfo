@@ -170,6 +170,7 @@ namespace CgmInfo.TextEncoding
             { "SEGTRAN", SegmentReader.SegmentTransformation },
             { "SEGHIGHL", SegmentReader.SegmentHighlighting },
             { "SEGDISPPRI", SegmentReader.SegmentDisplayPriority },
+            { "SEGPICKPRI", SegmentReader.SegmentPickPriority },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

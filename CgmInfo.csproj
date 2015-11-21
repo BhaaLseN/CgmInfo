@@ -164,6 +164,7 @@
     <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
     <Compile Include="Commands\Segment\SegmentDisplayPriority.cs" />
     <Compile Include="Commands\Segment\SegmentHighlighting.cs" />
+    <Compile Include="Commands\Segment\SegmentPickPriority.cs" />
     <Compile Include="Commands\Segment\SegmentTransformation.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />

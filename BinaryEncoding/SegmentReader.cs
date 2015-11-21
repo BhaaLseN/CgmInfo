@@ -74,5 +74,11 @@ namespace CgmInfo.BinaryEncoding
             // P2: (integer) segment display priority: valid values are non-negative integers
             return new SegmentDisplayPriority(reader.ReadName(), reader.ReadInteger());
         }
+        public static SegmentPickPriority SegmentPickPriority(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) segment identifier
+            // P2: (integer) segment pick priority: valid values are non-negative integers
+            return new SegmentPickPriority(reader.ReadName(), reader.ReadInteger());
+        }
     }
 }

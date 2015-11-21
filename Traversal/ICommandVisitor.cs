@@ -163,6 +163,7 @@ namespace CgmInfo.Traversal
         void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, T parameter);
         void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, T parameter);
         void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, T parameter);
+        void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

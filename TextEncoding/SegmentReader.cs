@@ -37,6 +37,10 @@ namespace CgmInfo.TextEncoding
         {
             return new SegmentDisplayPriority(reader.ReadName(), reader.ReadInteger());
         }
+        public static SegmentPickPriority SegmentPickPriority(MetafileReader reader)
+        {
+            return new SegmentPickPriority(reader.ReadName(), reader.ReadInteger());
+        }
 
         private static SegmentTransformationApplication ParseTransformationApplication(string token)
         {

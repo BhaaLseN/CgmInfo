@@ -624,6 +624,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Segment Display Priority: {0} -> {1}", segmentDisplayPriority.SegmentIdentifier, segmentDisplayPriority.Priority);
         }
+        public void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Pick Priority: {0} -> {1}", segmentPickPriority.SegmentIdentifier, segmentPickPriority.Priority);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

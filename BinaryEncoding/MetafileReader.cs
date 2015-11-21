@@ -232,7 +232,7 @@ namespace CgmInfo.BinaryEncoding
                     { 4, SegmentReader.SegmentTransformation },
                     { 5, SegmentReader.SegmentHighlighting },
                     { 6, SegmentReader.SegmentDisplayPriority },
-                    //{ 7, SegmentReader.SegmentPickPriority },
+                    { 7, SegmentReader.SegmentPickPriority },
                 }
             },
             // application structure descriptor elements [ISO/IEC 8632-3 8.11, Table 12]

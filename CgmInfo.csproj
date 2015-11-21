@@ -45,6 +45,7 @@
     <Compile Include="BinaryEncoding\ControlElementReader.cs" />
     <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
     <Compile Include="BinaryEncoding\EscapeReader.cs" />
+    <Compile Include="BinaryEncoding\ExternalReader.cs" />
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Commands\Control\Transparency.cs" />
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
+    <Compile Include="Commands\Enums\ActionRequired.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Commands\Enums\VerticalTextAlignment.cs" />
     <Compile Include="Commands\Enums\WidthSpecificationModeType.cs" />
     <Compile Include="Commands\Escape\EscapeCommand.cs" />
+    <Compile Include="Commands\External\Message.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />
@@ -216,6 +219,7 @@
     <Compile Include="TextEncoding\ControlElementReader.cs" />
     <Compile Include="TextEncoding\DelimiterElementReader.cs" />
     <Compile Include="TextEncoding\EscapeReader.cs" />
+    <Compile Include="TextEncoding\ExternalReader.cs" />
     <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="TextEncoding\MetafileReader.cs" />

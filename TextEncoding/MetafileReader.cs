@@ -158,6 +158,9 @@ namespace CgmInfo.TextEncoding
             // escape elements [ISO/IEC 8632-4 7.7]
             { "ESCAPE", EscapeReader.Escape },
 
+            // external elements [ISO/IEC 8632-4 7.8]
+            { "MESSAGE", ExternalReader.Message },
+
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };

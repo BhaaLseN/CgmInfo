@@ -218,7 +218,7 @@ namespace CgmInfo.BinaryEncoding
             // external elements [ISO/IEC 8632-3 8.9, Table 10]
             { 7, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
-                    //{ 1, ExternalReader.Message },
+                    { 1, ExternalReader.Message },
                     //{ 2, ExternalReader.ApplicationData },
                 }
             },

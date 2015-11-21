@@ -6,6 +6,7 @@ using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -780,6 +781,12 @@ namespace CgmInfoGui.Traversal
                 recordNode.Nodes.AddRange(e.Values.Select(v => new SimpleNode(Convert.ToString(v))));
                 return recordNode;
             }));
+        }
+
+        public void AcceptExternalMessage(Message message, MetafileContext parameter)
+        {
+            var msgNode = parameter.AddNode("MESSAGE: {0}", message.ActionRequired);
+            msgNode.Add(new SimpleNode(message.MessageString));
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

@@ -3,6 +3,7 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -149,6 +150,9 @@ namespace CgmInfo.Traversal
 
         // escape
         void AcceptEscapeEscape(EscapeCommand escapeCommand, T parameter);
+
+        // external
+        void AcceptExternalMessage(Message message, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

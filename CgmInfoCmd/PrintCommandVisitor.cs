@@ -5,6 +5,7 @@ using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -583,6 +584,11 @@ namespace CgmInfoCmd
         public void AcceptEscapeEscape(EscapeCommand escapeCommand, PrintContext parameter)
         {
             parameter.WriteLine("Escape: {0} ({1}) '{2}'", escapeCommand.Identifier, escapeCommand.Name, escapeCommand.DataRecord);
+        }
+
+        public void AcceptExternalMessage(Message message, PrintContext parameter)
+        {
+            parameter.WriteLine("Message: {0} '{1}'", message.ActionRequired, message.MessageString);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)

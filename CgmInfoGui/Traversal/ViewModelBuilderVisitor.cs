@@ -831,6 +831,10 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Y Translation: {0}", segmentTransformation.Matrix.Elements[5])),
             });
         }
+        public void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, MetafileContext parameter)
+        {
+            parameter.AddNode("SEGMENT HIGHLIGHTING: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

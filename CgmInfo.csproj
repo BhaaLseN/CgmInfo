@@ -119,6 +119,7 @@
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
     <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
+    <Compile Include="Commands\Enums\Highlighting.cs" />
     <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
     <Compile Include="Commands\Enums\InheritanceFilterDesignator.cs" />
     <Compile Include="Commands\Enums\InheritanceFilterSetting.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Commands\Segment\CopySegment.cs" />
     <Compile Include="Commands\Segment\InheritanceFilter.cs" />
     <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
+    <Compile Include="Commands\Segment\SegmentHighlighting.cs" />
     <Compile Include="Commands\Segment\SegmentTransformation.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />

@@ -60,5 +60,13 @@ namespace CgmInfo.BinaryEncoding
             //      a23: (vdc) y translation component
             return new SegmentTransformation(reader.ReadName(), reader.ReadMatrix());
         }
+        public static SegmentHighlighting SegmentHighlighting(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) segment identifier
+            // P2: (enumerated) highlighting: valid values are
+            //      0 normal
+            //      1 highlighted
+            return new SegmentHighlighting(reader.ReadName(), reader.ReadEnum<Highlighting>());
+        }
     }
 }

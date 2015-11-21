@@ -230,7 +230,7 @@ namespace CgmInfo.BinaryEncoding
                     { 2, SegmentReader.InheritanceFilter },
                     { 3, SegmentReader.ClipInheritance },
                     { 4, SegmentReader.SegmentTransformation },
-                    //{ 5, SegmentReader.SegmentHighlighting },
+                    { 5, SegmentReader.SegmentHighlighting },
                     //{ 6, SegmentReader.SegmentDisplayPriority },
                     //{ 7, SegmentReader.SegmentPickPriority },
                 }

@@ -616,6 +616,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Segment Transformation: {0} -> {1}", segmentTransformation.SegmentIdentifier, segmentTransformation.Matrix);
         }
+        public void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Highlighting: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

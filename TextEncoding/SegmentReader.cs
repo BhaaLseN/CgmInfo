@@ -29,6 +29,10 @@ namespace CgmInfo.TextEncoding
         {
             return new SegmentTransformation(reader.ReadName(), reader.ReadMatrix());
         }
+        public static SegmentHighlighting SegmentHighlighting(MetafileReader reader)
+        {
+            return new SegmentHighlighting(reader.ReadName(), ParseHighlighting(reader.ReadEnum()));
+        }
 
         private static SegmentTransformationApplication ParseTransformationApplication(string token)
         {
@@ -149,6 +153,13 @@ namespace CgmInfo.TextEncoding
             if (token.ToUpperInvariant() == "INTERSECTION")
                 return ClipInheritanceType.Intersection;
             return ClipInheritanceType.StateList;
+        }
+        private static Highlighting ParseHighlighting(string token)
+        {
+            // assume "normal" unless its "highlighted"
+            if (token.ToUpperInvariant() == "HIGHL")
+                return Highlighting.Highlighted;
+            return Highlighting.Normal;
         }
     }
 }

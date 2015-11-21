@@ -809,6 +809,11 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Y Translation: {0}", copySegment.Matrix.Elements[5])),
             });
         }
+        public void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, MetafileContext parameter)
+        {
+            var inheritanceFilterNode = parameter.AddNode("INHERITANCE FILTER [{0} entries]", inheritanceFilter.Items.Length);
+            inheritanceFilterNode.Nodes.AddRange(inheritanceFilter.Items.Select(i => new SimpleNode(string.Format("{0}: {1}", i.Designator, i.Setting))));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.Segment;
 
@@ -22,6 +23,21 @@ namespace CgmInfo.BinaryEncoding
             //      0: no
             //      1: yes
             return new CopySegment(reader.ReadName(), reader.ReadMatrix(), reader.ReadEnum<SegmentTransformationApplication>());
+        }
+        public static InheritanceFilter InheritanceFilter(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (enumerated list) list of one or more of: (list omitted)
+            // P2: (enumerated) setting: valid values are
+            //      0 state list
+            //      1 segment
+            var items = new List<InheritanceFilterItem>();
+            while (reader.HasMoreData(4)) // 2 per enum
+            {
+                items.Add(new InheritanceFilterItem(
+                    reader.ReadEnum<InheritanceFilterDesignator>(),
+                    reader.ReadEnum<InheritanceFilterSetting>()));
+            }
+            return new InheritanceFilter(items.ToArray());
         }
     }
 }

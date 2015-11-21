@@ -227,7 +227,7 @@ namespace CgmInfo.BinaryEncoding
             { 8, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
                     { 1, SegmentReader.CopySegment },
-                    //{ 2, SegmentReader.InheritanceFilter },
+                    { 2, SegmentReader.InheritanceFilter },
                     //{ 3, SegmentReader.ClipInheritance },
                     //{ 4, SegmentReader.SegmentTransformation },
                     //{ 5, SegmentReader.SegmentHighlighting },

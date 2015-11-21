@@ -600,6 +600,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Copy Segment: {0} -> {1} (applied: {2})", copySegment.SegmentIdentifier, copySegment.Matrix, copySegment.TransformationApplication);
         }
+        public void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, PrintContext parameter)
+        {
+            parameter.WriteLine("Inheritance Filter: {0} entries", inheritanceFilter.Items.Length);
+            parameter.BeginLevel();
+            foreach (var item in inheritanceFilter.Items)
+                parameter.WriteLine("{0}: {1}", item.Designator, item.Setting);
+            parameter.EndLevel();
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

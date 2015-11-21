@@ -158,6 +158,7 @@ namespace CgmInfo.Traversal
 
         // segment control and segment attributes
         void AcceptSegmentCopySegment(CopySegment copySegment, T parameter);
+        void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

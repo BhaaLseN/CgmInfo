@@ -119,6 +119,8 @@
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
     <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
     <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
+    <Compile Include="Commands\Enums\InheritanceFilterDesignator.cs" />
+    <Compile Include="Commands\Enums\InheritanceFilterSetting.cs" />
     <Compile Include="Commands\Enums\InteriorStyleType.cs" />
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
@@ -155,6 +157,8 @@
     <Compile Include="Commands\PictureDescriptor\LineAndEdgeTypeDefinition.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
     <Compile Include="Commands\Segment\CopySegment.cs" />
+    <Compile Include="Commands\Segment\InheritanceFilter.cs" />
+    <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />

@@ -7,6 +7,7 @@ using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 
 namespace CgmInfo.Traversal
 {
@@ -154,6 +155,9 @@ namespace CgmInfo.Traversal
         // external
         void AcceptExternalMessage(Message message, T parameter);
         void AcceptExternalApplicationData(ApplicationData applicationData, T parameter);
+
+        // segment control and segment attributes
+        void AcceptSegmentCopySegment(CopySegment copySegment, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

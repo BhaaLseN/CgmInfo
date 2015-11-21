@@ -7,6 +7,7 @@ using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 
 namespace CgmInfo.Traversal
 {
@@ -660,6 +661,13 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptExternalApplicationData(ApplicationData applicationData, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Segment control and segment attribute elements
+        public virtual void AcceptSegmentCopySegment(CopySegment copySegment, T parameter)
         {
             // intentionally left blank
         }

@@ -10,6 +10,7 @@ using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 
@@ -792,6 +793,21 @@ namespace CgmInfoGui.Traversal
         {
             var appData = parameter.AddNode("APPLICATION DATA: {0}", applicationData.Identifier);
             appData.Add(new SimpleNode(applicationData.DataRecord));
+        }
+
+        public void AcceptSegmentCopySegment(CopySegment copySegment, MetafileContext parameter)
+        {
+            var copySegmentNode = parameter.AddNode("COPY SEGMENT: {0}", copySegment.SegmentIdentifier);
+            copySegmentNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Transformation applied: {0}", copySegment.TransformationApplication)),
+                new SimpleNode(string.Format("X Scale: {0}", copySegment.Matrix.Elements[0])),
+                new SimpleNode(string.Format("X Rotation: {0}", copySegment.Matrix.Elements[1])),
+                new SimpleNode(string.Format("Y Rotation: {0}", copySegment.Matrix.Elements[2])),
+                new SimpleNode(string.Format("Y Scale: {0}", copySegment.Matrix.Elements[3])),
+                new SimpleNode(string.Format("X Translation: {0}", copySegment.Matrix.Elements[4])),
+                new SimpleNode(string.Format("Y Translation: {0}", copySegment.Matrix.Elements[5])),
+            });
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

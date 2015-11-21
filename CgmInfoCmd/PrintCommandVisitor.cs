@@ -9,6 +9,7 @@ using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 using CgmInfo.Traversal;
 
 namespace CgmInfoCmd
@@ -593,6 +594,11 @@ namespace CgmInfoCmd
         public void AcceptExternalApplicationData(ApplicationData applicationData, PrintContext parameter)
         {
             parameter.WriteLine("Application Data: {0} '{1}'", applicationData.Identifier, applicationData.DataRecord);
+        }
+
+        public void AcceptSegmentCopySegment(CopySegment copySegment, PrintContext parameter)
+        {
+            parameter.WriteLine("Copy Segment: {0} -> {1} (applied: {2})", copySegment.SegmentIdentifier, copySegment.Matrix, copySegment.TransformationApplication);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)

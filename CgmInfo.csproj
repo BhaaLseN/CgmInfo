@@ -49,6 +49,7 @@
     <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
     <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
+    <Compile Include="BinaryEncoding\SegmentReader.cs" />
     <Compile Include="Commands\Attributes\AlternateCharacterSetIndex.cs" />
     <Compile Include="Commands\Attributes\AspectSourceFlags.cs" />
     <Compile Include="Commands\Attributes\CharacterExpansionFactor.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Commands\Enums\OnOffIndicator.cs" />
     <Compile Include="Commands\Enums\RegionIndicator.cs" />
     <Compile Include="Commands\Enums\ScalingModeType.cs" />
+    <Compile Include="Commands\Enums\SegmentTransformationApplication.cs" />
     <Compile Include="Commands\Enums\TextPathMode.cs" />
     <Compile Include="Commands\Enums\TextPathType.cs" />
     <Compile Include="Commands\Enums\TextPrecisionType.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
     <Compile Include="Commands\PictureDescriptor\LineAndEdgeTypeDefinition.cs" />
     <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
+    <Compile Include="Commands\Segment\CopySegment.cs" />
     <Compile Include="MetafileProperties.cs" />
     <Compile Include="MetafileReader.cs" />
     <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
     <Compile Include="TextEncoding\MetafileReader.cs" />
     <Compile Include="TextEncoding\PictureDescriptorReader.cs" />
+    <Compile Include="TextEncoding\SegmentReader.cs" />
     <Compile Include="TextEncoding\TextEncodingHelper.cs" />
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />

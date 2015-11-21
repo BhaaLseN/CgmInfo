@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -161,6 +162,9 @@ namespace CgmInfo.TextEncoding
             // external elements [ISO/IEC 8632-4 7.8]
             { "MESSAGE", ExternalReader.Message },
             { "APPLDATA", ExternalReader.ApplicationData },
+
+            // segment control and segment attribute elements [ISO/IEC 8632-4 7.9]
+            { "COPYSEG", SegmentReader.CopySegment },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
@@ -419,6 +423,16 @@ namespace CgmInfo.TextEncoding
                 return ReadVdc();
             else
                 return ReadReal();
+        }
+        internal Matrix ReadMatrix()
+        {
+            return new Matrix(
+                // a11 and a12
+                (float)ReadReal(), (float)ReadReal(),
+                // a21 and a22
+                (float)ReadReal(), (float)ReadReal(),
+                // a13 and a23
+                (float)ReadVdc(), (float)ReadVdc());
         }
         internal double ReadVdc()
         {

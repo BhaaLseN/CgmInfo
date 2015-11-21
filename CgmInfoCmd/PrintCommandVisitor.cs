@@ -620,6 +620,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Segment Highlighting: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
         }
+        public void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Display Priority: {0} -> {1}", segmentDisplayPriority.SegmentIdentifier, segmentDisplayPriority.Priority);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

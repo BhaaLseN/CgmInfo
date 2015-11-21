@@ -169,6 +169,7 @@ namespace CgmInfo.TextEncoding
             { "CLIPINH", SegmentReader.ClipInheritance },
             { "SEGTRAN", SegmentReader.SegmentTransformation },
             { "SEGHIGHL", SegmentReader.SegmentHighlighting },
+            { "SEGDISPPRI", SegmentReader.SegmentDisplayPriority },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

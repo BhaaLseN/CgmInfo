@@ -33,6 +33,10 @@ namespace CgmInfo.TextEncoding
         {
             return new SegmentHighlighting(reader.ReadName(), ParseHighlighting(reader.ReadEnum()));
         }
+        public static SegmentDisplayPriority SegmentDisplayPriority(MetafileReader reader)
+        {
+            return new SegmentDisplayPriority(reader.ReadName(), reader.ReadInteger());
+        }
 
         private static SegmentTransformationApplication ParseTransformationApplication(string token)
         {

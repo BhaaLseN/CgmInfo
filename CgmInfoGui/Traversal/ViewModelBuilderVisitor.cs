@@ -835,6 +835,10 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("SEGMENT HIGHLIGHTING: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
         }
+        public void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, MetafileContext parameter)
+        {
+            parameter.AddNode("SEGMENT DISPLAY PRIORITY: {0} -> {1}", segmentDisplayPriority.SegmentIdentifier, segmentDisplayPriority.Priority);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

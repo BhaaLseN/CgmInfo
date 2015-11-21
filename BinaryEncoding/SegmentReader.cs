@@ -68,5 +68,11 @@ namespace CgmInfo.BinaryEncoding
             //      1 highlighted
             return new SegmentHighlighting(reader.ReadName(), reader.ReadEnum<Highlighting>());
         }
+        public static SegmentDisplayPriority SegmentDisplayPriority(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (name) segment identifier
+            // P2: (integer) segment display priority: valid values are non-negative integers
+            return new SegmentDisplayPriority(reader.ReadName(), reader.ReadInteger());
+        }
     }
 }

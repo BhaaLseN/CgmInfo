@@ -162,6 +162,7 @@
     <Compile Include="Commands\Segment\CopySegment.cs" />
     <Compile Include="Commands\Segment\InheritanceFilter.cs" />
     <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
+    <Compile Include="Commands\Segment\SegmentDisplayPriority.cs" />
     <Compile Include="Commands\Segment\SegmentHighlighting.cs" />
     <Compile Include="Commands\Segment\SegmentTransformation.cs" />
     <Compile Include="MetafileProperties.cs" />

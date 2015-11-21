@@ -212,7 +212,7 @@ namespace CgmInfo.BinaryEncoding
             // escape elements [ISO/IEC 8632-3 8.8, Table 9]
             { 6, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
-                    //{ 1, EscapeReader.Escape },
+                    { 1, EscapeReader.Escape },
                 }
             },
             // external elements [ISO/IEC 8632-3 8.9, Table 10]

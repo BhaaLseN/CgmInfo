@@ -2,6 +2,7 @@
 using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Escape;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -145,6 +146,9 @@ namespace CgmInfo.Traversal
         void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter);
         void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter);
         void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, T parameter);
+
+        // escape
+        void AcceptEscapeEscape(EscapeCommand escapeCommand, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

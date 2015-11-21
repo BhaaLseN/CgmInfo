@@ -2,6 +2,7 @@ using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Escape;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -639,6 +640,13 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Escape elements
+        public virtual void AcceptEscapeEscape(EscapeCommand escapeCommand, T parameter)
         {
             // intentionally left blank
         }

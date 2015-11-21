@@ -5,6 +5,7 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.Escape;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
@@ -768,6 +769,17 @@ namespace CgmInfoGui.Traversal
         public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, MetafileContext parameter)
         {
             parameter.AddNode("EDGE TYPE INITIAL OFFSET: {0}", edgeTypeInitialOffset.Offset);
+        }
+
+        public void AcceptEscapeEscape(EscapeCommand escapeCommand, MetafileContext parameter)
+        {
+            var esc = parameter.AddNode("ESCAPE: {0} ({1})", escapeCommand.Identifier, escapeCommand.Name);
+            esc.Nodes.AddRange(escapeCommand.DataRecord.Elements.Select(e =>
+            {
+                var recordNode = new SimpleNode(e.Type.ToString());
+                recordNode.Nodes.AddRange(e.Values.Select(v => new SimpleNode(Convert.ToString(v))));
+                return recordNode;
+            }));
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

@@ -155,6 +155,9 @@ namespace CgmInfo.TextEncoding
             { "EDGETYPECONT", AttributeReader.EdgeTypeContinuation },
             { "EDGETYPEINITOFFSET", AttributeReader.EdgeTypeInitialOffset },
 
+            // escape elements [ISO/IEC 8632-4 7.7]
+            { "ESCAPE", EscapeReader.Escape },
+
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };

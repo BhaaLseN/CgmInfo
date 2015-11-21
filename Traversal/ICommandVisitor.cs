@@ -153,6 +153,7 @@ namespace CgmInfo.Traversal
 
         // external
         void AcceptExternalMessage(Message message, T parameter);
+        void AcceptExternalApplicationData(ApplicationData applicationData, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

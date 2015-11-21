@@ -128,6 +128,7 @@
     <Compile Include="Commands\Enums\VerticalTextAlignment.cs" />
     <Compile Include="Commands\Enums\WidthSpecificationModeType.cs" />
     <Compile Include="Commands\Escape\EscapeCommand.cs" />
+    <Compile Include="Commands\External\ApplicationData.cs" />
     <Compile Include="Commands\External\Message.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />

@@ -658,6 +658,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptExternalApplicationData(ApplicationData applicationData, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         public virtual void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, T parameter)

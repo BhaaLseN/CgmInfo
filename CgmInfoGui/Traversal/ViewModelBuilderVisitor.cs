@@ -788,6 +788,11 @@ namespace CgmInfoGui.Traversal
             var msgNode = parameter.AddNode("MESSAGE: {0}", message.ActionRequired);
             msgNode.Add(new SimpleNode(message.MessageString));
         }
+        public void AcceptExternalApplicationData(ApplicationData applicationData, MetafileContext parameter)
+        {
+            var appData = parameter.AddNode("APPLICATION DATA: {0}", applicationData.Identifier);
+            appData.Add(new SimpleNode(applicationData.DataRecord));
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {

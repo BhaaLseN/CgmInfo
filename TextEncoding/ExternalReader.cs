@@ -9,6 +9,10 @@ namespace CgmInfo.TextEncoding
         {
             return new Message(ParseActionRequired(reader.ReadEnum()), reader.ReadString());
         }
+        public static ApplicationData ApplicationData(MetafileReader reader)
+        {
+            return new ApplicationData(reader.ReadInteger(), reader.ReadString());
+        }
 
         private static ActionRequired ParseActionRequired(string token)
         {

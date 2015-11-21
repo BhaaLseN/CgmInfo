@@ -219,7 +219,7 @@ namespace CgmInfo.BinaryEncoding
             { 7, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
                     { 1, ExternalReader.Message },
-                    //{ 2, ExternalReader.ApplicationData },
+                    { 2, ExternalReader.ApplicationData },
                 }
             },
             // segment control/segment attribute elements [ISO/IEC 8632-3 8.10, Table 11]

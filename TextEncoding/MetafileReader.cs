@@ -160,6 +160,7 @@ namespace CgmInfo.TextEncoding
 
             // external elements [ISO/IEC 8632-4 7.8]
             { "MESSAGE", ExternalReader.Message },
+            { "APPLDATA", ExternalReader.ApplicationData },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },

@@ -590,6 +590,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Message: {0} '{1}'", message.ActionRequired, message.MessageString);
         }
+        public void AcceptExternalApplicationData(ApplicationData applicationData, PrintContext parameter)
+        {
+            parameter.WriteLine("Application Data: {0} '{1}'", applicationData.Identifier, applicationData.DataRecord);
+        }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {

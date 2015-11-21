@@ -5,9 +5,12 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 
@@ -768,6 +771,77 @@ namespace CgmInfoGui.Traversal
         public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, MetafileContext parameter)
         {
             parameter.AddNode("EDGE TYPE INITIAL OFFSET: {0}", edgeTypeInitialOffset.Offset);
+        }
+
+        public void AcceptEscapeEscape(EscapeCommand escapeCommand, MetafileContext parameter)
+        {
+            var esc = parameter.AddNode("ESCAPE: {0} ({1})", escapeCommand.Identifier, escapeCommand.Name);
+            esc.Nodes.AddRange(escapeCommand.DataRecord.Elements.Select(e =>
+            {
+                var recordNode = new SimpleNode(e.Type.ToString());
+                recordNode.Nodes.AddRange(e.Values.Select(v => new SimpleNode(Convert.ToString(v))));
+                return recordNode;
+            }));
+        }
+
+        public void AcceptExternalMessage(Message message, MetafileContext parameter)
+        {
+            var msgNode = parameter.AddNode("MESSAGE: {0}", message.ActionRequired);
+            msgNode.Add(new SimpleNode(message.MessageString));
+        }
+        public void AcceptExternalApplicationData(ApplicationData applicationData, MetafileContext parameter)
+        {
+            var appData = parameter.AddNode("APPLICATION DATA: {0}", applicationData.Identifier);
+            appData.Add(new SimpleNode(applicationData.DataRecord));
+        }
+
+        public void AcceptSegmentCopySegment(CopySegment copySegment, MetafileContext parameter)
+        {
+            var copySegmentNode = parameter.AddNode("COPY SEGMENT: {0}", copySegment.SegmentIdentifier);
+            copySegmentNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Transformation applied: {0}", copySegment.TransformationApplication)),
+                new SimpleNode(string.Format("X Scale: {0}", copySegment.Matrix.Elements[0])),
+                new SimpleNode(string.Format("X Rotation: {0}", copySegment.Matrix.Elements[1])),
+                new SimpleNode(string.Format("Y Rotation: {0}", copySegment.Matrix.Elements[2])),
+                new SimpleNode(string.Format("Y Scale: {0}", copySegment.Matrix.Elements[3])),
+                new SimpleNode(string.Format("X Translation: {0}", copySegment.Matrix.Elements[4])),
+                new SimpleNode(string.Format("Y Translation: {0}", copySegment.Matrix.Elements[5])),
+            });
+        }
+        public void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, MetafileContext parameter)
+        {
+            var inheritanceFilterNode = parameter.AddNode("INHERITANCE FILTER [{0} entries]", inheritanceFilter.Items.Length);
+            inheritanceFilterNode.Nodes.AddRange(inheritanceFilter.Items.Select(i => new SimpleNode(string.Format("{0}: {1}", i.Designator, i.Setting))));
+        }
+        public void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, MetafileContext parameter)
+        {
+            parameter.AddNode("CLIP INHERITANCE: {0}", clipInheritance.InheritanceType);
+        }
+        public void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, MetafileContext parameter)
+        {
+            var segmentTransformationNode = parameter.AddNode("SEGMENT TRANSFORMATION: {0}", segmentTransformation.SegmentIdentifier);
+            segmentTransformationNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("X Scale: {0}", segmentTransformation.Matrix.Elements[0])),
+                new SimpleNode(string.Format("X Rotation: {0}", segmentTransformation.Matrix.Elements[1])),
+                new SimpleNode(string.Format("Y Rotation: {0}", segmentTransformation.Matrix.Elements[2])),
+                new SimpleNode(string.Format("Y Scale: {0}", segmentTransformation.Matrix.Elements[3])),
+                new SimpleNode(string.Format("X Translation: {0}", segmentTransformation.Matrix.Elements[4])),
+                new SimpleNode(string.Format("Y Translation: {0}", segmentTransformation.Matrix.Elements[5])),
+            });
+        }
+        public void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, MetafileContext parameter)
+        {
+            parameter.AddNode("SEGMENT HIGHLIGHTING: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
+        }
+        public void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, MetafileContext parameter)
+        {
+            parameter.AddNode("SEGMENT DISPLAY PRIORITY: {0} -> {1}", segmentDisplayPriority.SegmentIdentifier, segmentDisplayPriority.Priority);
+        }
+        public void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, MetafileContext parameter)
+        {
+            parameter.AddNode("SEGMENT PICK PRIORITY: {0} -> {1}", segmentPickPriority.SegmentIdentifier, segmentPickPriority.Priority);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
@@ -30,7 +31,8 @@ namespace CgmInfo.BinaryEncoding
             // some files seem to include padding or similar, which throws this off by having an extra byte available at the end
             while (reader.HasMoreData(4))
             {
-                DataTypeIndex type = reader.ReadEnum<DataTypeIndex>();
+                // enum is an index at the current index precision for SDR [ISO/IEC 8632-3 H.2.2]
+                DataTypeIndex type = (DataTypeIndex)Enum.ToObject(typeof(DataTypeIndex), reader.ReadIndex());
                 int count = reader.ReadWord();
                 object[] values = new object[count];
                 for (int i = 0; i < count; i++)

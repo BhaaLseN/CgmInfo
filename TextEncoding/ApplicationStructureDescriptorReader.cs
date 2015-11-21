@@ -22,7 +22,7 @@ namespace CgmInfo.TextEncoding
         {
             _sdr = sdr;
         }
-        private static StructuredDataRecord ParseStructuredDataRecord(string sdr)
+        public static StructuredDataRecord ParseStructuredDataRecord(string sdr)
         {
             var elements = new List<StructuredDataElement>();
             var reader = new ApplicationStructureDescriptorReader(sdr);

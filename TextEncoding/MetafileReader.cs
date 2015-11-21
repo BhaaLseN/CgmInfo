@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -154,6 +155,22 @@ namespace CgmInfo.TextEncoding
             { "EDGEJOIN", AttributeReader.EdgeJoin },
             { "EDGETYPECONT", AttributeReader.EdgeTypeContinuation },
             { "EDGETYPEINITOFFSET", AttributeReader.EdgeTypeInitialOffset },
+
+            // escape elements [ISO/IEC 8632-4 7.7]
+            { "ESCAPE", EscapeReader.Escape },
+
+            // external elements [ISO/IEC 8632-4 7.8]
+            { "MESSAGE", ExternalReader.Message },
+            { "APPLDATA", ExternalReader.ApplicationData },
+
+            // segment control and segment attribute elements [ISO/IEC 8632-4 7.9]
+            { "COPYSEG", SegmentReader.CopySegment },
+            { "INHFILTER", SegmentReader.InheritanceFilter },
+            { "CLIPINH", SegmentReader.ClipInheritance },
+            { "SEGTRAN", SegmentReader.SegmentTransformation },
+            { "SEGHIGHL", SegmentReader.SegmentHighlighting },
+            { "SEGDISPPRI", SegmentReader.SegmentDisplayPriority },
+            { "SEGPICKPRI", SegmentReader.SegmentPickPriority },
 
             // application structure descriptor elements [ISO/IEC 8632-4 7.10]
             { "APSATTR", ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
@@ -412,6 +429,16 @@ namespace CgmInfo.TextEncoding
                 return ReadVdc();
             else
                 return ReadReal();
+        }
+        internal Matrix ReadMatrix()
+        {
+            return new Matrix(
+                // a11 and a12
+                (float)ReadReal(), (float)ReadReal(),
+                // a21 and a22
+                (float)ReadReal(), (float)ReadReal(),
+                // a13 and a23
+                (float)ReadVdc(), (float)ReadVdc());
         }
         internal double ReadVdc()
         {

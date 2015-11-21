@@ -2,9 +2,12 @@
 using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 
 namespace CgmInfo.Traversal
 {
@@ -145,6 +148,22 @@ namespace CgmInfo.Traversal
         void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, T parameter);
         void AcceptAttributeEdgeTypeContinuation(EdgeTypeContinuation edgeTypeContinuation, T parameter);
         void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, T parameter);
+
+        // escape
+        void AcceptEscapeEscape(EscapeCommand escapeCommand, T parameter);
+
+        // external
+        void AcceptExternalMessage(Message message, T parameter);
+        void AcceptExternalApplicationData(ApplicationData applicationData, T parameter);
+
+        // segment control and segment attributes
+        void AcceptSegmentCopySegment(CopySegment copySegment, T parameter);
+        void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, T parameter);
+        void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, T parameter);
+        void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, T parameter);
+        void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, T parameter);
+        void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, T parameter);
+        void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, T parameter);
 
         // application structure descriptor
         void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, T parameter);

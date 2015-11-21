@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using CgmInfo.Commands;
@@ -212,26 +213,26 @@ namespace CgmInfo.BinaryEncoding
             // escape elements [ISO/IEC 8632-3 8.8, Table 9]
             { 6, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
-                    //{ 1, EscapeReader.Escape },
+                    { 1, EscapeReader.Escape },
                 }
             },
             // external elements [ISO/IEC 8632-3 8.9, Table 10]
             { 7, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
-                    //{ 1, ExternalReader.Message },
-                    //{ 2, ExternalReader.ApplicationData },
+                    { 1, ExternalReader.Message },
+                    { 2, ExternalReader.ApplicationData },
                 }
             },
             // segment control/segment attribute elements [ISO/IEC 8632-3 8.10, Table 11]
             { 8, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
-                    //{ 1, SegmentReader.CopySegment },
-                    //{ 2, SegmentReader.InheritanceFilter },
-                    //{ 3, SegmentReader.ClipInheritance },
-                    //{ 4, SegmentReader.SegmentTransformation },
-                    //{ 5, SegmentReader.SegmentHighlighting },
-                    //{ 6, SegmentReader.SegmentDisplayPriority },
-                    //{ 7, SegmentReader.SegmentPickPriority },
+                    { 1, SegmentReader.CopySegment },
+                    { 2, SegmentReader.InheritanceFilter },
+                    { 3, SegmentReader.ClipInheritance },
+                    { 4, SegmentReader.SegmentTransformation },
+                    { 5, SegmentReader.SegmentHighlighting },
+                    { 6, SegmentReader.SegmentDisplayPriority },
+                    { 7, SegmentReader.SegmentPickPriority },
                 }
             },
             // application structure descriptor elements [ISO/IEC 8632-3 8.11, Table 12]
@@ -588,6 +589,16 @@ namespace CgmInfo.BinaryEncoding
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
+        internal Matrix ReadMatrix()
+        {
+            return new Matrix(
+                // a11 and a12
+                (float)ReadReal(), (float)ReadReal(),
+                // a21 and a22
+                (float)ReadReal(), (float)ReadReal(),
+                // a13 and a23
+                (float)ReadVdc(), (float)ReadVdc());
+        }
         internal double ReadViewportCoordinate()
         {
             // a Viewport Coordinate (VC) is either an int or a double; depending on what DEVICE VIEWPORT SPECIFICATION MODE said [ISO/IEC 8632-3 7, Table 1, Note 13/14]

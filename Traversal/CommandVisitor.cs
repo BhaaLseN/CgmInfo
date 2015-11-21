@@ -2,9 +2,12 @@ using CgmInfo.Commands;
 using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
+using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 
 namespace CgmInfo.Traversal
 {
@@ -639,6 +642,62 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Escape elements
+        public virtual void AcceptEscapeEscape(EscapeCommand escapeCommand, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region External elements
+        public virtual void AcceptExternalMessage(Message message, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptExternalApplicationData(ApplicationData applicationData, T parameter)
+        {
+            // intentionally left blank
+        }
+        #endregion
+
+        #region Segment control and segment attribute elements
+        public virtual void AcceptSegmentCopySegment(CopySegment copySegment, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, T parameter)
         {
             // intentionally left blank
         }

@@ -4,9 +4,12 @@ using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.Escape;
+using CgmInfo.Commands.External;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Commands.Segment;
 using CgmInfo.Traversal;
 
 namespace CgmInfoCmd
@@ -577,6 +580,53 @@ namespace CgmInfoCmd
         public void AcceptAttributeEdgeTypeInitialOffset(EdgeTypeInitialOffset edgeTypeInitialOffset, PrintContext parameter)
         {
             parameter.WriteLine("Edge Type Initial Offset: {0}", edgeTypeInitialOffset.Offset);
+        }
+
+        public void AcceptEscapeEscape(EscapeCommand escapeCommand, PrintContext parameter)
+        {
+            parameter.WriteLine("Escape: {0} ({1}) '{2}'", escapeCommand.Identifier, escapeCommand.Name, escapeCommand.DataRecord);
+        }
+
+        public void AcceptExternalMessage(Message message, PrintContext parameter)
+        {
+            parameter.WriteLine("Message: {0} '{1}'", message.ActionRequired, message.MessageString);
+        }
+        public void AcceptExternalApplicationData(ApplicationData applicationData, PrintContext parameter)
+        {
+            parameter.WriteLine("Application Data: {0} '{1}'", applicationData.Identifier, applicationData.DataRecord);
+        }
+
+        public void AcceptSegmentCopySegment(CopySegment copySegment, PrintContext parameter)
+        {
+            parameter.WriteLine("Copy Segment: {0} -> {1} (applied: {2})", copySegment.SegmentIdentifier, copySegment.Matrix, copySegment.TransformationApplication);
+        }
+        public void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, PrintContext parameter)
+        {
+            parameter.WriteLine("Inheritance Filter: {0} entries", inheritanceFilter.Items.Length);
+            parameter.BeginLevel();
+            foreach (var item in inheritanceFilter.Items)
+                parameter.WriteLine("{0}: {1}", item.Designator, item.Setting);
+            parameter.EndLevel();
+        }
+        public void AcceptSegmentClipInheritance(ClipInheritance clipInheritance, PrintContext parameter)
+        {
+            parameter.WriteLine("Clip Inheritance: {0}", clipInheritance.InheritanceType);
+        }
+        public void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Transformation: {0} -> {1}", segmentTransformation.SegmentIdentifier, segmentTransformation.Matrix);
+        }
+        public void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Highlighting: {0} -> {1}", segmentHighlighting.SegmentIdentifier, segmentHighlighting.Highlighting);
+        }
+        public void AcceptSegmentSegmentDisplayPriority(SegmentDisplayPriority segmentDisplayPriority, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Display Priority: {0} -> {1}", segmentDisplayPriority.SegmentIdentifier, segmentDisplayPriority.Priority);
+        }
+        public void AcceptSegmentSegmentPickPriority(SegmentPickPriority segmentPickPriority, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Pick Priority: {0} -> {1}", segmentPickPriority.SegmentIdentifier, segmentPickPriority.Priority);
         }
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)

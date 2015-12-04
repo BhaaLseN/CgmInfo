@@ -215,6 +215,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
         }
+        public void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, PrintContext parameter)
+        {
+            parameter.WriteLine("Font Properties: {0} entries", fontProperties.Properties.Length);
+            parameter.BeginLevel();
+            foreach (var property in fontProperties.Properties)
+                parameter.WriteLine("{0} ({1}), priority {2}", property.Indicator, property.Name, property.Priority);
+            parameter.EndLevel();
+        }
 
         public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, PrintContext parameter)
         {

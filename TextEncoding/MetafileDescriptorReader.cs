@@ -187,5 +187,19 @@ namespace CgmInfo.TextEncoding
                 return CharacterCodingAnnouncerType.Extended8Bit;
             return CharacterCodingAnnouncerType.Basic7Bit;
         }
+
+        public static FontProperties FontProperties(MetafileReader reader)
+        {
+            var properties = new List<FontProperty>();
+            while (reader.HasMoreData())
+            {
+                int propertyIndicator = reader.ReadIndex();
+                int priority = reader.ReadInteger();
+                // The SDR for each of the standardized properties contains only one member (typed sequence) [ISO/IEC 8632-1 7.3.21]
+                var record = ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
+                properties.Add(new FontProperty(propertyIndicator, priority, record.Elements.First()));
+            }
+            return new FontProperties(properties.ToArray());
+        }
     }
 }

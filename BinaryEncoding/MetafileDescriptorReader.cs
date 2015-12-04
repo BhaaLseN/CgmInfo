@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
@@ -192,6 +193,40 @@ namespace CgmInfo.BinaryEncoding
             //      2 extended 7 - bit
             //      3 extended 8 - bit
             return new CharacterCodingAnnouncer(reader.ReadEnum<CharacterCodingAnnouncerType>());
+        }
+
+        public static FontProperties FontProperties(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // FONT PROPERTIES: has a variable number of parameter 3-tuples (P1,P2,P3); each parameter 3-tuple contains
+            // P1: (index) property indicator, valid values are
+            //      1 font index
+            //      2 standard version
+            //      3 design source
+            //      4 font family
+            //      5 posture
+            //      6 weight
+            //      7 proportionate width
+            //      8 included glyph collections
+            //      9 included glyphs
+            //      10 design size
+            //      11 minimum size
+            //      12 maximum size
+            //      13 design group
+            //      14 structure
+            //      >14 reserved for registered values
+            // P2: (integer) priority, valid values are non-negative integers.
+            // P3: (structured data record) property value record, each record contains a single member and is comprised of
+            // [data type indicator, data element count, data element(s)].
+            var properties = new List<FontProperty>();
+            while (reader.HasMoreData(4))
+            {
+                int propertyIndicator = reader.ReadIndex();
+                int priority = reader.ReadInteger();
+                // The SDR for each of the standardized properties contains only one member (typed sequence) [ISO/IEC 8632-1 7.3.21]
+                var record = ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                properties.Add(new FontProperty(propertyIndicator, priority, record.Elements.First()));
+            }
+            return new FontProperties(properties.ToArray());
         }
 
         // returns a readable name for the given class/id.

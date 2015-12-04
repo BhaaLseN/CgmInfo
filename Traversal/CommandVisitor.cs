@@ -583,6 +583,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Picture Descriptor elements

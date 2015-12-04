@@ -62,6 +62,7 @@ namespace CgmInfo.TextEncoding
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
             { "SEGPRIEXT", MetafileDescriptorReader.SegmentPriorityExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
+            { "FONTPROP", MetafileDescriptorReader.FontProperties },
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]
             { "SCALEMODE", PictureDescriptorReader.ScalingMode },

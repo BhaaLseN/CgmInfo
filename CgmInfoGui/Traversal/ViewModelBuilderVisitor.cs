@@ -254,6 +254,16 @@ namespace CgmInfoGui.Traversal
                 segmentPriorityExtent.MaximumPriorityValue);
         }
 
+        public void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, MetafileContext parameter)
+        {
+            var fontPropNode = parameter.AddMetafileDescriptorNode("FONT PROPERTIES [{0} elements]", fontProperties.Properties.Length);
+            fontPropNode.Nodes.AddRange(fontProperties.Properties.Select(p => new SimpleNode(string.Format("{0} ({1}), priority {2}", p.Indicator, p.Name, p.Priority))
+            {
+                new SimpleNode(string.Format("Priority: {0}", p.Priority)),
+                new SimpleNode(string.Format("{0}: {1}", p.Record.Type, string.Join(", ", p.Record.Values))),
+            }));
+        }
+
         public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, MetafileContext parameter)
         {
             var scalingModeNode = parameter.AddNode("SCALING MODE: {0}", scalingMode.ScalingModeType);

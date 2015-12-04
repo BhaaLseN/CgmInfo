@@ -57,6 +57,7 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
         void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
+        void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, T parameter);
 
         // picture descriptor
         void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter);

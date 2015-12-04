@@ -67,7 +67,7 @@ namespace CgmInfo.BinaryEncoding
                     { 18, MetafileDescriptorReader.SegmentPriorityExtent },
                     { 19, ReadColorModel },
                     //{ 20, MetafileDescriptorReader.ColorCalibration },
-                    //{ 21, MetafileDescriptorReader.FontProperties },
+                    { 21, MetafileDescriptorReader.FontProperties },
                     //{ 22, MetafileDescriptorReader.GlyphMapping },
                     //{ 23, MetafileDescriptorReader.SymbolLibraryList },
                     //{ 24, MetafileDescriptorReader.PictureDirectory },

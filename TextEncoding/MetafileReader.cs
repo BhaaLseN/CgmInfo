@@ -60,6 +60,7 @@ namespace CgmInfo.TextEncoding
             { "CHARCODING", MetafileDescriptorReader.CharacterCodingAnnouncer },
             { "NAMEPREC", ReadNamePrecision },
             { "MAXVDCEXT", MetafileDescriptorReader.MaximumVdcExtent },
+            { "SEGPRIEXT", MetafileDescriptorReader.SegmentPriorityExtent },
             { "COLRMODEL", MetafileDescriptorReader.ColorModelCommand },
 
             // picture descriptor elements [ISO/IEC 8632-4 7.3]

@@ -247,6 +247,13 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, MetafileContext parameter)
+        {
+            parameter.AddMetafileDescriptorNode("SEGMENT PRIORITY EXTENT: {0} to {1}",
+                segmentPriorityExtent.MinimumPriorityValue,
+                segmentPriorityExtent.MaximumPriorityValue);
+        }
+
         public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, MetafileContext parameter)
         {
             var scalingModeNode = parameter.AddNode("SCALING MODE: {0}", scalingMode.ScalingModeType);

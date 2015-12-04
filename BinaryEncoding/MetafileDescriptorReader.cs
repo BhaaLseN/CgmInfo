@@ -160,6 +160,13 @@ namespace CgmInfo.BinaryEncoding
             return new MaximumVdcExtent(reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static SegmentPriorityExtent SegmentPriorityExtent(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) minimum segment priority value: valid values are non-negative integers
+            // P2: (integer) maximum segment priority value: valid values are non-negative integers
+            return new SegmentPriorityExtent(reader.ReadInteger(), reader.ReadInteger());
+        }
+
         public static CharacterSetList CharacterSetList(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (enumerated) CHARACTER SET TYPE: valid codes are

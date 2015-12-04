@@ -64,7 +64,7 @@ namespace CgmInfo.BinaryEncoding
                     { 15, MetafileDescriptorReader.CharacterCodingAnnouncer },
                     { 16, ReadNamePrecision },
                     { 17, MetafileDescriptorReader.MaximumVdcExtent },
-                    //{ 18, MetafileDescriptorReader.SegmentPriorityExtent },
+                    { 18, MetafileDescriptorReader.SegmentPriorityExtent },
                     { 19, ReadColorModel },
                     //{ 20, MetafileDescriptorReader.ColorCalibration },
                     //{ 21, MetafileDescriptorReader.FontProperties },

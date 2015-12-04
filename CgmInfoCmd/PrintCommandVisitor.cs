@@ -207,6 +207,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Maximum VDC Extent: {0} - {1}", maximumVdcExtent.FirstCorner, maximumVdcExtent.SecondCorner);
         }
+        public void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Priority Extent: {0} - {1}", segmentPriorityExtent.MinimumPriorityValue, segmentPriorityExtent.MaximumPriorityValue);
+        }
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);

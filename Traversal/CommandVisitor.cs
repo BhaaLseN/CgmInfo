@@ -544,6 +544,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, T parameter)
         {
             // intentionally left blank

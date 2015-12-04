@@ -145,6 +145,7 @@
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileDefaultsReplacement.cs" />
     <Compile Include="Commands\MetafileDescriptor\MetafileElementsList.cs" />
+    <Compile Include="Commands\MetafileDescriptor\SegmentPriorityExtent.cs" />
     <Compile Include="Commands\PictureDescriptor\BackgroundColor.cs" />
     <Compile Include="Commands\PictureDescriptor\ColorSelectionMode.cs" />
     <Compile Include="Commands\PictureDescriptor\DeviceViewport.cs" />

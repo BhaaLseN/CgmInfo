@@ -144,6 +144,11 @@ namespace CgmInfo.TextEncoding
             return new MaximumVdcExtent(firstCorner, secondCorner);
         }
 
+        public static SegmentPriorityExtent SegmentPriorityExtent(MetafileReader reader)
+        {
+            return new SegmentPriorityExtent(reader.ReadInteger(), reader.ReadInteger());
+        }
+
         public static CharacterSetList CharacterSetList(MetafileReader reader)
         {
             var entries = new List<CharacterSetListEntry>();

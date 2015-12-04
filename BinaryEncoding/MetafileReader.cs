@@ -124,7 +124,7 @@ namespace CgmInfo.BinaryEncoding
             { 4, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
                     { 1, GraphicalPrimitiveReader.Polyline },
-                    //{ 2, GraphicalPrimitiveReader.DisjointPolyline },
+                    { 2, GraphicalPrimitiveReader.DisjointPolyline },
                     //{ 3, GraphicalPrimitiveReader.Polymarker },
                     { 4, GraphicalPrimitiveReader.Text },
                     { 5, GraphicalPrimitiveReader.RestrictedText },

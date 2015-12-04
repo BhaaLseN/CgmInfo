@@ -99,6 +99,8 @@ namespace CgmInfo.TextEncoding
             // graphical primitive elements [ISO/IEC 8632-4 7.5]
             { "LINE", GraphicalPrimitiveReader.Polyline },
             { "INCRLINE", GraphicalPrimitiveReader.IncrementalPolyline },
+            { "DISJTLINE", GraphicalPrimitiveReader.DisjointPolyline },
+            { "INCRDISJTLINE", GraphicalPrimitiveReader.IncrementalDisjointPolyline },
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },

@@ -9,27 +9,26 @@ namespace CgmInfo.TextEncoding
     {
         public static Polyline Polyline(MetafileReader reader)
         {
-            var points = new List<PointF>();
-            while (reader.HasMoreData(2))
-            {
-                points.Add(reader.ReadPoint());
-            }
+            var points = ReadPointList(reader);
             return new Polyline(points.ToArray());
         }
 
         public static Polyline IncrementalPolyline(MetafileReader reader)
         {
-            var points = new List<PointF>();
-            var lastPoint = reader.ReadPoint();
-            points.Add(lastPoint);
-            while (reader.HasMoreData(2))
-            {
-                double deltaX = reader.ReadVdc();
-                double deltaY = reader.ReadVdc();
-                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
-                points.Add(lastPoint);
-            }
+            var points = ReadIncrementalPointList(reader);
             return new Polyline(points.ToArray());
+        }
+
+        public static DisjointPolyline DisjointPolyline(MetafileReader reader)
+        {
+            var points = ReadPointList(reader);
+            return new DisjointPolyline(points.ToArray());
+        }
+
+        public static DisjointPolyline IncrementalDisjointPolyline(MetafileReader reader)
+        {
+            var points = ReadIncrementalPointList(reader);
+            return new DisjointPolyline(points.ToArray());
         }
 
         public static TextCommand Text(MetafileReader reader)
@@ -103,6 +102,32 @@ namespace CgmInfo.TextEncoding
             if (token.ToUpperInvariant() == "FINAL")
                 return FinalFlag.Final;
             return FinalFlag.NotFinal;
+        }
+
+        private static List<PointF> ReadPointList(MetafileReader reader)
+        {
+            var points = new List<PointF>();
+            while (reader.HasMoreData(2))
+            {
+                points.Add(reader.ReadPoint());
+            }
+
+            return points;
+        }
+        private static List<PointF> ReadIncrementalPointList(MetafileReader reader)
+        {
+            var points = new List<PointF>();
+            var lastPoint = reader.ReadPoint();
+            points.Add(lastPoint);
+            while (reader.HasMoreData(2))
+            {
+                double deltaX = reader.ReadVdc();
+                double deltaY = reader.ReadVdc();
+                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
+                points.Add(lastPoint);
+            }
+
+            return points;
         }
     }
 }

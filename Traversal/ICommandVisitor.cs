@@ -93,6 +93,7 @@ namespace CgmInfo.Traversal
 
         // graphical primitives
         void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter);
+        void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, T parameter);
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);

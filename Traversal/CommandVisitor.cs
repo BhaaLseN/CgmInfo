@@ -210,6 +210,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter)
         {
             // intentionally left blank

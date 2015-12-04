@@ -11,14 +11,15 @@ namespace CgmInfo.BinaryEncoding
         public static Polyline Polyline(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1-Pn: (point) n (X,Y) polyline vertices
-            var points = new List<PointF>();
-            // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
-            //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
-            while (reader.HasMoreData(2))
-            {
-                points.Add(reader.ReadPoint());
-            }
+            var points = ReadPointList(reader);
             return new Polyline(points.ToArray());
+        }
+
+        public static DisjointPolyline DisjointPolyline(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1-Pn: (point) n (X,Y) line segment endpoints
+            var points = ReadPointList(reader);
+            return new DisjointPolyline(points.ToArray());
         }
 
         public static TextCommand Text(MetafileReader reader, CommandHeader commandHeader)
@@ -112,6 +113,19 @@ namespace CgmInfo.BinaryEncoding
             // NOTE: Text Encoding allows start/end vectors to be encoded as point (mostly for syntax),
             //       but it actually makes sense to store them as such - so we rely on ReadPoint to read 2x VDC for us.
             return new EllipticalArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
+        private static List<PointF> ReadPointList(MetafileReader reader)
+        {
+            var points = new List<PointF>();
+            // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
+            //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
+            while (reader.HasMoreData(2))
+            {
+                points.Add(reader.ReadPoint());
+            }
+
+            return points;
         }
     }
 }

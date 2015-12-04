@@ -357,6 +357,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Polyline: {0} points", polyline.Points.Length);
         }
+        public void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, PrintContext parameter)
+        {
+            parameter.WriteLine("Disjoint Polyline: {0} points", disjointPolyline.Points.Length);
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {
             parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);

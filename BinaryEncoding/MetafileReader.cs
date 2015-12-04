@@ -520,6 +520,11 @@ namespace CgmInfo.BinaryEncoding
             }
         }
 
+        public long Position
+        {
+            get { return _reader != null ? _reader.BaseStream.Position : -1; }
+        }
+
         internal bool HasMoreData()
         {
             return HasMoreData(1);

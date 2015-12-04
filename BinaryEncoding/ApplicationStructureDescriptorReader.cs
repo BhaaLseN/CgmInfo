@@ -28,6 +28,7 @@ namespace CgmInfo.BinaryEncoding
             }
 
             var elements = new List<StructuredDataElement>();
+            long startPosition = reader.Position;
             // require at least 2 bytes for the enum, and 2 bytes for the count
             // some files seem to include padding or similar, which throws this off by having an extra byte available at the end
             while (reader.HasMoreData(4))
@@ -41,6 +42,9 @@ namespace CgmInfo.BinaryEncoding
                     values[i] = ReadValue(reader, type);
                 }
                 elements.Add(new StructuredDataElement(type, values));
+                // only read as much as specified by length
+                if (reader.Position - startPosition >= length)
+                    break;
             }
             return new StructuredDataRecord(elements);
         }

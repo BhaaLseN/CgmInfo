@@ -31,6 +31,18 @@ namespace CgmInfo.TextEncoding
             return new DisjointPolyline(points.ToArray());
         }
 
+        public static Polymarker Polymarker(MetafileReader reader)
+        {
+            var points = ReadPointList(reader);
+            return new Polymarker(points.ToArray());
+        }
+
+        public static Polymarker IncrementalPolymarker(MetafileReader reader)
+        {
+            var points = ReadIncrementalPointList(reader);
+            return new Polymarker(points.ToArray());
+        }
+
         public static TextCommand Text(MetafileReader reader)
         {
             return new TextCommand(reader.ReadPoint(), ParseFinalFlag(reader.ReadEnum()), reader.ReadString());

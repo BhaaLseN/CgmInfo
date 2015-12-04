@@ -125,7 +125,7 @@ namespace CgmInfo.BinaryEncoding
                 {
                     { 1, GraphicalPrimitiveReader.Polyline },
                     { 2, GraphicalPrimitiveReader.DisjointPolyline },
-                    //{ 3, GraphicalPrimitiveReader.Polymarker },
+                    { 3, GraphicalPrimitiveReader.Polymarker },
                     { 4, GraphicalPrimitiveReader.Text },
                     { 5, GraphicalPrimitiveReader.RestrictedText },
                     { 6, GraphicalPrimitiveReader.AppendText },

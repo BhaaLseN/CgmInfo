@@ -101,6 +101,8 @@ namespace CgmInfo.TextEncoding
             { "INCRLINE", GraphicalPrimitiveReader.IncrementalPolyline },
             { "DISJTLINE", GraphicalPrimitiveReader.DisjointPolyline },
             { "INCRDISJTLINE", GraphicalPrimitiveReader.IncrementalDisjointPolyline },
+            { "MARKER", GraphicalPrimitiveReader.Polymarker },
+            { "INCRMARKER", GraphicalPrimitiveReader.IncrementalPolymarker },
             { "TEXT", GraphicalPrimitiveReader.Text },
             { "RESTRTEXT", GraphicalPrimitiveReader.RestrictedText },
             { "APNDTEXT", GraphicalPrimitiveReader.AppendText },

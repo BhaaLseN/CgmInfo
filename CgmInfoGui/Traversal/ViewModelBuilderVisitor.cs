@@ -468,6 +468,11 @@ namespace CgmInfoGui.Traversal
             var node = parameter.AddNode("DISJOINT POLYLINE: {0} points", disjointPolyline.Points.Length);
             node.Nodes.AddRange(disjointPolyline.Points.Select(p => new SimpleNode(p.ToString())));
         }
+        public void AcceptGraphicalPrimitivePolymarker(Polymarker polymarker, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYMARKER: {0} points", polymarker.Points.Length);
+            node.Nodes.AddRange(polymarker.Points.Select(p => new SimpleNode(p.ToString())));
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");

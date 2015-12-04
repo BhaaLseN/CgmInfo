@@ -22,6 +22,13 @@ namespace CgmInfo.BinaryEncoding
             return new DisjointPolyline(points.ToArray());
         }
 
+        public static Polymarker Polymarker(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1-Pn: (point) n (X,Y) marker positions
+            var points = ReadPointList(reader);
+            return new Polymarker(points.ToArray());
+        }
+
         public static TextCommand Text(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) text position

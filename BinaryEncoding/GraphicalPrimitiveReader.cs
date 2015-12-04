@@ -5,11 +5,12 @@ using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.BinaryEncoding
 {
+    // [ISO/IEC 8632-3 8.6]
     internal static class GraphicalPrimitiveReader
     {
         public static Polyline Polyline(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1-Pn: (point) n (X,Y) polyline vertices [ISO/IEC 8632-3 8.6]
+            // P1-Pn: (point) n (X,Y) polyline vertices
             var points = new List<PointF>();
             // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
             //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
@@ -22,7 +23,7 @@ namespace CgmInfo.BinaryEncoding
 
         public static TextCommand Text(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (point) text position [ISO/IEC 8632-3 8.6]
+            // P1: (point) text position
             // P2: (enumerated) final / not - final flag: valid values are
             //      0 not final
             //      1 final
@@ -32,7 +33,7 @@ namespace CgmInfo.BinaryEncoding
 
         public static RestrictedText RestrictedText(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (vdc) delta width [ISO/IEC 8632-3 8.6]
+            // P1: (vdc) delta width
             // P2: (vdc) delta height
             // P3: (point) text position
             // P4: (enumerated) final / not - final flag: valid values are
@@ -47,13 +48,13 @@ namespace CgmInfo.BinaryEncoding
             // P1: (enumerated) final / not - final flag: valid values are
             //      0 not final
             //      1 final
-            // P2: (string) text string [ISO/IEC 8632-3 8.6]
+            // P2: (string) text string
             return new AppendText(reader.ReadEnum<FinalFlag>(), reader.ReadString());
         }
 
         public static Polygon Polygon(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1-Pn: (point) n (X,Y) polygon vertices [ISO/IEC 8632-3 8.6]
+            // P1-Pn: (point) n (X,Y) polygon vertices
             var points = new List<PointF>();
             // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
             //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
@@ -66,14 +67,14 @@ namespace CgmInfo.BinaryEncoding
 
         public static Rectangle Rectangle(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (point) first corner [ISO/IEC 8632-3 8.6]
+            // P1: (point) first corner
             // P2: (point) second corner
             return new Rectangle(reader.ReadPoint(), reader.ReadPoint());
         }
 
         public static Circle Circle(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (point) centre of circle [ISO/IEC 8632-3 8.6]
+            // P1: (point) centre of circle
             // P2: (vdc) radius of circle
             return new Circle(reader.ReadPoint(), reader.ReadVdc());
         }

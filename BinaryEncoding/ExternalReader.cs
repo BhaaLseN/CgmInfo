@@ -3,7 +3,7 @@ using CgmInfo.Commands.External;
 
 namespace CgmInfo.BinaryEncoding
 {
-    // [ISO/IEC 8632-3 8.8]
+    // [ISO/IEC 8632-3 8.9]
     internal static class ExternalReader
     {
         public static Message Message(MetafileReader reader, CommandHeader commandHeader)

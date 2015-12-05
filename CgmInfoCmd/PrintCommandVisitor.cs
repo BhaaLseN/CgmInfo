@@ -386,6 +386,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Polygon Set: {0} points", polygonSet.Points.Length);
         }
+        public void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, PrintContext parameter)
+        {
+            parameter.WriteLine("Cell Array: {0} by {1}", cellArray.NX, cellArray.NY);
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, PrintContext parameter)
         {
             parameter.WriteLine("Rectangle: {0} - {1}", rectangle.FirstCorner, rectangle.SecondCorner);

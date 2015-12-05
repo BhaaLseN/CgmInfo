@@ -516,6 +516,25 @@ namespace CgmInfoGui.Traversal
             var node = parameter.AddNode("POLYGON SET: {0} points", polygonSet.Points.Length);
             node.Nodes.AddRange(polygonSet.Points.Select((p, i) => new SimpleNode(string.Format("{0} ({1})", p, polygonSet.Flags[i]))));
         }
+        public void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, MetafileContext parameter)
+        {
+            var cellArrayNode = parameter.AddNode("CELL ARRAY: {0} by {1}", cellArray.NX, cellArray.NY);
+            cellArrayNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Corner Point P: {0}", cellArray.CornerPointP)),
+                new SimpleNode(string.Format("Corner Point Q: {0}", cellArray.CornerPointQ)),
+                new SimpleNode(string.Format("Corner Point R: {0}", cellArray.CornerPointR)),
+            });
+            for (int y = 0; y < cellArray.NY; y++)
+            {
+                var rowNode = new SimpleNode(string.Format("Row {0}", y));
+                for (int x = 0; x < cellArray.NX; x++)
+                {
+                    rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[y * cellArray.NX + x].ToString()));
+                }
+                cellArrayNode.Nodes.Add(rowNode);
+            }
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, MetafileContext parameter)
         {
             var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",

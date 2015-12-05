@@ -114,6 +114,7 @@
     <Compile Include="Commands\Enums\ActionRequired.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
+    <Compile Include="Commands\Enums\CellRepresentationMode.cs" />
     <Compile Include="Commands\Enums\ClipInheritanceType.cs" />
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\ColorModeType.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Commands\Escape\EscapeCommand.cs" />
     <Compile Include="Commands\External\ApplicationData.cs" />
     <Compile Include="Commands\External\Message.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\CellArray.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />

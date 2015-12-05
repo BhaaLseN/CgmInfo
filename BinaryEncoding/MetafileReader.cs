@@ -131,7 +131,7 @@ namespace CgmInfo.BinaryEncoding
                     { 6, GraphicalPrimitiveReader.AppendText },
                     { 7, GraphicalPrimitiveReader.Polygon },
                     { 8, GraphicalPrimitiveReader.PolygonSet },
-                    //{ 9, GraphicalPrimitiveReader.CellArray },
+                    { 9, GraphicalPrimitiveReader.CellArray },
                     //{ 10, GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
                     { 11, GraphicalPrimitiveReader.Rectangle },
                     { 12, GraphicalPrimitiveReader.Circle },

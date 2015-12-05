@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
+using CgmInfo.Utilities;
 using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.TextEncoding
@@ -111,6 +113,39 @@ namespace CgmInfo.TextEncoding
                 flags.Add(ParseEdgeOutFlags(reader.ReadEnum()));
             }
             return new PolygonSet(points.ToArray(), flags.ToArray());
+        }
+
+        public static CellArray CellArray(MetafileReader reader)
+        {
+            var p = reader.ReadPoint();
+            var q = reader.ReadPoint();
+            var r = reader.ReadPoint();
+
+            int nx = reader.ReadInteger();
+            int ny = reader.ReadInteger();
+
+            // TODO: not really used in text encoding; but in case we ever need it,
+            //       the same check for zero as in binary encoding needs to happen.
+            //       intentionally unused until that time comes.
+            int localColorPrecision = reader.ReadInteger();
+
+            int totalCount = nx * ny;
+            var colors = new List<MetafileColor>();
+            while (reader.HasMoreData())
+            {
+                colors.Add(reader.ReadColor());
+            }
+            // FIXME: for parenthesized lists, every row is enclosed by parenthesis (which right now are ignored by the parser).
+            //        The number of cells between parentheses shall be less than or equal to the row length.
+            //        If a row is not complete, then the last defined cell in the row is replicated to fill the row.
+            //        Since the parser ignores parenthesis, we can only fill the last row with the last color of all rows;
+            //        but not every row with the last color of each row.
+            if (colors.Count < totalCount)
+            {
+                var lastColor = colors.Last();
+                colors.AddRange(Enumerable.Range(0, totalCount - colors.Count).Select(i => lastColor));
+            }
+            return new CellArray(p, q, r, nx, ny, colors.ToArray());
         }
 
         public static Rectangle Rectangle(MetafileReader reader)

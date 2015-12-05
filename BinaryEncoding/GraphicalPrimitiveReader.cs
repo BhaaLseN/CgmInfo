@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
+using CgmInfo.Utilities;
 using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.BinaryEncoding
@@ -91,6 +93,79 @@ namespace CgmInfo.BinaryEncoding
                 flags.Add(reader.ReadEnum<EdgeOutFlags>());
             }
             return new PolygonSet(points.ToArray(), flags.ToArray());
+        }
+
+        public static CellArray CellArray(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) corner point P
+            // P2: (point) corner point Q
+            // P3: (point) corner point R
+            // P4: (integer) nx
+            // P5: (integer) ny
+            // P6: (integer) local colour precision: valid values are 0, 1, 2, 4, 8, 16, 24, and 32. If the value is zero (the
+            //      'default colour precision indicator' value), the COLOUR (INDEX) PRECISION for the picture indicates the
+            //      precision with which the colour list is encoded. If the value is non-zero, the precision with which the colour
+            //      data is encoded is given by the value.
+            // P7: (enumerated) cell representation mode: valid values are
+            //      0 run length list mode
+            //      1 packed list mode
+            // P8: (colour list) array of cell colour values.
+            //      If the COLOUR SELECTION MODE is 'direct', the values will be direct colour values. If the COLOUR
+            //      SELECTION MODE is 'indexed', the values will be indexes into the COLOUR TABLE.
+            //      If the cell representation mode is 'packed list', the colour values are represented by rows of values, each
+            //      row starting on a word boundary. If the cell representation mode is 'run length', the colour list values are
+            //      represented by rows broken into runs of constant colour; each row starts on a word boundary. Each list
+            //      item consists of a cell count (integer) followed by a colour value. With the exception of the first run of a
+            //      row, the integer count of each run immediately follows the colour specifier of the preceding run with no
+            //      intervening padding.
+            var p = reader.ReadPoint();
+            var q = reader.ReadPoint();
+            var r = reader.ReadPoint();
+
+            int nx = reader.ReadInteger();
+            int ny = reader.ReadInteger();
+
+            int localColorPrecision = reader.ReadInteger();
+            if (localColorPrecision == 0)
+            {
+                if (reader.Descriptor.ColorSelectionMode == ColorModeType.Direct)
+                    localColorPrecision = reader.Descriptor.ColorPrecision;
+                else
+                    localColorPrecision = reader.Descriptor.ColorIndexPrecision;
+            }
+            // might be either 1/2/4 or 8/16/32 here; but we want byte-sizes in ReadColor
+            if (localColorPrecision >= 8)
+                localColorPrecision /= 8;
+
+            var cellRepresentationMode = reader.ReadEnum<CellRepresentationMode>();
+
+            int totalCount = nx * ny;
+            var colors = new List<MetafileColor>();
+            while (colors.Count < totalCount)
+            {
+                // chunks are split into rows; each row is word-aligned
+                // word-align the next read if necessary
+                if (reader.Position % 2 == 1 && reader.HasMoreData())
+                    reader.ReadByte();
+
+                int rowCount = nx;
+                while (rowCount > 0)
+                {
+                    if (cellRepresentationMode == CellRepresentationMode.RunLengthList)
+                    {
+                        int cellCount = reader.ReadInteger();
+                        rowCount -= cellCount;
+                        var cellColor = reader.ReadColor(localColorPrecision);
+                        colors.AddRange(Enumerable.Range(0, cellCount).Select(i => cellColor));
+                    }
+                    else
+                    {
+                        rowCount--;
+                        colors.Add(reader.ReadColor(localColorPrecision));
+                    }
+                }
+            }
+            return new CellArray(p, q, r, nx, ny, colors.ToArray());
         }
 
         public static Rectangle Rectangle(MetafileReader reader, CommandHeader commandHeader)

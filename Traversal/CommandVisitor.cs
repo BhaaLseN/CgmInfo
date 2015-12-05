@@ -245,6 +245,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter)
         {
             // intentionally left blank

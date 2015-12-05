@@ -130,7 +130,7 @@ namespace CgmInfo.BinaryEncoding
                     { 5, GraphicalPrimitiveReader.RestrictedText },
                     { 6, GraphicalPrimitiveReader.AppendText },
                     { 7, GraphicalPrimitiveReader.Polygon },
-                    //{ 8, GraphicalPrimitiveReader.PolygonSet },
+                    { 8, GraphicalPrimitiveReader.PolygonSet },
                     //{ 9, GraphicalPrimitiveReader.CellArray },
                     //{ 10, GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
                     { 11, GraphicalPrimitiveReader.Rectangle },

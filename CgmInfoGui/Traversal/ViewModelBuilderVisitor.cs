@@ -511,6 +511,11 @@ namespace CgmInfoGui.Traversal
             var node = parameter.AddNode("POLYGON: {0} points", polygon.Points.Length);
             node.Nodes.AddRange(polygon.Points.Select(p => new SimpleNode(p.ToString())));
         }
+        public void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYGON SET: {0} points", polygonSet.Points.Length);
+            node.Nodes.AddRange(polygonSet.Points.Select((p, i) => new SimpleNode(string.Format("{0} ({1})", p, polygonSet.Flags[i]))));
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, MetafileContext parameter)
         {
             var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",

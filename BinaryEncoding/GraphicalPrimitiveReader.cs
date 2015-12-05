@@ -73,6 +73,26 @@ namespace CgmInfo.BinaryEncoding
             return new Polygon(points.ToArray());
         }
 
+        public static PolygonSet PolygonSet(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P(i): (point) (X,Y) polygon vertex
+            // P(i+1): (enumerated) edge out flag, indicating closures and edge visibility: valid values are
+            //      0 invisible
+            //      1 visible
+            //      2 close, invisible
+            //      3 close, visible
+            var points = new List<PointF>();
+            var flags = new List<EdgeOutFlags>();
+            // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
+            //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
+            while (reader.HasMoreData(3))
+            {
+                points.Add(reader.ReadPoint());
+                flags.Add(reader.ReadEnum<EdgeOutFlags>());
+            }
+            return new PolygonSet(points.ToArray(), flags.ToArray());
+        }
+
         public static Rectangle Rectangle(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) first corner

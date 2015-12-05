@@ -118,6 +118,7 @@
     <Compile Include="Commands\Enums\ClippingMode.cs" />
     <Compile Include="Commands\Enums\ColorModeType.cs" />
     <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
+    <Compile Include="Commands\Enums\EdgeOutFlags.cs" />
     <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
     <Compile Include="Commands\Enums\Highlighting.cs" />
     <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\PolygonSet.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polymarker.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />

@@ -99,6 +99,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
         void AcceptGraphicalPrimitivePolygon(Polygon polygon, T parameter);
+        void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, T parameter);
         void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter);
         void AcceptGraphicalPrimitiveCircle(Circle circle, T parameter);
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);

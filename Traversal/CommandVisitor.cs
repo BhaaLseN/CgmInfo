@@ -240,6 +240,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter)
         {
             // intentionally left blank

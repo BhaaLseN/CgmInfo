@@ -275,6 +275,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter)
         {
             // intentionally left blank

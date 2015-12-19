@@ -580,13 +580,25 @@ namespace CgmInfoGui.Traversal
         }
         public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, MetafileContext parameter)
         {
-            var circlarArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);
-            circlarArcNode.Nodes.AddRange(new[]
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);
+            circularArcNode.Nodes.AddRange(new[]
             {
                 new SimpleNode(string.Format("Center: {0}", circularArcCenter.Center)),
                 new SimpleNode(string.Format("Start: {0}", circularArcCenter.Start)),
                 new SimpleNode(string.Format("End: {0}", circularArcCenter.End)),
                 new SimpleNode(string.Format("Radius: {0}", circularArcCenter.Radius)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE CLOSE: {0} by {0} ({1})", circularArcCenterClose.Radius, circularArcCenterClose.Closure);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", circularArcCenterClose.Center)),
+                new SimpleNode(string.Format("Start: {0}", circularArcCenterClose.Start)),
+                new SimpleNode(string.Format("End: {0}", circularArcCenterClose.End)),
+                new SimpleNode(string.Format("Radius: {0}", circularArcCenterClose.Radius)),
+                new SimpleNode(string.Format("Arc Closure: {0}", circularArcCenterClose.Closure)),
             });
         }
         public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, MetafileContext parameter)

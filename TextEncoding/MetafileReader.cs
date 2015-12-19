@@ -116,6 +116,7 @@ namespace CgmInfo.TextEncoding
             { "ARC3PT", GraphicalPrimitiveReader.CircularArc3Point },
             { "ARC3PTCLOSE", GraphicalPrimitiveReader.CircularArc3PointClose },
             { "ARCCTR", GraphicalPrimitiveReader.CircularArcCenter },
+            { "ARCCTRCLOSE", GraphicalPrimitiveReader.CircularArcCenterClose },
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
             { "ELLIPARC", GraphicalPrimitiveReader.EllipticalArc },
 

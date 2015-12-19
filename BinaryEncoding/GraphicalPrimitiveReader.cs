@@ -214,6 +214,22 @@ namespace CgmInfo.BinaryEncoding
             return new CircularArcCenter(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc());
         }
 
+        public static CircularArcCenterClose CircularArcCenterClose(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre of circle
+            // P2: (vdc) delta X for start vector
+            // P3: (vdc) delta Y for start vector
+            // P4: (vdc) delta X for end vector
+            // P5: (vdc) delta Y for end vector
+            // P6: (vdc) radius of circle
+            // P7: (enumerated) type of arc closure: valid values are
+            //      0 pie closure
+            //      1 chord closure
+            // NOTE: Text Encoding allows start/end vectors to be encoded as point (mostly for syntax),
+            //       but it actually makes sense to store them as such - so we rely on ReadPoint to read 2x VDC for us.
+            return new CircularArcCenterClose(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc(), reader.ReadEnum<ArcClosureType>());
+        }
+
         public static Ellipse Ellipse(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) centre of ellipse

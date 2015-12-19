@@ -138,7 +138,7 @@ namespace CgmInfo.BinaryEncoding
                     { 13, GraphicalPrimitiveReader.CircularArc3Point },
                     { 14, GraphicalPrimitiveReader.CircularArc3PointClose },
                     { 15, GraphicalPrimitiveReader.CircularArcCenter },
-                    //{ 16, GraphicalPrimitiveReader.CircularArcCenterClose },
+                    { 16, GraphicalPrimitiveReader.CircularArcCenterClose },
                     { 17, GraphicalPrimitiveReader.Ellipse },
                     { 18, GraphicalPrimitiveReader.EllipticalArc },
                     //{ 19, GraphicalPrimitiveReader.EllipticalArcClose },

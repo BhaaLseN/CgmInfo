@@ -673,6 +673,23 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", parabolicArc.End)),
             });
         }
+        public void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, MetafileContext parameter)
+        {
+            var splineNode = parameter.AddNode("NON-UNIFORM B-SPLINE: {0} ({1} points)",
+                nonUniformBSpline.SplineOrder, nonUniformBSpline.ControlPoints.Length);
+            var controlPointsNode = new SimpleNode(string.Format("Control Points [{0} elements]", nonUniformBSpline.ControlPoints.Length));
+            controlPointsNode.Nodes.AddRange(nonUniformBSpline.ControlPoints.Select(n => new SimpleNode(n.ToString())));
+            var knotsNode = new SimpleNode(string.Format("Knots [{0} elements]", nonUniformBSpline.Knots.Length));
+            knotsNode.Nodes.AddRange(nonUniformBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
+            splineNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Spline Order: {0}", nonUniformBSpline.SplineOrder)),
+                controlPointsNode,
+                knotsNode,
+                new SimpleNode(string.Format("Start: {0}", nonUniformBSpline.Start)),
+                new SimpleNode(string.Format("End: {0}", nonUniformBSpline.End)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

@@ -310,6 +310,27 @@ namespace CgmInfo.BinaryEncoding
             return new ParabolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static NonUniformBSpline NonUniformBSpline(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) spline order (=m)
+            // P2: (integer) number of control points (=n)
+            // P(3)-P(2+n): (points) array of control points
+            // P(3+n)-P(2+2n+m): (real) list of knots, of length n+m.
+            // P(3+2n+m): (real) parameter start value
+            // P(4+2n+m): (real) parameter end value
+            int splineOrder = reader.ReadInteger();
+            int numberOfControlPoints = reader.ReadInteger();
+            var controlPoints = new List<PointF>();
+            for (int i = 0; i < numberOfControlPoints; i++)
+                controlPoints.Add(reader.ReadPoint());
+            var knots = new List<double>();
+            for (int i = 0; i < splineOrder + numberOfControlPoints; i++)
+                knots.Add(reader.ReadReal());
+            double start = reader.ReadReal();
+            double end = reader.ReadReal();
+            return new NonUniformBSpline(splineOrder, controlPoints.ToArray(), knots.ToArray(), start, end);
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

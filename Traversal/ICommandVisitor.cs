@@ -114,6 +114,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, T parameter);
         void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, T parameter);
         void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, T parameter);
+        void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter);
 
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);

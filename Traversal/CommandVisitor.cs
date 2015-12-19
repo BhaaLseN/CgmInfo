@@ -314,6 +314,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

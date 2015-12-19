@@ -452,6 +452,12 @@ namespace CgmInfoCmd
             parameter.WriteLine("Parabolic Arc: {0} ({1} to {2})",
                 parabolicArc.TangentIntersectionPoint, parabolicArc.Start, parabolicArc.End);
         }
+        public void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, PrintContext parameter)
+        {
+            parameter.WriteLine("Non-Uniform B-Spline: {0} ({1} points, {2} knots, {3} to {4})",
+                nonUniformBSpline.SplineOrder, nonUniformBSpline.ControlPoints.Length, nonUniformBSpline.Knots.Length,
+                nonUniformBSpline.Start, nonUniformBSpline.End);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

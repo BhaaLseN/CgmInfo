@@ -438,6 +438,10 @@ namespace CgmInfoCmd
             parameter.WriteLine("Circular Arc Center Reversed: {0} @ {1} ({2} to {3})",
                 circularArcCenterReversed.Center, circularArcCenterReversed.Radius, circularArcCenterReversed.Start, circularArcCenterReversed.End);
         }
+        public void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, PrintContext parameter)
+        {
+            parameter.WriteLine("Connecting Edge");
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

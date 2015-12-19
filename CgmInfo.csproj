@@ -146,6 +146,7 @@
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenterClose.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenterReversed.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\ConnectingEdge.cs" />
     <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />

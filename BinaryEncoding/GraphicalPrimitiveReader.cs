@@ -282,6 +282,12 @@ namespace CgmInfo.BinaryEncoding
             return new CircularArcCenterReversed(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc());
         }
 
+        public static ConnectingEdge ConnectingEdge(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // CONNECTING EDGE: has no parameters
+            return new ConnectingEdge();
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

@@ -198,6 +198,11 @@ namespace CgmInfo.TextEncoding
             return new CircularArcCenterReversed(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc());
         }
 
+        public static ConnectingEdge ConnectingEdge(MetafileReader reader)
+        {
+            return new ConnectingEdge();
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

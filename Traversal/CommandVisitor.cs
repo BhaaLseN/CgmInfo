@@ -299,6 +299,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

@@ -647,6 +647,10 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Radius: {0}", circularArcCenterReversed.Radius)),
             });
         }
+        public void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, MetafileContext parameter)
+        {
+            parameter.AddNode("CONNECTING EDGE");
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

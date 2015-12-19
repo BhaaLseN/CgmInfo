@@ -447,6 +447,11 @@ namespace CgmInfoCmd
             parameter.WriteLine("Hyperbolic Arc: {0} @ {1} - {2} ({3} to {4})",
                 hyperbolicArc.Center, hyperbolicArc.TraverseRadiusEndPoint, hyperbolicArc.ConjugateRadiusEndPoint, hyperbolicArc.Start, hyperbolicArc.End);
         }
+        public void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, PrintContext parameter)
+        {
+            parameter.WriteLine("Parabolic Arc: {0} ({1} to {2})",
+                parabolicArc.TangentIntersectionPoint, parabolicArc.Start, parabolicArc.End);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

@@ -211,6 +211,11 @@ namespace CgmInfo.TextEncoding
             return new HyperbolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static ParabolicArc ParabolicArc(MetafileReader reader)
+        {
+            return new ParabolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

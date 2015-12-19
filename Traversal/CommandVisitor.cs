@@ -309,6 +309,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

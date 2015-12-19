@@ -302,6 +302,14 @@ namespace CgmInfo.BinaryEncoding
             return new HyperbolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static ParabolicArc ParabolicArc(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) tangent intersection point
+            // P2: (point) start point
+            // P3: (point) end point
+            return new ParabolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

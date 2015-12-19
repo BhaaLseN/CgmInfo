@@ -663,6 +663,16 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", hyperbolicArc.End)),
             });
         }
+        public void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, MetafileContext parameter)
+        {
+            var arcNode = parameter.AddNode("PARABOLIC ARC: {0}", parabolicArc.TangentIntersectionPoint);
+            arcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Tangent Intersection Point: {0}", parabolicArc.TangentIntersectionPoint)),
+                new SimpleNode(string.Format("Start: {0}", parabolicArc.Start)),
+                new SimpleNode(string.Format("End: {0}", parabolicArc.End)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

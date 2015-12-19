@@ -442,6 +442,11 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Connecting Edge");
         }
+        public void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, PrintContext parameter)
+        {
+            parameter.WriteLine("Hyperbolic Arc: {0} @ {1} - {2} ({3} to {4})",
+                hyperbolicArc.Center, hyperbolicArc.TraverseRadiusEndPoint, hyperbolicArc.ConjugateRadiusEndPoint, hyperbolicArc.Start, hyperbolicArc.End);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

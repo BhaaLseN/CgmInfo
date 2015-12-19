@@ -122,6 +122,7 @@ namespace CgmInfo.TextEncoding
             { "ELLIPARCCLOSE", GraphicalPrimitiveReader.EllipticalArcClose },
             { "ARCCTRREV", GraphicalPrimitiveReader.CircularArcCenterReversed },
             { "CONNEDGE", GraphicalPrimitiveReader.ConnectingEdge },
+            { "HYPERBARC", GraphicalPrimitiveReader.HyperbolicArc },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },

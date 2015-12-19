@@ -288,6 +288,20 @@ namespace CgmInfo.BinaryEncoding
             return new ConnectingEdge();
         }
 
+        public static HyperbolicArc HyperbolicArc(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre point
+            // P2: (point) transverse radius end point
+            // P3: (point) conjugate radius end point
+            // P4: (vdc) start vector x component
+            // P5: (vdc) start vector y component
+            // P6: (vdc) end vector x component
+            // P7: (vdc) end vector y component
+            // NOTE: Text Encoding does not permit start/end vectors to be encoded as point here (vs. ARCBOUNDS definitions),
+            //       but it actually makes sense to store them as such - we can still rely on ReadPoint to read 2x VDC for us.
+            return new HyperbolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

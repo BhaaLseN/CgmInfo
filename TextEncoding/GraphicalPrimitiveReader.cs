@@ -203,6 +203,14 @@ namespace CgmInfo.TextEncoding
             return new ConnectingEdge();
         }
 
+        public static HyperbolicArc HyperbolicArc(MetafileReader reader)
+        {
+            // NOTE: Text Encoding does not permit start/end vectors to be encoded as point here (vs. ARCBOUNDS definitions),
+            //       but it actually makes sense to store them as such - we can still rely on ReadPoint to read 2x VDC for us
+            //       since we ignore parenthesis in the parser (which needs to be fixed in case we ever do).
+            return new HyperbolicArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

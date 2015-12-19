@@ -651,6 +651,18 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddNode("CONNECTING EDGE");
         }
+        public void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, MetafileContext parameter)
+        {
+            var arcNode = parameter.AddNode("HYPERBOLIC ARC: {0}", hyperbolicArc.Center);
+            arcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", hyperbolicArc.Center)),
+                new SimpleNode(string.Format("Traverse Radius End Point: {0}", hyperbolicArc.TraverseRadiusEndPoint)),
+                new SimpleNode(string.Format("Conjugate Radius End Point: {0}", hyperbolicArc.ConjugateRadiusEndPoint)),
+                new SimpleNode(string.Format("Start: {0}", hyperbolicArc.Start)),
+                new SimpleNode(string.Format("End: {0}", hyperbolicArc.End)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

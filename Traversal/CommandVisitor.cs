@@ -289,6 +289,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

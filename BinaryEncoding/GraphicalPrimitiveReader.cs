@@ -252,6 +252,23 @@ namespace CgmInfo.BinaryEncoding
             return new EllipticalArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static EllipticalArcClose EllipticalArcClose(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) centre of ellipse
+            // P2: (point) endpoint for first conjugate diameter
+            // P3: (point) endpoint for second conjugate diameter
+            // P4: (vdc) delta X for start vector
+            // P5: (vdc) delta Y for start vector
+            // P6: (vdc) delta X for end vector
+            // P7: (vdc) delta Y for end vector
+            // P8: (enumerated) type of arc closure: valid values are
+            //      0 pie closure
+            //      1 chord closure
+            // NOTE: Text Encoding allows start/end vectors to be encoded as point (mostly for syntax),
+            //       but it actually makes sense to store them as such - so we rely on ReadPoint to read 2x VDC for us.
+            return new EllipticalArcClose(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadEnum<ArcClosureType>());
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

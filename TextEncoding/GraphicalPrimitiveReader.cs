@@ -188,6 +188,11 @@ namespace CgmInfo.TextEncoding
             return new EllipticalArc(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static EllipticalArcClose EllipticalArcClose(MetafileReader reader)
+        {
+            return new EllipticalArcClose(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), ParseArcClosure(reader.ReadEnum()));
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

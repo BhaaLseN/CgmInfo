@@ -623,6 +623,19 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
             });
         }
+        public void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, MetafileContext parameter)
+        {
+            var ellipseNode = parameter.AddNode("ELLIPTICAL ARC CLOSE: {0} ({1})", ellipticalArcClose.Center, ellipticalArcClose.Closure);
+            ellipseNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", ellipticalArcClose.Center)),
+                new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipticalArcClose.FirstConjugateDiameter)),
+                new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipticalArcClose.SecondConjugateDiameter)),
+                new SimpleNode(string.Format("Start: {0}", ellipticalArcClose.Start)),
+                new SimpleNode(string.Format("End: {0}", ellipticalArcClose.End)),
+                new SimpleNode(string.Format("Arc Closure: {0}", ellipticalArcClose.Closure)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

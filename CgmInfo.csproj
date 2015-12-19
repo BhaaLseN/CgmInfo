@@ -148,6 +148,7 @@
     <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\EllipticalArcClose.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
     <Compile Include="Commands\GraphicalPrimitives\PolygonSet.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />

@@ -425,6 +425,14 @@ namespace CgmInfoCmd
             parameter.WriteLine("Elliptical Arc: {0} @ {1} - {2} ({3} to {4})",
                 ellipticalArc.Center, ellipticalArc.FirstConjugateDiameter, ellipticalArc.SecondConjugateDiameter, ellipticalArc.Start, ellipticalArc.End);
         }
+        public void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, PrintContext parameter)
+        {
+            parameter.WriteLine("Elliptical Arc Close: {0} @ {1} - {2} ({3} to {4}, {5})",
+                ellipticalArcClose.Center,
+                ellipticalArcClose.FirstConjugateDiameter, ellipticalArcClose.SecondConjugateDiameter,
+                ellipticalArcClose.Start, ellipticalArcClose.End,
+                ellipticalArcClose.Closure);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

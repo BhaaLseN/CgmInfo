@@ -109,6 +109,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, T parameter);
         void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter);
         void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter);
+        void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, T parameter);
 
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);

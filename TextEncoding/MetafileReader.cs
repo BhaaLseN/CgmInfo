@@ -120,6 +120,7 @@ namespace CgmInfo.TextEncoding
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
             { "ELLIPARC", GraphicalPrimitiveReader.EllipticalArc },
             { "ELLIPARCCLOSE", GraphicalPrimitiveReader.EllipticalArcClose },
+            { "ARCCTRREV", GraphicalPrimitiveReader.CircularArcCenterReversed },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },

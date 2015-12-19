@@ -433,6 +433,11 @@ namespace CgmInfoCmd
                 ellipticalArcClose.Start, ellipticalArcClose.End,
                 ellipticalArcClose.Closure);
         }
+        public void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc Center Reversed: {0} @ {1} ({2} to {3})",
+                circularArcCenterReversed.Center, circularArcCenterReversed.Radius, circularArcCenterReversed.Start, circularArcCenterReversed.End);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

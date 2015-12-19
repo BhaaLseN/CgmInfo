@@ -636,6 +636,17 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Arc Closure: {0}", ellipticalArcClose.Closure)),
             });
         }
+        public void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE REVERSED: {0} by {0}", circularArcCenterReversed.Radius);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", circularArcCenterReversed.Center)),
+                new SimpleNode(string.Format("Start: {0}", circularArcCenterReversed.Start)),
+                new SimpleNode(string.Format("End: {0}", circularArcCenterReversed.End)),
+                new SimpleNode(string.Format("Radius: {0}", circularArcCenterReversed.Radius)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

@@ -158,6 +158,11 @@ namespace CgmInfo.TextEncoding
             return new Circle(reader.ReadPoint(), reader.ReadVdc());
         }
 
+        public static CircularArc3Point CircularArc3Point(MetafileReader reader)
+        {
+            return new CircularArc3Point(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         public static CircularArcCenter CircularArcCenter(MetafileReader reader)
         {
             return new CircularArcCenter(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc());

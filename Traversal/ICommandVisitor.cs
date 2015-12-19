@@ -103,6 +103,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, T parameter);
         void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter);
         void AcceptGraphicalPrimitiveCircle(Circle circle, T parameter);
+        void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, T parameter);
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);
         void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter);
         void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter);

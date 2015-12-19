@@ -398,6 +398,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Circle: {0} @ {1}", circle.Center, circle.Radius);
         }
+        public void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc 3 Point: {0} to {1} to {2}", circularArc3Point.Start, circularArc3Point.Intermediate, circularArc3Point.End);
+        }
         public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, PrintContext parameter)
         {
             parameter.WriteLine("Circular Arc Center: {0} @ {1} ({2} to {3})", circularArcCenter.Center, circularArcCenter.Radius, circularArcCenter.Start, circularArcCenter.End);

@@ -182,6 +182,14 @@ namespace CgmInfo.BinaryEncoding
             return new Circle(reader.ReadPoint(), reader.ReadVdc());
         }
 
+        public static CircularArc3Point CircularArc3Point(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) starting point
+            // P2: (point) intermediate point
+            // P3: (point) ending point
+            return new CircularArc3Point(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
+        }
+
         public static CircularArcCenter CircularArcCenter(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) centre of circle

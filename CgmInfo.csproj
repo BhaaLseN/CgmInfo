@@ -140,6 +140,7 @@
     <Compile Include="Commands\External\Message.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CellArray.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\CircularArc3Point.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />

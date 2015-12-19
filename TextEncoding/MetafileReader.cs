@@ -113,6 +113,7 @@ namespace CgmInfo.TextEncoding
             { "CELLARRAY", GraphicalPrimitiveReader.CellArray },
             { "RECT", GraphicalPrimitiveReader.Rectangle },
             { "CIRCLE", GraphicalPrimitiveReader.Circle },
+            { "ARC3PT", GraphicalPrimitiveReader.CircularArc3Point },
             { "ARCCTR", GraphicalPrimitiveReader.CircularArcCenter },
             { "ELLIPSE", GraphicalPrimitiveReader.Ellipse },
             { "ELLIPARC", GraphicalPrimitiveReader.EllipticalArc },

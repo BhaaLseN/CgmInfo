@@ -464,6 +464,10 @@ namespace CgmInfoCmd
                 nonUniformRationalBSpline.SplineOrder, nonUniformRationalBSpline.ControlPoints.Length, nonUniformRationalBSpline.Knots.Length,
                 nonUniformRationalBSpline.Start, nonUniformRationalBSpline.End);
         }
+        public void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, PrintContext parameter)
+        {
+            parameter.WriteLine("Polybezier: {0} ({1}, {2} points)", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

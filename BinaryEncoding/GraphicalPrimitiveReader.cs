@@ -356,6 +356,20 @@ namespace CgmInfo.BinaryEncoding
             return new NonUniformRationalBSpline(splineOrder, controlPoints.ToArray(), knots.ToArray(), start, end, weights.ToArray());
         }
 
+        public static Polybezier Polybezier(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) continuity indicator: valid values are
+            //      1: discontinuous
+            //      2: continuous
+            //      >2 reserved for registered values
+            // P2-Pn: (point) list of point sequences: each sequence defines a single bezier curve and contains 4 or 3 points
+            //      according to the continuity indicator values 1 or 2, respectively (if the indicator is 2, the first curve, and
+            //      only the first, is defined by 4 points).
+            int continuityIndicator = reader.ReadIndex();
+            var pointSequences = ReadPointList(reader);
+            return new Polybezier(continuityIndicator, pointSequences.ToArray());
+        }
+
         private static List<PointF> ReadPointList(MetafileReader reader)
         {
             var points = new List<PointF>();

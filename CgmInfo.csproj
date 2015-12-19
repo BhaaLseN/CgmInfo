@@ -155,6 +155,7 @@
     <Compile Include="Commands\GraphicalPrimitives\NonUniformBSpline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\NonUniformRationalBSpline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\ParabolicArc.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\Polybezier.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
     <Compile Include="Commands\GraphicalPrimitives\PolygonSet.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />

@@ -148,7 +148,7 @@ namespace CgmInfo.BinaryEncoding
                     { 23, GraphicalPrimitiveReader.ParabolicArc },
                     { 24, GraphicalPrimitiveReader.NonUniformBSpline },
                     { 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
-                    //{ 26, GraphicalPrimitiveReader.Polybezier },
+                    { 26, GraphicalPrimitiveReader.Polybezier },
                     //{ 27, GraphicalPrimitiveReader.Polysymbol },
                     //{ 28, GraphicalPrimitiveReader.BitonalTile },
                     //{ 29, GraphicalPrimitiveReader.Tile },

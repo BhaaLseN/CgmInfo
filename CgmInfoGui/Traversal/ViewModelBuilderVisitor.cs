@@ -710,6 +710,11 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", nonUniformRationalBSpline.End)),
             });
         }
+        public void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, MetafileContext parameter)
+        {
+            var bezierNode = parameter.AddNode("POLYBEZIER: {0} ({1}) [{2} elements]", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
+            bezierNode.Nodes.AddRange(polybezier.PointSequences.Select(n => new SimpleNode(n.ToString())));
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

@@ -116,6 +116,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, T parameter);
         void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter);
         void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, T parameter);
+        void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, T parameter);
 
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);

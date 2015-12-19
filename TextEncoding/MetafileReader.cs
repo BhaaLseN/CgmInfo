@@ -126,6 +126,7 @@ namespace CgmInfo.TextEncoding
             { "PARABARC", GraphicalPrimitiveReader.ParabolicArc },
             { "NUB", GraphicalPrimitiveReader.NonUniformBSpline },
             { "NURB", GraphicalPrimitiveReader.NonUniformRationalBSpline },
+            { "POLYBEZIER", GraphicalPrimitiveReader.Polybezier },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },

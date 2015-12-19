@@ -249,6 +249,15 @@ namespace CgmInfo.TextEncoding
             return new NonUniformRationalBSpline(splineOrder, controlPoints.ToArray(), knots.ToArray(), start, end, weights.ToArray());
         }
 
+        public static Polybezier Polybezier(MetafileReader reader)
+        {
+            int continuityIndicator = reader.ReadIndex();
+            var pointSequences = new List<PointF>();
+            while (reader.HasMoreData(2))
+                pointSequences.Add(reader.ReadPoint());
+            return new Polybezier(continuityIndicator, pointSequences.ToArray());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

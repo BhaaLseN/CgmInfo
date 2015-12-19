@@ -458,6 +458,12 @@ namespace CgmInfoCmd
                 nonUniformBSpline.SplineOrder, nonUniformBSpline.ControlPoints.Length, nonUniformBSpline.Knots.Length,
                 nonUniformBSpline.Start, nonUniformBSpline.End);
         }
+        public void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, PrintContext parameter)
+        {
+            parameter.WriteLine("Non-Uniform Rational B-Spline: {0} ({1} points, {2} knots, {3} to {4})",
+                nonUniformRationalBSpline.SplineOrder, nonUniformRationalBSpline.ControlPoints.Length, nonUniformRationalBSpline.Knots.Length,
+                nonUniformRationalBSpline.Start, nonUniformRationalBSpline.End);
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

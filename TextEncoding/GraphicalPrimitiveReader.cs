@@ -231,6 +231,24 @@ namespace CgmInfo.TextEncoding
             return new NonUniformBSpline(splineOrder, controlPoints.ToArray(), knots.ToArray(), start, end);
         }
 
+        public static NonUniformRationalBSpline NonUniformRationalBSpline(MetafileReader reader)
+        {
+            int splineOrder = reader.ReadInteger();
+            int numberOfControlPoints = reader.ReadInteger();
+            var controlPoints = new List<PointF>();
+            for (int i = 0; i < numberOfControlPoints; i++)
+                controlPoints.Add(reader.ReadPoint());
+            var knots = new List<double>();
+            for (int i = 0; i < splineOrder + numberOfControlPoints; i++)
+                knots.Add(reader.ReadReal());
+            double start = reader.ReadReal();
+            double end = reader.ReadReal();
+            var weights = new List<double>();
+            for (int i = 0; i < numberOfControlPoints; i++)
+                weights.Add(reader.ReadReal());
+            return new NonUniformRationalBSpline(splineOrder, controlPoints.ToArray(), knots.ToArray(), start, end, weights.ToArray());
+        }
+
         private static FinalFlag ParseFinalFlag(string token)
         {
             // assume not final; unless its final

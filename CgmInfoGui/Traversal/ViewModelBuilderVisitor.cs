@@ -690,6 +690,26 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", nonUniformBSpline.End)),
             });
         }
+        public void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, MetafileContext parameter)
+        {
+            var splineNode = parameter.AddNode("NON-UNIFORM RATIONAL B-SPLINE: {0} ({1} points)",
+                nonUniformRationalBSpline.SplineOrder, nonUniformRationalBSpline.ControlPoints.Length);
+            var controlPointsNode = new SimpleNode(string.Format("Control Points [{0} elements]", nonUniformRationalBSpline.ControlPoints.Length));
+            controlPointsNode.Nodes.AddRange(nonUniformRationalBSpline.ControlPoints.Select(n => new SimpleNode(n.ToString())));
+            var knotsNode = new SimpleNode(string.Format("Knots [{0} elements]", nonUniformRationalBSpline.Knots.Length));
+            knotsNode.Nodes.AddRange(nonUniformRationalBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
+            var weightsNode = new SimpleNode(string.Format("Weights [{0} elements]", nonUniformRationalBSpline.Weights.Length));
+            weightsNode.Nodes.AddRange(nonUniformRationalBSpline.Weights.Select(n => new SimpleNode(n.ToString())));
+            splineNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Spline Order: {0}", nonUniformRationalBSpline.SplineOrder)),
+                controlPointsNode,
+                knotsNode,
+                weightsNode,
+                new SimpleNode(string.Format("Start: {0}", nonUniformRationalBSpline.Start)),
+                new SimpleNode(string.Format("End: {0}", nonUniformRationalBSpline.End)),
+            });
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

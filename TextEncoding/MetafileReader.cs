@@ -125,6 +125,7 @@ namespace CgmInfo.TextEncoding
             { "HYPERBARC", GraphicalPrimitiveReader.HyperbolicArc },
             { "PARABARC", GraphicalPrimitiveReader.ParabolicArc },
             { "NUB", GraphicalPrimitiveReader.NonUniformBSpline },
+            { "NURB", GraphicalPrimitiveReader.NonUniformRationalBSpline },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },

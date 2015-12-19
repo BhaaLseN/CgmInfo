@@ -144,6 +144,11 @@ namespace CgmInfo.TextEncoding
             return new MaximumVdcExtent(firstCorner, secondCorner);
         }
 
+        public static SegmentPriorityExtent SegmentPriorityExtent(MetafileReader reader)
+        {
+            return new SegmentPriorityExtent(reader.ReadInteger(), reader.ReadInteger());
+        }
+
         public static CharacterSetList CharacterSetList(MetafileReader reader)
         {
             var entries = new List<CharacterSetListEntry>();
@@ -181,6 +186,20 @@ namespace CgmInfo.TextEncoding
             else if (token == "EXTD8BIT")
                 return CharacterCodingAnnouncerType.Extended8Bit;
             return CharacterCodingAnnouncerType.Basic7Bit;
+        }
+
+        public static FontProperties FontProperties(MetafileReader reader)
+        {
+            var properties = new List<FontProperty>();
+            while (reader.HasMoreData())
+            {
+                int propertyIndicator = reader.ReadIndex();
+                int priority = reader.ReadInteger();
+                // The SDR for each of the standardized properties contains only one member (typed sequence) [ISO/IEC 8632-1 7.3.21]
+                var record = ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
+                properties.Add(new FontProperty(propertyIndicator, priority, record.Elements.First()));
+            }
+            return new FontProperties(properties.ToArray());
         }
     }
 }

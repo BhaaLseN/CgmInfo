@@ -55,7 +55,9 @@ namespace CgmInfo.Traversal
         void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, T parameter);
         void AcceptMetafileDescriptorNamePrecision(NamePrecision namePrecision, T parameter);
         void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, T parameter);
+        void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, T parameter);
         void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, T parameter);
+        void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, T parameter);
 
         // picture descriptor
         void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, T parameter);
@@ -91,15 +93,30 @@ namespace CgmInfo.Traversal
 
         // graphical primitives
         void AcceptGraphicalPrimitivePolyline(Polyline polyline, T parameter);
+        void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, T parameter);
+        void AcceptGraphicalPrimitivePolymarker(Polymarker polymarker, T parameter);
         void AcceptGraphicalPrimitiveText(TextCommand text, T parameter);
         void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, T parameter);
         void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter);
         void AcceptGraphicalPrimitivePolygon(Polygon polygon, T parameter);
+        void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, T parameter);
+        void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, T parameter);
         void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter);
         void AcceptGraphicalPrimitiveCircle(Circle circle, T parameter);
+        void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, T parameter);
+        void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, T parameter);
         void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter);
+        void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, T parameter);
         void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, T parameter);
         void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter);
+        void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, T parameter);
+        void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, T parameter);
+        void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, T parameter);
+        void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, T parameter);
+        void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, T parameter);
+        void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter);
+        void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, T parameter);
+        void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, T parameter);
 
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);

@@ -64,10 +64,10 @@ namespace CgmInfo.BinaryEncoding
                     { 15, MetafileDescriptorReader.CharacterCodingAnnouncer },
                     { 16, ReadNamePrecision },
                     { 17, MetafileDescriptorReader.MaximumVdcExtent },
-                    //{ 18, MetafileDescriptorReader.SegmentPriorityExtent },
+                    { 18, MetafileDescriptorReader.SegmentPriorityExtent },
                     { 19, ReadColorModel },
                     //{ 20, MetafileDescriptorReader.ColorCalibration },
-                    //{ 21, MetafileDescriptorReader.FontProperties },
+                    { 21, MetafileDescriptorReader.FontProperties },
                     //{ 22, MetafileDescriptorReader.GlyphMapping },
                     //{ 23, MetafileDescriptorReader.SymbolLibraryList },
                     //{ 24, MetafileDescriptorReader.PictureDirectory },
@@ -124,31 +124,31 @@ namespace CgmInfo.BinaryEncoding
             { 4, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
                 {
                     { 1, GraphicalPrimitiveReader.Polyline },
-                    //{ 2, GraphicalPrimitiveReader.DisjointPolyline },
-                    //{ 3, GraphicalPrimitiveReader.Polymarker },
+                    { 2, GraphicalPrimitiveReader.DisjointPolyline },
+                    { 3, GraphicalPrimitiveReader.Polymarker },
                     { 4, GraphicalPrimitiveReader.Text },
                     { 5, GraphicalPrimitiveReader.RestrictedText },
                     { 6, GraphicalPrimitiveReader.AppendText },
                     { 7, GraphicalPrimitiveReader.Polygon },
-                    //{ 8, GraphicalPrimitiveReader.PolygonSet },
-                    //{ 9, GraphicalPrimitiveReader.CellArray },
+                    { 8, GraphicalPrimitiveReader.PolygonSet },
+                    { 9, GraphicalPrimitiveReader.CellArray },
                     //{ 10, GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
                     { 11, GraphicalPrimitiveReader.Rectangle },
                     { 12, GraphicalPrimitiveReader.Circle },
-                    //{ 13, GraphicalPrimitiveReader.CircularArcPoint },
-                    //{ 14, GraphicalPrimitiveReader.CirculeArc3PointClose },
+                    { 13, GraphicalPrimitiveReader.CircularArc3Point },
+                    { 14, GraphicalPrimitiveReader.CircularArc3PointClose },
                     { 15, GraphicalPrimitiveReader.CircularArcCenter },
-                    //{ 16, GraphicalPrimitiveReader.CircularArcCenterClose },
+                    { 16, GraphicalPrimitiveReader.CircularArcCenterClose },
                     { 17, GraphicalPrimitiveReader.Ellipse },
                     { 18, GraphicalPrimitiveReader.EllipticalArc },
-                    //{ 19, GraphicalPrimitiveReader.EllipticalArcClose },
-                    //{ 20, GraphicalPrimitiveReader.CircularArcCenterReversed },
-                    //{ 21, GraphicalPrimitiveReader.ConnectingEdge },
-                    //{ 22, GraphicalPrimitiveReader.HyperbolicArc },
-                    //{ 23, GraphicalPrimitiveReader.ParabolicArc },
-                    //{ 24, GraphicalPrimitiveReader.NonUniformBSpline },
-                    //{ 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
-                    //{ 26, GraphicalPrimitiveReader.Polybezier },
+                    { 19, GraphicalPrimitiveReader.EllipticalArcClose },
+                    { 20, GraphicalPrimitiveReader.CircularArcCenterReversed },
+                    { 21, GraphicalPrimitiveReader.ConnectingEdge },
+                    { 22, GraphicalPrimitiveReader.HyperbolicArc },
+                    { 23, GraphicalPrimitiveReader.ParabolicArc },
+                    { 24, GraphicalPrimitiveReader.NonUniformBSpline },
+                    { 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
+                    { 26, GraphicalPrimitiveReader.Polybezier },
                     //{ 27, GraphicalPrimitiveReader.Polysymbol },
                     //{ 28, GraphicalPrimitiveReader.BitonalTile },
                     //{ 29, GraphicalPrimitiveReader.Tile },
@@ -518,6 +518,11 @@ namespace CgmInfo.BinaryEncoding
                 }
                 return new MetafileDefaultsReplacement(commands.ToArray());
             }
+        }
+
+        public long Position
+        {
+            get { return _reader != null ? _reader.BaseStream.Position : -1; }
         }
 
         internal bool HasMoreData()

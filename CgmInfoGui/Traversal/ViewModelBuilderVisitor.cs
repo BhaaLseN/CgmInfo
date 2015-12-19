@@ -247,6 +247,23 @@ namespace CgmInfoGui.Traversal
             });
         }
 
+        public void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, MetafileContext parameter)
+        {
+            parameter.AddMetafileDescriptorNode("SEGMENT PRIORITY EXTENT: {0} to {1}",
+                segmentPriorityExtent.MinimumPriorityValue,
+                segmentPriorityExtent.MaximumPriorityValue);
+        }
+
+        public void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, MetafileContext parameter)
+        {
+            var fontPropNode = parameter.AddMetafileDescriptorNode("FONT PROPERTIES [{0} elements]", fontProperties.Properties.Length);
+            fontPropNode.Nodes.AddRange(fontProperties.Properties.Select(p => new SimpleNode(string.Format("{0} ({1}), priority {2}", p.Indicator, p.Name, p.Priority))
+            {
+                new SimpleNode(string.Format("Priority: {0}", p.Priority)),
+                new SimpleNode(string.Format("{0}: {1}", p.Record.Type, string.Join(", ", p.Record.Values))),
+            }));
+        }
+
         public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, MetafileContext parameter)
         {
             var scalingModeNode = parameter.AddNode("SCALING MODE: {0}", scalingMode.ScalingModeType);
@@ -446,6 +463,16 @@ namespace CgmInfoGui.Traversal
             var node = parameter.AddNode("POLYLINE: {0} points", polyline.Points.Length);
             node.Nodes.AddRange(polyline.Points.Select(p => new SimpleNode(p.ToString())));
         }
+        public void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("DISJOINT POLYLINE: {0} points", disjointPolyline.Points.Length);
+            node.Nodes.AddRange(disjointPolyline.Points.Select(p => new SimpleNode(p.ToString())));
+        }
+        public void AcceptGraphicalPrimitivePolymarker(Polymarker polymarker, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYMARKER: {0} points", polymarker.Points.Length);
+            node.Nodes.AddRange(polymarker.Points.Select(p => new SimpleNode(p.ToString())));
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
         {
             var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
@@ -484,6 +511,30 @@ namespace CgmInfoGui.Traversal
             var node = parameter.AddNode("POLYGON: {0} points", polygon.Points.Length);
             node.Nodes.AddRange(polygon.Points.Select(p => new SimpleNode(p.ToString())));
         }
+        public void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, MetafileContext parameter)
+        {
+            var node = parameter.AddNode("POLYGON SET: {0} points", polygonSet.Points.Length);
+            node.Nodes.AddRange(polygonSet.Points.Select((p, i) => new SimpleNode(string.Format("{0} ({1})", p, polygonSet.Flags[i]))));
+        }
+        public void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, MetafileContext parameter)
+        {
+            var cellArrayNode = parameter.AddNode("CELL ARRAY: {0} by {1}", cellArray.NX, cellArray.NY);
+            cellArrayNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Corner Point P: {0}", cellArray.CornerPointP)),
+                new SimpleNode(string.Format("Corner Point Q: {0}", cellArray.CornerPointQ)),
+                new SimpleNode(string.Format("Corner Point R: {0}", cellArray.CornerPointR)),
+            });
+            for (int y = 0; y < cellArray.NY; y++)
+            {
+                var rowNode = new SimpleNode(string.Format("Row {0}", y));
+                for (int x = 0; x < cellArray.NX; x++)
+                {
+                    rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[y * cellArray.NX + x].ToString()));
+                }
+                cellArrayNode.Nodes.Add(rowNode);
+            }
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, MetafileContext parameter)
         {
             var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",
@@ -504,15 +555,50 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Radius: {0}", circle.Radius)),
             });
         }
+        public void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC 3 POINT: {0} to {1} to {2}",
+                circularArc3Point.Start, circularArc3Point.Intermediate, circularArc3Point.End);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Start: {0}", circularArc3Point.Start)),
+                new SimpleNode(string.Format("Intermediate: {0}", circularArc3Point.Intermediate)),
+                new SimpleNode(string.Format("End: {0}", circularArc3Point.End)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC 3 POINT CLOSE: {0} to {1} to {2} ({3})",
+                circularArc3PointClose.Start, circularArc3PointClose.Intermediate, circularArc3PointClose.End, circularArc3PointClose.Closure);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Start: {0}", circularArc3PointClose.Start)),
+                new SimpleNode(string.Format("Intermediate: {0}", circularArc3PointClose.Intermediate)),
+                new SimpleNode(string.Format("End: {0}", circularArc3PointClose.End)),
+                new SimpleNode(string.Format("Arc Closure: {0}", circularArc3PointClose.Closure)),
+            });
+        }
         public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, MetafileContext parameter)
         {
-            var circlarArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);
-            circlarArcNode.Nodes.AddRange(new[]
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);
+            circularArcNode.Nodes.AddRange(new[]
             {
                 new SimpleNode(string.Format("Center: {0}", circularArcCenter.Center)),
                 new SimpleNode(string.Format("Start: {0}", circularArcCenter.Start)),
                 new SimpleNode(string.Format("End: {0}", circularArcCenter.End)),
                 new SimpleNode(string.Format("Radius: {0}", circularArcCenter.Radius)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE CLOSE: {0} by {0} ({1})", circularArcCenterClose.Radius, circularArcCenterClose.Closure);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", circularArcCenterClose.Center)),
+                new SimpleNode(string.Format("Start: {0}", circularArcCenterClose.Start)),
+                new SimpleNode(string.Format("End: {0}", circularArcCenterClose.End)),
+                new SimpleNode(string.Format("Radius: {0}", circularArcCenterClose.Radius)),
+                new SimpleNode(string.Format("Arc Closure: {0}", circularArcCenterClose.Closure)),
             });
         }
         public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, MetafileContext parameter)
@@ -536,6 +622,98 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("Start: {0}", ellipticalArc.Start)),
                 new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
             });
+        }
+        public void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, MetafileContext parameter)
+        {
+            var ellipseNode = parameter.AddNode("ELLIPTICAL ARC CLOSE: {0} ({1})", ellipticalArcClose.Center, ellipticalArcClose.Closure);
+            ellipseNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", ellipticalArcClose.Center)),
+                new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipticalArcClose.FirstConjugateDiameter)),
+                new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipticalArcClose.SecondConjugateDiameter)),
+                new SimpleNode(string.Format("Start: {0}", ellipticalArcClose.Start)),
+                new SimpleNode(string.Format("End: {0}", ellipticalArcClose.End)),
+                new SimpleNode(string.Format("Arc Closure: {0}", ellipticalArcClose.Closure)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE REVERSED: {0} by {0}", circularArcCenterReversed.Radius);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", circularArcCenterReversed.Center)),
+                new SimpleNode(string.Format("Start: {0}", circularArcCenterReversed.Start)),
+                new SimpleNode(string.Format("End: {0}", circularArcCenterReversed.End)),
+                new SimpleNode(string.Format("Radius: {0}", circularArcCenterReversed.Radius)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, MetafileContext parameter)
+        {
+            parameter.AddNode("CONNECTING EDGE");
+        }
+        public void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, MetafileContext parameter)
+        {
+            var arcNode = parameter.AddNode("HYPERBOLIC ARC: {0}", hyperbolicArc.Center);
+            arcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Center: {0}", hyperbolicArc.Center)),
+                new SimpleNode(string.Format("Traverse Radius End Point: {0}", hyperbolicArc.TraverseRadiusEndPoint)),
+                new SimpleNode(string.Format("Conjugate Radius End Point: {0}", hyperbolicArc.ConjugateRadiusEndPoint)),
+                new SimpleNode(string.Format("Start: {0}", hyperbolicArc.Start)),
+                new SimpleNode(string.Format("End: {0}", hyperbolicArc.End)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, MetafileContext parameter)
+        {
+            var arcNode = parameter.AddNode("PARABOLIC ARC: {0}", parabolicArc.TangentIntersectionPoint);
+            arcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Tangent Intersection Point: {0}", parabolicArc.TangentIntersectionPoint)),
+                new SimpleNode(string.Format("Start: {0}", parabolicArc.Start)),
+                new SimpleNode(string.Format("End: {0}", parabolicArc.End)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, MetafileContext parameter)
+        {
+            var splineNode = parameter.AddNode("NON-UNIFORM B-SPLINE: {0} ({1} points)",
+                nonUniformBSpline.SplineOrder, nonUniformBSpline.ControlPoints.Length);
+            var controlPointsNode = new SimpleNode(string.Format("Control Points [{0} elements]", nonUniformBSpline.ControlPoints.Length));
+            controlPointsNode.Nodes.AddRange(nonUniformBSpline.ControlPoints.Select(n => new SimpleNode(n.ToString())));
+            var knotsNode = new SimpleNode(string.Format("Knots [{0} elements]", nonUniformBSpline.Knots.Length));
+            knotsNode.Nodes.AddRange(nonUniformBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
+            splineNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Spline Order: {0}", nonUniformBSpline.SplineOrder)),
+                controlPointsNode,
+                knotsNode,
+                new SimpleNode(string.Format("Start: {0}", nonUniformBSpline.Start)),
+                new SimpleNode(string.Format("End: {0}", nonUniformBSpline.End)),
+            });
+        }
+        public void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, MetafileContext parameter)
+        {
+            var splineNode = parameter.AddNode("NON-UNIFORM RATIONAL B-SPLINE: {0} ({1} points)",
+                nonUniformRationalBSpline.SplineOrder, nonUniformRationalBSpline.ControlPoints.Length);
+            var controlPointsNode = new SimpleNode(string.Format("Control Points [{0} elements]", nonUniformRationalBSpline.ControlPoints.Length));
+            controlPointsNode.Nodes.AddRange(nonUniformRationalBSpline.ControlPoints.Select(n => new SimpleNode(n.ToString())));
+            var knotsNode = new SimpleNode(string.Format("Knots [{0} elements]", nonUniformRationalBSpline.Knots.Length));
+            knotsNode.Nodes.AddRange(nonUniformRationalBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
+            var weightsNode = new SimpleNode(string.Format("Weights [{0} elements]", nonUniformRationalBSpline.Weights.Length));
+            weightsNode.Nodes.AddRange(nonUniformRationalBSpline.Weights.Select(n => new SimpleNode(n.ToString())));
+            splineNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Spline Order: {0}", nonUniformRationalBSpline.SplineOrder)),
+                controlPointsNode,
+                knotsNode,
+                weightsNode,
+                new SimpleNode(string.Format("Start: {0}", nonUniformRationalBSpline.Start)),
+                new SimpleNode(string.Format("End: {0}", nonUniformRationalBSpline.End)),
+            });
+        }
+        public void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, MetafileContext parameter)
+        {
+            var bezierNode = parameter.AddNode("POLYBEZIER: {0} ({1}) [{2} elements]", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
+            bezierNode.Nodes.AddRange(polybezier.PointSequences.Select(n => new SimpleNode(n.ToString())));
         }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)

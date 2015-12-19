@@ -207,9 +207,21 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Maximum VDC Extent: {0} - {1}", maximumVdcExtent.FirstCorner, maximumVdcExtent.SecondCorner);
         }
+        public void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, PrintContext parameter)
+        {
+            parameter.WriteLine("Segment Priority Extent: {0} - {1}", segmentPriorityExtent.MinimumPriorityValue, segmentPriorityExtent.MaximumPriorityValue);
+        }
         public void AcceptMetafileDescriptorColorModel(ColorModelCommand colorModel, PrintContext parameter)
         {
             parameter.WriteLine("Color Model: {0}", colorModel.ColorModel);
+        }
+        public void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, PrintContext parameter)
+        {
+            parameter.WriteLine("Font Properties: {0} entries", fontProperties.Properties.Length);
+            parameter.BeginLevel();
+            foreach (var property in fontProperties.Properties)
+                parameter.WriteLine("{0} ({1}), priority {2}", property.Indicator, property.Name, property.Priority);
+            parameter.EndLevel();
         }
 
         public void AcceptPictureDescriptorScalingMode(ScalingMode scalingMode, PrintContext parameter)
@@ -345,6 +357,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Polyline: {0} points", polyline.Points.Length);
         }
+        public void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, PrintContext parameter)
+        {
+            parameter.WriteLine("Disjoint Polyline: {0} points", disjointPolyline.Points.Length);
+        }
+        public void AcceptGraphicalPrimitivePolymarker(Polymarker polymarker, PrintContext parameter)
+        {
+            parameter.WriteLine("Polymarker: {0} points", polymarker.Points.Length);
+        }
         public void AcceptGraphicalPrimitiveText(TextCommand text, PrintContext parameter)
         {
             parameter.WriteLine("Text: '{0}' (at {1})", text.Text, text.Position);
@@ -362,6 +382,14 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Polygon: {0} points", polygon.Points.Length);
         }
+        public void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, PrintContext parameter)
+        {
+            parameter.WriteLine("Polygon Set: {0} points", polygonSet.Points.Length);
+        }
+        public void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, PrintContext parameter)
+        {
+            parameter.WriteLine("Cell Array: {0} by {1}", cellArray.NX, cellArray.NY);
+        }
         public void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, PrintContext parameter)
         {
             parameter.WriteLine("Rectangle: {0} - {1}", rectangle.FirstCorner, rectangle.SecondCorner);
@@ -370,9 +398,23 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Circle: {0} @ {1}", circle.Center, circle.Radius);
         }
+        public void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc 3 Point: {0} to {1} to {2}", circularArc3Point.Start, circularArc3Point.Intermediate, circularArc3Point.End);
+        }
+        public void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc 3 Point Close: {0} to {1} to {2} ({3})",
+                circularArc3PointClose.Start, circularArc3PointClose.Intermediate, circularArc3PointClose.End, circularArc3PointClose.Closure);
+        }
         public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, PrintContext parameter)
         {
             parameter.WriteLine("Circular Arc Center: {0} @ {1} ({2} to {3})", circularArcCenter.Center, circularArcCenter.Radius, circularArcCenter.Start, circularArcCenter.End);
+        }
+        public void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc Center Close: {0} @ {1} ({2} to {3}, {4})",
+                circularArcCenterClose.Center, circularArcCenterClose.Radius, circularArcCenterClose.Start, circularArcCenterClose.End, circularArcCenterClose.Closure);
         }
         public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, PrintContext parameter)
         {
@@ -382,6 +424,49 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Elliptical Arc: {0} @ {1} - {2} ({3} to {4})",
                 ellipticalArc.Center, ellipticalArc.FirstConjugateDiameter, ellipticalArc.SecondConjugateDiameter, ellipticalArc.Start, ellipticalArc.End);
+        }
+        public void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, PrintContext parameter)
+        {
+            parameter.WriteLine("Elliptical Arc Close: {0} @ {1} - {2} ({3} to {4}, {5})",
+                ellipticalArcClose.Center,
+                ellipticalArcClose.FirstConjugateDiameter, ellipticalArcClose.SecondConjugateDiameter,
+                ellipticalArcClose.Start, ellipticalArcClose.End,
+                ellipticalArcClose.Closure);
+        }
+        public void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, PrintContext parameter)
+        {
+            parameter.WriteLine("Circular Arc Center Reversed: {0} @ {1} ({2} to {3})",
+                circularArcCenterReversed.Center, circularArcCenterReversed.Radius, circularArcCenterReversed.Start, circularArcCenterReversed.End);
+        }
+        public void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, PrintContext parameter)
+        {
+            parameter.WriteLine("Connecting Edge");
+        }
+        public void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, PrintContext parameter)
+        {
+            parameter.WriteLine("Hyperbolic Arc: {0} @ {1} - {2} ({3} to {4})",
+                hyperbolicArc.Center, hyperbolicArc.TraverseRadiusEndPoint, hyperbolicArc.ConjugateRadiusEndPoint, hyperbolicArc.Start, hyperbolicArc.End);
+        }
+        public void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, PrintContext parameter)
+        {
+            parameter.WriteLine("Parabolic Arc: {0} ({1} to {2})",
+                parabolicArc.TangentIntersectionPoint, parabolicArc.Start, parabolicArc.End);
+        }
+        public void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, PrintContext parameter)
+        {
+            parameter.WriteLine("Non-Uniform B-Spline: {0} ({1} points, {2} knots, {3} to {4})",
+                nonUniformBSpline.SplineOrder, nonUniformBSpline.ControlPoints.Length, nonUniformBSpline.Knots.Length,
+                nonUniformBSpline.Start, nonUniformBSpline.End);
+        }
+        public void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, PrintContext parameter)
+        {
+            parameter.WriteLine("Non-Uniform Rational B-Spline: {0} ({1} points, {2} knots, {3} to {4})",
+                nonUniformRationalBSpline.SplineOrder, nonUniformRationalBSpline.ControlPoints.Length, nonUniformRationalBSpline.Knots.Length,
+                nonUniformRationalBSpline.Start, nonUniformRationalBSpline.End);
+        }
+        public void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, PrintContext parameter)
+        {
+            parameter.WriteLine("Polybezier: {0} ({1}, {2} points)", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
         }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)

@@ -1,27 +1,29 @@
 using System.Collections.Generic;
+using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
 
 namespace CgmInfo.BinaryEncoding
 {
+    // [ISO/IEC 8632-3 8.3]
     internal static class MetafileDescriptorReader
     {
         public static MetafileVersion MetafileVersion(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) metafile version number: valid values are 1, 2, 3, 4 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) metafile version number: valid values are 1, 2, 3, 4
             return new MetafileVersion(reader.ReadInteger());
         }
 
         public static MetafileDescription MetafileDescription(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (string fixed) metafile description string [ISO/IEC 8632-3 8.3]
+            // P1: (string fixed) metafile description string
             return new MetafileDescription(reader.ReadString());
         }
 
         public static VdcType VdcType(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (enumerated) VDC TYPE: valid values are [ISO/IEC 8632-3 8.3]
+            // P1: (enumerated) VDC TYPE: valid values are
             //      0 VDC values specified in integers
             //      1 VDC values specified in reals
             return new VdcType(reader.ReadEnum<VdcTypeSpecification>());
@@ -29,13 +31,13 @@ namespace CgmInfo.BinaryEncoding
 
         public static IntegerPrecision IntegerPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) integer precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) integer precision: valid values are 8, 16, 24 or 32
             return new IntegerPrecision(reader.ReadInteger());
         }
 
         public static RealPrecision RealPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (enumerated) form of representation for real values: valid values are [ISO/IEC 8632-3 8.3]
+            // P1: (enumerated) form of representation for real values: valid values are
             //      0 floating point format
             //      1 fixed point format
             // P2: (integer) field width for exponent or whole part(including 1 bit for sign)
@@ -45,31 +47,31 @@ namespace CgmInfo.BinaryEncoding
 
         public static IndexPrecision IndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Index precision: valid values are 8, 16, 24 or 32
             return new IndexPrecision(reader.ReadInteger());
         }
 
         public static ColorPrecision ColorPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Colour precision: valid values are 8, 16, 24 or 32
             return new ColorPrecision(reader.ReadInteger());
         }
 
         public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) Colour index precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) Colour index precision: valid values are 8, 16, 24 or 32
             return new ColorIndexPrecision(reader.ReadInteger());
         }
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (colour index) maximum colour index that may be encountered in the metafile [ISO/IEC 8632-3 8.3]
+            // P1: (colour index) maximum colour index that may be encountered in the metafile
             return new MaximumColorIndex(reader.ReadColorIndex());
         }
 
         public static ColorValueExtent ColorValueExtent(MetafileReader reader, CommandHeader commandHeader)
         {
-            // If the model is RGB or CMYK, then 2 parameters: [ISO/IEC 8632-3 8.3]
+            // If the model is RGB or CMYK, then 2 parameters:
             // P1: (direct colour value) minimum colour value
             // P2: (direct colour value) maximum colour value
             // If the model is CIELAB, CIELUV, or RGB-related then 3 parameters:
@@ -110,7 +112,7 @@ namespace CgmInfo.BinaryEncoding
 
         public static ColorModelCommand ColorModelCommand(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (index) colour model: valid values are [ISO/IEC 8632-3 8.3]
+            // P1: (index) colour model: valid values are
             //      1 RGB
             //      2 CIELAB
             //      3 CIELUV
@@ -122,13 +124,13 @@ namespace CgmInfo.BinaryEncoding
 
         public static NamePrecision NamePrecision(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) name precision: valid values are 8, 16, 24 or 32 [ISO/IEC 8632-3 8.3]
+            // P1: (integer) name precision: valid values are 8, 16, 24 or 32
             return new NamePrecision(reader.ReadInteger());
         }
 
         public static MetafileElementsList MetafileElementsList(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (integer) number of elements specified [ISO/IEC 8632-3 8.3]
+            // P1: (integer) number of elements specified
             // P2: (index-pair array) List of metafile elements in this metafile. Each element is represented by two values:
             //      the first is its element class code (as in Table 2)
             //      the second is its element id code (as in Table 3 to Table 10).
@@ -145,7 +147,7 @@ namespace CgmInfo.BinaryEncoding
 
         public static FontList FontList(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1-Pn: (string fixed) n font names [ISO/IEC 8632-3 8.3]
+            // P1-Pn: (string fixed) n font names
             var fonts = new List<string>();
             while (reader.HasMoreData())
                 fonts.Add(reader.ReadString());
@@ -154,14 +156,21 @@ namespace CgmInfo.BinaryEncoding
 
         public static MaximumVdcExtent MaximumVdcExtent(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (point) first corner [ISO/IEC 8632-3 8.3]
+            // P1: (point) first corner
             // P2: (point) second corner
             return new MaximumVdcExtent(reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static SegmentPriorityExtent SegmentPriorityExtent(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (integer) minimum segment priority value: valid values are non-negative integers
+            // P2: (integer) maximum segment priority value: valid values are non-negative integers
+            return new SegmentPriorityExtent(reader.ReadInteger(), reader.ReadInteger());
+        }
+
         public static CharacterSetList CharacterSetList(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (enumerated) CHARACTER SET TYPE: valid codes are [ISO/IEC 8632-3 8.3]
+            // P1: (enumerated) CHARACTER SET TYPE: valid codes are
             //      0 94 - character G - set
             //      1 96 - character G - set
             //      2 94 - character multibyte G-set
@@ -178,12 +187,46 @@ namespace CgmInfo.BinaryEncoding
 
         public static CharacterCodingAnnouncer CharacterCodingAnnouncer(MetafileReader reader, CommandHeader commandHeader)
         {
-            // P1: (enumerated) character coding announcer: valid values are [ISO/IEC 8632-3 8.3]
+            // P1: (enumerated) character coding announcer: valid values are
             //      0 basic 7 - bit
             //      1 basic 8 - bit
             //      2 extended 7 - bit
             //      3 extended 8 - bit
             return new CharacterCodingAnnouncer(reader.ReadEnum<CharacterCodingAnnouncerType>());
+        }
+
+        public static FontProperties FontProperties(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // FONT PROPERTIES: has a variable number of parameter 3-tuples (P1,P2,P3); each parameter 3-tuple contains
+            // P1: (index) property indicator, valid values are
+            //      1 font index
+            //      2 standard version
+            //      3 design source
+            //      4 font family
+            //      5 posture
+            //      6 weight
+            //      7 proportionate width
+            //      8 included glyph collections
+            //      9 included glyphs
+            //      10 design size
+            //      11 minimum size
+            //      12 maximum size
+            //      13 design group
+            //      14 structure
+            //      >14 reserved for registered values
+            // P2: (integer) priority, valid values are non-negative integers.
+            // P3: (structured data record) property value record, each record contains a single member and is comprised of
+            // [data type indicator, data element count, data element(s)].
+            var properties = new List<FontProperty>();
+            while (reader.HasMoreData(4))
+            {
+                int propertyIndicator = reader.ReadIndex();
+                int priority = reader.ReadInteger();
+                // The SDR for each of the standardized properties contains only one member (typed sequence) [ISO/IEC 8632-1 7.3.21]
+                var record = ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                properties.Add(new FontProperty(propertyIndicator, priority, record.Elements.First()));
+            }
+            return new FontProperties(properties.ToArray());
         }
 
         // returns a readable name for the given class/id.

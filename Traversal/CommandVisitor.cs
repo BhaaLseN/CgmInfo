@@ -210,6 +210,16 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitiveDisjointPolyline(DisjointPolyline disjointPolyline, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitivePolymarker(Polymarker polymarker, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveAppendText(AppendText appendText, T parameter)
         {
             // intentionally left blank
@@ -230,6 +240,16 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitivePolygonSet(PolygonSet polygonSet, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveRectangle(Rectangle rectangle, T parameter)
         {
             // intentionally left blank
@@ -240,7 +260,22 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, T parameter)
         {
             // intentionally left blank
         }
@@ -251,6 +286,46 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, T parameter)
         {
             // intentionally left blank
         }
@@ -544,6 +619,11 @@ namespace CgmInfo.Traversal
             // intentionally left blank
         }
 
+        public virtual void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, T parameter)
+        {
+            // intentionally left blank
+        }
+
         public virtual void AcceptMetafileDescriptorMetafileDescription(MetafileDescription metafileDescription, T parameter)
         {
             // intentionally left blank
@@ -575,6 +655,11 @@ namespace CgmInfo.Traversal
         }
 
         public virtual void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, T parameter)
+        {
+            // intentionally left blank
+        }
+
+        public virtual void AcceptMetafileDescriptorFontProperties(FontProperties fontProperties, T parameter)
         {
             // intentionally left blank
         }

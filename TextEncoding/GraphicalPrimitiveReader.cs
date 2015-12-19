@@ -163,6 +163,11 @@ namespace CgmInfo.TextEncoding
             return new CircularArc3Point(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static CircularArc3PointClose CircularArc3PointClose(MetafileReader reader)
+        {
+            return new CircularArc3PointClose(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), ParseArcClosure(reader.ReadEnum()));
+        }
+
         public static CircularArcCenter CircularArcCenter(MetafileReader reader)
         {
             return new CircularArcCenter(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadVdc());
@@ -223,6 +228,14 @@ namespace CgmInfo.TextEncoding
             else if (token == "CLOSEVIS")
                 return EdgeOutFlags.VisibleClose;
             return EdgeOutFlags.Invisible;
+        }
+
+        private static ArcClosureType ParseArcClosure(string token)
+        {
+            // assume pie unless its chord
+            if (token.ToUpperInvariant() == "CHORD")
+                return ArcClosureType.Chord;
+            return ArcClosureType.Pie;
         }
     }
 }

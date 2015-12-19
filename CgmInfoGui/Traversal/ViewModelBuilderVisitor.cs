@@ -566,6 +566,18 @@ namespace CgmInfoGui.Traversal
                 new SimpleNode(string.Format("End: {0}", circularArc3Point.End)),
             });
         }
+        public void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, MetafileContext parameter)
+        {
+            var circularArcNode = parameter.AddNode("CIRCULAR ARC 3 POINT CLOSE: {0} to {1} to {2} ({3})",
+                circularArc3PointClose.Start, circularArc3PointClose.Intermediate, circularArc3PointClose.End, circularArc3PointClose.Closure);
+            circularArcNode.Nodes.AddRange(new[]
+            {
+                new SimpleNode(string.Format("Start: {0}", circularArc3PointClose.Start)),
+                new SimpleNode(string.Format("Intermediate: {0}", circularArc3PointClose.Intermediate)),
+                new SimpleNode(string.Format("End: {0}", circularArc3PointClose.End)),
+                new SimpleNode(string.Format("Arc Closure: {0}", circularArc3PointClose.Closure)),
+            });
+        }
         public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, MetafileContext parameter)
         {
             var circlarArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);

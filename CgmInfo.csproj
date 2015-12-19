@@ -112,6 +112,7 @@
     <Compile Include="Commands\Control\VdcRealPrecision.cs" />
     <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
     <Compile Include="Commands\Enums\ActionRequired.cs" />
+    <Compile Include="Commands\Enums\ArcClosureType.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
     <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
     <Compile Include="Commands\Enums\CellRepresentationMode.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Commands\GraphicalPrimitives\CellArray.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArc3Point.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\CircularArc3PointClose.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
     <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />
     <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />

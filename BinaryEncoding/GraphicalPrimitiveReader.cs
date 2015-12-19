@@ -190,6 +190,17 @@ namespace CgmInfo.BinaryEncoding
             return new CircularArc3Point(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint());
         }
 
+        public static CircularArc3PointClose CircularArc3PointClose(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (point) starting point
+            // P2: (point) intermediate point
+            // P3: (point) ending point
+            // P4: (enumerated) type of arc closure: valid values are
+            //      0 pie closure
+            //      1 chord closure
+            return new CircularArc3PointClose(reader.ReadPoint(), reader.ReadPoint(), reader.ReadPoint(), reader.ReadEnum<ArcClosureType>());
+        }
+
         public static CircularArcCenter CircularArcCenter(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1: (point) centre of circle

@@ -28,14 +28,12 @@
             <TextBlock Text="{Binding Results.Count, ElementName=this}"/>
             <TextBlock xml:space="preserve"> Results</TextBlock>
         </StackPanel>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Results, ElementName=this}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding DisplayText}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <ListBox ItemsSource="{Binding Results, ElementName=this}" SelectedItem="{Binding SelectedResult, ElementName=this}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding DisplayText}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </DockPanel>
 </UserControl>

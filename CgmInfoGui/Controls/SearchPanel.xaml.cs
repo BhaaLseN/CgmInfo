@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using CgmInfoGui.ViewModels.Nodes;
 
@@ -31,6 +33,15 @@ namespace CgmInfoGui.Controls
 
         public static readonly DependencyProperty ResultsProperty =
             DependencyProperty.Register("Results", typeof(ObservableCollection<SearchResultItem>), typeof(SearchPanel), new PropertyMetadata(null));
+
+        public SearchResultItem SelectedResult
+        {
+            get { return (SearchResultItem)GetValue(SelectedResultProperty); }
+            set { SetValue(SelectedResultProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedResultProperty =
+            DependencyProperty.Register("SelectedResult", typeof(SearchResultItem), typeof(SearchPanel), new PropertyMetadata(OnSelectedResultChanged));
 
         public string SearchText
         {
@@ -110,6 +121,71 @@ namespace CgmInfoGui.Controls
             Results.Clear();
         }
 
+        private static void OnSelectedResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((SearchPanel)d).OnSelectedResultChanged(e);
+        }
+        public void OnSelectedResultChanged(DependencyPropertyChangedEventArgs e)
+        {
+            var source = Source;
+            var selectedResult = SelectedResult;
+            if (selectedResult != null)
+                SelectItemPath(source, selectedResult.ParentPath);
+        }
+
+        private static void SelectItemPath(ItemsControl itemsControl, int[] parentPath)
+        {
+            if (itemsControl == null || !parentPath.Any())
+                return;
+
+            int currentIndex = parentPath.First();
+            int[] remainingPath = parentPath.Skip(1).ToArray();
+
+            // items might not be generated yet; we can only proceed here if they are...
+            if (itemsControl.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            {
+                var container = itemsControl.ItemContainerGenerator.ContainerFromIndex(currentIndex) as ItemsControl;
+                if (container != null)
+                {
+                    // keep selecting items until we reached the target
+                    if (remainingPath.Any())
+                    {
+                        SelectItemPath(container, remainingPath);
+                    }
+                    else
+                    {
+                        // select the target item and bring it into view (tree view only)
+                        var treeViewItem = container as TreeViewItem;
+                        if (treeViewItem != null)
+                        {
+                            treeViewItem.IsSelected = true;
+                            treeViewItem.BringIntoView();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // If the item containers haven't been generated yet, attach an event
+                // and wait for the status to change.
+                EventHandler selectWhenReadyMethod = null;
+                selectWhenReadyMethod = (ds, de) =>
+                {
+                    if (itemsControl.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+                    {
+                        itemsControl.ItemContainerGenerator.StatusChanged -= selectWhenReadyMethod;
+                        SelectItemPath(itemsControl, parentPath);
+                    }
+                };
+
+                itemsControl.ItemContainerGenerator.StatusChanged += selectWhenReadyMethod;
+                // force expansion (tree view only)
+                var treeViewItem = itemsControl as TreeViewItem;
+                if (treeViewItem != null)
+                    treeViewItem.IsExpanded = true;
+            }
+        }
+
         private void OnClearClick(object sender, RoutedEventArgs e)
         {
             SearchText = "";
@@ -118,12 +194,11 @@ namespace CgmInfoGui.Controls
 
     public sealed class SearchResultItem
     {
-        private readonly int[] _parentPath;
         private readonly NodeBase _node;
         internal SearchResultItem(NodeBase node, string searchText, int[] parentPath, Style matchStyle)
         {
             _node = node;
-            _parentPath = parentPath;
+            ParentPath = parentPath;
             string escapedSearchText = Regex.Escape(searchText);
             // split them all, but make the delimiters stick around
             string[] parts = Regex.Split(node.DisplayName, '(' + escapedSearchText + ')', RegexOptions.IgnoreCase);
@@ -140,6 +215,7 @@ namespace CgmInfoGui.Controls
             DisplayText = displayText;
         }
 
+        internal int[] ParentPath { get; }
         public object DisplayText { get; }
     }
 }

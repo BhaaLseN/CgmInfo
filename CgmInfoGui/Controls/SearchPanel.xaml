@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="CgmInfoGui.Controls.SearchPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:CgmInfoGui.Converters"
+             mc:Ignorable="d" 
+             x:Name="this"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="SearchResultMatch" TargetType="Inline">
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- delay search text update by 500ms to prevent frequent searches while typing -->
+            <TextBox x:Name="_searchText" Text="{Binding SearchText, ElementName=this, Delay=500, UpdateSourceTrigger=PropertyChanged}"/>
+            <!-- disable clear button when no text is present -->
+            <Button x:Name="_clearButton" Content="x" Grid.Column="1" IsEnabled="{Binding Text.Length, ElementName=_searchText}" Click="OnClearClick"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding Results.Count, ElementName=this}"/>
+            <TextBlock xml:space="preserve"> Results</TextBlock>
+        </StackPanel>
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Results, ElementName=this}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding DisplayText}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SearchPanel.xaml.cs">
+      <DependentUpon>SearchPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\FileSizeConverter.cs" />
     <Compile Include="Converters\PrefixConverter.cs" />
     <Compile Include="Converters\PrettyXmlConverter.cs" />
@@ -97,6 +100,10 @@
     <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedNode.cs" />
+    <Page Include="Controls\SearchPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mvm="clr-namespace:CgmInfoGui.ViewModels"
         xmlns:conv="clr-namespace:CgmInfoGui.Converters"
+        xmlns:ctrl="clr-namespace:CgmInfoGui.Controls"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -31,7 +32,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Margin="5">CGM File:</TextBlock>
-            <TextBox Text="{Binding FileName}" Margin="5" Grid.Column="1"/>
+            <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Grid.Column="1"/>
             <Button Command="{Binding BrowseCommand}" Margin="5" Padding="5,0" Grid.Column="2">...</Button>
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
@@ -82,7 +83,16 @@
                     <xcad:LayoutDocumentPaneGroup>
                         <xcad:LayoutDocumentPane>
                             <xcad:LayoutDocument Title="Metafile Structure" ContentId="MetafileStructure" CanClose="False">
-                                <TreeView ItemsSource="{Binding MetafileNodes}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5px"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TreeView x:Name="MetafileStructure" ItemsSource="{Binding MetafileNodes}"/>
+                                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+                                    <ctrl:SearchPanel Grid.Column="2" Source="{Binding ElementName=MetafileStructure}"/>
+                                </Grid>
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Application Structure" ContentId="ApplicationStructure" CanClose="False">
                                 <TreeView ItemsSource="{Binding APSNodes}"/>

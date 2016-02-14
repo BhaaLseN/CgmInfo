@@ -64,6 +64,10 @@ namespace CgmInfoGui.Controls
                 var results = await Task.Run(() => FindMatches(source.Items, new int[0], searchText, matchStyle));
                 Results = new ObservableCollection<SearchResultItem>(results);
             }
+            else
+            {
+                Results = new ObservableCollection<SearchResultItem>();
+            }
         }
 
         private static IEnumerable<SearchResultItem> FindMatches(IEnumerable items, int[] parentPath, string searchText, Style matchStyle)

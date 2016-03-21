@@ -29,13 +29,16 @@ namespace CgmInfo.BinaryEncoding
 
             var elements = new List<StructuredDataElement>();
             long startPosition = reader.Position;
-            // require at least 2 bytes for the enum, and 2 bytes for the count
+            // require at least the number of bytes for the enum and the count; which depends on integer/index precision:
+            // > The integer of the "data count" and the index of the "data type index" are represented respectively at the current
+            // > Integer Precision and the current Index Precision of the metafile. [ISO/IEC 8632-1 H.2.2]
             // some files seem to include padding or similar, which throws this off by having an extra byte available at the end
-            while (reader.HasMoreData(4))
+            while (reader.HasMoreData((reader.Descriptor.IndexPrecision + reader.Descriptor.IntegerPrecision) / 8))
             {
-                // enum is an index at the current index precision for SDR [ISO/IEC 8632-3 H.2.2]
+                // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
                 DataTypeIndex type = (DataTypeIndex)Enum.ToObject(typeof(DataTypeIndex), reader.ReadIndex());
-                int count = reader.ReadWord();
+                // count is an interger at the current integer precision for SDR [ISO/IEC 8632-1 H.2.2]
+                int count = reader.ReadInteger();
                 object[] values = new object[count];
                 for (int i = 0; i < count; i++)
                 {

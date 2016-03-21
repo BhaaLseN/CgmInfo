@@ -218,7 +218,7 @@ namespace CgmInfo.BinaryEncoding
             // P3: (structured data record) property value record, each record contains a single member and is comprised of
             // [data type indicator, data element count, data element(s)].
             var properties = new List<FontProperty>();
-            while (reader.HasMoreData(4))
+            while (reader.HasMoreData((reader.Descriptor.IndexPrecision + reader.Descriptor.IntegerPrecision) / 8))
             {
                 int propertyIndicator = reader.ReadIndex();
                 int priority = reader.ReadInteger();

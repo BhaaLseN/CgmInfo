@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Text;
 using CgmInfo.Commands.Delimiter;
 
 namespace CgmInfoGui.ViewModels.Nodes
@@ -22,7 +25,17 @@ namespace CgmInfoGui.ViewModels.Nodes
 
         public override string DisplayName
         {
-            get { return string.Format("BEGIN APPLICATION STRUCTURE: {0} '{1}'", Type, Identifier); }
+            get
+            {
+                var sb = new StringBuilder();
+                sb.AppendFormat("BEGIN APPLICATION STRUCTURE: {0} '{1}'", Type, Identifier);
+
+                var layerName = Nodes.OfType<APSAttributeNode>().FirstOrDefault(n => string.Equals(n.Name, "LAYERNAME", StringComparison.InvariantCultureIgnoreCase));
+                if (layerName != null)
+                    sb.AppendFormat(" ({0})", layerName.Value);
+
+                return sb.ToString();
+            }
         }
     }
 }

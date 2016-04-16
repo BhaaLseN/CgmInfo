@@ -138,7 +138,7 @@ namespace CgmInfoGui.ViewModels
                 Filter = "Computer Graphics Metafile (*.cgm)|*.cgm",
                 Multiselect = false,
                 RestoreDirectory = true,
-                Title = "Select a CGM file (binary encoded)",
+                Title = "Select a CGM file",
             };
             if (ofd.ShowDialog() == true)
             {

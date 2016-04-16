@@ -1024,8 +1024,8 @@ namespace CgmInfoGui.Traversal
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, MetafileContext parameter)
         {
-            var aps = parameter.AddNode("{0}", applicationStructureAttribute.AttributeType);
-            aps.Nodes.AddRange(applicationStructureAttribute.DataRecord.Elements.SelectMany(e => e.Values).Select(e => new SimpleNode(Convert.ToString(e))));
+            var aps = new APSAttributeNode(applicationStructureAttribute);
+            parameter.AddNode(aps);
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, MetafileContext parameter)

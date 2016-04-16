@@ -88,6 +88,7 @@
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Nodes\ApplicationStructureViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\APSAttributeNode.cs" />
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
     <Compile Include="ViewModels\Nodes\HotspotNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />

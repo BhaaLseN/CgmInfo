@@ -67,8 +67,13 @@ namespace CgmInfoGui.Controls
         }
         private async void OnSearchTextChanged(DependencyPropertyChangedEventArgs e)
         {
-            var source = Source;
             string searchText = SearchText;
+            await PerformSearch(searchText);
+        }
+
+        private async Task PerformSearch(string searchText)
+        {
+            var source = Source;
             if (source != null && source.Items != null && !string.IsNullOrWhiteSpace(searchText))
             {
                 var matchStyle = FindResource("SearchResultMatch") as Style;
@@ -112,13 +117,16 @@ namespace CgmInfoGui.Controls
                 ((INotifyCollectionChanged)newValue.Items).CollectionChanged += OnSourceCollectionChanged;
         }
 
-        private void OnSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private async void OnSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // any action that changes the source collection invalidates the cached result vectors
             // trash the found results to avoid issues here
             // TODO: handle this differently?
             // FIXME: does this even work? data source is hierarchical...
             Results.Clear();
+            // trigger another search to make sure the search result isn't empty.
+            if (!string.IsNullOrEmpty(SearchText))
+                await PerformSearch(SearchText);
         }
 
         private static void OnSelectedResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

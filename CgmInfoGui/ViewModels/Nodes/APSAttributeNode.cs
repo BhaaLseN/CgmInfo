@@ -15,6 +15,7 @@ namespace CgmInfoGui.ViewModels.Nodes
             var allValues = apsAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
             switch (Name.ToUpperInvariant())
             {
+                case "NAME":
                 case "LAYERNAME":
                     if (allValues.Length == 1)
                         Value = Convert.ToString(allValues[0]);

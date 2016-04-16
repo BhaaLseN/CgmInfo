@@ -30,6 +30,9 @@ namespace CgmInfoGui.ViewModels.Nodes
                 var sb = new StringBuilder();
                 sb.AppendFormat("BEGIN APPLICATION STRUCTURE: {0} '{1}'", Type, Identifier);
 
+                var name = Nodes.OfType<APSAttributeNode>().FirstOrDefault(n => string.Equals(n.Name, "NAME", StringComparison.InvariantCultureIgnoreCase));
+                if (name != null)
+                    sb.AppendFormat(" - '{0}'", name.Value);
                 var layerName = Nodes.OfType<APSAttributeNode>().FirstOrDefault(n => string.Equals(n.Name, "LAYERNAME", StringComparison.InvariantCultureIgnoreCase));
                 if (layerName != null)
                     sb.AppendFormat(" ({0})", layerName.Value);

@@ -392,7 +392,7 @@ namespace CgmInfo.BinaryEncoding
             reader._insideMetafile = false;
             return result;
         }
-        
+
         private static Command ReadVdcType(MetafileReader reader, CommandHeader commandHeader)
         {
             var vdcType = MetafileDescriptorReader.VdcType(reader, commandHeader);

@@ -41,7 +41,7 @@ namespace CgmInfoCmd
             {
                 return new Indent(depth);
             }
-            public static implicit operator string (Indent indent)
+            public static implicit operator string(Indent indent)
             {
                 if (indent == null || indent._depth <= 0)
                     return "";

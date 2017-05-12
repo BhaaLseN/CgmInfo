@@ -47,6 +47,39 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
         parameter.LineAttributes.MiterLimit = miterLimit.Limit;
     }
 
+    public override void AcceptAttributeCharacterExpansionFactor(CharacterExpansionFactor characterExpansionFactor, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.CharacterExpansionFactor = characterExpansionFactor.Factor;
+    }
+    public override void AcceptAttributeCharacterHeight(CharacterHeight characterHeight, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.CharacterHeight = characterHeight.Height;
+    }
+    public override void AcceptAttributeCharacterSpacing(CharacterSpacing characterSpacing, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.CharacterSpacing = characterSpacing.AdditionalIntercharacterSpace;
+    }
+    public override void AcceptAttributeTextColor(TextColor textColor, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.TextColor = textColor.Color.GetColor();
+    }
+    public override void AcceptAttributeTextAlignment(TextAlignment textAlignment, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.TextAlignment = textAlignment;
+    }
+    public override void AcceptAttributeTextPath(TextPath textPath, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.TextPath = textPath.Path;
+    }
+    public override void AcceptAttributeTextFontIndex(TextFontIndex textFontIndex, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.FontIndex = textFontIndex.Index;
+    }
+    public override void AcceptMetafileDescriptorFontList(FontList fontList, GraphicalElementContext parameter)
+    {
+        parameter.TextAttributes.FontList = fontList.Fonts.ToArray();
+    }
+
     public override void AcceptGraphicalPrimitivePolyline(Polyline polyline, GraphicalElementContext parameter)
     {
         var line = new LineVisual(polyline.Points.ToPoints(), parameter.LineAttributes.GetPen);
@@ -101,10 +134,10 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
 
     public override void AcceptGraphicalPrimitiveText(TextCommand text, GraphicalElementContext parameter)
     {
-        var textVisual = new TextVisual(text.Text, text.Position.ToPoint());
+        var textVisual = new TextVisual(text.Text, text.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.CharacterHeight, parameter.TextAttributes.TextColor);
         parameter.IncreaseBounds(text.Position.ToPoint());
         if (text.Final == FinalFlag.Final)
-            parameter.LastText = null;
+            parameter.FinalizeText(textVisual);
         else
             parameter.LastText = textVisual;
         parameter.Add(textVisual);
@@ -113,17 +146,21 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
     {
         if (parameter.LastText == null)
             return;
+        // TODO: actually create two distinct items, because their text attributes might be different
         var textVisual = parameter.LastText;
         textVisual.Text += appendText.Text;
         if (appendText.Final == FinalFlag.Final)
+        {
             parameter.LastText = null;
+            parameter.FinalizeText(textVisual);
+        }
     }
     public override void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, GraphicalElementContext parameter)
     {
-        var textVisual = new TextVisual(restrictedText.Text, restrictedText.Position.ToPoint());
+        var textVisual = new TextVisual(restrictedText.Text, restrictedText.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.CharacterHeight, parameter.TextAttributes.TextColor);
         parameter.IncreaseBounds(new Rect(restrictedText.Position.ToPoint(), new Size(restrictedText.DeltaWidth, restrictedText.DeltaHeight)));
         if (restrictedText.Final == FinalFlag.Final)
-            parameter.LastText = null;
+            parameter.FinalizeText(textVisual);
         else
             parameter.LastText = textVisual;
         parameter.Add(textVisual);

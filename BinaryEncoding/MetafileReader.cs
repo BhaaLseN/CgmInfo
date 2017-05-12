@@ -245,8 +245,8 @@ namespace CgmInfo.BinaryEncoding
 
         private BinaryReader _reader;
         private bool _insideMetafile;
-        // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
-        private Encoding _currentEncoding = Encoding.ASCII;
+        // assume a default ISO 8859-1 [ISO/IEC 8632-1 6.3.4.5]
+        private Encoding _currentEncoding = GetDefaultEncoding();
 
         public MetafileReader(string fileName)
             : base(fileName, true)
@@ -798,7 +798,8 @@ namespace CgmInfo.BinaryEncoding
             // try to detect certain common encodings (based on ISO/IEC 2022 / ECMA-35)
             // this only checks for DOCS (DECIDE OTHER CODING SYSTEM), identified by "ESC % / F" (0x1B 0x25 0x2F F)
             // and limited to F = "G" (0x47), "H" (0x48), "I" (0x49), "J" (0x4A), "K" (0x4B) and "L" (0x4C) at this point.
-            // 0x47 until 0x49 are various levels of UTF-8, while 0x4A until 0x4C are various levels of UTF-16
+            // 0x47 until 0x49 are various levels of UTF-8, while 0x4A until 0x4C are various levels of UTF-16.
+            // this also specifically checks for the ASCII encoding identified by "ESC ( B" (0x1B 0x28 0x42).
             // [ISO-IR International Register of Coded Character Sets to be used with Escape Sequences, 2.8.2]
             // [ISO/IEC 8632-1 6.3.4.5, Example 1]
             if (length >= 4 && characters[0] == 0x1B && characters[1] == 0x25 && characters[2] == 0x2F &&
@@ -820,6 +821,12 @@ namespace CgmInfo.BinaryEncoding
                 }
                 result = _currentEncoding.GetString(characters, 4, length - 4);
             }
+            else if (length >= 3 && characters[0] == 0x1B && characters[1] == 0x28 && characters[2] == 0x42)
+            {
+                // ESC 2/8 4/2: ISO 646, U.S. National Character Set (ASCII)
+                _currentEncoding = Encoding.ASCII;
+                result = _currentEncoding.GetString(characters, 3, length - 3);
+            }
             else
             {
                 result = _currentEncoding.GetString(characters);
@@ -840,6 +847,32 @@ namespace CgmInfo.BinaryEncoding
                     _reader.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private static Encoding GetDefaultEncoding()
+        {
+            try
+            {
+                // try to use ISO 8859-1 as default [ISO/IEC 8632-1 6.3.4.5]
+                // "BEGIN METAFILE causes ISO 8859-1 Left Hand Side to be designated as the G0 set
+                // and ISO 8859-1, Right Hand Side of Latin Alphabet Nr. 1 to be designated as the G1 set."
+                return Encoding.GetEncoding("ISO-8859-1");
+            }
+            catch
+            {
+                try
+                {
+                    // in case it is not available, try to use windows-1252 instead (which is a superset of ISO 8859-1
+                    return Encoding.GetEncoding("Windows-1252");
+                }
+                catch
+                {
+                    // in case this also fails, do an absolute fallback to ASCII.
+                    // this is most likely incorrect, since we should be using an 8-bit ASCII encoding,
+                    // but Encoding.ASCII is only 7-bit; at least it will not trash the output when used.
+                    return Encoding.ASCII;
+                }
+            }
         }
     }
 }

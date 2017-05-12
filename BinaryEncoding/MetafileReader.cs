@@ -245,8 +245,8 @@ namespace CgmInfo.BinaryEncoding
 
         private BinaryReader _reader;
         private bool _insideMetafile;
-        // assume a default ASCII unless I misunderstood the spec [ISO/IEC 8632-1 6.3.4.5, Example 2]
-        private Encoding _currentEncoding = Encoding.ASCII;
+        // assume a default ISO 8859-1 [ISO/IEC 8632-1 6.3.4.5]
+        private Encoding _currentEncoding = GetDefaultEncoding();
 
         public MetafileReader(string fileName)
             : base(fileName, true)
@@ -840,6 +840,32 @@ namespace CgmInfo.BinaryEncoding
                     _reader.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private static Encoding GetDefaultEncoding()
+        {
+            try
+            {
+                // try to use ISO 8859-1 as default [ISO/IEC 8632-1 6.3.4.5]
+                // "BEGIN METAFILE causes ISO 8859-1 Left Hand Side to be designated as the G0 set
+                // and ISO 8859-1, Right Hand Side of Latin Alphabet Nr. 1 to be designated as the G1 set."
+                return Encoding.GetEncoding("ISO-8859-1");
+            }
+            catch
+            {
+                try
+                {
+                    // in case it is not available, try to use windows-1252 instead (which is a superset of ISO 8859-1
+                    return Encoding.GetEncoding("Windows-1252");
+                }
+                catch
+                {
+                    // in case this also fails, do an absolute fallback to ASCII.
+                    // this is most likely incorrect, since we should be using an 8-bit ASCII encoding,
+                    // but Encoding.ASCII is only 7-bit; at least it will not trash the output when used.
+                    return Encoding.ASCII;
+                }
+            }
         }
     }
 }

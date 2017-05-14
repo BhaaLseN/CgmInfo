@@ -2,7 +2,7 @@
 CgmInfo is a fully managed CGM Metafile library based on the ISO/IEC 8632:1999 standard intended for extraction of various informations encoded in either binary or text (as described by Part 3 and 4 of ISO/IEC 8632, respectively). It's licensed under the terms of the GNU General Public License, version 3 or later (GPLv3+).
 
 ### Requirements
-* Microsoft Visual Studio 2015 (Community Edition or higher to build)
+* Microsoft Visual Studio 2017 (Community Edition or higher to build)
 * NuGet to build ```CgmInfoGui```, which is a GUI tool to display Metafile information
 
 ## Technical Details

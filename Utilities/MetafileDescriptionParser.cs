@@ -6,13 +6,13 @@ namespace CgmInfo.Utilities
 {
     public static class MetafileDescriptionParser
     {
-        // handles parameters such as "key:value""key:value" and "key:value","key:value"
+        // handles parameters such as "key:value""key:value"
         private static readonly Regex DescriptionQuotedParameterRegex = new Regex(
-            @"\s*(?<qt>[""'])(?<key>[^:]+?):(?<value>.+?)\k<qt>(?:[;,]?|$)",
+            @"\s*""(?<key>[^:]+?):(?<value>.+?)""",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        // handles parameters such as key:value,key:value
+        // handles parameters such as "key:value","key:value" or "key:value";"key:value"
         private static readonly Regex DescriptionCommaSeparatedParameterRegex = new Regex(
-            @"\s*(?<key>[^:]+?):(?<value>[^,]+?)(?:,|$)",
+            @"\s*""(?<key>[^:]+?):(?<value>.+?)""(?:[;,]|$)",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
@@ -28,9 +28,24 @@ namespace CgmInfo.Utilities
         {
             var ret = new Dictionary<string, string>();
 
-            var matches = DescriptionQuotedParameterRegex.Matches(description);
-            if (matches.Count == 0)
-                matches = DescriptionCommaSeparatedParameterRegex.Matches(description);
+            var matches = DescriptionCommaSeparatedParameterRegex.Matches(description);
+            if (matches.Count < 2)
+            {
+                // in case one (or no) match came out including commas, try again without commas.
+                // the specification does not indicate if and how keyword:value pairs should be delimited,
+                // other than specifying that they should be surrounded by double quotes.
+                // most commonly, they appear to be delimited by commas; but sometimes appear without delimiter.
+                var nonCommaMatches = DescriptionQuotedParameterRegex.Matches(description);
+                if (nonCommaMatches.Count > matches.Count)
+                    matches = nonCommaMatches;
+
+                // we might still end up with no really good matches here; so we can exit early without attempting to
+                // parse the metafile description string. chances are they aren't keyword:value pairs at all if we still
+                // have less than two matches (as just a single pair seems unlikely, with most profiles at least specifying
+                // a ProfileId and ProfileEd member; often together with ColourClass/Source/Date members)
+                if (matches.Count < 2)
+                    return ret;
+            }
             foreach (var match in matches.OfType<Match>())
             {
                 if (match.Success)

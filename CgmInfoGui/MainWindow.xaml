@@ -32,7 +32,11 @@
             </Grid.RowDefinitions>
 
             <TextBlock Margin="5">CGM File:</TextBlock>
-            <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Grid.Column="1"/>
+            <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Grid.Column="1">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding ProcessCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
             <Button Command="{Binding BrowseCommand}" Margin="5" Padding="5,0" Grid.Column="2">...</Button>
 
             <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>

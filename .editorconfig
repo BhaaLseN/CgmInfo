@@ -135,14 +135,24 @@ dotnet_naming_symbols.methods_properties_classes.applicable_kinds = method,prope
 dotnet_naming_symbols.locals_parameters.applicable_kinds = parameter
 dotnet_naming_symbols.constant_fields.applicable_kinds = field
 dotnet_naming_symbols.constant_fields.required_modifiers = const
+dotnet_naming_symbols.static_readonly_fields.applicable_kinds = field
+dotnet_naming_symbols.static_readonly_fields.required_modifiers = static,readonly
 dotnet_naming_symbols.private_fields.applicable_kinds = field
 dotnet_naming_symbols.private_fields.applicable_accessibilities = private
 
 # naming conventions
-# name all methods, properties and classes using PamelCase
+# name all methods, properties and classes using PascalCase
 dotnet_naming_rule.methods_properties_classes_should_be_camel_case.severity = warning
 dotnet_naming_rule.methods_properties_classes_should_be_camel_case.symbols = methods_properties_classes
 dotnet_naming_rule.methods_properties_classes_should_be_camel_case.style = pascal_case_style
+
+# name all constant or static/readonly fields using PascalCase
+dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.symbols = static_readonly_fields
+dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.style = pascal_case_style
 
 # name all private fields using _camelCase
 dotnet_naming_rule.private_fields_should_be_underscore_camel_case.severity = warning
@@ -153,8 +163,3 @@ dotnet_naming_rule.private_fields_should_be_underscore_camel_case.style = unders
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.severity = warning
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.symbols = locals_parameters
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.style = camel_case_style
-
-# name all constant fields using PascalCase
-dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
-dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style

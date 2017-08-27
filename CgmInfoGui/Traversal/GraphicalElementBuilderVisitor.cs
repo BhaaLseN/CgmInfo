@@ -14,13 +14,9 @@ namespace CgmInfoGui.Traversal
 {
     public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementContext>
     {
-        public override void AcceptMetafileDescriptorMaximumVdcExtent(MaximumVdcExtent maximumVdcExtent, GraphicalElementContext parameter)
-        {
-            parameter.SetMaximumExtent(maximumVdcExtent.FirstCorner.ToPoint(), maximumVdcExtent.SecondCorner.ToPoint());
-        }
         public override void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, GraphicalElementContext parameter)
         {
-            parameter.SetExtent(vdcExtent.FirstCorner.ToPoint(), vdcExtent.SecondCorner.ToPoint());
+            parameter.SetMaximumExtent(vdcExtent.FirstCorner.ToPoint(), vdcExtent.SecondCorner.ToPoint());
         }
 
         public override void AcceptAttributeLineColor(LineColor lineColor, GraphicalElementContext parameter)

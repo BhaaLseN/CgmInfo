@@ -94,7 +94,7 @@ namespace CgmInfoGui.Traversal
 
         public override void AcceptGraphicalPrimitiveText(TextCommand text, GraphicalElementContext parameter)
         {
-            var textVisual = new TextVisual(text.Text, text.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.CharacterHeight, parameter.TextAttributes.TextColor);
+            var textVisual = new TextVisual(text.Text, text.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.GetFontSize(), parameter.TextAttributes.TextColor);
             parameter.IncreaseBounds(text.Position.ToPoint());
             if (text.Final == FinalFlag.Final)
                 parameter.FinalizeText(textVisual);
@@ -117,7 +117,7 @@ namespace CgmInfoGui.Traversal
         }
         public override void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, GraphicalElementContext parameter)
         {
-            var textVisual = new TextVisual(restrictedText.Text, restrictedText.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.CharacterHeight, parameter.TextAttributes.TextColor);
+            var textVisual = new TextVisual(restrictedText.Text, restrictedText.Position.ToPoint(), parameter.TextAttributes.GetFontFamily(), parameter.TextAttributes.GetFontSize(), parameter.TextAttributes.TextColor);
             parameter.IncreaseBounds(new Rect(restrictedText.Position.ToPoint(), new Size(restrictedText.DeltaWidth, restrictedText.DeltaHeight)));
             if (restrictedText.Final == FinalFlag.Final)
                 parameter.FinalizeText(textVisual);

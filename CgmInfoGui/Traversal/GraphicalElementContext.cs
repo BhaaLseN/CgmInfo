@@ -186,6 +186,12 @@ public class GraphicalElementContext
             // unsupported font families automatically fall back to something that the system has
             return new FontFamily(Font);
         }
+        public double GetFontSize()
+        {
+            // FIXME: this is wrong, character height is base to cap, while font size is
+            //        from one base to another (including ascenders and descenders).
+            return CharacterHeight;
+        }
     }
 
     public sealed class LineAttributeValues

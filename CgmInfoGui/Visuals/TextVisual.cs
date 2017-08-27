@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -29,9 +30,14 @@ namespace CgmInfoGui.Visuals
             drawingContext.DrawText(formattedText, visualContext.Correct(Location));
         }
 
+        // from System.Windows.Media.FormattedText, otherwise it may throw.
+        // some metafile generators seem to do wonky things with integer VDCs and may exceed this value.
+        private const double MaxFontEmSize = 35791.394066666668;
+
         internal FormattedText CreateFormattedText()
         {
-            return new FormattedText(Text, CultureInfo.GetCultureInfo("en"), FlowDirection.LeftToRight, new Typeface(Font, new FontStyle(), new FontWeight(), new FontStretch()), FontSize, FontBrush, PixelsPerDip);
+            double preferredEmSize = Math.Min(FontSize, MaxFontEmSize);
+            return new FormattedText(Text, CultureInfo.GetCultureInfo("en"), FlowDirection.LeftToRight, new Typeface(Font, new FontStyle(), new FontWeight(), new FontStretch()), preferredEmSize, FontBrush, PixelsPerDip);
         }
     }
 }

@@ -715,6 +715,19 @@ namespace CgmInfoGui.Traversal
             var bezierNode = parameter.AddNode("POLYBEZIER: {0} ({1}) [{2} elements]", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
             bezierNode.Nodes.AddRange(polybezier.PointSequences.Select(n => new SimpleNode(n.ToString())));
         }
+        public void AcceptGraphicalPrimitiveBitonalTile(BitonalTile bitonalTile, MetafileContext parameter)
+        {
+            var bitonalTileNode = parameter.AddNode("BITONAL TILE: {0} ({1})", bitonalTile.CompressionType, bitonalTile.CompressionTypeName);
+            bitonalTileNode.Nodes.Add(new SimpleNode("Row Padding Indicator: " + bitonalTile.RowPaddingIndicator));
+            bitonalTileNode.Nodes.Add(new SimpleNode("Cell Background Color: " + bitonalTile.CellBackgroundColor));
+            bitonalTileNode.Nodes.Add(new SimpleNode("Cell Foreground Color: " + bitonalTile.CellForegroundColor));
+            if (bitonalTile.Parameters != null)
+            {
+                var parameterNode = new SimpleNode($"Parameters [{bitonalTile.Parameters.Elements.Count()}]");
+                parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode(n.ToString())));
+                bitonalTileNode.Nodes.Add(parameterNode);
+            }
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

@@ -117,6 +117,7 @@ namespace CgmInfo.Traversal
         void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, T parameter);
         void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, T parameter);
         void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, T parameter);
+        void AcceptGraphicalPrimitiveBitonalTile(BitonalTile bitonalTile, T parameter);
 
         // attributes
         void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, T parameter);

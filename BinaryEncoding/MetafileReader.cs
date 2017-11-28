@@ -150,7 +150,7 @@ namespace CgmInfo.BinaryEncoding
                     { 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
                     { 26, GraphicalPrimitiveReader.Polybezier },
                     //{ 27, GraphicalPrimitiveReader.Polysymbol },
-                    //{ 28, GraphicalPrimitiveReader.BitonalTile },
+                    { 28, GraphicalPrimitiveReader.BitonalTile },
                     //{ 29, GraphicalPrimitiveReader.Tile },
                 }
             },

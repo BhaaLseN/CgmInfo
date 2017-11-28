@@ -468,6 +468,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Polybezier: {0} ({1}, {2} points)", polybezier.ContinuityIndicator, polybezier.Name, polybezier.PointSequences.Length);
         }
+        public void AcceptGraphicalPrimitiveBitonalTile(BitonalTile bitonalTile, PrintContext parameter)
+        {
+            parameter.WriteLine("Bitonal Tile: {0} ({1}, {2} parameters)", bitonalTile.CompressionType, bitonalTile.CompressionTypeName, bitonalTile.Parameters?.Elements.Count());
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

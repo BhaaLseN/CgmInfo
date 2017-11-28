@@ -139,6 +139,7 @@
     <Compile Include="Commands\Escape\EscapeCommand.cs" />
     <Compile Include="Commands\External\ApplicationData.cs" />
     <Compile Include="Commands\External\Message.cs" />
+    <Compile Include="Commands\GraphicalPrimitives\BitonalTile.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CellArray.cs" />
     <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
     <Compile Include="Commands\GraphicalPrimitives\CircularArc3Point.cs" />

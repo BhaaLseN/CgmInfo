@@ -329,6 +329,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveBitonalTile(BitonalTile bitonalTile, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

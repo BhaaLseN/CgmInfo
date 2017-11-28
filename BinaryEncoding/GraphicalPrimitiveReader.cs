@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Utilities;
@@ -368,6 +369,67 @@ namespace CgmInfo.BinaryEncoding
             int continuityIndicator = reader.ReadIndex();
             var pointSequences = ReadPointList(reader);
             return new Polybezier(continuityIndicator, pointSequences.ToArray());
+        }
+
+        public static BitonalTile BitonalTile(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) compression type: valid values are
+            //      0: null background
+            //      1: null foreground
+            //      2: T6
+            //      3: 1-dimensional
+            //      4: T4 2-dimensional
+            //      5: bitmap (uncompressed)
+            //      6: run length
+            //      >6 reserved for registered values
+            // P2: (integer) row padding indicator: valid values are non-negative integers.
+            // P3: (colour) cell background colour
+            // P4: (colour) cell foreground colour
+            // P5: (structured data record) method-specific parameters, valid values are
+            //      [null_SDR], for compression types 1-5,
+            //      [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
+            //      as defined in the Register, for type>6.
+            //      Note 1 See NOTE 17, Table 1, for additional SDR formatting requirements.
+            // P6 (bitstream) compressed cell colour specifiers
+            int compressionType = reader.ReadIndex();
+            int rowPaddingIndicator = reader.ReadInteger();
+            var cellBackgroundColor = reader.ReadColor();
+            var cellForegroundColor = reader.ReadColor();
+            var parameters = ReadBitonalTileSDR(compressionType, reader);
+            // TODO: do something with the bit stream?
+            //       for the info application, it doesn't make too much sense; but other applications might want it.
+            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters);
+        }
+        private static StructuredDataRecord ReadBitonalTileSDR(int compressionType, MetafileReader reader)
+        {
+            switch (compressionType)
+            {
+                case 0: // null background
+                case 1: // null foreground
+                case 2: // T6
+                case 3: // 1-dimensional
+                case 4: // T4 2-dimensional
+                case 5: // bitmap (uncompressed)
+                    // [null_SDR], for compression types 1-5,
+                    return new StructuredDataRecord(new StructuredDataElement[0]);
+
+                case 6: // run length
+                    int i_I = reader.ReadInteger();
+                    int one = reader.ReadInteger();
+                    int runCountPrecision = reader.ReadInteger();
+
+                    // [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
+                    return new StructuredDataRecord(new[]
+                    {
+                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { i_I }),
+                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { one }),
+                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { runCountPrecision }),
+                    });
+
+                default: // >6 reserved for registered values
+                    // TODO: as defined in the Register, for type>6.
+                    return null;
+            }
         }
 
         private static List<PointF> ReadPointList(MetafileReader reader)

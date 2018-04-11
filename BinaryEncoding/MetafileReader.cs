@@ -275,7 +275,7 @@ namespace CgmInfo.BinaryEncoding
                 return null;
 
             Command result;
-            CommandHeader commandHeader = ReadCommandHeader(stream);
+            var commandHeader = ReadCommandHeader(stream);
             // special case: we might encounter a no-op after END METAFILE, which leads into EOF.
             // ReadCommandHeader will return null in that case, and we should simply pass this on here.
             if (commandHeader == null)

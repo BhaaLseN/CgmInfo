@@ -195,7 +195,7 @@ namespace CgmInfoGui.Traversal
                             .ToArray();
                         var points = new List<PointF[]>();
                         var lastPoint = firstPoint;
-                        foreach (PointF[] pointGroup in pointGroups)
+                        foreach (var pointGroup in pointGroups)
                         {
                             points.Add(new[]
                             {

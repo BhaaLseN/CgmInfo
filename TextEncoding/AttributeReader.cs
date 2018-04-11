@@ -448,11 +448,11 @@ namespace CgmInfo.TextEncoding
             AspectSourceFlagsType[] asfTypes;
             if (ASFMapping.TryGetValue(typeToken.ToUpperInvariant(), out asfTypes))
             {
-                AspectSourceFlagsValue asfValue = valueToken.ToUpperInvariant() == "BUNDLED"
+                var asfValue = valueToken.ToUpperInvariant() == "BUNDLED"
                     ? AspectSourceFlagsValue.Bundled
                     : AspectSourceFlagsValue.Individual;
 
-                foreach (AspectSourceFlagsType asfType in asfTypes)
+                foreach (var asfType in asfTypes)
                     asf[asfType] = asfValue;
             }
         }

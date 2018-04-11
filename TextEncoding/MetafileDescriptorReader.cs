@@ -81,14 +81,14 @@ namespace CgmInfo.TextEncoding
             ColorValueExtent result;
             if (reader.Descriptor.ColorModel == ColorModel.RGB)
             {
-                MetafileColor min = reader.ReadDirectColor();
-                MetafileColor max = reader.ReadDirectColor();
+                var min = reader.ReadDirectColor();
+                var max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.RGB, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CMYK)
             {
-                MetafileColor min = reader.ReadDirectColor();
-                MetafileColor max = reader.ReadDirectColor();
+                var min = reader.ReadDirectColor();
+                var max = reader.ReadDirectColor();
                 result = new ColorValueExtent(ColorSpace.CMYK, min, max);
             }
             else if (reader.Descriptor.ColorModel == ColorModel.CIELAB || reader.Descriptor.ColorModel == ColorModel.CIELUV || reader.Descriptor.ColorModel == ColorModel.RGBrelated)

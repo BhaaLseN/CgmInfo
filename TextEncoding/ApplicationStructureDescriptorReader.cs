@@ -38,7 +38,7 @@ namespace CgmInfo.TextEncoding
         }
         public StructuredDataElement ReadElement()
         {
-            DataTypeIndex type = ReadDataTypeIndex();
+            var type = ReadDataTypeIndex();
             if ((int)type == -1)
                 return null;
 

@@ -57,15 +57,15 @@ csharp_style_var_for_built_in_types = false : suggestion
 csharp_style_var_when_type_is_apparent = true : suggestion
 csharp_style_var_elsewhere = true : suggestion
 
-# Prefer method-like constructs to have a block body
-csharp_style_expression_bodied_methods = false : none
+# Prefer method-like constructs to have a block body (unless they fit on a single line)
+csharp_style_expression_bodied_methods = when_on_single_line : none
 csharp_style_expression_bodied_constructors = false : none
-csharp_style_expression_bodied_operators = false : none
+csharp_style_expression_bodied_operators = when_on_single_line : none
 
 # Prefer property-like constructs to have an expression-body
-csharp_style_expression_bodied_properties = true : none
-csharp_style_expression_bodied_indexers = true : none
-csharp_style_expression_bodied_accessors = true : none
+csharp_style_expression_bodied_properties = when_on_single_line : none
+csharp_style_expression_bodied_indexers = when_on_single_line : none
+csharp_style_expression_bodied_accessors = when_on_single_line : none
 
 # Suggest more modern language features when available
 csharp_style_pattern_matching_over_is_with_cast_check = true : suggestion

@@ -9,32 +9,23 @@ namespace CgmInfo
 {
     public abstract class MetafileReader : IDisposable
     {
-        private readonly MetafileDescriptor _descriptor = new MetafileDescriptor();
-        private readonly MetafileProperties _properties;
         private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
-
         private readonly FileStream _fileStream;
 
-        public MetafileDescriptor Descriptor
-        {
-            get { return _descriptor; }
-        }
-        public MetafileProperties Properties
-        {
-            get { return _properties; }
-        }
+        public MetafileDescriptor Descriptor { get; } = new MetafileDescriptor();
+        public MetafileProperties Properties { get; }
 
         protected MetafileReader(string fileName, bool isBinaryEncoding)
         {
             _fileStream = File.OpenRead(fileName);
-            _properties = new MetafileProperties(isBinaryEncoding, _fileStream.Length);
+            Properties = new MetafileProperties(isBinaryEncoding, _fileStream.Length);
         }
 
         public Command Read()
         {
             var command = ReadCommand(_fileStream);
             if (command != null)
-                command.Accept(_propertyVisitor, _properties);
+                command.Accept(_propertyVisitor, Properties);
             return command;
         }
 

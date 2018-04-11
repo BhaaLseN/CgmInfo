@@ -38,7 +38,7 @@ namespace CgmInfo.TextEncoding
         }
         public StructuredDataElement ReadElement()
         {
-            DataTypeIndex type = ReadDataTypeIndex();
+            var type = ReadDataTypeIndex();
             if ((int)type == -1)
                 return null;
 
@@ -169,16 +169,14 @@ namespace CgmInfo.TextEncoding
         private int ReadInteger()
         {
             string token = ReadToken();
-            int ret;
-            if (!int.TryParse(token, out ret))
+            if (!int.TryParse(token, out int ret))
                 ret = -1;
             return ret;
         }
         private double ReadReal()
         {
             string token = ReadToken();
-            double ret;
-            if (!double.TryParse(token, NumberStyles.Any, CultureInfo.GetCultureInfo("en"), out ret))
+            if (!double.TryParse(token, NumberStyles.Any, CultureInfo.GetCultureInfo("en"), out double ret))
                 ret = -1;
             return ret;
         }

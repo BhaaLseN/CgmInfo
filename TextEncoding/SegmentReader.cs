@@ -143,8 +143,7 @@ namespace CgmInfo.TextEncoding
         };
         private static InheritanceFilterDesignator ParseFilterDesignator(string token)
         {
-            InheritanceFilterDesignator designator;
-            if (!FilterDesignatorMapping.TryGetValue(token.ToUpperInvariant(), out designator))
+            if (!FilterDesignatorMapping.TryGetValue(token.ToUpperInvariant(), out var designator))
                 designator = 0;
             return designator;
         }

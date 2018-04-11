@@ -216,8 +216,7 @@ namespace CgmInfo.TextEncoding
             var tokens = new List<string>();
             do
             {
-                string token;
-                state = ReadToken(stream, out token);
+                state = ReadToken(stream, out string token);
                 tokens.Add(token);
             } while (state == TokenState.EndOfToken);
 
@@ -230,8 +229,7 @@ namespace CgmInfo.TextEncoding
                 _currentTokenIndex = 0;
 
                 string elementName = ReadToken();
-                Func<MetafileReader, Command> commandHandler;
-                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out commandHandler) || commandHandler == null)
+                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out var commandHandler) || commandHandler == null)
                     commandHandler = r => UnsupportedCommand(elementName);
 
                 return commandHandler(this);
@@ -396,8 +394,7 @@ namespace CgmInfo.TextEncoding
             var match = DecimalInteger.Match(number);
             if (match.Success)
             {
-                int num;
-                if (!int.TryParse(match.Groups["digits"].Value, out num))
+                if (!int.TryParse(match.Groups["digits"].Value, out int num))
                     throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at command position {1}", number, _commandPosition));
                 if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
                     num = -num;
@@ -407,8 +404,7 @@ namespace CgmInfo.TextEncoding
             match = BasedInteger.Match(number);
             if (match.Success)
             {
-                int radix;
-                if (!int.TryParse(match.Groups["radix"].Value, out radix))
+                if (!int.TryParse(match.Groups["radix"].Value, out int radix))
                     throw new FormatException(string.Format("Invalid Based Integer radix '{0}' at command position {1}", number, _commandPosition));
                 int num = 0;
                 string digits = match.Groups["digits"].Value.ToUpperInvariant();

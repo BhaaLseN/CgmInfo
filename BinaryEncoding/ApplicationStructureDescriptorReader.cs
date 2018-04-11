@@ -36,7 +36,7 @@ namespace CgmInfo.BinaryEncoding
             while (reader.HasMoreData((reader.Descriptor.IndexPrecision + reader.Descriptor.IntegerPrecision) / 8))
             {
                 // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
-                DataTypeIndex type = (DataTypeIndex)Enum.ToObject(typeof(DataTypeIndex), reader.ReadIndex());
+                var type = (DataTypeIndex)Enum.ToObject(typeof(DataTypeIndex), reader.ReadIndex());
                 // count is an interger at the current integer precision for SDR [ISO/IEC 8632-1 H.2.2]
                 int count = reader.ReadInteger();
                 object[] values = new object[count];

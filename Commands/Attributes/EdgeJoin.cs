@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeEdgeJoin(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownEdgeJoinIndicators = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownEdgeJoinIndicators { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // edge join indicators originally part of ISO/IEC 8632:1999
             { 1, "Unspecified" },
@@ -29,14 +29,9 @@ namespace CgmInfo.Commands.Attributes
             { 3, "Round" },
             { 4, "Bevel" },
         });
-        public static IReadOnlyDictionary<int, string> KnownEdgeJoinIndicators
-        {
-            get { return _knownEdgeJoinIndicators; }
-        }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownEdgeJoinIndicators.TryGetValue(index, out name))
+            if (KnownEdgeJoinIndicators.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

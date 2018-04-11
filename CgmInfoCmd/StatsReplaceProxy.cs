@@ -29,9 +29,7 @@ namespace CgmInfoCmd
         }
         public override IMessage Invoke(IMessage msg)
         {
-            var methodMessage = msg as IMethodCallMessage;
-
-            if (methodMessage != null)
+            if (msg is IMethodCallMessage methodMessage)
             {
                 CollectStats(methodMessage.Args.OfType<Command>().FirstOrDefault());
                 object retVal = _preventActualMethodCalls ? null : methodMessage.MethodBase.Invoke(_target, methodMessage.Args);
@@ -75,22 +73,19 @@ namespace CgmInfoCmd
             if (command == null)
                 return;
 
-            var unsupportedCommand = command as UnsupportedCommand;
-            if (unsupportedCommand != null && unsupportedCommand.IsTextEncoding)
+            if (command is UnsupportedCommand unsupportedCommand && unsupportedCommand.IsTextEncoding)
                 AddGroupCount("Unsupported", unsupportedCommand.ElementName);
             else
                 AddGroupCount(GetElementClass(command.ElementClass), GetElementId(command.ElementId));
         }
         private void AddGroupCount(string className, string elementName)
         {
-            Dictionary<string, int> elements;
-            if (!_stats.TryGetValue(className, out elements))
+            if (!_stats.TryGetValue(className, out var elements))
             {
                 elements = new Dictionary<string, int>();
                 _stats[className] = elements;
             }
-            int count;
-            if (!elements.TryGetValue(elementName, out count))
+            if (!elements.TryGetValue(elementName, out int count))
                 count = 0;
             elements[elementName] = count + 1;
         }

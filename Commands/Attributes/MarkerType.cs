@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeMarkerType(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownMarkerTypes = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownMarkerTypes { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // there is no value 0, guessing it should mean "None" if it ever happens
             { 0, "None" },
@@ -54,17 +54,12 @@ namespace CgmInfo.Commands.Attributes
             { 25, "Meteorological Automatic Station Circle, sky obscured" },
             { 26, "Meteorological Automatic Station Circle, sky not observed" },
         });
-        public static IReadOnlyDictionary<int, string> KnownMarkerTypes
-        {
-            get { return _knownMarkerTypes; }
-        }
         public static string GetName(int index)
         {
             if (index < 0)
                 return "Private";
 
-            string name;
-            if (KnownMarkerTypes.TryGetValue(index, out name))
+            if (KnownMarkerTypes.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

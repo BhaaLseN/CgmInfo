@@ -445,14 +445,13 @@ namespace CgmInfo.TextEncoding
         };
         private static void SetASFValue(Dictionary<AspectSourceFlagsType, AspectSourceFlagsValue> asf, string typeToken, string valueToken)
         {
-            AspectSourceFlagsType[] asfTypes;
-            if (ASFMapping.TryGetValue(typeToken.ToUpperInvariant(), out asfTypes))
+            if (ASFMapping.TryGetValue(typeToken.ToUpperInvariant(), out var asfTypes))
             {
-                AspectSourceFlagsValue asfValue = valueToken.ToUpperInvariant() == "BUNDLED"
+                var asfValue = valueToken.ToUpperInvariant() == "BUNDLED"
                     ? AspectSourceFlagsValue.Bundled
                     : AspectSourceFlagsValue.Individual;
 
-                foreach (AspectSourceFlagsType asfType in asfTypes)
+                foreach (var asfType in asfTypes)
                     asf[asfType] = asfValue;
             }
         }

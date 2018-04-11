@@ -143,7 +143,7 @@ namespace CgmInfo.BinaryEncoding
             // P6-P(5+n): (integers) list of n gap widths
             // P(6+n)-P(5+2n): (integers) list of n line types
             int hatchIndex = reader.ReadIndex();
-            HatchStyleIndicator styleIndicator = reader.ReadEnum<HatchStyleIndicator>();
+            var styleIndicator = reader.ReadEnum<HatchStyleIndicator>();
             double hatchDirectionStartX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
             double hatchDirectionStartY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
             double hatchDirectionEndX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);

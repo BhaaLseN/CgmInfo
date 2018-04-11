@@ -74,7 +74,7 @@ namespace CgmInfo.TextEncoding
         public static HatchStyleDefinition HatchStyleDefinition(MetafileReader reader)
         {
             int hatchIndex = reader.ReadIndex();
-            HatchStyleIndicator styleIndicator = ParseHatchStyleIndicator(reader.ReadEnum());
+            var styleIndicator = ParseHatchStyleIndicator(reader.ReadEnum());
             double hatchDirectionStartX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
             double hatchDirectionStartY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
             double hatchDirectionEndX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);

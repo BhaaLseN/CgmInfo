@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeEdgeTypeContinuation(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownEdgeTypeContinuations = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownEdgeTypeContinuations { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // edge type continuations originally part of ISO/IEC 8632:1999
             { 1, "Unspecified" },
@@ -29,14 +29,9 @@ namespace CgmInfo.Commands.Attributes
             { 3, "Restart" },
             { 4, "Adaptive Continue" },
         });
-        public static IReadOnlyDictionary<int, string> KnownEdgeTypeContinuations
-        {
-            get { return _knownEdgeTypeContinuations; }
-        }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownEdgeTypeContinuations.TryGetValue(index, out name))
+            if (KnownEdgeTypeContinuations.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

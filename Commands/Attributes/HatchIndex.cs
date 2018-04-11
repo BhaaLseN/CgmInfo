@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeHatchIndex(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownHatchIndices = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownHatchIndices { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // there is no value 0, guessing it should mean "None" if it ever happens
             { 0, "None" },
@@ -47,17 +47,12 @@ namespace CgmInfo.Commands.Attributes
             { 18, "Sand" },
             { 19, "Repeating Dot" },
         });
-        public static IReadOnlyDictionary<int, string> KnownHatchIndices
-        {
-            get { return _knownHatchIndices; }
-        }
         public static string GetName(int index)
         {
             if (index < 0)
                 return "Private";
 
-            string name;
-            if (KnownHatchIndices.TryGetValue(index, out name))
+            if (KnownHatchIndices.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

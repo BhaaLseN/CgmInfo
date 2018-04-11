@@ -112,8 +112,7 @@ namespace CgmInfo.TextEncoding
         }
         private static ClippingMode GetClippingMode(string token)
         {
-            ClippingMode ret;
-            if (!Enum.TryParse<ClippingMode>(token, true, out ret))
+            if (!Enum.TryParse<ClippingMode>(token, true, out var ret))
                 ret = ClippingMode.Locus;
             return ret;
         }

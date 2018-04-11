@@ -122,8 +122,7 @@ namespace CgmInfoGui.Traversal
 
             var firstElement = dataRecord.Elements.First();
             object regionTypeObject = firstElement != null ? firstElement.Values.FirstOrDefault() : null;
-            HotspotRegionType regionType;
-            if (regionTypeObject != null && Enum.TryParse<HotspotRegionType>(Convert.ToString(regionTypeObject), out regionType))
+            if (regionTypeObject != null && Enum.TryParse<HotspotRegionType>(Convert.ToString(regionTypeObject), out var regionType))
             {
                 _currentNode.RegionType = regionType;
                 _currentNode.RegionValues = dataRecord.Elements.Skip(1).First().Values.OfType<double>().ToArray();

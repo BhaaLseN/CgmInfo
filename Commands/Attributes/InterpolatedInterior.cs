@@ -29,21 +29,16 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeInterpolatedInterior(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownInteriorStyles = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownInteriorStyles { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // interior styles originally part of ISO/IEC 8632:1999
             { 1, "Parallel" },
             { 2, "Elliptical" },
             { 3, "Triangular" },
         });
-        public static IReadOnlyDictionary<int, string> KnownInteriorStyles
-        {
-            get { return _knownInteriorStyles; }
-        }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownInteriorStyles.TryGetValue(index, out name))
+            if (KnownInteriorStyles.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

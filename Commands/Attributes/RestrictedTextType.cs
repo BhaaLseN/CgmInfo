@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeRestrictedTextType(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownRestrictionTypes = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownRestrictionTypes { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // restriction types originally part of ISO/IEC 8632:1999
             { 1, "Basic" },
@@ -31,10 +31,6 @@ namespace CgmInfo.Commands.Attributes
             { 5, "Isotropic-All" },
             { 6, "Justified" },
         });
-        public static IReadOnlyDictionary<int, string> KnownRestrictionTypes
-        {
-            get { return _knownRestrictionTypes; }
-        }
         public static string GetName(int index)
         {
             if (KnownRestrictionTypes.TryGetValue(index, out string name))

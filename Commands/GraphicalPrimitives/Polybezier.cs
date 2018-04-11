@@ -24,16 +24,12 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             visitor.AcceptGraphicalPrimitivePolybezier(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownContinuityIndicators = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownContinuityIndicators { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // continuity indicators originally part of ISO/IEC 8632:1999
             { 1, "Discontinuous" },
             { 2, "Continuous" },
         });
-        public static IReadOnlyDictionary<int, string> KnownContinuityIndicators
-        {
-            get { return _knownContinuityIndicators; }
-        }
         public static string GetName(int index)
         {
             if (KnownContinuityIndicators.TryGetValue(index, out string name))

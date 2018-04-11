@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeEdgeType(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownEdgeTypes = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownEdgeTypes { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // there is no value 0, guessing it should mean "None" if it ever happens
             { 0, "None" },
@@ -32,10 +32,6 @@ namespace CgmInfo.Commands.Attributes
             { 4, "Dash-Dot" },
             { 5, "Dash-Dot-Dot" },
         });
-        public static IReadOnlyDictionary<int, string> KnownEdgeTypes
-        {
-            get { return _knownEdgeTypes; }
-        }
         public static string GetName(int index)
         {
             if (index < 0)

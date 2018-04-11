@@ -34,7 +34,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
         public int Priority { get; private set; }
         public StructuredDataElement Record { get; private set; }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownPropertyIndicators = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownPropertyIndicators { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // property indicators originally part of ISO/IEC 8632:1999
             { 1, "Font Index" },
@@ -52,10 +52,6 @@ namespace CgmInfo.Commands.MetafileDescriptor
             { 13, "Design Group" },
             { 14, "Structure" },
         });
-        public static IReadOnlyDictionary<int, string> KnownPropertyIndicators
-        {
-            get { return _knownPropertyIndicators; }
-        }
         public static string GetName(int index)
         {
             if (KnownPropertyIndicators.TryGetValue(index, out string name))

@@ -21,7 +21,7 @@ namespace CgmInfo.Commands.Attributes
             visitor.AcceptAttributeLineTypeContinuation(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownLineTypeContinuations = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownLineTypeContinuations { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // line type continuations originally part of ISO/IEC 8632:1999
             { 1, "Unspecified" },
@@ -29,10 +29,6 @@ namespace CgmInfo.Commands.Attributes
             { 3, "Restart" },
             { 4, "Adaptive Continue" },
         });
-        public static IReadOnlyDictionary<int, string> KnownLineTypeContinuations
-        {
-            get { return _knownLineTypeContinuations; }
-        }
         public static string GetName(int index)
         {
             if (KnownLineTypeContinuations.TryGetValue(index, out string name))

@@ -23,7 +23,7 @@ namespace CgmInfo.Commands.Escape
             visitor.AcceptEscapeEscape(this, parameter);
         }
 
-        private static readonly ReadOnlyDictionary<int, string> _knownEscapeTypes = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        public static IReadOnlyDictionary<int, string> KnownEscapeTypes { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {
             // ISO/IEC 8632:1999 defines no escape elements; all values that follow are registered with the ISO/IEC 9973 Items Register
             { 1 , "Set Dash" },
@@ -74,10 +74,6 @@ namespace CgmInfo.Commands.Escape
             { 47, "Symbol Reference Point" },
             { 48, "Symbol Design Height and Width" },
         });
-        public static IReadOnlyDictionary<int, string> KnownEscapeTypes
-        {
-            get { return _knownEscapeTypes; }
-        }
         public static string GetName(int index)
         {
             if (KnownEscapeTypes.TryGetValue(index, out string name))

@@ -40,8 +40,7 @@ namespace CgmInfo.Commands.Attributes
         }
         public static string GetLineCapName(int index)
         {
-            string name;
-            if (KnownEdgeCapIndicators.TryGetValue(index, out name))
+            if (KnownEdgeCapIndicators.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";
@@ -60,8 +59,7 @@ namespace CgmInfo.Commands.Attributes
         }
         public static string GetDashCapName(int index)
         {
-            string name;
-            if (KnownDashCapIndicators.TryGetValue(index, out name))
+            if (KnownDashCapIndicators.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

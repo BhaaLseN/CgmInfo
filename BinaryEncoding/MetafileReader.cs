@@ -281,10 +281,8 @@ namespace CgmInfo.BinaryEncoding
             if (commandHeader == null)
                 return null;
 
-            Func<MetafileReader, CommandHeader, Command> commandHandler;
-            Dictionary<int, Func<MetafileReader, CommandHeader, Command>> elementClassMap;
-            if (!_commandTable.TryGetValue(commandHeader.ElementClass, out elementClassMap) || elementClassMap == null ||
-                !elementClassMap.TryGetValue(commandHeader.ElementId, out commandHandler) || commandHandler == null)
+            if (!_commandTable.TryGetValue(commandHeader.ElementClass, out var elementClassMap) || elementClassMap == null ||
+                !elementClassMap.TryGetValue(commandHeader.ElementId, out var commandHandler) || commandHandler == null)
                 commandHandler = ReadUnsupportedElement;
 
             result = commandHandler(this, commandHeader);

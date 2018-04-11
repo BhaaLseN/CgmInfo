@@ -56,8 +56,7 @@ namespace CgmInfo.Commands.Attributes
             if (index < 0)
                 return "Private";
 
-            string name;
-            if (KnownHatchIndices.TryGetValue(index, out name))
+            if (KnownHatchIndices.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

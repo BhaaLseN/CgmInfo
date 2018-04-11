@@ -63,8 +63,7 @@ namespace CgmInfo.Commands.Attributes
             if (index < 0)
                 return "Private";
 
-            string name;
-            if (KnownMarkerTypes.TryGetValue(index, out name))
+            if (KnownMarkerTypes.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

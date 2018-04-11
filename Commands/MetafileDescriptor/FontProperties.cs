@@ -58,8 +58,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
         }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownPropertyIndicators.TryGetValue(index, out name))
+            if (KnownPropertyIndicators.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

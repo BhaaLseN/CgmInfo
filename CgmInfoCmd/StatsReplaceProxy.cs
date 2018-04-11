@@ -83,14 +83,12 @@ namespace CgmInfoCmd
         }
         private void AddGroupCount(string className, string elementName)
         {
-            Dictionary<string, int> elements;
-            if (!_stats.TryGetValue(className, out elements))
+            if (!_stats.TryGetValue(className, out var elements))
             {
                 elements = new Dictionary<string, int>();
                 _stats[className] = elements;
             }
-            int count;
-            if (!elements.TryGetValue(elementName, out count))
+            if (!elements.TryGetValue(elementName, out int count))
                 count = 0;
             elements[elementName] = count + 1;
         }

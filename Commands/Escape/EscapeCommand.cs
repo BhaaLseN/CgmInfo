@@ -80,8 +80,7 @@ namespace CgmInfo.Commands.Escape
         }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownEscapeTypes.TryGetValue(index, out name))
+            if (KnownEscapeTypes.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

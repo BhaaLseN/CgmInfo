@@ -37,8 +37,7 @@ namespace CgmInfo.Commands.Attributes
         }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownRestrictionTypes.TryGetValue(index, out name))
+            if (KnownRestrictionTypes.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

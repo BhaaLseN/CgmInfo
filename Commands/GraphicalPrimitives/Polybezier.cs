@@ -36,8 +36,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
         }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownContinuityIndicators.TryGetValue(index, out name))
+            if (KnownContinuityIndicators.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

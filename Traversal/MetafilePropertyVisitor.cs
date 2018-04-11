@@ -20,11 +20,9 @@ namespace CgmInfo.Traversal
             var keys = MetafileDescriptionParser.ParseDescription(metafileDescription.Description);
             if (keys.Any())
             {
-                string profileId;
-                if (!keys.TryGetValue("ProfileId", out profileId))
+                if (!keys.TryGetValue("ProfileId", out string profileId))
                     profileId = "ISO/IEC 8632";
-                string profileEd;
-                if (!keys.TryGetValue("ProfileEd", out profileEd))
+                if (!keys.TryGetValue("ProfileEd", out string profileEd))
                     profileEd = "(guess)";
 
                 parameter.Profile = string.Format("{0} {1}", profileId, profileEd);

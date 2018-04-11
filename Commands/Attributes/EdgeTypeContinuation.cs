@@ -35,8 +35,7 @@ namespace CgmInfo.Commands.Attributes
         }
         public static string GetName(int index)
         {
-            string name;
-            if (KnownEdgeTypeContinuations.TryGetValue(index, out name))
+            if (KnownEdgeTypeContinuations.TryGetValue(index, out string name))
                 return name;
 
             return "Reserved";

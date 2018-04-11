@@ -109,11 +109,9 @@ namespace CgmInfoGui.Controls
         }
         private void OnSourceChanged(DependencyPropertyChangedEventArgs e)
         {
-            var oldValue = e.OldValue as ItemsControl;
-            if (oldValue != null && oldValue.Items != null)
+            if (e.OldValue is ItemsControl oldValue && oldValue.Items != null)
                 ((INotifyCollectionChanged)oldValue.Items).CollectionChanged -= OnSourceCollectionChanged;
-            var newValue = e.NewValue as ItemsControl;
-            if (newValue != null && newValue.Items != null)
+            if (e.NewValue is ItemsControl newValue && newValue.Items != null)
                 ((INotifyCollectionChanged)newValue.Items).CollectionChanged += OnSourceCollectionChanged;
         }
 
@@ -152,8 +150,7 @@ namespace CgmInfoGui.Controls
             // items might not be generated yet; we can only proceed here if they are...
             if (itemsControl.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
-                var container = itemsControl.ItemContainerGenerator.ContainerFromIndex(currentIndex) as ItemsControl;
-                if (container != null)
+                if (itemsControl.ItemContainerGenerator.ContainerFromIndex(currentIndex) is ItemsControl container)
                 {
                     // keep selecting items until we reached the target
                     if (remainingPath.Any())
@@ -163,8 +160,7 @@ namespace CgmInfoGui.Controls
                     else
                     {
                         // select the target item and bring it into view (tree view only)
-                        var treeViewItem = container as TreeViewItem;
-                        if (treeViewItem != null)
+                        if (container is TreeViewItem treeViewItem)
                         {
                             treeViewItem.IsSelected = true;
                             treeViewItem.BringIntoView();
@@ -188,8 +184,7 @@ namespace CgmInfoGui.Controls
 
                 itemsControl.ItemContainerGenerator.StatusChanged += selectWhenReadyMethod;
                 // force expansion (tree view only)
-                var treeViewItem = itemsControl as TreeViewItem;
-                if (treeViewItem != null)
+                if (itemsControl is TreeViewItem treeViewItem)
                     treeViewItem.IsExpanded = true;
             }
         }

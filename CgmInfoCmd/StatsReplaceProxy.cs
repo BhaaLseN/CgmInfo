@@ -29,9 +29,7 @@ namespace CgmInfoCmd
         }
         public override IMessage Invoke(IMessage msg)
         {
-            var methodMessage = msg as IMethodCallMessage;
-
-            if (methodMessage != null)
+            if (msg is IMethodCallMessage methodMessage)
             {
                 CollectStats(methodMessage.Args.OfType<Command>().FirstOrDefault());
                 object retVal = _preventActualMethodCalls ? null : methodMessage.MethodBase.Invoke(_target, methodMessage.Args);
@@ -75,8 +73,7 @@ namespace CgmInfoCmd
             if (command == null)
                 return;
 
-            var unsupportedCommand = command as UnsupportedCommand;
-            if (unsupportedCommand != null && unsupportedCommand.IsTextEncoding)
+            if (command is UnsupportedCommand unsupportedCommand && unsupportedCommand.IsTextEncoding)
                 AddGroupCount("Unsupported", unsupportedCommand.ElementName);
             else
                 AddGroupCount(GetElementClass(command.ElementClass), GetElementId(command.ElementId));

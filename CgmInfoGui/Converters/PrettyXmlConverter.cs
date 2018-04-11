@@ -169,21 +169,17 @@ namespace CgmInfoGui.Converters
         private IEnumerable<Block> RenderNode(XNode node, double indent)
         {
             // render a child element, if it is one
-            var xmlElement = node as XElement;
-            if (xmlElement != null)
+            if (node is XElement xmlElement)
                 return RenderElement(xmlElement, indent);
 
             // try to render a list of handled node subclasses; or fall back to a generic result
             // those are assumed to be inline and simply become one line.
             IEnumerable<Inline> ret;
-            var xmlText = node as XText;
-            var xmlComment = node as XComment;
-            var xmlDoctype = node as XDocumentType;
-            if (xmlText != null)
+            if (node is XText xmlText)
                 ret = RenderText(xmlText);
-            else if (xmlComment != null)
+            else if (node is XComment xmlComment)
                 ret = RenderComment(xmlComment);
-            else if (xmlDoctype != null)
+            else if (node is XDocumentType xmlDoctype)
                 ret = new[] { Bracket(xmlDoctype.ToString()) };
             else
                 ret = RenderUnsupported(node);
@@ -333,23 +329,21 @@ namespace CgmInfoGui.Converters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var doc = value as XDocument;
-            if (doc != null)
+            if (value is XDocument doc)
                 return Render(doc);
 
-            if (value is XmlNode)
+            if (value is XmlNode node)
             {
-                using (var reader = new XmlNodeReader((XmlNode)value))
+                using (var reader = new XmlNodeReader(node))
                 {
                     reader.MoveToContent();
                     value = XElement.Load(reader, LoadOptions.PreserveWhitespace);
                 }
             }
 
-            var strParam = parameter as string;
 
-            return (value is XElement && (strParam == null || strParam.ToLower() != "text"))
-                ? Render((XElement)value)
+            return (value is XElement element && (parameter as string)?.ToLower() != "text")
+                ? Render(element)
                 : value;
         }
 

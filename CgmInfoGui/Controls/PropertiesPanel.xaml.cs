@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace CgmInfoGui.Controls
 {
@@ -29,6 +30,18 @@ namespace CgmInfoGui.Controls
         private void OnSourceChanged(DependencyPropertyChangedEventArgs e)
         {
             // TODO: update data template to show either property grid or raw view
+        }
+
+        private void OnPreparePropertyItem(object sender, PropertyItemEventArgs e)
+        {
+            if (!(e.Item is PropertyItem propertyItem))
+                return;
+
+            // allow expanding pretty much everything that isn't a primitive type.
+            if (!propertyItem.PropertyType.IsValueType && propertyItem.PropertyType != typeof(object) && propertyItem.PropertyType != typeof(string))
+                propertyItem.IsExpandable = true;
+
+            // TODO: find out how to make collections show their items; not the list properties.
         }
     }
 }

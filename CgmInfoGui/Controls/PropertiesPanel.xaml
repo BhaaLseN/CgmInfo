@@ -14,6 +14,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <xctk:PropertyGrid SelectedObject="{Binding Source.Command, ElementName=this}"/>
+        <xctk:PropertyGrid IsReadOnly="True"
+                           PreparePropertyItem="OnPreparePropertyItem"
+                           SelectedObject="{Binding Source.Command, ElementName=this}" />
     </Grid>
 </UserControl>

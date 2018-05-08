@@ -87,6 +87,7 @@
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Traversal\HotspotBuilderVisitor.cs" />
     <Compile Include="Traversal\HotspotContext.cs" />
+    <Compile Include="Traversal\NodeContextInterceptor.cs" />
     <Compile Include="Traversal\XCFDocumentBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureContext.cs" />

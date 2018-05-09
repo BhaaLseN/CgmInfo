@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using CgmInfo.Commands;
@@ -597,15 +596,15 @@ namespace CgmInfo.BinaryEncoding
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
 
-        internal Matrix ReadMatrix()
+        internal MetafileMatrix ReadMatrix()
         {
-            return new Matrix(
+            return new MetafileMatrix(
                 // a11 and a12
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a21 and a22
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a13 and a23
-                (float)ReadVdc(), (float)ReadVdc());
+                ReadVdc(), ReadVdc());
         }
         internal double ReadViewportCoordinate()
         {

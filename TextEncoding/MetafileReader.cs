@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -446,15 +445,15 @@ namespace CgmInfo.TextEncoding
             else
                 return ReadReal();
         }
-        internal Matrix ReadMatrix()
+        internal MetafileMatrix ReadMatrix()
         {
-            return new Matrix(
+            return new MetafileMatrix(
                 // a11 and a12
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a21 and a22
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a13 and a23
-                (float)ReadVdc(), (float)ReadVdc());
+                ReadVdc(), ReadVdc());
         }
         internal double ReadVdc()
         {

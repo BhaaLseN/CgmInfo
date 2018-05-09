@@ -271,6 +271,7 @@
     <Compile Include="Utilities\MetafileColorIndexed.cs" />
     <Compile Include="Utilities\MetafileColorRGB.cs" />
     <Compile Include="Utilities\MetafileDescriptionParser.cs" />
+    <Compile Include="Utilities\MetafileMatrix.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

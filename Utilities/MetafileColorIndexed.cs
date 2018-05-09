@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace CgmInfo.Utilities
 {
     public class MetafileColorIndexed : MetafileColor
@@ -13,11 +11,11 @@ namespace CgmInfo.Utilities
             _actualColor = actualColor;
             Index = colorIndex;
         }
-        public override Color GetColor()
+        public override ARGB ToARGB()
         {
             if (_actualColor == null)
-                return default(Color);
-            return _actualColor.GetColor();
+                return default(ARGB);
+            return _actualColor.ToARGB();
         }
         protected override string GetStringValue()
         {

@@ -265,6 +265,7 @@
     <Compile Include="Traversal\CommandVisitor.cs" />
     <Compile Include="Traversal\ICommandVisitor.cs" />
     <Compile Include="Traversal\MetafilePropertyVisitor.cs" />
+    <Compile Include="Utilities\ARGB.cs" />
     <Compile Include="Utilities\MetafileColor.cs" />
     <Compile Include="Utilities\MetafileColorCIE.cs" />
     <Compile Include="Utilities\MetafileColorCMYK.cs" />

@@ -176,7 +176,7 @@ namespace CgmInfo.TextEncoding
         private double ReadReal()
         {
             string token = ReadToken();
-            if (!double.TryParse(token, NumberStyles.Any, CultureInfo.GetCultureInfo("en"), out double ret))
+            if (!double.TryParse(token, NumberStyles.Any, TextEncodingHelper.Culture, out double ret))
                 ret = -1;
             return ret;
         }

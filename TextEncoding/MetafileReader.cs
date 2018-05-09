@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -435,7 +434,7 @@ namespace CgmInfo.TextEncoding
             if (!ExplicitPointNumber.IsMatch(number) && !ScaledRealNumber.IsMatch(number) && !DecimalInteger.IsMatch(number))
                 throw new FormatException(string.Format("Invalid Real number '{0}' at command position {1}", number, _commandPosition));
 
-            return double.Parse(number, CultureInfo.GetCultureInfo("en"));
+            return double.Parse(number, TextEncodingHelper.Culture);
         }
         internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
         {

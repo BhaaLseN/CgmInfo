@@ -1,17 +1,17 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class Polymarker : Command
     {
-        public Polymarker(PointF[] points)
+        public Polymarker(MetafilePoint[] points)
             : base(4, 3)
         {
             Points = points;
         }
 
-        public PointF[] Points { get; private set; }
+        public MetafilePoint[] Points { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

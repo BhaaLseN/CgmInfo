@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.PictureDescriptor;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.TextEncoding
 {
@@ -88,8 +88,8 @@ namespace CgmInfo.TextEncoding
             for (int i = 0; i < n; i++)
                 lineTypes.Add(reader.ReadInteger());
             return new HatchStyleDefinition(hatchIndex, styleIndicator,
-                new PointF((float)hatchDirectionStartX, (float)hatchDirectionStartY),
-                new PointF((float)hatchDirectionEndX, (float)hatchDirectionEndY),
+                new MetafilePoint(hatchDirectionStartX, hatchDirectionStartY),
+                new MetafilePoint(hatchDirectionEndX, hatchDirectionEndY),
                 dutyCycleLength, gapWidths.ToArray(), lineTypes.ToArray());
         }
 

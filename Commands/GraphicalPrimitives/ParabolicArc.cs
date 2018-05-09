@@ -1,11 +1,11 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class ParabolicArc : Command
     {
-        public ParabolicArc(PointF tangentIntersectionPoint, PointF start, PointF end)
+        public ParabolicArc(MetafilePoint tangentIntersectionPoint, MetafilePoint start, MetafilePoint end)
             : base(4, 23)
         {
             TangentIntersectionPoint = tangentIntersectionPoint;
@@ -13,9 +13,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             End = end;
         }
 
-        public PointF TangentIntersectionPoint { get; private set; }
-        public PointF Start { get; private set; }
-        public PointF End { get; private set; }
+        public MetafilePoint TangentIntersectionPoint { get; private set; }
+        public MetafilePoint Start { get; private set; }
+        public MetafilePoint End { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

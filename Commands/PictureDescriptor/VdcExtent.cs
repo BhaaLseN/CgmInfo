@@ -1,19 +1,19 @@
-﻿using System.Drawing;
-using CgmInfo.Traversal;
+﻿using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
     public class VdcExtent : Command
     {
-        public VdcExtent(PointF firstCorner, PointF secondCorner)
+        public VdcExtent(MetafilePoint firstCorner, MetafilePoint secondCorner)
             : base(2, 6)
         {
             FirstCorner = firstCorner;
             SecondCorner = secondCorner;
         }
 
-        public PointF FirstCorner { get; private set; }
-        public PointF SecondCorner { get; private set; }
+        public MetafilePoint FirstCorner { get; private set; }
+        public MetafilePoint SecondCorner { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

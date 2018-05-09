@@ -1,19 +1,19 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
     public class ClipRectangle : Command
     {
-        public ClipRectangle(PointF firstCorner, PointF secondCorner)
+        public ClipRectangle(MetafilePoint firstCorner, MetafilePoint secondCorner)
             : base(3, 5)
         {
             FirstCorner = firstCorner;
             SecondCorner = secondCorner;
         }
 
-        public PointF FirstCorner { get; private set; }
-        public PointF SecondCorner { get; private set; }
+        public MetafilePoint FirstCorner { get; private set; }
+        public MetafilePoint SecondCorner { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

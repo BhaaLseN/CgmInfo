@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using CgmInfo.Commands;
@@ -566,9 +565,9 @@ namespace CgmInfo.BinaryEncoding
         {
             return (TEnum)Enum.ToObject(typeof(TEnum), ReadEnum());
         }
-        internal PointF ReadPoint()
+        internal MetafilePoint ReadPoint()
         {
-            return new PointF((float)ReadVdc(), (float)ReadVdc());
+            return new MetafilePoint(ReadVdc(), ReadVdc());
         }
         internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
         {
@@ -621,11 +620,11 @@ namespace CgmInfo.BinaryEncoding
 
             throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
         }
-        internal PointF ReadViewportPoint()
+        internal MetafilePoint ReadViewportPoint()
         {
             double x = ReadViewportCoordinate();
             double y = ReadViewportCoordinate();
-            return new PointF((float)x, (float)y);
+            return new MetafilePoint(x, y);
         }
         internal MetafileColor ReadColor(int colorPrecision)
         {

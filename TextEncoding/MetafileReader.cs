@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -469,11 +468,11 @@ namespace CgmInfo.TextEncoding
 
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
-        internal PointF ReadPoint()
+        internal MetafilePoint ReadPoint()
         {
             double x = ReadVdc();
             double y = ReadVdc();
-            return new PointF((float)x, (float)y);
+            return new MetafilePoint(x, y);
         }
         internal double ReadViewportCoordinate()
         {
@@ -490,11 +489,11 @@ namespace CgmInfo.TextEncoding
 
             throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
         }
-        internal PointF ReadViewportPoint()
+        internal MetafilePoint ReadViewportPoint()
         {
             double x = ReadViewportCoordinate();
             double y = ReadViewportCoordinate();
-            return new PointF((float)x, (float)y);
+            return new MetafilePoint(x, y);
         }
         internal MetafileColor ReadColor()
         {

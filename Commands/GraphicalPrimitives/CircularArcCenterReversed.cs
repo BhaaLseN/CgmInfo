@@ -1,11 +1,11 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class CircularArcCenterReversed : Command
     {
-        public CircularArcCenterReversed(PointF center, PointF start, PointF end, double radius)
+        public CircularArcCenterReversed(MetafilePoint center, MetafilePoint start, MetafilePoint end, double radius)
             : base(4, 20)
         {
             Center = center;
@@ -14,9 +14,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Radius = radius;
         }
 
-        public PointF Center { get; private set; }
-        public PointF Start { get; private set; }
-        public PointF End { get; private set; }
+        public MetafilePoint Center { get; private set; }
+        public MetafilePoint Start { get; private set; }
+        public MetafilePoint End { get; private set; }
         public double Radius { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)

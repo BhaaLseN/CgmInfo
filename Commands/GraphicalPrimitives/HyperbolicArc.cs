@@ -1,11 +1,11 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class HyperbolicArc : Command
     {
-        public HyperbolicArc(PointF center, PointF traverseRadiusEndPoint, PointF conjugateRadiusEndPoint, PointF start, PointF end)
+        public HyperbolicArc(MetafilePoint center, MetafilePoint traverseRadiusEndPoint, MetafilePoint conjugateRadiusEndPoint, MetafilePoint start, MetafilePoint end)
             : base(4, 22)
         {
             Center = center;
@@ -15,11 +15,11 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             End = end;
         }
 
-        public PointF Center { get; private set; }
-        public PointF TraverseRadiusEndPoint { get; private set; }
-        public PointF ConjugateRadiusEndPoint { get; private set; }
-        public PointF Start { get; private set; }
-        public PointF End { get; private set; }
+        public MetafilePoint Center { get; private set; }
+        public MetafilePoint TraverseRadiusEndPoint { get; private set; }
+        public MetafilePoint ConjugateRadiusEndPoint { get; private set; }
+        public MetafilePoint Start { get; private set; }
+        public MetafilePoint End { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -1,19 +1,19 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
     public class PatternSize : Command
     {
-        public PatternSize(PointF width, PointF height)
+        public PatternSize(MetafilePoint width, MetafilePoint height)
             : base(5, 33)
         {
             Width = width;
             Height = height;
         }
 
-        public PointF Width { get; private set; }
-        public PointF Height { get; private set; }
+        public MetafilePoint Width { get; private set; }
+        public MetafilePoint Height { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

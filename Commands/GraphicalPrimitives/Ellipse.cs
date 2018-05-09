@@ -1,11 +1,11 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class Ellipse : Command
     {
-        public Ellipse(PointF center, PointF firstConjugateDiameter, PointF secondConjugateDiameter)
+        public Ellipse(MetafilePoint center, MetafilePoint firstConjugateDiameter, MetafilePoint secondConjugateDiameter)
             : base(4, 17)
         {
             Center = center;
@@ -13,9 +13,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             SecondConjugateDiameter = secondConjugateDiameter;
         }
 
-        public PointF Center { get; private set; }
-        public PointF FirstConjugateDiameter { get; private set; }
-        public PointF SecondConjugateDiameter { get; private set; }
+        public MetafilePoint Center { get; private set; }
+        public MetafilePoint FirstConjugateDiameter { get; private set; }
+        public MetafilePoint SecondConjugateDiameter { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

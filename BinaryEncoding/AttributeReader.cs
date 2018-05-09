@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using CgmInfo.Commands.Attributes;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Utilities;
@@ -303,8 +302,8 @@ namespace CgmInfo.BinaryEncoding
             //       expressed in any of the modes which can be selected with INTERIOR STYLE SPECIFICATION MODE.
             var specificationMode = reader.Properties.Version < 3 ? WidthSpecificationModeType.Absolute : reader.Descriptor.InteriorStyleSpecificationMode;
             return new PatternSize(
-                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)),
-                new PointF((float)reader.ReadSizeSpecification(specificationMode), (float)reader.ReadSizeSpecification(specificationMode)));
+                new MetafilePoint(reader.ReadSizeSpecification(specificationMode), reader.ReadSizeSpecification(specificationMode)),
+                new MetafilePoint(reader.ReadSizeSpecification(specificationMode), reader.ReadSizeSpecification(specificationMode)));
         }
 
         public static ColorTable ColorTable(MetafileReader reader, CommandHeader commandHeader)
@@ -427,7 +426,7 @@ namespace CgmInfo.BinaryEncoding
             // P5: (colour) array of k colour specifiers: k=3 for triangular, m+1 otherwise.
 
             int style = reader.ReadIndex();
-            var referenceGeometry = new List<PointF>();
+            var referenceGeometry = new List<MetafilePoint>();
             var stageDesignators = new List<double>();
             var colorSpecifiers = new List<MetafileColor>();
 
@@ -458,7 +457,7 @@ namespace CgmInfo.BinaryEncoding
                 {
                     double rgX = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
                     double rgY = reader.ReadSizeSpecification(reader.Descriptor.InteriorStyleSpecificationMode);
-                    referenceGeometry.Add(new PointF((float)rgX, (float)rgY));
+                    referenceGeometry.Add(new MetafilePoint(rgX, rgY));
                 }
 
                 int numberOfStages = reader.ReadInteger();

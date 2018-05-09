@@ -375,7 +375,7 @@ namespace CgmInfo.BinaryEncoding
         private static Command ReadUnsupportedElement(MetafileReader reader, CommandHeader commandHeader)
         {
             // no need to seek here anymore; the whole unsupported element has been read into the temporary buffer already anyways
-            return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId);
+            return new UnsupportedCommand(commandHeader.ElementClass, commandHeader.ElementId, reader.GetInternalBuffer());
         }
 
         private static Command ReadBeginMetafile(MetafileReader reader, CommandHeader commandHeader)
@@ -531,6 +531,11 @@ namespace CgmInfo.BinaryEncoding
         internal bool HasMoreData(int minimumLeft)
         {
             return _reader != null && _reader.BaseStream.Position + minimumLeft <= _reader.BaseStream.Length;
+        }
+
+        private byte[] GetInternalBuffer()
+        {
+            return ((MemoryStream)_reader.BaseStream).ToArray();
         }
 
         internal int ReadInteger()

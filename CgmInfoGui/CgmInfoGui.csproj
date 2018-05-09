@@ -78,12 +78,16 @@
     <Compile Include="Controls\SearchPanel.xaml.cs">
       <DependentUpon>SearchPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PropertiesPanel.xaml.cs">
+      <DependentUpon>PropertiesPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\FileSizeConverter.cs" />
     <Compile Include="Converters\PrefixConverter.cs" />
     <Compile Include="Converters\PrettyXmlConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Traversal\HotspotBuilderVisitor.cs" />
     <Compile Include="Traversal\HotspotContext.cs" />
+    <Compile Include="Traversal\NodeContextInterceptor.cs" />
     <Compile Include="Traversal\XCFDocumentBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
     <Compile Include="Traversal\APSStructureContext.cs" />
@@ -107,6 +111,10 @@
     <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedNode.cs" />
+    <Page Include="Controls\PropertiesPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SearchPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

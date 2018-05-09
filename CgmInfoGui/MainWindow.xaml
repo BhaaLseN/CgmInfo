@@ -95,7 +95,14 @@
                                     </Grid.ColumnDefinitions>
                                     <TreeView x:Name="MetafileStructure" ItemsSource="{Binding MetafileNodes}"/>
                                     <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
-                                    <ctrl:SearchPanel Grid.Column="2" Source="{Binding ElementName=MetafileStructure}"/>
+                                    <TabControl Grid.Column="2">
+                                        <TabItem Header="Properties">
+                                            <ctrl:PropertiesPanel Source="{Binding SelectedItem, ElementName=MetafileStructure, Mode=OneWay}"/>
+                                        </TabItem>
+                                        <TabItem Header="Search">
+                                            <ctrl:SearchPanel Source="{Binding ElementName=MetafileStructure}"/>
+                                        </TabItem>
+                                    </TabControl>
                                 </Grid>
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Application Structure" ContentId="ApplicationStructure" CanClose="False">

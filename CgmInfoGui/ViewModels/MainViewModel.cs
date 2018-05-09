@@ -156,7 +156,7 @@ namespace CgmInfoGui.ViewModels
             {
                 using (var reader = MetafileReader.Create(FileName))
                 {
-                    var vmVisitor = new ViewModelBuilderVisitor();
+                    var vmVisitor = new ViewModelBuilderVisitor().WithCommand();
                     var metafileContext = new MetafileContext();
                     var apsVisitor = new APSStructureBuilderVisitor();
                     var apsContext = new APSStructureContext();

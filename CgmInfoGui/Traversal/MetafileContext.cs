@@ -19,6 +19,7 @@ namespace CgmInfoGui.Traversal
             if (metafile == null)
                 throw new InvalidOperationException("Got a Metafile Descriptor element without a Metafile");
             metafile.Descriptor.Nodes.Add(node);
+            LastAddedNode = node;
         }
 
         public void AddUnsupportedNode(UnsupportedCommand unsupportedCommand)
@@ -38,7 +39,9 @@ namespace CgmInfoGui.Traversal
                 container = new UnsupportedContainer();
                 level.Insert(0, container);
             }
-            container.Add(new UnsupportedNode(unsupportedCommand));
+            var unsupportedNode = new UnsupportedNode(unsupportedCommand);
+            LastAddedNode = unsupportedNode;
+            container.Add(unsupportedNode);
         }
     }
 }

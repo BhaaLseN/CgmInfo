@@ -10,9 +10,10 @@ namespace CgmInfo.Commands
         private const int ReservedElementClass_Text = 15;
         private const int ReservedElementId_Text = 127;
 
-        public UnsupportedCommand(int elementClass, int elementId)
+        public UnsupportedCommand(int elementClass, int elementId, byte[] rawBuffer)
             : base(elementClass, elementId)
         {
+            RawBuffer = rawBuffer;
         }
 
         public UnsupportedCommand(string elementName, string rawParameters)
@@ -38,6 +39,9 @@ namespace CgmInfo.Commands
         /// <summary>Raw parameter string as read from the file in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>
         public string RawParameters { get; private set; }
+        /// <summary>Raw buffer bytes as read from the file in Binary Encoding</summary>
+        /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>false</c>.</remarks>
+        public byte[] RawBuffer { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

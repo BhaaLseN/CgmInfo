@@ -15,6 +15,8 @@ namespace CgmInfoGui.Traversal
             get { return _rootLevel; }
         }
 
+        public NodeBase LastAddedNode { get; protected set; }
+
         protected List<NodeBase> CurrentLevelNodes
         {
             get { return _currentLevel != null ? _currentLevel.Nodes : _rootLevel; }
@@ -28,6 +30,7 @@ namespace CgmInfoGui.Traversal
         }
         public void AddNode(NodeBase node)
         {
+            LastAddedNode = node;
             if (_currentLevel != null)
                 _currentLevel.Nodes.Add(node);
             else

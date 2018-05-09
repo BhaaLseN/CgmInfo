@@ -1,285 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{47C4F45A-FEC9-48C9-B308-4E15CD4B35CE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CgmInfo</RootNamespace>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>CgmInfo</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <RootNamespace>CgmInfo</RootNamespace>
+    <Authors>BhaaL</Authors>
+    <Company>BhaaL</Company>
+    <RepositoryUrl>https://github.com/BhaaLseN/CgmInfo</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Description>CGM Metafile Info Library</Description>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+	<Compile Remove="CgmInfoCmd\**" />
+	<Compile Remove="CgmInfoGui\**" />
+	<Compile Remove="packages\**" />
+	<EmbeddedResource Remove="CgmInfoCmd\**" />
+	<EmbeddedResource Remove="CgmInfoGui\**" />
+	<EmbeddedResource Remove="packages\**" />
+	<None Remove="CgmInfoCmd\**" />
+	<None Remove="CgmInfoGui\**" />
+	<None Remove="packages\**" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="BinaryEncoding\ApplicationStructureDescriptorReader.cs" />
-    <Compile Include="BinaryEncoding\AttributeReader.cs" />
-    <Compile Include="BinaryEncoding\ControlElementReader.cs" />
-    <Compile Include="BinaryEncoding\DelimiterElementReader.cs" />
-    <Compile Include="BinaryEncoding\EscapeReader.cs" />
-    <Compile Include="BinaryEncoding\ExternalReader.cs" />
-    <Compile Include="BinaryEncoding\GraphicalPrimitiveReader.cs" />
-    <Compile Include="BinaryEncoding\MetafileDescriptorReader.cs" />
-    <Compile Include="BinaryEncoding\PictureDescriptorReader.cs" />
-    <Compile Include="BinaryEncoding\SegmentReader.cs" />
-    <Compile Include="Commands\Attributes\AlternateCharacterSetIndex.cs" />
-    <Compile Include="Commands\Attributes\AspectSourceFlags.cs" />
-    <Compile Include="Commands\Attributes\CharacterExpansionFactor.cs" />
-    <Compile Include="Commands\Attributes\CharacterHeight.cs" />
-    <Compile Include="Commands\Attributes\CharacterOrientation.cs" />
-    <Compile Include="Commands\Attributes\CharacterSetIndex.cs" />
-    <Compile Include="Commands\Attributes\CharacterSpacing.cs" />
-    <Compile Include="Commands\Attributes\ColorTable.cs" />
-    <Compile Include="Commands\Attributes\EdgeBundleIndex.cs" />
-    <Compile Include="Commands\Attributes\EdgeCap.cs" />
-    <Compile Include="Commands\Attributes\EdgeColor.cs" />
-    <Compile Include="Commands\Attributes\EdgeJoin.cs" />
-    <Compile Include="Commands\Attributes\EdgeType.cs" />
-    <Compile Include="Commands\Attributes\EdgeTypeContinuation.cs" />
-    <Compile Include="Commands\Attributes\EdgeTypeInitialOffset.cs" />
-    <Compile Include="Commands\Attributes\EdgeVisibility.cs" />
-    <Compile Include="Commands\Attributes\EdgeWidth.cs" />
-    <Compile Include="Commands\Attributes\FillBundleIndex.cs" />
-    <Compile Include="Commands\Attributes\FillColor.cs" />
-    <Compile Include="Commands\Attributes\FillReferencePoint.cs" />
-    <Compile Include="Commands\Attributes\HatchIndex.cs" />
-    <Compile Include="Commands\Attributes\InteriorStyle.cs" />
-    <Compile Include="Commands\Attributes\InterpolatedInterior.cs" />
-    <Compile Include="Commands\Attributes\LineBundleIndex.cs" />
-    <Compile Include="Commands\Attributes\LineCap.cs" />
-    <Compile Include="Commands\Attributes\LineColor.cs" />
-    <Compile Include="Commands\Attributes\LineJoin.cs" />
-    <Compile Include="Commands\Attributes\LineType.cs" />
-    <Compile Include="Commands\Attributes\LineTypeContinuation.cs" />
-    <Compile Include="Commands\Attributes\LineTypeInitialOffset.cs" />
-    <Compile Include="Commands\Attributes\LineWidth.cs" />
-    <Compile Include="Commands\Attributes\MarkerBundleIndex.cs" />
-    <Compile Include="Commands\Attributes\MarkerColor.cs" />
-    <Compile Include="Commands\Attributes\MarkerSize.cs" />
-    <Compile Include="Commands\Attributes\MarkerType.cs" />
-    <Compile Include="Commands\Attributes\PatternIndex.cs" />
-    <Compile Include="Commands\Attributes\PatternSize.cs" />
-    <Compile Include="Commands\Attributes\PatternTable.cs" />
-    <Compile Include="Commands\Attributes\PickIdentifier.cs" />
-    <Compile Include="Commands\Attributes\RestrictedTextType.cs" />
-    <Compile Include="Commands\Attributes\TextAlignment.cs" />
-    <Compile Include="Commands\Attributes\TextBundleIndex.cs" />
-    <Compile Include="Commands\Attributes\TextColor.cs" />
-    <Compile Include="Commands\Attributes\TextFontIndex.cs" />
-    <Compile Include="Commands\Attributes\TextPath.cs" />
-    <Compile Include="Commands\Attributes\TextPrecision.cs" />
-    <Compile Include="Commands\Control\AuxiliaryColor.cs" />
-    <Compile Include="Commands\Control\GeneralizedTextPathMode.cs" />
-    <Compile Include="Commands\Control\MarkerClippingMode.cs" />
-    <Compile Include="Commands\Control\EdgeClippingMode.cs" />
-    <Compile Include="Commands\Control\LineClippingMode.cs" />
-    <Compile Include="Commands\Control\ClipRectangle.cs" />
-    <Compile Include="Commands\Control\ClipIndicator.cs" />
-    <Compile Include="Commands\Control\MiterLimit.cs" />
-    <Compile Include="Commands\Control\NewRegion.cs" />
-    <Compile Include="Commands\Control\ProtectionRegionIndicator.cs" />
-    <Compile Include="Commands\Control\RestorePrimitiveContext.cs" />
-    <Compile Include="Commands\Control\SavePrimitiveContext.cs" />
-    <Compile Include="Commands\Control\Transparency.cs" />
-    <Compile Include="Commands\Control\VdcRealPrecision.cs" />
-    <Compile Include="Commands\Control\VdcIntegerPrecision.cs" />
-    <Compile Include="Commands\Enums\ActionRequired.cs" />
-    <Compile Include="Commands\Enums\ArcClosureType.cs" />
-    <Compile Include="Commands\Enums\AspectSourceFlagsType.cs" />
-    <Compile Include="Commands\Enums\AspectSourceFlagsValue.cs" />
-    <Compile Include="Commands\Enums\CellRepresentationMode.cs" />
-    <Compile Include="Commands\Enums\ClipInheritanceType.cs" />
-    <Compile Include="Commands\Enums\ClippingMode.cs" />
-    <Compile Include="Commands\Enums\ColorModeType.cs" />
-    <Compile Include="Commands\Enums\DeviceViewportSpecificationModeType.cs" />
-    <Compile Include="Commands\Enums\EdgeOutFlags.cs" />
-    <Compile Include="Commands\Enums\HatchStyleIndicator.cs" />
-    <Compile Include="Commands\Enums\Highlighting.cs" />
-    <Compile Include="Commands\Enums\HorizontalTextAlignment.cs" />
-    <Compile Include="Commands\Enums\InheritanceFilterDesignator.cs" />
-    <Compile Include="Commands\Enums\InheritanceFilterSetting.cs" />
-    <Compile Include="Commands\Enums\InteriorStyleType.cs" />
-    <Compile Include="Commands\Enums\OnOffIndicator.cs" />
-    <Compile Include="Commands\Enums\RegionIndicator.cs" />
-    <Compile Include="Commands\Enums\ScalingModeType.cs" />
-    <Compile Include="Commands\Enums\SegmentTransformationApplication.cs" />
-    <Compile Include="Commands\Enums\TextPathMode.cs" />
-    <Compile Include="Commands\Enums\TextPathType.cs" />
-    <Compile Include="Commands\Enums\TextPrecisionType.cs" />
-    <Compile Include="Commands\Enums\VerticalTextAlignment.cs" />
-    <Compile Include="Commands\Enums\WidthSpecificationModeType.cs" />
-    <Compile Include="Commands\Escape\EscapeCommand.cs" />
-    <Compile Include="Commands\External\ApplicationData.cs" />
-    <Compile Include="Commands\External\Message.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\BitonalTile.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CellArray.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Circle.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CircularArc3Point.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CircularArc3PointClose.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CircularArcCenter.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CircularArcCenterClose.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\CircularArcCenterReversed.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\ConnectingEdge.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\DisjointPolyline.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\EllipticalArc.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Ellipse.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\EllipticalArcClose.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\HyperbolicArc.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\NonUniformBSpline.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\NonUniformRationalBSpline.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\ParabolicArc.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Polybezier.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Polygon.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\PolygonSet.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Polyline.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Polymarker.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\Rectangle.cs" />
-    <Compile Include="Commands\MetafileDescriptor\FontProperties.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MetafileDefaultsReplacement.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MetafileElementsList.cs" />
-    <Compile Include="Commands\MetafileDescriptor\SegmentPriorityExtent.cs" />
-    <Compile Include="Commands\PictureDescriptor\BackgroundColor.cs" />
-    <Compile Include="Commands\PictureDescriptor\ColorSelectionMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\DeviceViewport.cs" />
-    <Compile Include="Commands\PictureDescriptor\DeviceViewportSpecificationMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\EdgeWidthSpecificationMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\GeometricPatternDefinition.cs" />
-    <Compile Include="Commands\PictureDescriptor\InteriorStyleSpecificationMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\HatchStyleDefinition.cs" />
-    <Compile Include="Commands\PictureDescriptor\LineWidthSpecificationMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\MarkerSizeSpecificationMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\ScalingMode.cs" />
-    <Compile Include="Commands\PictureDescriptor\LineAndEdgeTypeDefinition.cs" />
-    <Compile Include="Commands\PictureDescriptor\VdcExtent.cs" />
-    <Compile Include="Commands\Segment\ClipInheritance.cs" />
-    <Compile Include="Commands\Segment\CopySegment.cs" />
-    <Compile Include="Commands\Segment\InheritanceFilter.cs" />
-    <Compile Include="Commands\Segment\InheritanceFilterItem.cs" />
-    <Compile Include="Commands\Segment\SegmentDisplayPriority.cs" />
-    <Compile Include="Commands\Segment\SegmentHighlighting.cs" />
-    <Compile Include="Commands\Segment\SegmentPickPriority.cs" />
-    <Compile Include="Commands\Segment\SegmentTransformation.cs" />
-    <Compile Include="MetafileProperties.cs" />
-    <Compile Include="MetafileReader.cs" />
-    <Compile Include="Commands\ApplicationStructureDescriptor\ApplicationStructureAttribute.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="BinaryEncoding\CommandHeader.cs" />
-    <Compile Include="Commands\Delimiter\EndApplicationStructure.cs" />
-    <Compile Include="Commands\Delimiter\BeginCompoundTextPath.cs" />
-    <Compile Include="Commands\Delimiter\BeginApplicationStructure.cs" />
-    <Compile Include="Commands\Delimiter\BeginApplicationStructureBody.cs" />
-    <Compile Include="Commands\Delimiter\BeginTileArray.cs" />
-    <Compile Include="Commands\Delimiter\EndTileArray.cs" />
-    <Compile Include="Commands\Delimiter\EndCompoundTextPath.cs" />
-    <Compile Include="Commands\Delimiter\EndCompoundLine.cs" />
-    <Compile Include="Commands\Delimiter\BeginCompoundLine.cs" />
-    <Compile Include="Commands\Delimiter\BeginProtectionRegion.cs" />
-    <Compile Include="Commands\Delimiter\EndProtectionRegion.cs" />
-    <Compile Include="Commands\Delimiter\EndFigure.cs" />
-    <Compile Include="Commands\Delimiter\BeginFigure.cs" />
-    <Compile Include="Commands\Delimiter\BeginSegment.cs" />
-    <Compile Include="Commands\Delimiter\BeginPicture.cs" />
-    <Compile Include="Commands\Delimiter\BeginPictureBody.cs" />
-    <Compile Include="Commands\Delimiter\EndSegment.cs" />
-    <Compile Include="Commands\Delimiter\EndPicture.cs" />
-    <Compile Include="Commands\Delimiter\EndMetafile.cs" />
-    <Compile Include="Commands\Delimiter\BeginMetafile.cs" />
-    <Compile Include="Commands\Enums\CellPathDirection.cs" />
-    <Compile Include="Commands\Enums\CharacterCodingAnnouncerType.cs" />
-    <Compile Include="Commands\Enums\CharacterSetType.cs" />
-    <Compile Include="Commands\Enums\ColorModel.cs" />
-    <Compile Include="Commands\Enums\ColorSpace.cs" />
-    <Compile Include="Commands\Enums\DataTypeIndex.cs" />
-    <Compile Include="Commands\Enums\FinalFlag.cs" />
-    <Compile Include="Commands\Enums\InheritanceFlag.cs" />
-    <Compile Include="Commands\Enums\LineProgressionDirection.cs" />
-    <Compile Include="Commands\Enums\RealPrecisionSpecification.cs" />
-    <Compile Include="Commands\Enums\RealRepresentation.cs" />
-    <Compile Include="Commands\Enums\VdcTypeSpecification.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\AppendText.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\RestrictedText.cs" />
-    <Compile Include="Commands\GraphicalPrimitives\TextCommand.cs" />
-    <Compile Include="Commands\MetafileDescriptor\CharacterCodingAnnouncer.cs" />
-    <Compile Include="Commands\MetafileDescriptor\FontList.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MaximumVdcExtent.cs" />
-    <Compile Include="Commands\MetafileDescriptor\NamePrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\ColorIndexPrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\ColorModelCommand.cs" />
-    <Compile Include="Commands\MetafileDescriptor\ColorValueExtent.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MaximumColorIndex.cs" />
-    <Compile Include="Commands\MetafileDescriptor\ColorPrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\IndexPrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\CharacterSetList.cs" />
-    <Compile Include="Commands\MetafileDescriptor\RealPrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MetafileDescription.cs" />
-    <Compile Include="Commands\MetafileDescriptor\IntegerPrecision.cs" />
-    <Compile Include="Commands\MetafileDescriptor\MetafileVersion.cs" />
-    <Compile Include="BinaryEncoding\MetafileReader.cs" />
-    <Compile Include="Commands\MetafileDescriptor\VdcType.cs" />
-    <Compile Include="Commands\StructuredDataElement.cs" />
-    <Compile Include="Commands\StructuredDataRecord.cs" />
-    <Compile Include="Commands\UnsupportedCommand.cs" />
-    <Compile Include="MetafileDescriptor.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StreamExtensions.cs" />
-    <Compile Include="TextEncoding\ApplicationStructureDescriptorReader.cs" />
-    <Compile Include="TextEncoding\AttributeReader.cs" />
-    <Compile Include="TextEncoding\ControlElementReader.cs" />
-    <Compile Include="TextEncoding\DelimiterElementReader.cs" />
-    <Compile Include="TextEncoding\EscapeReader.cs" />
-    <Compile Include="TextEncoding\ExternalReader.cs" />
-    <Compile Include="TextEncoding\GraphicalPrimitiveReader.cs" />
-    <Compile Include="TextEncoding\MetafileDescriptorReader.cs" />
-    <Compile Include="TextEncoding\MetafileReader.cs" />
-    <Compile Include="TextEncoding\PictureDescriptorReader.cs" />
-    <Compile Include="TextEncoding\SegmentReader.cs" />
-    <Compile Include="TextEncoding\TextEncodingHelper.cs" />
-    <Compile Include="Traversal\CommandVisitor.cs" />
-    <Compile Include="Traversal\ICommandVisitor.cs" />
-    <Compile Include="Traversal\MetafilePropertyVisitor.cs" />
-    <Compile Include="Utilities\ARGB.cs" />
-    <Compile Include="Utilities\MetafileColor.cs" />
-    <Compile Include="Utilities\MetafileColorCIE.cs" />
-    <Compile Include="Utilities\MetafileColorCMYK.cs" />
-    <Compile Include="Utilities\MetafileColorIndexed.cs" />
-    <Compile Include="Utilities\MetafileColorRGB.cs" />
-    <Compile Include="Utilities\MetafileDescriptionParser.cs" />
-    <Compile Include="Utilities\MetafileMatrix.cs" />
-    <Compile Include="Utilities\MetafilePoint.cs" />
+    <None Remove="*.bak" />
+    <None Remove="*.suo" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

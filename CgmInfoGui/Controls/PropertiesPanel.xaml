@@ -16,6 +16,40 @@
     <Grid>
         <xctk:PropertyGrid IsReadOnly="True"
                            PreparePropertyItem="OnPreparePropertyItem"
-                           SelectedObject="{Binding Source.Command, ElementName=this}" />
+                           SelectedObject="{Binding Source.Command, ElementName=this}">
+            <xctk:PropertyGrid.Style>
+                <Style>
+                    <Setter Property="Control.Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RawDocument, ElementName=this}" Value="{x:Null}">
+                            <Setter Property="Control.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </xctk:PropertyGrid.Style>
+        </xctk:PropertyGrid>
+        <FlowDocumentReader Document="{Binding RawDocument, ElementName=this}"
+                            IsFindEnabled="False"
+                            IsPageViewEnabled="False"
+                            IsPrintEnabled="False"
+                            IsScrollViewEnabled="True"
+                            IsTwoPageViewEnabled="False"
+                            ViewingMode="Scroll">
+            <FlowDocumentReader.Style>
+                <Style>
+                    <Setter Property="Control.Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RawDocument, ElementName=this}" Value="{x:Null}">
+                            <Setter Property="Control.Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </FlowDocumentReader.Style>
+            <FlowDocumentReader.Resources>
+                <Style TargetType="Table">
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                </Style>
+            </FlowDocumentReader.Resources>
+        </FlowDocumentReader>
     </Grid>
 </UserControl>

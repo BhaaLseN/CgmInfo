@@ -172,15 +172,14 @@ namespace CgmInfoGui.Controls
             {
                 // If the item containers haven't been generated yet, attach an event
                 // and wait for the status to change.
-                EventHandler selectWhenReadyMethod = null;
-                selectWhenReadyMethod = (ds, de) =>
+                void selectWhenReadyMethod(object ds, EventArgs de)
                 {
                     if (itemsControl.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                     {
                         itemsControl.ItemContainerGenerator.StatusChanged -= selectWhenReadyMethod;
                         SelectItemPath(itemsControl, parentPath);
                     }
-                };
+                }
 
                 itemsControl.ItemContainerGenerator.StatusChanged += selectWhenReadyMethod;
                 // force expansion (tree view only)

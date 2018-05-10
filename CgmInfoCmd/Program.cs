@@ -39,10 +39,7 @@ namespace CgmInfoCmd
                     do
                     {
                         command = reader.Read();
-                        if (command != null)
-                        {
-                            command.Accept(printVisitor, printContext);
-                        }
+                        command?.Accept(printVisitor, printContext);
                     } while (command != null);
                 }
                 statsProxy.Print(fileName);

@@ -353,8 +353,7 @@ namespace CgmInfo.BinaryEncoding
 
             readBuffer.Position = 0;
 
-            if (_reader != null)
-                _reader.Dispose();
+            _reader?.Dispose();
             _reader = new BinaryReader(readBuffer);
 
             bool isNoop = elementClass == 0 && elementId == 0;
@@ -843,10 +842,8 @@ namespace CgmInfo.BinaryEncoding
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                if (_reader != null)
-                    _reader.Dispose();
-            }
+                _reader?.Dispose();
+
             base.Dispose(disposing);
         }
 

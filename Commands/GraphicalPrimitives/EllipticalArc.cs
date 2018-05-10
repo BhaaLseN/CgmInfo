@@ -1,11 +1,11 @@
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class EllipticalArc : Command
     {
-        public EllipticalArc(PointF center, PointF firstConjugateDiameter, PointF secondConjugateDiameter, PointF start, PointF end)
+        public EllipticalArc(MetafilePoint center, MetafilePoint firstConjugateDiameter, MetafilePoint secondConjugateDiameter, MetafilePoint start, MetafilePoint end)
             : base(4, 18)
         {
             Center = center;
@@ -15,11 +15,11 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             End = end;
         }
 
-        public PointF Center { get; private set; }
-        public PointF FirstConjugateDiameter { get; private set; }
-        public PointF SecondConjugateDiameter { get; private set; }
-        public PointF Start { get; private set; }
-        public PointF End { get; private set; }
+        public MetafilePoint Center { get; private set; }
+        public MetafilePoint FirstConjugateDiameter { get; private set; }
+        public MetafilePoint SecondConjugateDiameter { get; private set; }
+        public MetafilePoint Start { get; private set; }
+        public MetafilePoint End { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

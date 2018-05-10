@@ -1,12 +1,12 @@
-﻿using System.Drawing;
-using CgmInfo.Commands.Enums;
+﻿using CgmInfo.Commands.Enums;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class RestrictedText : Command
     {
-        public RestrictedText(double deltaWidth, double deltaHeight, PointF position, FinalFlag final, string text)
+        public RestrictedText(double deltaWidth, double deltaHeight, MetafilePoint position, FinalFlag final, string text)
             : base(4, 5)
         {
             DeltaWidth = deltaWidth;
@@ -17,7 +17,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
         }
         public double DeltaWidth { get; private set; }
         public double DeltaHeight { get; private set; }
-        public PointF Position { get; private set; }
+        public MetafilePoint Position { get; private set; }
         public FinalFlag Final { get; private set; }
         public string Text { get; private set; }
 

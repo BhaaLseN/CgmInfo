@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace CgmInfo.Utilities
 {
     public class MetafileColorRGB : MetafileColor
@@ -14,9 +12,9 @@ namespace CgmInfo.Utilities
             Green = green;
             Blue = blue;
         }
-        public override Color GetColor()
+        public override ARGB ToARGB()
         {
-            return Color.FromArgb(Red, Green, Blue);
+            return new ARGB { Red = Red, Green = Green, Blue = Blue };
         }
         protected override string GetStringValue()
         {

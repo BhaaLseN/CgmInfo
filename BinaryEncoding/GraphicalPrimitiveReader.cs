@@ -4,7 +4,6 @@ using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Utilities;
-using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.BinaryEncoding
 {
@@ -66,7 +65,7 @@ namespace CgmInfo.BinaryEncoding
         public static Polygon Polygon(MetafileReader reader, CommandHeader commandHeader)
         {
             // P1-Pn: (point) n (X,Y) polygon vertices
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
             //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
             while (reader.HasMoreData(2))
@@ -84,7 +83,7 @@ namespace CgmInfo.BinaryEncoding
             //      1 visible
             //      2 close, invisible
             //      3 close, visible
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             var flags = new List<EdgeOutFlags>();
             // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
             //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
@@ -321,7 +320,7 @@ namespace CgmInfo.BinaryEncoding
             // P(4+2n+m): (real) parameter end value
             int splineOrder = reader.ReadInteger();
             int numberOfControlPoints = reader.ReadInteger();
-            var controlPoints = new List<PointF>();
+            var controlPoints = new List<MetafilePoint>();
             for (int i = 0; i < numberOfControlPoints; i++)
                 controlPoints.Add(reader.ReadPoint());
             var knots = new List<double>();
@@ -343,7 +342,7 @@ namespace CgmInfo.BinaryEncoding
             // P(5+2n+m)-P(4+3n+m): (real) list of weights, of length n.
             int splineOrder = reader.ReadInteger();
             int numberOfControlPoints = reader.ReadInteger();
-            var controlPoints = new List<PointF>();
+            var controlPoints = new List<MetafilePoint>();
             for (int i = 0; i < numberOfControlPoints; i++)
                 controlPoints.Add(reader.ReadPoint());
             var knots = new List<double>();
@@ -432,9 +431,9 @@ namespace CgmInfo.BinaryEncoding
             }
         }
 
-        private static List<PointF> ReadPointList(MetafileReader reader)
+        private static List<MetafilePoint> ReadPointList(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             // TODO: point is 2 VDCs, but that may range from 8 bits each until up to 64 bits for a single coordinate
             //       this should probably check for 2x VDC size instead of simply 2x minimum-possible VDC size
             while (reader.HasMoreData(2))

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class Polybezier : Command
     {
-        public Polybezier(int continuityIndicator, PointF[] pointSequences)
+        public Polybezier(int continuityIndicator, MetafilePoint[] pointSequences)
             : base(4, 26)
         {
             ContinuityIndicator = continuityIndicator;
@@ -17,7 +17,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
 
         public int ContinuityIndicator { get; private set; }
         public string Name { get; private set; }
-        public PointF[] PointSequences { get; private set; }
+        public MetafilePoint[] PointSequences { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -2,41 +2,38 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Proxies;
+using System.Reflection;
 using CgmInfo.Commands;
 using CgmInfo.Traversal;
 
 namespace CgmInfoCmd
 {
-    class StatsReplaceProxy<T, TContext> : RealProxy where T : ICommandVisitor<TContext>, new()
+    public class StatsReplaceProxy<T, TContext> : DispatchProxy where T : ICommandVisitor<TContext>, new()
     {
-        private readonly bool _preventActualMethodCalls;
+        private bool _preventActualMethodCalls;
         private readonly T _target;
 
-        private readonly Dictionary<string, Dictionary<string, int>> _stats = new Dictionary<string, Dictionary<string, int>>();
+        private Dictionary<string, Dictionary<string, int>> _stats = new Dictionary<string, Dictionary<string, int>>();
 
-        public new ICommandVisitor<TContext> GetTransparentProxy()
+        public ICommandVisitor<TContext> GetTransparentProxy(bool preventActualMethodCalls)
         {
-            return (ICommandVisitor<TContext>)base.GetTransparentProxy();
+            var proxy = Create<ICommandVisitor<TContext>, StatsReplaceProxy<T, TContext>>();
+            // share instance fields; since the created proxy is NOT the same instance as this one.
+            var @this = ((StatsReplaceProxy<T, TContext>)proxy);
+            @this._preventActualMethodCalls = preventActualMethodCalls;
+            @this._stats = _stats;
+            return proxy;
         }
 
-        public StatsReplaceProxy(bool preventActualMethodCalls)
-            : base(typeof(ICommandVisitor<TContext>))
+        public StatsReplaceProxy()
         {
-            _preventActualMethodCalls = preventActualMethodCalls;
             _target = new T();
         }
-        public override IMessage Invoke(IMessage msg)
+        protected override object Invoke(MethodInfo targetMethod, object[] args)
         {
-            if (msg is IMethodCallMessage methodMessage)
-            {
-                CollectStats(methodMessage.Args.OfType<Command>().FirstOrDefault());
-                object retVal = _preventActualMethodCalls ? null : methodMessage.MethodBase.Invoke(_target, methodMessage.Args);
-                return new ReturnMessage(retVal, null, 0, methodMessage.LogicalCallContext, methodMessage);
-            }
-
-            return msg;
+            CollectStats(args.OfType<Command>().FirstOrDefault());
+            object retVal = _preventActualMethodCalls ? null : targetMethod.Invoke(_target, args);
+            return retVal;
         }
         public void Reset()
         {

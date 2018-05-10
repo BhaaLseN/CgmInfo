@@ -1,12 +1,12 @@
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class CircularArcCenterClose : Command
     {
-        public CircularArcCenterClose(PointF center, PointF start, PointF end, double radius, ArcClosureType closure)
+        public CircularArcCenterClose(MetafilePoint center, MetafilePoint start, MetafilePoint end, double radius, ArcClosureType closure)
             : base(4, 16)
         {
             Center = center;
@@ -16,9 +16,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Closure = closure;
         }
 
-        public PointF Center { get; private set; }
-        public PointF Start { get; private set; }
-        public PointF End { get; private set; }
+        public MetafilePoint Center { get; private set; }
+        public MetafilePoint Start { get; private set; }
+        public MetafilePoint End { get; private set; }
         public double Radius { get; private set; }
         public ArcClosureType Closure { get; private set; }
 

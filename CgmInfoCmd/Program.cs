@@ -27,8 +27,8 @@ namespace CgmInfoCmd
                 return;
             }
 
-            var statsProxy = new StatsReplaceProxy<PrintCommandVisitor, PrintContext>(fileNames.Count > 1);
-            var printVisitor = statsProxy.GetTransparentProxy();
+            var statsProxy = new StatsReplaceProxy<PrintCommandVisitor, PrintContext>();
+            var printVisitor = statsProxy.GetTransparentProxy(fileNames.Count > 1);
             foreach (string fileName in fileNames)
             {
                 statsProxy.Reset();

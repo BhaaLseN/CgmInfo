@@ -1,12 +1,12 @@
-﻿using System.Drawing;
-using CgmInfo.Commands.Enums;
+﻿using CgmInfo.Commands.Enums;
 using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Delimiter
 {
     public class BeginTileArray : Command
     {
-        public BeginTileArray(PointF position,
+        public BeginTileArray(MetafilePoint position,
             CellPathDirection cellPathDirection, LineProgressionDirection lineProgressionDirection,
             int pathDirectionTileCount, int lineDirectionTileCount,
             int pathDirectionCellCount, int lineDirectionCellCount,
@@ -35,7 +35,7 @@ namespace CgmInfo.Commands.Delimiter
             LineDirectionImageCellCount = lineDirectionImageCellCount;
         }
 
-        public PointF Position { get; private set; }
+        public MetafilePoint Position { get; private set; }
         public CellPathDirection CellPathDirection { get; private set; }
         public LineProgressionDirection LineProgressionDirection { get; private set; }
         public int PathDirectionTileCount { get; private set; }

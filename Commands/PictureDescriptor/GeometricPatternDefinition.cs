@@ -1,11 +1,11 @@
-﻿using System.Drawing;
-using CgmInfo.Traversal;
+﻿using CgmInfo.Traversal;
+using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
     public class GeometricPatternDefinition : Command
     {
-        public GeometricPatternDefinition(int geometricPatternIndex, int segmentIdentifier, PointF firstCorner, PointF secondCorner)
+        public GeometricPatternDefinition(int geometricPatternIndex, int segmentIdentifier, MetafilePoint firstCorner, MetafilePoint secondCorner)
             : base(2, 19)
         {
             GeometricPatternIndex = geometricPatternIndex;
@@ -16,8 +16,8 @@ namespace CgmInfo.Commands.PictureDescriptor
 
         public int GeometricPatternIndex { get; private set; }
         public int SegmentIdentifier { get; private set; }
-        public PointF FirstCorner { get; private set; }
-        public PointF SecondCorner { get; private set; }
+        public MetafilePoint FirstCorner { get; private set; }
+        public MetafilePoint SecondCorner { get; private set; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

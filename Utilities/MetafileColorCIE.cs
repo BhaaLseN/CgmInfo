@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using CgmInfo.Commands.Enums;
 
 namespace CgmInfo.Utilities
@@ -18,7 +17,7 @@ namespace CgmInfo.Utilities
             Component2 = component2;
             Component3 = component3;
         }
-        public override Color GetColor()
+        public override ARGB ToARGB()
         {
             // CIELAB/CIELUV/RGB-related are not exactly .NET Color values, and need to be converted first.
             // TODO: actually convert them to RGB (using CIEXYZ for example, [ISO/IEC 8632-1 Annex G])

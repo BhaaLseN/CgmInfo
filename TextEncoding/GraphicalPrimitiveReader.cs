@@ -4,7 +4,6 @@ using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Utilities;
-using PointF = System.Drawing.PointF;
 
 namespace CgmInfo.TextEncoding
 {
@@ -63,7 +62,7 @@ namespace CgmInfo.TextEncoding
 
         public static Polygon Polygon(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             while (reader.HasMoreData(2))
             {
                 points.Add(reader.ReadPoint());
@@ -73,14 +72,14 @@ namespace CgmInfo.TextEncoding
 
         public static Polygon IncrementalPolygon(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             var lastPoint = reader.ReadPoint();
             points.Add(lastPoint);
             while (reader.HasMoreData(2))
             {
                 double deltaX = reader.ReadVdc();
                 double deltaY = reader.ReadVdc();
-                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
+                lastPoint = new MetafilePoint(lastPoint.X + deltaX, lastPoint.Y + deltaY);
                 points.Add(lastPoint);
             }
             return new Polygon(points.ToArray());
@@ -88,7 +87,7 @@ namespace CgmInfo.TextEncoding
 
         public static PolygonSet PolygonSet(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             var flags = new List<EdgeOutFlags>();
             while (reader.HasMoreData(3))
             {
@@ -100,7 +99,7 @@ namespace CgmInfo.TextEncoding
 
         public static PolygonSet IncrementalPolygonSet(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             var flags = new List<EdgeOutFlags>();
             var lastPoint = reader.ReadPoint();
             points.Add(lastPoint);
@@ -109,7 +108,7 @@ namespace CgmInfo.TextEncoding
             {
                 double deltaX = reader.ReadVdc();
                 double deltaY = reader.ReadVdc();
-                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
+                lastPoint = new MetafilePoint(lastPoint.X + deltaX, lastPoint.Y + deltaY);
                 points.Add(lastPoint);
                 flags.Add(ParseEdgeOutFlags(reader.ReadEnum()));
             }
@@ -221,7 +220,7 @@ namespace CgmInfo.TextEncoding
         {
             int splineOrder = reader.ReadInteger();
             int numberOfControlPoints = reader.ReadInteger();
-            var controlPoints = new List<PointF>();
+            var controlPoints = new List<MetafilePoint>();
             for (int i = 0; i < numberOfControlPoints; i++)
                 controlPoints.Add(reader.ReadPoint());
             var knots = new List<double>();
@@ -236,7 +235,7 @@ namespace CgmInfo.TextEncoding
         {
             int splineOrder = reader.ReadInteger();
             int numberOfControlPoints = reader.ReadInteger();
-            var controlPoints = new List<PointF>();
+            var controlPoints = new List<MetafilePoint>();
             for (int i = 0; i < numberOfControlPoints; i++)
                 controlPoints.Add(reader.ReadPoint());
             var knots = new List<double>();
@@ -253,7 +252,7 @@ namespace CgmInfo.TextEncoding
         public static Polybezier Polybezier(MetafileReader reader)
         {
             int continuityIndicator = reader.ReadIndex();
-            var pointSequences = new List<PointF>();
+            var pointSequences = new List<MetafilePoint>();
             while (reader.HasMoreData(2))
                 pointSequences.Add(reader.ReadPoint());
             return new Polybezier(continuityIndicator, pointSequences.ToArray());
@@ -310,9 +309,9 @@ namespace CgmInfo.TextEncoding
             return FinalFlag.NotFinal;
         }
 
-        private static List<PointF> ReadPointList(MetafileReader reader)
+        private static List<MetafilePoint> ReadPointList(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             while (reader.HasMoreData(2))
             {
                 points.Add(reader.ReadPoint());
@@ -320,16 +319,16 @@ namespace CgmInfo.TextEncoding
 
             return points;
         }
-        private static List<PointF> ReadIncrementalPointList(MetafileReader reader)
+        private static List<MetafilePoint> ReadIncrementalPointList(MetafileReader reader)
         {
-            var points = new List<PointF>();
+            var points = new List<MetafilePoint>();
             var lastPoint = reader.ReadPoint();
             points.Add(lastPoint);
             while (reader.HasMoreData(2))
             {
                 double deltaX = reader.ReadVdc();
                 double deltaY = reader.ReadVdc();
-                lastPoint = new PointF((float)(lastPoint.X + deltaX), (float)(lastPoint.Y + deltaY));
+                lastPoint = new MetafilePoint(lastPoint.X + deltaX, lastPoint.Y + deltaY);
                 points.Add(lastPoint);
             }
 

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using CgmInfo.Traversal;
 using CgmInfo.Utilities;
 
@@ -8,7 +7,7 @@ namespace CgmInfo.Commands.Attributes
 {
     public class InterpolatedInterior : Command
     {
-        public InterpolatedInterior(int index, PointF[] referenceGeometry, double[] stageDesignators, MetafileColor[] colorSpecifiers)
+        public InterpolatedInterior(int index, MetafilePoint[] referenceGeometry, double[] stageDesignators, MetafileColor[] colorSpecifiers)
             : base(5, 43)
         {
             Index = index;
@@ -20,7 +19,7 @@ namespace CgmInfo.Commands.Attributes
 
         public int Index { get; private set; }
         public string Name { get; private set; }
-        public PointF[] ReferenceGeometry { get; private set; }
+        public MetafilePoint[] ReferenceGeometry { get; private set; }
         public double[] StageDesignators { get; private set; }
         public MetafileColor[] ColorSpecifiers { get; private set; }
 

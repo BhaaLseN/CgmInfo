@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace CgmInfo.Utilities
 {
     public class MetafileColorCMYK : MetafileColor
@@ -16,7 +14,7 @@ namespace CgmInfo.Utilities
             Yellow = yellow;
             Black = black;
         }
-        public override Color GetColor()
+        public override ARGB ToARGB()
         {
             double c = Cyan / 255.0;
             double m = Magenta / 255.0;
@@ -35,7 +33,7 @@ namespace CgmInfo.Utilities
             int green = (int)g;
             int blue = (int)b;
 
-            return Color.FromArgb(red, green, blue);
+            return new ARGB { Red = red, Green = green, Blue = blue };
         }
         protected override string GetStringValue()
         {

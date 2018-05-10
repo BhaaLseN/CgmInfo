@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -435,7 +432,7 @@ namespace CgmInfo.TextEncoding
             if (!ExplicitPointNumber.IsMatch(number) && !ScaledRealNumber.IsMatch(number) && !DecimalInteger.IsMatch(number))
                 throw new FormatException(string.Format("Invalid Real number '{0}' at command position {1}", number, _commandPosition));
 
-            return double.Parse(number, CultureInfo.GetCultureInfo("en"));
+            return double.Parse(number, TextEncodingHelper.Culture);
         }
         internal double ReadSizeSpecification(WidthSpecificationModeType widthSpecificationMode)
         {
@@ -447,15 +444,15 @@ namespace CgmInfo.TextEncoding
             else
                 return ReadReal();
         }
-        internal Matrix ReadMatrix()
+        internal MetafileMatrix ReadMatrix()
         {
-            return new Matrix(
+            return new MetafileMatrix(
                 // a11 and a12
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a21 and a22
-                (float)ReadReal(), (float)ReadReal(),
+                ReadReal(), ReadReal(),
                 // a13 and a23
-                (float)ReadVdc(), (float)ReadVdc());
+                ReadVdc(), ReadVdc());
         }
         internal double ReadVdc()
         {
@@ -471,11 +468,11 @@ namespace CgmInfo.TextEncoding
 
             throw new NotSupportedException("The current VDC TYPE is not supported");
         }
-        internal PointF ReadPoint()
+        internal MetafilePoint ReadPoint()
         {
             double x = ReadVdc();
             double y = ReadVdc();
-            return new PointF((float)x, (float)y);
+            return new MetafilePoint(x, y);
         }
         internal double ReadViewportCoordinate()
         {
@@ -492,11 +489,11 @@ namespace CgmInfo.TextEncoding
 
             throw new NotSupportedException("The current DEVICE VIEWPORT SPECIFICATION MODE is not supported");
         }
-        internal PointF ReadViewportPoint()
+        internal MetafilePoint ReadViewportPoint()
         {
             double x = ReadViewportCoordinate();
             double y = ReadViewportCoordinate();
-            return new PointF((float)x, (float)y);
+            return new MetafilePoint(x, y);
         }
         internal MetafileColor ReadColor()
         {

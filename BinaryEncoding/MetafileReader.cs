@@ -353,8 +353,7 @@ namespace CgmInfo.BinaryEncoding
 
             readBuffer.Position = 0;
 
-            if (_reader != null)
-                _reader.Dispose();
+            _reader?.Dispose();
             _reader = new BinaryReader(readBuffer);
 
             bool isNoop = elementClass == 0 && elementId == 0;
@@ -561,7 +560,7 @@ namespace CgmInfo.BinaryEncoding
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
             return ReadInteger(2, false);
         }
-        internal TEnum ReadEnum<TEnum>() where TEnum : struct
+        internal TEnum ReadEnum<TEnum>() where TEnum : Enum
         {
             return (TEnum)Enum.ToObject(typeof(TEnum), ReadEnum());
         }
@@ -843,10 +842,8 @@ namespace CgmInfo.BinaryEncoding
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                if (_reader != null)
-                    _reader.Dispose();
-            }
+                _reader?.Dispose();
+
             base.Dispose(disposing);
         }
 

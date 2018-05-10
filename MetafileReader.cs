@@ -24,8 +24,7 @@ namespace CgmInfo
         public Command Read()
         {
             var command = ReadCommand(_fileStream);
-            if (command != null)
-                command.Accept(_propertyVisitor, Properties);
+            command?.Accept(_propertyVisitor, Properties);
             return command;
         }
 
@@ -58,9 +57,10 @@ namespace CgmInfo
                 _isDisposed = true;
             }
         }
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

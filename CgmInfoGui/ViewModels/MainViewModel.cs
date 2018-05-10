@@ -23,12 +23,8 @@ namespace CgmInfoGui.ViewModels
             get { return _fileName; }
             set
             {
-                if (value != _fileName)
-                {
-                    _fileName = value;
+                if (SetField(ref _fileName, value))
                     ProcessCommand.NotifyCanExecuteChanged();
-                    OnPropertyChanged();
-                }
             }
         }
 
@@ -36,70 +32,35 @@ namespace CgmInfoGui.ViewModels
         public List<NodeBase> MetafileNodes
         {
             get { return _metafileNodes; }
-            set
-            {
-                if (value != _metafileNodes)
-                {
-                    _metafileNodes = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetField(ref _metafileNodes, value); }
         }
 
         private List<NodeBase> _apsNodes;
         public List<NodeBase> APSNodes
         {
             get { return _apsNodes; }
-            set
-            {
-                if (value != _apsNodes)
-                {
-                    _apsNodes = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetField(ref _apsNodes, value); }
         }
 
         private XDocument _xcfDocument;
         public XDocument XCFDocument
         {
             get { return _xcfDocument; }
-            set
-            {
-                if (value != _xcfDocument)
-                {
-                    _xcfDocument = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetField(ref _xcfDocument, value); }
         }
 
         private MetafileProperties _metafileDescriptor;
         public MetafileProperties MetafileProperties
         {
             get { return _metafileDescriptor; }
-            set
-            {
-                if (value != _metafileDescriptor)
-                {
-                    _metafileDescriptor = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetField(ref _metafileDescriptor, value); }
         }
 
         private List<HotspotNode> _hotspots;
         public List<HotspotNode> Hotspots
         {
             get { return _hotspots; }
-            set
-            {
-                if (value != _hotspots)
-                {
-                    _hotspots = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetField(ref _hotspots, value); }
         }
 
         public DelegateCommand BrowseCommand { get; }
@@ -111,9 +72,8 @@ namespace CgmInfoGui.ViewModels
             get { return _isBusy; }
             set
             {
-                if (value != _isBusy)
+                if (SetField(ref _isBusy, value))
                 {
-                    _isBusy = value;
                     BrowseCommand.NotifyCanExecuteChanged();
                     ProcessCommand.NotifyCanExecuteChanged();
                 }
@@ -194,9 +154,15 @@ namespace CgmInfoGui.ViewModels
             MetafileProperties = result.MetafileProperties;
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        private bool SetField<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")
         {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+
+            field = newValue;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            return true;
         }
     }
 }

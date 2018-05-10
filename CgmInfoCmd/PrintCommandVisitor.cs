@@ -569,9 +569,9 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Hatch Index: {0} ({1})", hatchIndex.Index, hatchIndex.Name);
         }
-        public void AcceptAttributePatternIndex(PatternIndex patterIndex, PrintContext parameter)
+        public void AcceptAttributePatternIndex(PatternIndex patternIndex, PrintContext parameter)
         {
-            parameter.WriteLine("Pattern Index: {0}", patterIndex.Index);
+            parameter.WriteLine("Pattern Index: {0}", patternIndex.Index);
         }
         public void AcceptAttributeEdgeBundleIndex(EdgeBundleIndex edgeBundleIndex, PrintContext parameter)
         {

@@ -1,0 +1,13 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <Authors>BhaaL</Authors>
+    <Company>BhaaL</Company>
+    <RepositoryUrl>https://github.com/BhaaLseN/CgmInfo</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+</Project>

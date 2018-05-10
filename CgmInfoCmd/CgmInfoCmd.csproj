@@ -4,18 +4,16 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>CgmInfoCmd</AssemblyName>
     <RootNamespace>CgmInfoCmd</RootNamespace>
-    <Authors>BhaaL</Authors>
-    <Company>BhaaL</Company>
     <Description>CGM Metafile Info command line tool for testing</Description>
-    <RepositoryUrl>https://github.com/BhaaLseN/CgmInfo</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>CgmInfoCmd.Program</StartupObject>
   </PropertyGroup>
-
+  
+  <ImportGroup>
+    <Import Project="..\Common.props" />
+  </ImportGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>

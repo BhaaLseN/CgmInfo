@@ -57,9 +57,10 @@ namespace CgmInfo
                 _isDisposed = true;
             }
         }
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

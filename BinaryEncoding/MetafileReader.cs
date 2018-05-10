@@ -561,7 +561,7 @@ namespace CgmInfo.BinaryEncoding
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
             return ReadInteger(2, false);
         }
-        internal TEnum ReadEnum<TEnum>() where TEnum : struct
+        internal TEnum ReadEnum<TEnum>() where TEnum : Enum
         {
             return (TEnum)Enum.ToObject(typeof(TEnum), ReadEnum());
         }

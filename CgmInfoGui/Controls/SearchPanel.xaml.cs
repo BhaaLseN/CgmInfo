@@ -32,7 +32,7 @@ namespace CgmInfoGui.Controls
         }
 
         public static readonly DependencyProperty ResultsProperty =
-            DependencyProperty.Register("Results", typeof(ObservableCollection<SearchResultItem>), typeof(SearchPanel), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Results), typeof(ObservableCollection<SearchResultItem>), typeof(SearchPanel), new PropertyMetadata(null));
 
         public SearchResultItem SelectedResult
         {
@@ -41,7 +41,7 @@ namespace CgmInfoGui.Controls
         }
 
         public static readonly DependencyProperty SelectedResultProperty =
-            DependencyProperty.Register("SelectedResult", typeof(SearchResultItem), typeof(SearchPanel), new PropertyMetadata(OnSelectedResultChanged));
+            DependencyProperty.Register(nameof(SelectedResult), typeof(SearchResultItem), typeof(SearchPanel), new PropertyMetadata(OnSelectedResultChanged));
 
         public string SearchText
         {
@@ -50,7 +50,7 @@ namespace CgmInfoGui.Controls
         }
 
         public static readonly DependencyProperty SearchTextProperty =
-            DependencyProperty.Register("SearchText", typeof(string), typeof(SearchPanel), new PropertyMetadata(OnSearchTextChanged));
+            DependencyProperty.Register(nameof(SearchText), typeof(string), typeof(SearchPanel), new PropertyMetadata(OnSearchTextChanged));
 
         public ItemsControl Source
         {
@@ -59,7 +59,7 @@ namespace CgmInfoGui.Controls
         }
 
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(ItemsControl), typeof(SearchPanel), new PropertyMetadata(OnSourceChanged));
+            DependencyProperty.Register(nameof(Source), typeof(ItemsControl), typeof(SearchPanel), new PropertyMetadata(OnSourceChanged));
 
         private static void OnSearchTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

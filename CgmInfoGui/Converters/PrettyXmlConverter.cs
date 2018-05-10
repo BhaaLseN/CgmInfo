@@ -16,18 +16,18 @@ namespace CgmInfoGui.Converters
     {
         #region Dependency properties
 
-        public static DependencyProperty BracketStyleProperty = RegisterStyle("BracketStyle", MakeStyle(Colors.Blue));
-        public static DependencyProperty ElementNameStyleProperty = RegisterStyle("ElementNameStyle", MakeStyle(Colors.DarkRed));
-        public static DependencyProperty SpaceStyleProperty = RegisterStyle("SpaceStyle", null);
-        public static DependencyProperty AttributeNameStyleProperty = RegisterStyle("AttributeNameStyle", MakeStyle(Colors.Red));
-        public static DependencyProperty NamespaceValueStyleProperty = RegisterStyle("NamespaceValueStyle", MakeStyle(Colors.Red));
-        public static DependencyProperty AssignmentStyleProperty = RegisterStyle("AssignmentStyle", MakeStyle(Colors.DarkBlue));
-        public static DependencyProperty QuoteStyleProperty = RegisterStyle("QuoteStyle", MakeStyle(Colors.DarkBlue));
-        public static DependencyProperty AttributeValueStyleProperty = RegisterStyle("AttributeValueStyle", MakeStyle(Colors.Black));
-        public static DependencyProperty ElementValueStyleProperty = RegisterStyle("ElementValueStyle", MakeStyle(Colors.Black));
-        public static DependencyProperty CommentStyleProperty = RegisterStyle("CommentStyle", MakeStyle(Colors.Green));
-        public static DependencyProperty NotificationStyleProperty = RegisterStyle("NotificationStyle", MakeStyle(Colors.DarkGreen, FontStyles.Italic));
-        public static DependencyProperty ChildIndentProperty = DependencyProperty.Register("ChildIndent", typeof(double), typeof(PrettyXmlConverter), new PropertyMetadata(25d));
+        public static DependencyProperty BracketStyleProperty = RegisterStyle(nameof(BracketStyle), MakeStyle(Colors.Blue));
+        public static DependencyProperty ElementNameStyleProperty = RegisterStyle(nameof(ElementNameStyle), MakeStyle(Colors.DarkRed));
+        public static DependencyProperty SpaceStyleProperty = RegisterStyle(nameof(SpaceStyle), null);
+        public static DependencyProperty AttributeNameStyleProperty = RegisterStyle(nameof(AttributeNameStyle), MakeStyle(Colors.Red));
+        public static DependencyProperty NamespaceValueStyleProperty = RegisterStyle(nameof(NamespaceValueStyle), MakeStyle(Colors.Red));
+        public static DependencyProperty AssignmentStyleProperty = RegisterStyle(nameof(AssignmentStyle), MakeStyle(Colors.DarkBlue));
+        public static DependencyProperty QuoteStyleProperty = RegisterStyle(nameof(QuoteStyle), MakeStyle(Colors.DarkBlue));
+        public static DependencyProperty AttributeValueStyleProperty = RegisterStyle(nameof(AttributeValueStyle), MakeStyle(Colors.Black));
+        public static DependencyProperty ElementValueStyleProperty = RegisterStyle(nameof(ElementValueStyle), MakeStyle(Colors.Black));
+        public static DependencyProperty CommentStyleProperty = RegisterStyle(nameof(CommentStyle), MakeStyle(Colors.Green));
+        public static DependencyProperty NotificationStyleProperty = RegisterStyle(nameof(NotificationStyle), MakeStyle(Colors.DarkGreen, FontStyles.Italic));
+        public static DependencyProperty ChildIndentProperty = DependencyProperty.Register(nameof(ChildIndent), typeof(double), typeof(PrettyXmlConverter), new PropertyMetadata(25d));
         public static DependencyProperty FontFamilyProperty = FlowDocument.FontFamilyProperty.AddOwner(typeof(PrettyXmlConverter), new FrameworkPropertyMetadata(new FontFamily("Consolas")));
         public static DependencyProperty FontSizeProperty = FlowDocument.FontSizeProperty.AddOwner(typeof(PrettyXmlConverter), new FrameworkPropertyMetadata(14d));
         public static DependencyProperty PagePaddingProperty = FlowDocument.PagePaddingProperty.AddOwner(typeof(PrettyXmlConverter), new FrameworkPropertyMetadata(new Thickness(5)));

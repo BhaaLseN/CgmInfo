@@ -196,10 +196,8 @@ namespace CgmInfoGui.Controls
 
     public sealed class SearchResultItem
     {
-        private readonly NodeBase _node;
         internal SearchResultItem(NodeBase node, string searchText, int[] parentPath, Style matchStyle)
         {
-            _node = node;
             ParentPath = parentPath;
             string escapedSearchText = Regex.Escape(searchText);
             // split them all, but make the delimiters stick around

@@ -28,14 +28,8 @@
                 </Style>
             </xctk:PropertyGrid.Style>
         </xctk:PropertyGrid>
-        <FlowDocumentReader Document="{Binding RawDocument, ElementName=this}"
-                            IsFindEnabled="False"
-                            IsPageViewEnabled="False"
-                            IsPrintEnabled="False"
-                            IsScrollViewEnabled="True"
-                            IsTwoPageViewEnabled="False"
-                            ViewingMode="Scroll">
-            <FlowDocumentReader.Style>
+        <FlowDocumentScrollViewer Document="{Binding RawDocument, ElementName=this}">
+            <FlowDocumentScrollViewer.Style>
                 <Style>
                     <Setter Property="Control.Visibility" Value="Visible"/>
                     <Style.Triggers>
@@ -44,12 +38,12 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </FlowDocumentReader.Style>
-            <FlowDocumentReader.Resources>
+            </FlowDocumentScrollViewer.Style>
+            <FlowDocumentScrollViewer.Resources>
                 <Style TargetType="Table">
                     <Setter Property="FontFamily" Value="Consolas"/>
                 </Style>
-            </FlowDocumentReader.Resources>
-        </FlowDocumentReader>
+            </FlowDocumentScrollViewer.Resources>
+        </FlowDocumentScrollViewer>
     </Grid>
 </UserControl>

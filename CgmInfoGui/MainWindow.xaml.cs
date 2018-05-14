@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml.Linq;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
@@ -63,6 +64,21 @@ namespace CgmInfoGui
             Properties.Settings.Default.Save();
 
             base.OnClosed(e);
+        }
+
+        private void FileName_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetData(DataFormats.FileDrop) is string[] fileNames && sender is TextBox textBox)
+            {
+                textBox.Text = fileNames.FirstOrDefault();
+                e.Handled = true;
+            }
+        }
+
+        private void FileName_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Link : DragDropEffects.None;
+            e.Handled = true;
         }
     }
 }

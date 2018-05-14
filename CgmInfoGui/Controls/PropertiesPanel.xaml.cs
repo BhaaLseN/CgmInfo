@@ -90,6 +90,11 @@ namespace CgmInfoGui.Controls
                 textCell.Blocks.Add(textLine);
 
                 baseAddress += itemsPerLine;
+                if (baseAddress >= 0x1000)
+                {
+                    hexCell.Blocks.Add(new Paragraph(new Italic(new Run(string.Format("({0} more bytes not shown)", unsupportedCommand.RawBuffer.Length - baseAddress)))));
+                    break;
+                }
             }
 
             var tableRow = new TableRow();

@@ -376,7 +376,7 @@ namespace CgmInfo.BinaryEncoding
             //      0: null background
             //      1: null foreground
             //      2: T6
-            //      3: 1-dimensional
+            //      3: T4 1-dimensional
             //      4: T4 2-dimensional
             //      5: bitmap (uncompressed)
             //      6: run length
@@ -406,7 +406,7 @@ namespace CgmInfo.BinaryEncoding
                 case 0: // null background
                 case 1: // null foreground
                 case 2: // T6
-                case 3: // 1-dimensional
+                case 3: // T4 1-dimensional
                 case 4: // T4 2-dimensional
                 case 5: // bitmap (uncompressed)
                     // [null_SDR], for compression types 1-5,

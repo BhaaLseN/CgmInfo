@@ -36,7 +36,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             { 0, "Null Background" },
             { 1, "Null Foreground" },
             { 2, "T6" },
-            { 3, "1-dimensional" },
+            { 3, "T4 1-dimensional" },
             { 4, "T4 2-dimensional" },
             { 5, "Bitmap (uncompressed)" },
             { 6, "Run Length" },

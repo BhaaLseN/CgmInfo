@@ -125,6 +125,7 @@ namespace CgmInfo.TextEncoding
             { "NURB", GraphicalPrimitiveReader.NonUniformRationalBSpline },
             { "POLYBEZIER", GraphicalPrimitiveReader.Polybezier },
             { "BITONALTILE", GraphicalPrimitiveReader.BitonalTile },
+            { "TILE", GraphicalPrimitiveReader.Tile },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },

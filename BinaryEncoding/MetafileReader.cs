@@ -149,7 +149,7 @@ namespace CgmInfo.BinaryEncoding
                     { 26, GraphicalPrimitiveReader.Polybezier },
                     //{ 27, GraphicalPrimitiveReader.Polysymbol },
                     { 28, GraphicalPrimitiveReader.BitonalTile },
-                    //{ 29, GraphicalPrimitiveReader.Tile },
+                    { 29, GraphicalPrimitiveReader.Tile },
                 }
             },
             // attribute elements [ISO/IEC 8632-3 8.7, Table 8]

@@ -728,6 +728,18 @@ namespace CgmInfoGui.Traversal
                 bitonalTileNode.Nodes.Add(parameterNode);
             }
         }
+        public void AcceptGraphicalPrimitiveTile(Tile tile, MetafileContext parameter)
+        {
+            var tileNode = parameter.AddNode("TILE: {0} ({1})", tile.CompressionType, tile.CompressionTypeName);
+            tileNode.Nodes.Add(new SimpleNode("Row Padding Indicator: " + tile.RowPaddingIndicator));
+            tileNode.Nodes.Add(new SimpleNode("Cell Color Precision: " + tile.CellColorPrecision));
+            if (tile.Parameters != null)
+            {
+                var parameterNode = new SimpleNode($"Parameters [{tile.Parameters.Elements.Count()}]");
+                parameterNode.Nodes.AddRange(tile.Parameters.Elements.Select(n => new SimpleNode(n.ToString())));
+                tileNode.Nodes.Add(parameterNode);
+            }
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)
         {

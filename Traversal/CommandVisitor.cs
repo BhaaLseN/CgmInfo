@@ -334,6 +334,11 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+
+        public virtual void AcceptGraphicalPrimitiveTile(Tile tile, T parameter)
+        {
+            // intentionally left blank
+        }
         #endregion
 
         #region Attribute elements

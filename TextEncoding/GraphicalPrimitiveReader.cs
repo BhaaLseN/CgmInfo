@@ -264,12 +264,24 @@ namespace CgmInfo.TextEncoding
             int rowPaddingIndicator = reader.ReadInteger();
             var cellBackgroundColor = reader.ReadColor();
             var cellForegroundColor = reader.ReadColor();
-            var parameters = ReadBitonalTileSDR(compressionType, reader);
+            var parameters = ReadTileSDR(compressionType, reader);
             // TODO: do something with the bit stream?
             //       for the info application, it doesn't make too much sense; but other applications might want it.
             return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters);
         }
-        private static StructuredDataRecord ReadBitonalTileSDR(int compressionType, MetafileReader reader)
+
+        public static Tile Tile(MetafileReader reader)
+        {
+            int compressionType = reader.ReadIndex();
+            int rowPaddingIndicator = reader.ReadInteger();
+            int cellColorPrecision = reader.ReadInteger();
+            var parameters = ReadTileSDR(compressionType, reader);
+            // TODO: do something with the bit stream?
+            //       for the info application, it doesn't make too much sense; but other applications might want it.
+            return new Tile(compressionType, rowPaddingIndicator, cellColorPrecision, parameters);
+        }
+
+        private static StructuredDataRecord ReadTileSDR(int compressionType, MetafileReader reader)
         {
             switch (compressionType)
             {
@@ -285,8 +297,13 @@ namespace CgmInfo.TextEncoding
                 case 6: // run length
                     return ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
 
-                default: // >6 reserved for registered values
-                    // TODO: as defined in the Register, for type>6.
+                case 7: // baseline JPEG (ISO/IEC 9973)
+                case 8: // LZW (ISO/IEC 9973)
+                case 9: // PNG (ISO/IEC 9973)
+                    return ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
+
+                default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
+                    // TODO: as defined in the Register, for type>9.
                     return null;
             }
         }

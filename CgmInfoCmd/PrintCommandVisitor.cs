@@ -472,6 +472,10 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Bitonal Tile: {0} ({1}, {2} parameters)", bitonalTile.CompressionType, bitonalTile.CompressionTypeName, bitonalTile.Parameters?.Elements.Count());
         }
+        public void AcceptGraphicalPrimitiveTile(Tile tile, PrintContext parameter)
+        {
+            parameter.WriteLine("Tile: {0} ({1}, {2} parameters)", tile.CompressionType, tile.CompressionTypeName, tile.Parameters?.Elements.Count());
+        }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, PrintContext parameter)
         {

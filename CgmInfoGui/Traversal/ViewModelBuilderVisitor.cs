@@ -724,7 +724,7 @@ namespace CgmInfoGui.Traversal
             if (bitonalTile.Parameters != null)
             {
                 var parameterNode = new SimpleNode($"Parameters [{bitonalTile.Parameters.Elements.Count()}]");
-                parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode(n.ToString())));
+                parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
                 bitonalTileNode.Nodes.Add(parameterNode);
             }
         }
@@ -736,7 +736,7 @@ namespace CgmInfoGui.Traversal
             if (tile.Parameters != null)
             {
                 var parameterNode = new SimpleNode($"Parameters [{tile.Parameters.Elements.Count()}]");
-                parameterNode.Nodes.AddRange(tile.Parameters.Elements.Select(n => new SimpleNode(n.ToString())));
+                parameterNode.Nodes.AddRange(tile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
                 tileNode.Nodes.Add(parameterNode);
             }
         }

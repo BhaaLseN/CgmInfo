@@ -82,6 +82,7 @@
       <DependentUpon>PropertiesPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FileSizeConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\PrefixConverter.cs" />
     <Compile Include="Converters\PrettyXmlConverter.cs" />
     <Compile Include="Properties\Settings.cs" />

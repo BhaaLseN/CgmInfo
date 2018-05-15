@@ -413,17 +413,7 @@ namespace CgmInfo.BinaryEncoding
                     return new StructuredDataRecord(new StructuredDataElement[0]);
 
                 case 6: // run length
-                    int i_I = reader.ReadInteger();
-                    int one = reader.ReadInteger();
-                    int runCountPrecision = reader.ReadInteger();
-
-                    // [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
-                    return new StructuredDataRecord(new[]
-                    {
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { i_I }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { one }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { runCountPrecision }),
-                    });
+                    return ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
 
                 default: // >6 reserved for registered values
                     // TODO: as defined in the Register, for type>6.

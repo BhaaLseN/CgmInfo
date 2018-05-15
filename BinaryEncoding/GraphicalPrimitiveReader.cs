@@ -395,9 +395,8 @@ namespace CgmInfo.BinaryEncoding
             var cellBackgroundColor = reader.ReadColor();
             var cellForegroundColor = reader.ReadColor();
             var parameters = ReadTileSDR(compressionType, reader);
-            // TODO: do something with the bit stream?
-            //       for the info application, it doesn't make too much sense; but other applications might want it.
-            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters, compressedCells);
         }
 
         public static Tile Tile(MetafileReader reader, CommandHeader commandHeader)
@@ -424,9 +423,8 @@ namespace CgmInfo.BinaryEncoding
             int rowPaddingIndicator = reader.ReadInteger();
             int cellColorPrecision = reader.ReadInteger();
             var parameters = ReadTileSDR(compressionType, reader);
-            // TODO: do something with the bit stream?
-            //       for the info application, it doesn't make too much sense; but other applications might want it.
-            return new Tile(compressionType, rowPaddingIndicator, cellColorPrecision, parameters);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new Tile(compressionType, rowPaddingIndicator, cellColorPrecision, parameters, compressedCells);
         }
 
         private static StructuredDataRecord ReadTileSDR(int compressionType, MetafileReader reader)

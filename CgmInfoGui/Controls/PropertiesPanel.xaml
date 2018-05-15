@@ -27,6 +27,12 @@
                 </FlowDocumentScrollViewer.Resources>
             </FlowDocumentScrollViewer>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type nodes:ImageNode}">
+            <Grid>
+                <Image Source="{Binding Image}" Visibility="{Binding LoadError, Converter={StaticResource nullToVisibility}, ConverterParameter='inverse'}"/>
+                <TextBlock Text="{Binding LoadError.Message}" Visibility="{Binding LoadError, Converter={StaticResource nullToVisibility}}"/>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <ContentPresenter Content="{Binding Source, ElementName=this}"/>
 </UserControl>

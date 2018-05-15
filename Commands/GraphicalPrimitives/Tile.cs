@@ -4,7 +4,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
 {
     public class Tile : Command
     {
-        public Tile(int compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord parameters)
+        public Tile(int compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord parameters, byte[] compressedCells)
             : base(4, 29)
         {
             CompressionType = compressionType;
@@ -12,6 +12,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             RowPaddingIndicator = rowPaddingIndicator;
             CellColorPrecision = cellColorPrecision;
             Parameters = parameters;
+            CompressedCells = compressedCells;
         }
 
         public int CompressionType { get; }
@@ -19,6 +20,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
         public int RowPaddingIndicator { get; }
         public int CellColorPrecision { get; }
         public StructuredDataRecord Parameters { get; }
+        public byte[] CompressedCells { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

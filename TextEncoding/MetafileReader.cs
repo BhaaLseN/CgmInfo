@@ -371,6 +371,33 @@ namespace CgmInfo.TextEncoding
             return _currentTokens[_currentTokenIndex++];
         }
 
+        internal byte[] ReadBitstream()
+        {
+            var data = new List<byte>();
+            while (HasMoreData())
+            {
+                string chunk = ReadToken();
+                char? byte1 = null;
+                foreach (char c in chunk)
+                {
+                    // bitstream should only contain hexadecimal digits (2 characters per byte)
+                    if (!char.IsLetterOrDigit(c))
+                        continue;
+                    if (byte1.HasValue)
+                    {
+                        data.Add(Convert.ToByte("" + byte1 + c, 16));
+                        byte1 = null;
+                    }
+                    else
+                    {
+                        byte1 = c;
+                    }
+                }
+                // TODO: byte1 should always be null here; not sure what to do when it isn't...
+            }
+            return data.ToArray();
+        }
+
         internal string ReadEnum()
         {
             return ReadToken();

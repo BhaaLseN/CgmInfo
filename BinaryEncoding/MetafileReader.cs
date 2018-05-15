@@ -555,6 +555,24 @@ namespace CgmInfo.BinaryEncoding
             return signedRet;
         }
 
+        internal byte[] ReadBitstream()
+        {
+            // bitstream is a series of unsigned integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, BS / Note 15]
+            // 16 bits per entry is chosen for portability reasons and need not be filled completely; the remainder is set to 0.
+            byte[] data = _reader.ReadBytes((int)(_reader.BaseStream.Length - _reader.BaseStream.Position));
+            // the data is little endian; swap if necessary.
+            if (!BitConverter.IsLittleEndian)
+            {
+                for (int i = 0; i < data.Length; i += 2)
+                {
+                    byte temp = data[i];
+                    data[i] = data[i + 1];
+                    data[i + 1] = temp;
+                }
+            }
+            return data;
+        }
+
         internal int ReadEnum()
         {
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]

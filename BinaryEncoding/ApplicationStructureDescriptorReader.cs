@@ -97,6 +97,7 @@ namespace CgmInfo.BinaryEncoding
                 case DataTypeIndex.UnsignedInteger16bit:
                     return reader.ReadInteger(2, true);
                 case DataTypeIndex.BitStream:
+                    return reader.ReadBitstream();
                 case DataTypeIndex.ColorList:
                 default:
                     // FIXME: how are those implemented?

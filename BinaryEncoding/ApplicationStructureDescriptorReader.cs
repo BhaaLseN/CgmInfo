@@ -18,12 +18,11 @@ namespace CgmInfo.BinaryEncoding
 
         public static StructuredDataRecord ReadStructuredDataRecord(MetafileReader reader)
         {
-            // overall length seems to be encoded similar to the string length [ISO/IEC 8632-3 7, Table 1, Note 12]
+            // overall length is encoded similar to the string length [ISO/IEC 8632-3 7, Table 1, Note 12/Note 17]
             // (ie. one byte, followed by one word if its 255).
             int length = reader.ReadByte();
             if (length == 255)
             {
-                // FIXME: does an SDR also have a long form similar to a string?
                 length = reader.ReadWord();
             }
 

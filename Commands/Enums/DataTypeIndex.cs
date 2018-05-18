@@ -22,7 +22,7 @@ namespace CgmInfo.Commands.Enums
         VDC = 16,
         ColorComponent = 17,
         UnsignedInteger8bit = 18,
-        UnsignedInteger32Bit = 19,
+        UnsignedInteger32bit = 19,
         BitStream = 20,
         ColorList = 21,
         UnsignedInteger16bit = 22,

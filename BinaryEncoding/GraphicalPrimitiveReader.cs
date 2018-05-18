@@ -441,7 +441,7 @@ namespace CgmInfo.BinaryEncoding
                     return new StructuredDataRecord(new StructuredDataElement[0]);
 
                 case 6: // run length
-                    return ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                    return reader.ReadStructuredDataRecord();
 
                 case 7: // baseline JPEG (ISO/IEC 9973)
                         // 1) JPEG COLOUR MODEL - member type, Index (IX); number of items, 1; valid values:
@@ -465,7 +465,7 @@ namespace CgmInfo.BinaryEncoding
                         // when the value of the JPEG COLOUR MODEL is not 5 (RGB-related)
                 case 8: // LZW (ISO/IEC 9973)
                 case 9: // PNG (ISO/IEC 9973)
-                    return ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                    return reader.ReadStructuredDataRecord();
 
                 default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
                     // TODO: as defined in the Register, for type>9.

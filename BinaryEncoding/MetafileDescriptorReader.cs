@@ -223,7 +223,7 @@ namespace CgmInfo.BinaryEncoding
                 int propertyIndicator = reader.ReadIndex();
                 int priority = reader.ReadInteger();
                 // The SDR for each of the standardized properties contains only one member (typed sequence) [ISO/IEC 8632-1 7.3.21]
-                var record = ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                var record = reader.ReadStructuredDataRecord();
                 properties.Add(new FontProperty(propertyIndicator, priority, record.Elements.First()));
             }
             return new FontProperties(properties.ToArray());

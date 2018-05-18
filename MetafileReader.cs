@@ -20,9 +20,19 @@ namespace CgmInfo
             _fileStream = File.OpenRead(fileName);
             Properties = new MetafileProperties(isBinaryEncoding, _fileStream.Length);
         }
+        protected MetafileReader(MetafileReader other)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+            Descriptor = other.Descriptor;
+            Properties = other.Properties;
+        }
 
         public Command Read()
         {
+            if (_fileStream == null)
+                throw new InvalidOperationException("Attempted to read a Command from a Sub-Buffer reader.");
+
             var command = ReadCommand(_fileStream);
             command?.Accept(_propertyVisitor, Properties);
             return command;
@@ -51,7 +61,7 @@ namespace CgmInfo
             {
                 if (disposing)
                 {
-                    _fileStream.Dispose();
+                    _fileStream?.Dispose();
                 }
 
                 _isDisposed = true;

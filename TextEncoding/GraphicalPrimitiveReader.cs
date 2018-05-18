@@ -293,12 +293,12 @@ namespace CgmInfo.TextEncoding
                     return new StructuredDataRecord(new StructuredDataElement[0]);
 
                 case 6: // run length
-                    return ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
+                    return reader.ReadStructuredDataRecord();
 
                 case 7: // baseline JPEG (ISO/IEC 9973)
                 case 8: // LZW (ISO/IEC 9973)
                 case 9: // PNG (ISO/IEC 9973)
-                    return ApplicationStructureDescriptorReader.ParseStructuredDataRecord(reader.ReadString());
+                    return reader.ReadStructuredDataRecord();
 
                 default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
                     // TODO: as defined in the Register, for type>9.

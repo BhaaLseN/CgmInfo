@@ -250,6 +250,11 @@ namespace CgmInfo.BinaryEncoding
             : base(fileName, true)
         {
         }
+        private MetafileReader(MetafileReader parent, byte[] subBuffer)
+            : base(parent)
+        {
+            _reader = new BinaryReader(new MemoryStream(subBuffer));
+        }
 
         public static bool IsBinaryMetafile(Stream stream)
         {
@@ -533,6 +538,23 @@ namespace CgmInfo.BinaryEncoding
         private byte[] GetInternalBuffer()
         {
             return ((MemoryStream)_reader.BaseStream).ToArray();
+        }
+
+        internal StructuredDataRecord ReadStructuredDataRecord()
+        {
+            return ReadStructuredDataRecord(new StructuredDataRecordReader());
+        }
+
+        internal StructuredDataRecord ReadStructuredDataRecord(StructuredDataRecordReader sdrReader)
+        {
+            // overall length is encoded similar to the string length [ISO/IEC 8632-3 7, Table 1, Note 12/Note 17]
+            // (ie. one byte, followed by one word if its 255).
+            int length = ReadByte();
+            if (length == 255)
+                length = ReadWord();
+
+            byte[] sdrBuffer = _reader.ReadBytes(length);
+            return sdrReader.Read(new MetafileReader(this, sdrBuffer));
         }
 
         internal int ReadInteger()

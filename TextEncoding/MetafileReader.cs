@@ -200,6 +200,23 @@ namespace CgmInfo.TextEncoding
         {
         }
 
+        private MetafileReader(MetafileReader parent, string sdr)
+            : base(parent)
+        {
+            // read all tokens until end of either command or file
+            TokenState state;
+            var tokens = new List<string>();
+            var stream = new StringTokenProvider(sdr);
+            do
+            {
+                state = ReadToken(stream, out string token);
+                tokens.Add(token);
+            } while (state == TokenState.EndOfToken);
+
+            _currentTokens = tokens;
+            _currentTokenIndex = 0;
+        }
+
         private long _commandPosition;
         private int _currentTokenIndex;
         private List<string> _currentTokens;
@@ -209,12 +226,13 @@ namespace CgmInfo.TextEncoding
             // remember the current position for error feedback.
             // this always signifies the beginning of the command; not the token.
             _commandPosition = stream.Position;
+            var streamProvider = new StreamTokenProvider(stream);
             // read all tokens until end of either command or file
             TokenState state;
             var tokens = new List<string>();
             do
             {
-                state = ReadToken(stream, out string token);
+                state = ReadToken(streamProvider, out string token);
                 tokens.Add(token);
             } while (state == TokenState.EndOfToken);
 
@@ -357,6 +375,14 @@ namespace CgmInfo.TextEncoding
             var colorTable = AttributeReader.ColorTable(reader);
             reader.Descriptor.UpdateColorTable(colorTable);
             return colorTable;
+        }
+
+        internal StructuredDataRecord ReadStructuredDataRecord()
+        {
+            // SDR are encoded as string
+            string sdr = ReadString();
+            var sdrReader = new StructuredDataRecordReader();
+            return sdrReader.Read(new MetafileReader(this, sdr));
         }
 
         internal string ReadString()
@@ -578,14 +604,14 @@ namespace CgmInfo.TextEncoding
         {
             return _currentTokens == null || _currentTokenIndex + minimumLeft <= _currentTokens.Count;
         }
-        private static TokenState ReadToken(Stream stream, out string token)
+        private static TokenState ReadToken(ITokenProvider stream, out string token)
         {
             var sb = new StringBuilder();
             try
             {
                 while (stream.Position < stream.Length)
                 {
-                    char c = (char)stream.ReadByte();
+                    char c = stream.ReadChar();
                     switch (c)
                     {
                         // null characters; skip them [ISO/IEC 8632-4 6.1]
@@ -623,7 +649,7 @@ namespace CgmInfo.TextEncoding
                             char stringDelimiter = c;
                             do
                             {
-                                c = (char)stream.ReadByte();
+                                c = stream.ReadChar();
 
                                 // in case the delimiter appears:
                                 // either end of string, or double the delimiter to include a literal one
@@ -632,7 +658,7 @@ namespace CgmInfo.TextEncoding
                                     if (stream.Position >= stream.Length)
                                         return TokenState.EndOfFile;
 
-                                    char nextChar = (char)stream.ReadByte();
+                                    char nextChar = stream.ReadChar();
                                     if (nextChar == stringDelimiter)
                                     {
                                         // literal delimiter; append it once, then reset the character to keep the loop going
@@ -642,7 +668,7 @@ namespace CgmInfo.TextEncoding
                                     else
                                     {
                                         // end of string; reset back by the one character read ahead
-                                        stream.Seek(-1, SeekOrigin.Current);
+                                        stream.Position--;
                                         break;
                                     }
                                 }
@@ -670,7 +696,7 @@ namespace CgmInfo.TextEncoding
                         case '%':
                             do
                             {
-                                c = (char)stream.ReadByte();
+                                c = stream.ReadChar();
                                 if (stream.Position >= stream.Length)
                                     return TokenState.EndOfFile;
                             } while (c != '%');
@@ -699,6 +725,43 @@ namespace CgmInfo.TextEncoding
             EndOfElement,
             // reached something that delimits tokens from each other; but doesn't end the element
             EndOfToken,
+        }
+
+        private interface ITokenProvider
+        {
+            char ReadChar();
+            int Position { get; set; }
+            int Length { get; }
+        }
+        private sealed class StreamTokenProvider : ITokenProvider
+        {
+            private readonly Stream _stream;
+            private readonly long _startingPosition;
+            public StreamTokenProvider(Stream stream)
+            {
+                _stream = stream;
+                _startingPosition = stream.Position;
+            }
+
+            public int Position
+            {
+                get { return (int)(_stream.Position - _startingPosition); }
+                set { _stream.Position = _startingPosition + value; }
+            }
+
+            public int Length => (int)(_stream.Length - _startingPosition);
+            public char ReadChar() => (char)_stream.ReadByte();
+        }
+        private sealed class StringTokenProvider : ITokenProvider
+        {
+            private readonly string _str;
+            public StringTokenProvider(string str)
+            {
+                _str = str;
+            }
+            public int Position { get; set; }
+            public int Length => _str.Length;
+            public char ReadChar() => _str[Position++];
         }
     }
 }

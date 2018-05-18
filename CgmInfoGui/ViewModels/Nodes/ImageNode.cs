@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CgmInfo.Commands.Enums;
 using CgmInfoGui.ViewModels.Nodes.Sources;
 
 namespace CgmInfoGui.ViewModels.Nodes
@@ -73,6 +75,28 @@ namespace CgmInfoGui.ViewModels.Nodes
                 var ms = new MemoryStream(_tile.CompressedCells);
                 var jpegDecoder = new JpegBitmapDecoder(ms, BitmapCreateOptions.None, BitmapCacheOption.None);
                 return Task.FromResult(jpegDecoder.Frames[0].GetAsFrozen() as ImageSource);
+            }
+            else if (_tile.CompressionType == 9)
+            {
+                // PNG is a little special: the SDR contains bitstreams, one per chunk;
+                // we'll have to piece them together (and create a header), otherwise the decoder won't be able to read it.
+                var ms = new MemoryStream();
+
+                // PNG header
+                ms.Write(new byte[] { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a }, 0, 8);
+                // other headers from the SDR (usually at least IHDR)
+                foreach (var parameter in _tile.Parameters.Elements)
+                {
+                    if (parameter.Type == DataTypeIndex.BitStream && parameter.Values.FirstOrDefault() is byte[] data)
+                        ms.Write(data, 0, data.Length);
+                }
+                // actual payload, IDAT/IEND from the TILE
+                byte[] compressedCells = _tile.CompressedCells;
+                ms.Write(compressedCells, 0, compressedCells.Length);
+                ms.Position = 0;
+
+                var pngDecoder = new PngBitmapDecoder(ms, BitmapCreateOptions.None, BitmapCacheOption.None);
+                return Task.FromResult(pngDecoder.Frames[0].GetAsFrozen() as ImageSource);
             }
 
             throw new NotImplementedException($"Decoding of compression type {_tile.CompressionType} is not implemented yet.");

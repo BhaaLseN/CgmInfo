@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CgmInfo.Commands;
@@ -464,8 +465,12 @@ namespace CgmInfo.BinaryEncoding
                         // The value of the JPEG COLOUR SUBMODEL is ignored by interpreters
                         // when the value of the JPEG COLOUR MODEL is not 5 (RGB-related)
                 case 8: // LZW (ISO/IEC 9973)
-                case 9: // PNG (ISO/IEC 9973)
                     return reader.ReadStructuredDataRecord();
+
+                case 9: // PNG (ISO/IEC 9973)
+                        // PNG is a little special: the SDR contains bitstreams, one per chunk;
+                        // but bitstreams themselves have no length indication. override the SDR reader to be PNG-aware.
+                    return reader.ReadStructuredDataRecord(new PNGSDRReader());
 
                 default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
                     // TODO: as defined in the Register, for type>9.
@@ -484,6 +489,60 @@ namespace CgmInfo.BinaryEncoding
             }
 
             return points;
+        }
+
+        private sealed class PNGSDRReader : StructuredDataRecordReader
+        {
+            protected override byte[] ReadBitStream(MetafileReader reader)
+            {
+                // the PNG SDR holds multiple entries of type BitStream, but the BitStream itself has no real length indication.
+                // PNG uses the chunk length of the PNG chunk to do this.
+                // PNG chunks look like this:
+                //      DWORD DataLength
+                //      DWORD Type
+                //      BYTE Data[]
+                //      DWORD Crc
+                // Data is DataLength, and the full record is DataLength + 3 * sizeof(DWORD)
+                byte[] dataLength = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    dataLength[i] = reader.ReadByte();
+
+                // length is always stored in big-endian
+                int length;
+                if (BitConverter.IsLittleEndian)
+                    length = BitConverter.ToInt32(dataLength.Reverse().ToArray(), 0);
+                else
+                    length = BitConverter.ToInt32(dataLength, 0);
+
+                byte[] type = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    type[i] = reader.ReadByte();
+
+                byte[] data = new byte[length];
+                for (int i = 0; i < data.Length; i++)
+                    data[i] = reader.ReadByte();
+
+                byte[] crc = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    crc[i] = reader.ReadByte();
+
+                // bitstream is a series of unsigned integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, BS / Note 15]
+                // 16 bits per entry is chosen for portability reasons and need not be filled completely; the remainder is set to 0.
+                // we'll have to advance the stream to be aligned at a 16-bit boundary before we leave.
+                if (length % 2 != 0)
+                {
+                    byte shouldBeZero = reader.ReadByte();
+                    System.Diagnostics.Debug.Assert(shouldBeZero == 0);
+                }
+
+                byte[] result = new byte[dataLength.Length + type.Length + data.Length + crc.Length];
+                Array.Copy(dataLength, 0, result, 0, dataLength.Length);
+                Array.Copy(type, 0, result, dataLength.Length, type.Length);
+                Array.Copy(data, 0, result, dataLength.Length + type.Length, data.Length);
+                Array.Copy(crc, 0, result, dataLength.Length + type.Length + data.Length, crc.Length);
+
+                return result;
+            }
         }
     }
 }

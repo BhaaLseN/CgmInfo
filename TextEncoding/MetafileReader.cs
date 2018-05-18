@@ -656,6 +656,11 @@ namespace CgmInfo.TextEncoding
                                     return TokenState.EndOfFile;
                             } while (c != stringDelimiter);
 
+                            // (kinda) special case: empty string.
+                            // would break with two empty strings adjacent to each other (might happen in SDRs)
+                            if (sb.Length == 0)
+                                return TokenState.EndOfToken;
+
                             // end of string might also mean end of element;
                             // we need to do another read, or we'd end up with an empty string at the next read
                             // simply break for another loop; and pray we get either a "/" or ";" character next.

@@ -98,6 +98,16 @@ namespace CgmInfoGui.ViewModels.Nodes
                 var pngDecoder = new PngBitmapDecoder(ms, BitmapCreateOptions.None, BitmapCacheOption.None);
                 return Task.FromResult(pngDecoder.Frames[0].GetAsFrozen() as ImageSource);
             }
+            else if ((_tile.CompressionType >= 2 && _tile.CompressionType <= 5) || _tile.CompressionType == 7)
+            {
+                // we need to create a TIFF header here, otherwise the decoder won't be able to read it.
+                // TIFF will do all the CCITT compressions for us, as well as LZW and uncompressed (Bitmap).
+                var generator = new TiffGenerator(_tile);
+                var ms = generator.CreateStream();
+
+                var tiffDecoder = new TiffBitmapDecoder(ms, BitmapCreateOptions.None, BitmapCacheOption.None);
+                return Task.FromResult(tiffDecoder.Frames[0].GetAsFrozen() as ImageSource);
+            }
 
             throw new NotImplementedException($"Decoding of compression type {_tile.CompressionType} is not implemented yet.");
         }

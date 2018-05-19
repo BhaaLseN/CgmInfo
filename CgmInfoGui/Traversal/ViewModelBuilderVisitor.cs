@@ -728,7 +728,8 @@ namespace CgmInfoGui.Traversal
                 parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
                 bitonalTileNode.Nodes.Add(parameterNode);
             }
-            bitonalTileNode.Nodes.Add(new ImageNode(new BitonalTileSource(bitonalTile)));
+            var tileArray = (parameter.CurrentLevel as TileArrayViewModel)?.Command as BeginTileArray;
+            bitonalTileNode.Nodes.Add(new ImageNode(new BitonalTileSource(bitonalTile, tileArray)));
         }
         public void AcceptGraphicalPrimitiveTile(Tile tile, MetafileContext parameter)
         {
@@ -741,7 +742,8 @@ namespace CgmInfoGui.Traversal
                 parameterNode.Nodes.AddRange(tile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
                 tileNode.Nodes.Add(parameterNode);
             }
-            tileNode.Nodes.Add(new ImageNode(new TileSource(tile)));
+            var tileArray = (parameter.CurrentLevel as TileArrayViewModel)?.Command as BeginTileArray;
+            tileNode.Nodes.Add(new ImageNode(new TileSource(tile, tileArray)));
         }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)

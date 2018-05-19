@@ -8,18 +8,17 @@ namespace CgmInfoGui.Traversal
         private readonly Stack<NodeBase> _levelStack = new Stack<NodeBase>();
         private readonly List<NodeBase> _rootLevel = new List<NodeBase>();
 
-        private NodeBase _currentLevel;
-
         public ICollection<NodeBase> RootLevel
         {
             get { return _rootLevel; }
         }
 
         public NodeBase LastAddedNode { get; protected set; }
+        public NodeBase CurrentLevel { get; private set; }
 
         protected List<NodeBase> CurrentLevelNodes
         {
-            get { return _currentLevel != null ? _currentLevel.Nodes : _rootLevel; }
+            get { return CurrentLevel != null ? CurrentLevel.Nodes : _rootLevel; }
         }
 
         public NodeBase AddNode(string format, params object[] args)
@@ -31,8 +30,8 @@ namespace CgmInfoGui.Traversal
         public void AddNode(NodeBase node)
         {
             LastAddedNode = node;
-            if (_currentLevel != null)
-                _currentLevel.Nodes.Add(node);
+            if (CurrentLevel != null)
+                CurrentLevel.Nodes.Add(node);
             else
                 _rootLevel.Add(node);
         }
@@ -51,9 +50,9 @@ namespace CgmInfoGui.Traversal
         {
             if (!doNotAddTheNode)
                 AddNode(levelNode);
-            if (_currentLevel != null)
-                _levelStack.Push(_currentLevel);
-            _currentLevel = levelNode;
+            if (CurrentLevel != null)
+                _levelStack.Push(CurrentLevel);
+            CurrentLevel = levelNode;
         }
 
         public NodeBase EndLevel(string format, params object[] args)
@@ -70,9 +69,9 @@ namespace CgmInfoGui.Traversal
         public void EndLevel()
         {
             if (_levelStack.Count > 0)
-                _currentLevel = _levelStack.Pop();
+                CurrentLevel = _levelStack.Pop();
             else
-                _currentLevel = null;
+                CurrentLevel = null;
         }
     }
 }

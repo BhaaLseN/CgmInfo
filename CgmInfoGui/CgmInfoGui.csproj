@@ -112,6 +112,7 @@
     <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />
     <Compile Include="ViewModels\Nodes\Sources\TileSource.cs" />
+    <Compile Include="ViewModels\Nodes\TiffGenerator.cs" />
     <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />

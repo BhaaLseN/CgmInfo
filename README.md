@@ -14,7 +14,7 @@ CgmInfo is a fully managed CGM Metafile library based on the ISO/IEC 8632:1999 s
 * `CgmInfoGui`: A GUI application written in WPF to present a view on various aspects of the metafile, such as its metafile structure, its application structure and other uses such as hotspot information or [XML Companion file](http://www.w3.org/TR/webcgm20/WebCGM20-XCF.html) creation.
 
 ### Components
-CgmInfo is fully written in C# and might aswell work within PCL constraints (which are not provided as of now). However, its GUI application CgmInfoGui uses various third party libraries to provide a functional user interface.
+CgmInfo is fully written in C# and should work on all platforms that implement at least .NET Standard 1.3; with the CLI application CgmInfoCmd requiring .NET Core 2.0 or later. However, the GUI application CgmInfoGui is written using WPF and uses various third party libraries to provide a functional user interface, which will most likely be limited to run on Windows.
 - [Extended WPF Toolkit Community Edition](https://github.com/xceedsoftware/wpftoolkit/) by [Xceed](https://xceed.com/) for
   - [Docking Tabs](https://github.com/xceedsoftware/wpftoolkit/wiki/AvalonDock) for Tabbed UI that can be undocked/positioned as necessary (provided by `AvalonDock`)
   - [Zoombox](https://github.com/xceedsoftware/wpftoolkit/wiki/Zoombox) to provide Zooming/Panning capabilities (experimental branch only for now)

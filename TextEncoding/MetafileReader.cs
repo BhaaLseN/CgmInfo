@@ -125,6 +125,7 @@ namespace CgmInfo.TextEncoding
             { "NURB", GraphicalPrimitiveReader.NonUniformRationalBSpline },
             { "POLYBEZIER", GraphicalPrimitiveReader.Polybezier },
             { "BITONALTILE", GraphicalPrimitiveReader.BitonalTile },
+            { "TILE", GraphicalPrimitiveReader.Tile },
 
             // attribute elements [ISO/IEC 8632-4 7.6]
             { "LINEINDEX", AttributeReader.LineBundleIndex },
@@ -199,6 +200,23 @@ namespace CgmInfo.TextEncoding
         {
         }
 
+        private MetafileReader(MetafileReader parent, string sdr)
+            : base(parent)
+        {
+            // read all tokens until end of either command or file
+            TokenState state;
+            var tokens = new List<string>();
+            var stream = new StringTokenProvider(sdr);
+            do
+            {
+                state = ReadToken(stream, out string token);
+                tokens.Add(token);
+            } while (state == TokenState.EndOfToken);
+
+            _currentTokens = tokens;
+            _currentTokenIndex = 0;
+        }
+
         private long _commandPosition;
         private int _currentTokenIndex;
         private List<string> _currentTokens;
@@ -208,12 +226,13 @@ namespace CgmInfo.TextEncoding
             // remember the current position for error feedback.
             // this always signifies the beginning of the command; not the token.
             _commandPosition = stream.Position;
+            var streamProvider = new StreamTokenProvider(stream);
             // read all tokens until end of either command or file
             TokenState state;
             var tokens = new List<string>();
             do
             {
-                state = ReadToken(stream, out string token);
+                state = ReadToken(streamProvider, out string token);
                 tokens.Add(token);
             } while (state == TokenState.EndOfToken);
 
@@ -358,6 +377,14 @@ namespace CgmInfo.TextEncoding
             return colorTable;
         }
 
+        internal StructuredDataRecord ReadStructuredDataRecord()
+        {
+            // SDR are encoded as string
+            string sdr = ReadString();
+            var sdrReader = new StructuredDataRecordReader();
+            return sdrReader.Read(new MetafileReader(this, sdr));
+        }
+
         internal string ReadString()
         {
             return ReadToken();
@@ -368,6 +395,33 @@ namespace CgmInfo.TextEncoding
             if (_currentTokens == null || _currentTokenIndex >= _currentTokens.Count)
                 return null;
             return _currentTokens[_currentTokenIndex++];
+        }
+
+        internal byte[] ReadBitstream()
+        {
+            var data = new List<byte>();
+            while (HasMoreData())
+            {
+                string chunk = ReadToken();
+                char? byte1 = null;
+                foreach (char c in chunk)
+                {
+                    // bitstream should only contain hexadecimal digits (2 characters per byte)
+                    if (!char.IsLetterOrDigit(c))
+                        continue;
+                    if (byte1.HasValue)
+                    {
+                        data.Add(Convert.ToByte("" + byte1 + c, 16));
+                        byte1 = null;
+                    }
+                    else
+                    {
+                        byte1 = c;
+                    }
+                }
+                // TODO: byte1 should always be null here; not sure what to do when it isn't...
+            }
+            return data.ToArray();
         }
 
         internal string ReadEnum()
@@ -550,14 +604,14 @@ namespace CgmInfo.TextEncoding
         {
             return _currentTokens == null || _currentTokenIndex + minimumLeft <= _currentTokens.Count;
         }
-        private static TokenState ReadToken(Stream stream, out string token)
+        private static TokenState ReadToken(ITokenProvider stream, out string token)
         {
             var sb = new StringBuilder();
             try
             {
                 while (stream.Position < stream.Length)
                 {
-                    char c = (char)stream.ReadByte();
+                    char c = stream.ReadChar();
                     switch (c)
                     {
                         // null characters; skip them [ISO/IEC 8632-4 6.1]
@@ -595,7 +649,7 @@ namespace CgmInfo.TextEncoding
                             char stringDelimiter = c;
                             do
                             {
-                                c = (char)stream.ReadByte();
+                                c = stream.ReadChar();
 
                                 // in case the delimiter appears:
                                 // either end of string, or double the delimiter to include a literal one
@@ -604,7 +658,7 @@ namespace CgmInfo.TextEncoding
                                     if (stream.Position >= stream.Length)
                                         return TokenState.EndOfFile;
 
-                                    char nextChar = (char)stream.ReadByte();
+                                    char nextChar = stream.ReadChar();
                                     if (nextChar == stringDelimiter)
                                     {
                                         // literal delimiter; append it once, then reset the character to keep the loop going
@@ -614,7 +668,7 @@ namespace CgmInfo.TextEncoding
                                     else
                                     {
                                         // end of string; reset back by the one character read ahead
-                                        stream.Seek(-1, SeekOrigin.Current);
+                                        stream.Position--;
                                         break;
                                     }
                                 }
@@ -628,6 +682,11 @@ namespace CgmInfo.TextEncoding
                                     return TokenState.EndOfFile;
                             } while (c != stringDelimiter);
 
+                            // (kinda) special case: empty string.
+                            // would break with two empty strings adjacent to each other (might happen in SDRs)
+                            if (sb.Length == 0)
+                                return TokenState.EndOfToken;
+
                             // end of string might also mean end of element;
                             // we need to do another read, or we'd end up with an empty string at the next read
                             // simply break for another loop; and pray we get either a "/" or ";" character next.
@@ -637,7 +696,7 @@ namespace CgmInfo.TextEncoding
                         case '%':
                             do
                             {
-                                c = (char)stream.ReadByte();
+                                c = stream.ReadChar();
                                 if (stream.Position >= stream.Length)
                                     return TokenState.EndOfFile;
                             } while (c != '%');
@@ -666,6 +725,43 @@ namespace CgmInfo.TextEncoding
             EndOfElement,
             // reached something that delimits tokens from each other; but doesn't end the element
             EndOfToken,
+        }
+
+        private interface ITokenProvider
+        {
+            char ReadChar();
+            int Position { get; set; }
+            int Length { get; }
+        }
+        private sealed class StreamTokenProvider : ITokenProvider
+        {
+            private readonly Stream _stream;
+            private readonly long _startingPosition;
+            public StreamTokenProvider(Stream stream)
+            {
+                _stream = stream;
+                _startingPosition = stream.Position;
+            }
+
+            public int Position
+            {
+                get { return (int)(_stream.Position - _startingPosition); }
+                set { _stream.Position = _startingPosition + value; }
+            }
+
+            public int Length => (int)(_stream.Length - _startingPosition);
+            public char ReadChar() => (char)_stream.ReadByte();
+        }
+        private sealed class StringTokenProvider : ITokenProvider
+        {
+            private readonly string _str;
+            public StringTokenProvider(string str)
+            {
+                _str = str;
+            }
+            public int Position { get; set; }
+            public int Length => _str.Length;
+            public char ReadChar() => _str[Position++];
         }
     }
 }

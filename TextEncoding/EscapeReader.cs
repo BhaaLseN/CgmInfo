@@ -10,16 +10,15 @@ namespace CgmInfo.TextEncoding
         {
             int identifier = reader.ReadInteger();
 
-            string dataRecordString = reader.ReadString();
             // attempt to parse the data record as structured record, in case it is a known one
             // otherwise it is probably application specific and cannot be assumed to be a structured record
             StructuredDataRecord dataRecord;
             if (EscapeCommand.KnownEscapeTypes.ContainsKey(identifier))
-                dataRecord = ApplicationStructureDescriptorReader.ParseStructuredDataRecord(dataRecordString);
+                dataRecord = reader.ReadStructuredDataRecord();
             else
                 dataRecord = new StructuredDataRecord(new[]
                 {
-                    new StructuredDataElement(DataTypeIndex.String, new object[] { dataRecordString }),
+                    new StructuredDataElement(DataTypeIndex.String, new object[] { reader.ReadString() }),
                 });
             return new EscapeCommand(identifier, dataRecord);
         }

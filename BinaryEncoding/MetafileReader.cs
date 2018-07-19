@@ -149,7 +149,7 @@ namespace CgmInfo.BinaryEncoding
                     { 26, GraphicalPrimitiveReader.Polybezier },
                     //{ 27, GraphicalPrimitiveReader.Polysymbol },
                     { 28, GraphicalPrimitiveReader.BitonalTile },
-                    //{ 29, GraphicalPrimitiveReader.Tile },
+                    { 29, GraphicalPrimitiveReader.Tile },
                 }
             },
             // attribute elements [ISO/IEC 8632-3 8.7, Table 8]
@@ -249,6 +249,11 @@ namespace CgmInfo.BinaryEncoding
         public MetafileReader(string fileName)
             : base(fileName, true)
         {
+        }
+        private MetafileReader(MetafileReader parent, byte[] subBuffer)
+            : base(parent)
+        {
+            _reader = new BinaryReader(new MemoryStream(subBuffer));
         }
 
         public static bool IsBinaryMetafile(Stream stream)
@@ -535,6 +540,23 @@ namespace CgmInfo.BinaryEncoding
             return ((MemoryStream)_reader.BaseStream).ToArray();
         }
 
+        internal StructuredDataRecord ReadStructuredDataRecord()
+        {
+            return ReadStructuredDataRecord(new StructuredDataRecordReader());
+        }
+
+        internal StructuredDataRecord ReadStructuredDataRecord(StructuredDataRecordReader sdrReader)
+        {
+            // overall length is encoded similar to the string length [ISO/IEC 8632-3 7, Table 1, Note 12/Note 17]
+            // (ie. one byte, followed by one word if its 255).
+            int length = ReadByte();
+            if (length == 255)
+                length = ReadWord();
+
+            byte[] sdrBuffer = _reader.ReadBytes(length);
+            return sdrReader.Read(new MetafileReader(this, sdrBuffer));
+        }
+
         internal int ReadInteger()
         {
             // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
@@ -553,6 +575,24 @@ namespace CgmInfo.BinaryEncoding
             if (!unsigned && (ret & signBit) > 0)
                 signedRet = signedRet - maxUnsignedValue;
             return signedRet;
+        }
+
+        internal byte[] ReadBitstream()
+        {
+            // bitstream is a series of unsigned integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, BS / Note 15]
+            // 16 bits per entry is chosen for portability reasons and need not be filled completely; the remainder is set to 0.
+            byte[] data = _reader.ReadBytes((int)(_reader.BaseStream.Length - _reader.BaseStream.Position));
+            // the data is little endian; swap if necessary.
+            if (!BitConverter.IsLittleEndian)
+            {
+                for (int i = 0; i < data.Length; i += 2)
+                {
+                    byte temp = data[i];
+                    data[i] = data[i + 1];
+                    data[i + 1] = temp;
+                }
+            }
+            return data;
         }
 
         internal int ReadEnum()

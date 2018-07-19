@@ -17,7 +17,7 @@ namespace CgmInfo.BinaryEncoding
             // otherwise it is probably application specific and cannot be assumed to be a structured record
             StructuredDataRecord dataRecord;
             if (EscapeCommand.KnownEscapeTypes.ContainsKey(identifier))
-                dataRecord = ApplicationStructureDescriptorReader.ReadStructuredDataRecord(reader);
+                dataRecord = reader.ReadStructuredDataRecord();
             else
                 dataRecord = new StructuredDataRecord(new[]
                 {

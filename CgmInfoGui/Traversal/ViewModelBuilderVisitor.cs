@@ -13,6 +13,7 @@ using CgmInfo.Commands.PictureDescriptor;
 using CgmInfo.Commands.Segment;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
+using CgmInfoGui.ViewModels.Nodes.Sources;
 
 namespace CgmInfoGui.Traversal
 {
@@ -724,9 +725,25 @@ namespace CgmInfoGui.Traversal
             if (bitonalTile.Parameters != null)
             {
                 var parameterNode = new SimpleNode($"Parameters [{bitonalTile.Parameters.Elements.Count()}]");
-                parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode(n.ToString())));
+                parameterNode.Nodes.AddRange(bitonalTile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
                 bitonalTileNode.Nodes.Add(parameterNode);
             }
+            var tileArray = (parameter.CurrentLevel as TileArrayViewModel)?.Command as BeginTileArray;
+            bitonalTileNode.Nodes.Add(new ImageNode(new BitonalTileSource(bitonalTile, tileArray)));
+        }
+        public void AcceptGraphicalPrimitiveTile(Tile tile, MetafileContext parameter)
+        {
+            var tileNode = parameter.AddNode("TILE: {0} ({1})", tile.CompressionType, tile.CompressionTypeName);
+            tileNode.Nodes.Add(new SimpleNode("Row Padding Indicator: " + tile.RowPaddingIndicator));
+            tileNode.Nodes.Add(new SimpleNode("Cell Color Precision: " + tile.CellColorPrecision));
+            if (tile.Parameters != null)
+            {
+                var parameterNode = new SimpleNode($"Parameters [{tile.Parameters.Elements.Count()}]");
+                parameterNode.Nodes.AddRange(tile.Parameters.Elements.Select(n => new SimpleNode($"{n.Type}: {string.Join(", ", n.Values)}")));
+                tileNode.Nodes.Add(parameterNode);
+            }
+            var tileArray = (parameter.CurrentLevel as TileArrayViewModel)?.Command as BeginTileArray;
+            tileNode.Nodes.Add(new ImageNode(new TileSource(tile, tileArray)));
         }
 
         public void AcceptAttributeLineBundleIndex(LineBundleIndex lineBundleIndex, MetafileContext parameter)

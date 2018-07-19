@@ -82,6 +82,7 @@
       <DependentUpon>PropertiesPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FileSizeConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\PrefixConverter.cs" />
     <Compile Include="Converters\PrettyXmlConverter.cs" />
     <Compile Include="Properties\Settings.cs" />
@@ -101,12 +102,17 @@
     <Compile Include="ViewModels\Nodes\APSAttributeNode.cs" />
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
     <Compile Include="ViewModels\Nodes\HotspotNode.cs" />
+    <Compile Include="ViewModels\Nodes\ImageNode.cs" />
+    <Compile Include="ViewModels\Nodes\Sources\BitonalTileSource.cs" />
+    <Compile Include="ViewModels\Nodes\Sources\ITileSource.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />
     <Compile Include="ViewModels\Nodes\PictureViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SegmentViewModel.cs" />
     <Compile Include="ViewModels\Nodes\SimpleNode.cs" />
     <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeBase.cs" />
+    <Compile Include="ViewModels\Nodes\Sources\TileSource.cs" />
+    <Compile Include="ViewModels\Nodes\TiffGenerator.cs" />
     <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
     <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />

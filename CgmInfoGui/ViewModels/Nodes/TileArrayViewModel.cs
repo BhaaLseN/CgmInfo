@@ -1,3 +1,4 @@
+using System;
 using CgmInfo.Commands.Delimiter;
 
 namespace CgmInfoGui.ViewModels.Nodes
@@ -8,10 +9,21 @@ namespace CgmInfoGui.ViewModels.Nodes
 
         public TileArrayViewModel(BeginTileArray beginTileArray)
         {
+            // TODO: this is probably wrong for non-metric scaling modes.
+            // FIXME: this is certainly wrong for metric scaling modes with scale != 1.0.
+            double dpiX = Math.Round(beginTileArray.PathDirectionCellSize * 25.4, 0);
+            double dpiY = Math.Round(beginTileArray.LineDirectionCellSize * 25.4, 0);
+            string dpiEstimate;
+            if (Math.Abs(dpiX - dpiY) < 1.0)
+                dpiEstimate = dpiX + " DPI";
+            else
+                dpiEstimate = $"X: {dpiX} DPI, Y: {dpiY} DPI";
             _displayName = string.Format(
-                "BEGIN TILE ARRAY: {0} by {1} tiles, {2} by {3} cells each",
+                "BEGIN TILE ARRAY: {0} by {1} tiles, {2} by {3} cells each (estimated {4})",
                 beginTileArray.PathDirectionTileCount, beginTileArray.LineDirectionTileCount,
-                beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount);
+                beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount,
+                dpiEstimate);
+
             Descriptor = new SimpleNode("TILE ARRAY DESCRIPTOR")
             {
                 new SimpleNode(string.Format("Position: {0}", beginTileArray.Position)),

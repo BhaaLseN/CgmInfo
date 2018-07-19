@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CgmInfo.Commands;
@@ -376,7 +377,7 @@ namespace CgmInfo.BinaryEncoding
             //      0: null background
             //      1: null foreground
             //      2: T6
-            //      3: 1-dimensional
+            //      3: T4 1-dimensional
             //      4: T4 2-dimensional
             //      5: bitmap (uncompressed)
             //      6: run length
@@ -394,39 +395,85 @@ namespace CgmInfo.BinaryEncoding
             int rowPaddingIndicator = reader.ReadInteger();
             var cellBackgroundColor = reader.ReadColor();
             var cellForegroundColor = reader.ReadColor();
-            var parameters = ReadBitonalTileSDR(compressionType, reader);
-            // TODO: do something with the bit stream?
-            //       for the info application, it doesn't make too much sense; but other applications might want it.
-            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters);
+            var parameters = ReadTileSDR(compressionType, reader);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters, compressedCells);
         }
-        private static StructuredDataRecord ReadBitonalTileSDR(int compressionType, MetafileReader reader)
+
+        public static Tile Tile(MetafileReader reader, CommandHeader commandHeader)
+        {
+            // P1: (index) compression type: valid values are
+            //      0: null background
+            //      1: null foreground
+            //      2: T6
+            //      3: T4 1-dimensional
+            //      4: T4 2-dimensional
+            //      5: bitmap (uncompressed)
+            //      6: run length
+            //      >6 reserved for registered values
+            // P2: (integer) row padding indicator: valid values are non-negative integers.
+            // P3: (integer) cell colour precision: valid values are as for the local colour precision of CELL ARRAY for
+            //      compression types 0 - 5, or any value specified in the Register for compression type>6.
+            // P4: (structured data record) method-specific parameters, valid values are
+            //      [null_SDR], for compression types 1-5,
+            //      [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
+            //      as defined in the Register, for type>6.
+            //      Note 2 See NOTE 17, Table 1, for additional SDR formatting requirements.
+            // P5 (bitstream) compressed cell colour specifiers
+            int compressionType = reader.ReadIndex();
+            int rowPaddingIndicator = reader.ReadInteger();
+            int cellColorPrecision = reader.ReadInteger();
+            var parameters = ReadTileSDR(compressionType, reader);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new Tile(compressionType, rowPaddingIndicator, cellColorPrecision, parameters, compressedCells);
+        }
+
+        private static StructuredDataRecord ReadTileSDR(int compressionType, MetafileReader reader)
         {
             switch (compressionType)
             {
                 case 0: // null background
                 case 1: // null foreground
                 case 2: // T6
-                case 3: // 1-dimensional
+                case 3: // T4 1-dimensional
                 case 4: // T4 2-dimensional
                 case 5: // bitmap (uncompressed)
                     // [null_SDR], for compression types 1-5,
                     return new StructuredDataRecord(new StructuredDataElement[0]);
 
                 case 6: // run length
-                    int i_I = reader.ReadInteger();
-                    int one = reader.ReadInteger();
-                    int runCountPrecision = reader.ReadInteger();
+                    return reader.ReadStructuredDataRecord();
 
-                    // [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
-                    return new StructuredDataRecord(new[]
-                    {
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { i_I }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { one }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { runCountPrecision }),
-                    });
+                case 7: // baseline JPEG (ISO/IEC 9973)
+                        // 1) JPEG COLOUR MODEL - member type, Index (IX); number of items, 1; valid values:
+                        //      0 - JPEG COLOUR MODEL is the same as COLOUR MODEL of the metafile
+                        //      1 - RGB
+                        //      2 - CIELAB
+                        //      3 - CIELUV
+                        //      4 - CMYK
+                        //      5 - RGB-related
+                        //      Values less than 0 and greater than 5 are invalid.
+                        // 2) JPEG COLOUR SUBMODEL (Applicable only when JPEG COLOUR MODEL is 5) -
+                        //      member type, Index (IX); number of items, 1; valid values:
+                        //      0 - YCbCr
+                        //      1 - YCrCb
+                        //      2 - YUV
+                        //      3 - YIQ
+                        //      4 - YES
+                        //      5 - ADT
+                        //      Values less than 0 and greater than 5 are invalid.
+                        // The value of the JPEG COLOUR SUBMODEL is ignored by interpreters
+                        // when the value of the JPEG COLOUR MODEL is not 5 (RGB-related)
+                case 8: // LZW (ISO/IEC 9973)
+                    return reader.ReadStructuredDataRecord();
 
-                default: // >6 reserved for registered values
-                    // TODO: as defined in the Register, for type>6.
+                case 9: // PNG (ISO/IEC 9973)
+                        // PNG is a little special: the SDR contains bitstreams, one per chunk;
+                        // but bitstreams themselves have no length indication. override the SDR reader to be PNG-aware.
+                    return reader.ReadStructuredDataRecord(new PNGSDRReader());
+
+                default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
+                    // TODO: as defined in the Register, for type>9.
                     return null;
             }
         }
@@ -442,6 +489,60 @@ namespace CgmInfo.BinaryEncoding
             }
 
             return points;
+        }
+
+        private sealed class PNGSDRReader : StructuredDataRecordReader
+        {
+            protected override byte[] ReadBitStream(MetafileReader reader)
+            {
+                // the PNG SDR holds multiple entries of type BitStream, but the BitStream itself has no real length indication.
+                // PNG uses the chunk length of the PNG chunk to do this.
+                // PNG chunks look like this:
+                //      DWORD DataLength
+                //      DWORD Type
+                //      BYTE Data[]
+                //      DWORD Crc
+                // Data is DataLength, and the full record is DataLength + 3 * sizeof(DWORD)
+                byte[] dataLength = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    dataLength[i] = reader.ReadByte();
+
+                // length is always stored in big-endian
+                int length;
+                if (BitConverter.IsLittleEndian)
+                    length = BitConverter.ToInt32(dataLength.Reverse().ToArray(), 0);
+                else
+                    length = BitConverter.ToInt32(dataLength, 0);
+
+                byte[] type = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    type[i] = reader.ReadByte();
+
+                byte[] data = new byte[length];
+                for (int i = 0; i < data.Length; i++)
+                    data[i] = reader.ReadByte();
+
+                byte[] crc = new byte[4];
+                for (int i = 0; i < dataLength.Length; i++)
+                    crc[i] = reader.ReadByte();
+
+                // bitstream is a series of unsigned integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, BS / Note 15]
+                // 16 bits per entry is chosen for portability reasons and need not be filled completely; the remainder is set to 0.
+                // we'll have to advance the stream to be aligned at a 16-bit boundary before we leave.
+                if (length % 2 != 0)
+                {
+                    byte shouldBeZero = reader.ReadByte();
+                    System.Diagnostics.Debug.Assert(shouldBeZero == 0);
+                }
+
+                byte[] result = new byte[dataLength.Length + type.Length + data.Length + crc.Length];
+                Array.Copy(dataLength, 0, result, 0, dataLength.Length);
+                Array.Copy(type, 0, result, dataLength.Length, type.Length);
+                Array.Copy(data, 0, result, dataLength.Length + type.Length, data.Length);
+                Array.Copy(crc, 0, result, dataLength.Length + type.Length + data.Length, crc.Length);
+
+                return result;
+            }
         }
     }
 }

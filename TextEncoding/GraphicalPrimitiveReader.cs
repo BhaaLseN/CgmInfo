@@ -264,39 +264,44 @@ namespace CgmInfo.TextEncoding
             int rowPaddingIndicator = reader.ReadInteger();
             var cellBackgroundColor = reader.ReadColor();
             var cellForegroundColor = reader.ReadColor();
-            var parameters = ReadBitonalTileSDR(compressionType, reader);
-            // TODO: do something with the bit stream?
-            //       for the info application, it doesn't make too much sense; but other applications might want it.
-            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters);
+            var parameters = ReadTileSDR(compressionType, reader);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new BitonalTile(compressionType, rowPaddingIndicator, cellBackgroundColor, cellForegroundColor, parameters, compressedCells);
         }
-        private static StructuredDataRecord ReadBitonalTileSDR(int compressionType, MetafileReader reader)
+
+        public static Tile Tile(MetafileReader reader)
+        {
+            int compressionType = reader.ReadIndex();
+            int rowPaddingIndicator = reader.ReadInteger();
+            int cellColorPrecision = reader.ReadInteger();
+            var parameters = ReadTileSDR(compressionType, reader);
+            byte[] compressedCells = reader.ReadBitstream();
+            return new Tile(compressionType, rowPaddingIndicator, cellColorPrecision, parameters, compressedCells);
+        }
+
+        private static StructuredDataRecord ReadTileSDR(int compressionType, MetafileReader reader)
         {
             switch (compressionType)
             {
                 case 0: // null background
                 case 1: // null foreground
                 case 2: // T6
-                case 3: // 1-dimensional
+                case 3: // T4 1-dimensional
                 case 4: // T4 2-dimensional
                 case 5: // bitmap (uncompressed)
                     // [null_SDR], for compression types 1-5,
                     return new StructuredDataRecord(new StructuredDataElement[0]);
 
                 case 6: // run length
-                    int i_I = reader.ReadInteger();
-                    int one = reader.ReadInteger();
-                    int runCountPrecision = reader.ReadInteger();
+                    return reader.ReadStructuredDataRecord();
 
-                    // [(integer: i_I), (integer: 1), (integer: run-count precision)], for type=6,
-                    return new StructuredDataRecord(new[]
-                    {
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { i_I }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { one }),
-                        new StructuredDataElement(DataTypeIndex.Integer, new object[] { runCountPrecision }),
-                    });
+                case 7: // baseline JPEG (ISO/IEC 9973)
+                case 8: // LZW (ISO/IEC 9973)
+                case 9: // PNG (ISO/IEC 9973)
+                    return reader.ReadStructuredDataRecord();
 
-                default: // >6 reserved for registered values
-                    // TODO: as defined in the Register, for type>6.
+                default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
+                    // TODO: as defined in the Register, for type>9.
                     return null;
             }
         }

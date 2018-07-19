@@ -81,6 +81,7 @@
     <Compile Include="Controls\PropertiesPanel.xaml.cs">
       <DependentUpon>PropertiesPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ExpandableIListConverter.cs" />
     <Compile Include="Converters\FileSizeConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\PrefixConverter.cs" />

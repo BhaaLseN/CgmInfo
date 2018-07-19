@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using CgmInfo.Commands;
+using CgmInfo.Commands.MetafileDescriptor;
+using CgmInfoGui.Converters;
 using CgmInfoGui.ViewModels.Nodes;
 using Xceed.Wpf.Toolkit.PropertyGrid;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace CgmInfoGui.Controls
 {
@@ -14,10 +18,26 @@ namespace CgmInfoGui.Controls
     /// </summary>
     public partial class PropertiesPanel : UserControl
     {
+        static PropertiesPanel()
+        {
+            AddTypeDescriptorOverrides();
+        }
         public PropertiesPanel()
         {
             InitializeComponent();
         }
+
+        private static void AddTypeDescriptorOverrides()
+        {
+            // required overrides to show up correctly in the property grid
+            // used by various string lists (such as font list or metafile elements list)
+            AddTypeDescriptorOverride<string>();
+            // used by structured data records
+            AddTypeDescriptorOverride<StructuredDataElement>();
+            // used by character set list
+            AddTypeDescriptorOverride<CharacterSetListEntry>();
+        }
+        private static void AddTypeDescriptorOverride<T>() => TypeDescriptor.AddAttributes(typeof(List<T>), new TypeConverterAttribute(typeof(ExpandableIListConverter<T>)), new ExpandableObjectAttribute());
 
         public object Source
         {
@@ -127,8 +147,6 @@ namespace CgmInfoGui.Controls
             // allow expanding pretty much everything that isn't a primitive type.
             if (!propertyItem.PropertyType.IsValueType && propertyItem.PropertyType != typeof(object) && propertyItem.PropertyType != typeof(string))
                 propertyItem.IsExpandable = true;
-
-            // TODO: find out how to make collections show their items; not the list properties.
         }
 
         private static bool IsPrintable(byte value)

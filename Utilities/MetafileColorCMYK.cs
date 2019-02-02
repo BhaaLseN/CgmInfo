@@ -33,7 +33,7 @@ namespace CgmInfo.Utilities
             int green = (int)g;
             int blue = (int)b;
 
-            return new ARGB { Red = red, Green = green, Blue = blue };
+            return new ARGB { Alpha = 255, Red = red, Green = green, Blue = blue };
         }
         protected override string GetStringValue()
         {

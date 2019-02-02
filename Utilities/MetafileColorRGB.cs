@@ -14,7 +14,7 @@ namespace CgmInfo.Utilities
         }
         public override ARGB ToARGB()
         {
-            return new ARGB { Red = Red, Green = Green, Blue = Blue };
+            return new ARGB { Alpha = 255, Red = Red, Green = Green, Blue = Blue };
         }
         protected override string GetStringValue()
         {

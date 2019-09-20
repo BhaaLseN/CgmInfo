@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using CgmInfo.Commands;
 using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfoGui.Converters;
@@ -147,6 +148,30 @@ namespace CgmInfoGui.Controls
             // allow expanding pretty much everything that isn't a primitive type.
             if (!propertyItem.PropertyType.IsValueType && propertyItem.PropertyType != typeof(object) && propertyItem.PropertyType != typeof(string))
                 propertyItem.IsExpandable = true;
+
+            propertyItem.CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, ExecuteCopy, CanExecuteCopy));
+        }
+        private void ExecuteCopy(object sender, ExecutedRoutedEventArgs e)
+        {
+            var affectedPropertyItem = e.Parameter as PropertyItem ?? sender as PropertyItem;
+
+            // Clipboard is fickle and might throw for no reason. try a bunch of times before giving up.
+            int attempts = 5;
+            while (attempts --> 0)
+            {
+                try
+                {
+                    Clipboard.SetText(affectedPropertyItem?.Value?.ToString() ?? string.Empty);
+                    break;
+                }
+                catch { }
+            }
+        }
+        private void CanExecuteCopy(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var affectedPropertyItem = e.Parameter as PropertyItem ?? sender as PropertyItem;
+            e.CanExecute = affectedPropertyItem != null && affectedPropertyItem.Value != null;
+            e.Handled = true;
         }
 
         private static bool IsPrintable(byte value)

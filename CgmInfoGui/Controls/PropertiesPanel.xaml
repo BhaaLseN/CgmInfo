@@ -16,6 +16,13 @@
             <xctk:PropertyGrid IsReadOnly="True"
                                PreparePropertyItem="OnPreparePropertyItem"
                                SelectedObject="{Binding Command}">
+                <xctk:PropertyGrid.AdvancedOptionsMenu>
+                    <ContextMenu>
+                        <MenuItem Command="ApplicationCommands.Copy"
+                                  CommandParameter="{Binding}"
+                                  CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    </ContextMenu>
+                </xctk:PropertyGrid.AdvancedOptionsMenu>
             </xctk:PropertyGrid>
         </DataTemplate>
         <DataTemplate DataType="{x:Type nodes:UnsupportedNode}">

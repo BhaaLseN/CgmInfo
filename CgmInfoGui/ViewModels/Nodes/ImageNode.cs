@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,7 +12,76 @@ using CgmInfoGui.ViewModels.Nodes.Sources;
 
 namespace CgmInfoGui.ViewModels.Nodes
 {
-    public class ImageNode : NodeBase, INotifyPropertyChanged
+    public abstract class ImageNodeBase : NodeBase, INotifyPropertyChanged
+    {
+        protected ImageNodeBase() { }
+
+        private bool _loading;
+        private ImageSource _image;
+        public ImageSource Image
+        {
+            get
+            {
+                if (NeedsLoading)
+                {
+                    TryLoadImage();
+                }
+                return _image;
+            }
+            private set { SetField(ref _image, value); }
+        }
+
+        internal Task TryLoadImage()
+        {
+            _loading = true;
+            return Task.Run(LoadImage).ContinueWith(UpdateImage);
+        }
+
+        public bool NeedsLoading => _image == null && !_loading;
+
+        private Exception _loadError;
+        public Exception LoadError
+        {
+            get { return _loadError; }
+            private set { SetField(ref _loadError, value); }
+        }
+
+        private async Task UpdateImage(Task<ImageSource> imageSource)
+        {
+            try
+            {
+                Image = await imageSource;
+            }
+            catch (Exception ex)
+            {
+                LoadError = ex;
+            }
+            finally
+            {
+                _loading = false;
+                // this is necessary since TryLoadImage is run as fire&forget, and may return an old value
+                // before the property is updated (while raising the event, still returning null)
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+        protected abstract Task<ImageSource> LoadImage();
+        public override string DisplayName => "(Image)";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected bool SetField<T>(ref T field, T newValue)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+
+            field = newValue;
+            return true;
+        }
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+    public class ImageNode : ImageNodeBase
     {
         private readonly ITileSource _tile;
 
@@ -19,55 +90,7 @@ namespace CgmInfoGui.ViewModels.Nodes
             _tile = tileSource ?? throw new ArgumentNullException(nameof(tileSource));
         }
 
-        private bool _loading;
-        private ImageSource _image;
-        public ImageSource Image
-        {
-            get
-            {
-                if (_image == null && !_loading)
-                {
-                    _loading = true;
-                    Task.Run(LoadImage).ContinueWith(async i =>
-                    {
-                        try
-                        {
-                            Image = await i;
-                        }
-                        catch (Exception ex)
-                        {
-                            LoadError = ex;
-                        }
-                        finally
-                        {
-                            _loading = false;
-                        }
-                    });
-                }
-                return _image;
-            }
-            private set
-            {
-                if (_image == value)
-                    return;
-                _image = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
-            }
-        }
-        private Exception _loadError;
-        public Exception LoadError
-        {
-            get { return _loadError; }
-            private set
-            {
-                if (_loadError == value)
-                    return;
-                _loadError = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoadError)));
-            }
-        }
-
-        private Task<ImageSource> LoadImage()
+        protected override Task<ImageSource> LoadImage()
         {
             if (_tile.CompressionType == 7)
             {
@@ -111,9 +134,56 @@ namespace CgmInfoGui.ViewModels.Nodes
 
             throw new NotImplementedException($"Decoding of compression type {_tile.CompressionType} is not implemented yet.");
         }
+    }
 
-        public override string DisplayName => "(Image)";
+    public class CombinedImageNode : ImageNodeBase
+    {
+        private readonly int _pathDirectionTileCount;
+        private readonly int _lineDirectionTileCount;
+        private readonly double _tileWidth;
+        private readonly double _tileHeight;
+        private readonly double _dpiX;
+        private readonly double _dpiY;
+        private readonly IEnumerable<NodeBase> _collectionContainingTheImages;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public CombinedImageNode(int pathDirectionTileCount, int lineDirectionTileCount, double tileWidth, double tileHeight, double dpiX, double dpiY, IEnumerable<NodeBase> collectionContainingTheImages)
+        {
+            _pathDirectionTileCount = pathDirectionTileCount;
+            _lineDirectionTileCount = lineDirectionTileCount;
+            _tileWidth = tileWidth;
+            _tileHeight = tileHeight;
+            _dpiX = dpiX;
+            _dpiY = dpiY;
+            _collectionContainingTheImages = collectionContainingTheImages;
+        }
+
+        protected override Task<ImageSource> LoadImage()
+        {
+            var allImageNodes = _collectionContainingTheImages.SelectMany(n => n.Nodes).OfType<ImageNode>().ToArray();
+            var nodesThatNeedLoading = allImageNodes.Where(i => i.NeedsLoading && i.LoadError == null).ToArray();
+            if (nodesThatNeedLoading.Any())
+                Task.WaitAll(nodesThatNeedLoading.Select(n => n.TryLoadImage()).ToArray());
+
+            var d = new DrawingVisual();
+            using (var dc = d.RenderOpen())
+            {
+                for (int x = 0; x < _pathDirectionTileCount; x++)
+                {
+                    for (int y = 0; y < _lineDirectionTileCount; y++)
+                    {
+                        var tile = allImageNodes[x + y * _pathDirectionTileCount];
+                        if (tile.LoadError == null)
+                            dc.DrawImage(tile.Image, new System.Windows.Rect(x * _tileWidth, y * _tileHeight, _tileWidth, _tileHeight));
+                    }
+                }
+            }
+
+            // TODO: using _dpiX/_dpiY seems incorrect, tiles above tend to be 96 while the values passed in are higher.
+            var rtb = new RenderTargetBitmap(_pathDirectionTileCount * (int)_tileWidth, _lineDirectionTileCount * (int)_tileHeight, 96, 96, PixelFormats.Pbgra32);
+            rtb.Render(d);
+            rtb.Freeze();
+
+            return Task.FromResult<ImageSource>(rtb);
+        }
     }
 }

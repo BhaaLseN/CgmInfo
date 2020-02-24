@@ -24,6 +24,7 @@ namespace CgmInfoGui.ViewModels.Nodes
                 beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount,
                 dpiEstimate);
 
+            Nodes.Add(new CombinedImageNode(beginTileArray.PathDirectionTileCount, beginTileArray.LineDirectionTileCount, beginTileArray.PathDirectionCellCount, beginTileArray.LineDirectionCellCount, dpiX, dpiY, Nodes));
             Descriptor = new SimpleNode("TILE ARRAY DESCRIPTOR")
             {
                 new SimpleNode(string.Format("Position: {0}", beginTileArray.Position)),

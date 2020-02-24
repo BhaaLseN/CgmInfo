@@ -34,7 +34,7 @@
                 </FlowDocumentScrollViewer.Resources>
             </FlowDocumentScrollViewer>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type nodes:ImageNode}">
+        <DataTemplate DataType="{x:Type nodes:ImageNodeBase}">
             <Grid>
                 <Image Source="{Binding Image}" Visibility="{Binding LoadError, Converter={StaticResource nullToVisibility}, ConverterParameter='inverse'}"/>
                 <TextBlock Text="{Binding LoadError.Message}" Visibility="{Binding LoadError, Converter={StaticResource nullToVisibility}}"/>

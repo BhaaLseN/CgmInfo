@@ -1062,5 +1062,9 @@ namespace CgmInfoGui.Traversal
         {
             parameter.AddUnsupportedNode(unsupportedCommand);
         }
+        public void AcceptInvalidCommand(InvalidCommand invalidCommand, MetafileContext parameter)
+        {
+            parameter.AddNode(new InvalidCommandNode(invalidCommand));
+        }
     }
 }

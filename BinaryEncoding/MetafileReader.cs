@@ -288,7 +288,14 @@ namespace CgmInfo.BinaryEncoding
                 !elementClassMap.TryGetValue(commandHeader.ElementId, out var commandHandler) || commandHandler == null)
                 commandHandler = ReadUnsupportedElement;
 
-            result = commandHandler(this, commandHeader);
+            try
+            {
+                result = commandHandler(this, commandHeader);
+            }
+            catch (Exception ex)
+            {
+                return new InvalidCommand(commandHeader.ElementClass, commandHeader.ElementId, ex);
+            }
             // the only case where _insideMetafile is allowed to be false is at the end of the file (0/2 END METAFILE)
             if (result != null && !_insideMetafile)
             {

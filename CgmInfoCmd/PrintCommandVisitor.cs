@@ -731,5 +731,10 @@ namespace CgmInfoCmd
         {
             // do nothing; otherwise we'd probably spam the command line
         }
+        public void AcceptInvalidCommand(InvalidCommand invalidCommand, PrintContext parameter)
+        {
+            string commandIdentifier = invalidCommand.IsTextEncoding ? invalidCommand.ElementName : $"{invalidCommand.ElementClass}/{invalidCommand.ElementId}";
+            parameter.WriteLine("Error while reading {0}: {1}", commandIdentifier, invalidCommand.Exception.Message);
+        }
     }
 }

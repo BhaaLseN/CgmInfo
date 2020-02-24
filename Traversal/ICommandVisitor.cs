@@ -14,6 +14,7 @@ namespace CgmInfo.Traversal
     public interface ICommandVisitor<T>
     {
         void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, T parameter);
+        void AcceptInvalidCommand(InvalidCommand invalidCommand, T parameter);
 
         // delimiters
         void AcceptDelimiterBeginMetafile(BeginMetafile beginMetafile, T parameter);

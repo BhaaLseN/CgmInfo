@@ -802,5 +802,9 @@ namespace CgmInfo.Traversal
         {
             // intentionally left blank
         }
+        public virtual void AcceptInvalidCommand(InvalidCommand unsupportedCommand, T parameter)
+        {
+            // intentionally left blank
+        }
     }
 }

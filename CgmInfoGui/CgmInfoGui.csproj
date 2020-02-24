@@ -104,6 +104,7 @@
     <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
     <Compile Include="ViewModels\Nodes\HotspotNode.cs" />
     <Compile Include="ViewModels\Nodes\ImageNode.cs" />
+    <Compile Include="ViewModels\Nodes\InvalidCommandNode.cs" />
     <Compile Include="ViewModels\Nodes\Sources\BitonalTileSource.cs" />
     <Compile Include="ViewModels\Nodes\Sources\ITileSource.cs" />
     <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />

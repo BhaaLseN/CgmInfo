@@ -239,16 +239,20 @@ namespace CgmInfo.TextEncoding
             if (state == TokenState.EndOfFile)
                 return null;
 
+            _currentTokens = tokens;
+            _currentTokenIndex = 0;
+
+            string elementName = ReadToken();
+            if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out var commandHandler) || commandHandler == null)
+                commandHandler = r => UnsupportedCommand(elementName);
+
             try
             {
-                _currentTokens = tokens;
-                _currentTokenIndex = 0;
-
-                string elementName = ReadToken();
-                if (!_commandTable.TryGetValue(elementName.ToUpperInvariant(), out var commandHandler) || commandHandler == null)
-                    commandHandler = r => UnsupportedCommand(elementName);
-
                 return commandHandler(this);
+            }
+            catch (Exception ex)
+            {
+                return new InvalidCommand(elementName, ex);
             }
             finally
             {

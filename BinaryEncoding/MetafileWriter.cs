@@ -71,6 +71,31 @@ namespace CgmInfo.BinaryEncoding
                     //{ 24, MetafileDescriptorWriter.PictureDirectory },
                 }
             },
+            // picture descriptor elements [ISO/IEC 8632-3 8.4, Table 5]
+            { 2, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, PictureDescriptorWriter.ScalingMode },
+                    { 2, PictureDescriptorWriter.ColorSelectionMode },
+                    { 3, PictureDescriptorWriter.LineWidthSpecificationMode },
+                    { 4, PictureDescriptorWriter.MarkerSizeSpecificationMode },
+                    { 5, PictureDescriptorWriter.EdgeWidthSpecificationMode },
+                    { 6, PictureDescriptorWriter.VdcExtent },
+                    { 7, PictureDescriptorWriter.BackgroundColor },
+                    { 8, PictureDescriptorWriter.DeviceViewport },
+                    { 9, PictureDescriptorWriter.DeviceViewportSpecificationMode },
+                    //{ 10, PictureDescriptorWriter.DeviceViewportMapping },
+                    //{ 11, PictureDescriptorWriter.LineRepresentation },
+                    //{ 12, PictureDescriptorWriter.MarkerRepresentation },
+                    //{ 13, PictureDescriptorWriter.TextRepresentation },
+                    //{ 14, PictureDescriptorWriter.FillRepresentation },
+                    //{ 15, PictureDescriptorWriter.EdgeRepresentation },
+                    { 16, PictureDescriptorWriter.InteriorStyleSpecificationMode },
+                    { 17, PictureDescriptorWriter.LineAndEdgeTypeDefinition },
+                    { 18, PictureDescriptorWriter.HatchStyleDefinition },
+                    { 19, PictureDescriptorWriter.GeometricPatternDefinition },
+                    //{ 20, PictureDescriptorWriter.ApplicationStructureDirectory },
+                }
+            },
         };
 
         private bool _insideMetafile;

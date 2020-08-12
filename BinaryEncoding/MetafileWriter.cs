@@ -42,6 +42,35 @@ namespace CgmInfo.BinaryEncoding
                     { 23, DelimiterElementWriter.EndApplicationStructure },
                 }
             },
+            // metafile descriptor elements [ISO/IEC 8632-3 8.3, Table 4]
+            { 1, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, MetafileDescriptorWriter.MetafileVersion },
+                    { 2, MetafileDescriptorWriter.MetafileDescription },
+                    { 3, MetafileDescriptorWriter.VdcType },
+                    { 4, MetafileDescriptorWriter.IntegerPrecision },
+                    { 5, MetafileDescriptorWriter.RealPrecision },
+                    { 6, MetafileDescriptorWriter.IndexPrecision },
+                    { 7, MetafileDescriptorWriter.ColorPrecision },
+                    { 8, MetafileDescriptorWriter.ColorIndexPrecision },
+                    { 9, MetafileDescriptorWriter.MaximumColorIndex },
+                    { 10, MetafileDescriptorWriter.ColorValueExtent },
+                    { 11, MetafileDescriptorWriter.MetafileElementsList },
+                    //{ 12, MetafileDescriptorWriter.MetafileDefaultsReplacement },
+                    { 13, MetafileDescriptorWriter.FontList },
+                    { 14, MetafileDescriptorWriter.CharacterSetList },
+                    { 15, MetafileDescriptorWriter.CharacterCodingAnnouncer },
+                    { 16, MetafileDescriptorWriter.NamePrecision },
+                    { 17, MetafileDescriptorWriter.MaximumVdcExtent },
+                    { 18, MetafileDescriptorWriter.SegmentPriorityExtent },
+                    { 19, MetafileDescriptorWriter.ColorModel },
+                    //{ 20, MetafileDescriptorWriter.ColorCalibration },
+                    { 21, MetafileDescriptorWriter.FontProperties },
+                    //{ 22, MetafileDescriptorWriter.GlyphMapping },
+                    //{ 23, MetafileDescriptorWriter.SymbolLibraryList },
+                    //{ 24, MetafileDescriptorWriter.PictureDirectory },
+                }
+            },
         };
 
         private bool _insideMetafile;

@@ -15,6 +15,33 @@ namespace CgmInfo.BinaryEncoding
         // ISO/IEC 8632-3 8.1, Table 2
         private static readonly Dictionary<int, Dictionary<int, Action<MetafileWriter, Command>>> _commandTable = new Dictionary<int, Dictionary<int, Action<MetafileWriter, Command>>>
         {
+            // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
+            { 0, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 0, DelimiterElementWriter.Noop },
+                    { 1, DelimiterElementWriter.BeginMetafile },
+                    { 2, DelimiterElementWriter.EndMetafile },
+                    { 3, DelimiterElementWriter.BeginPicture },
+                    { 4, DelimiterElementWriter.BeginPictureBody },
+                    { 5, DelimiterElementWriter.EndPicture },
+                    { 6, DelimiterElementWriter.BeginSegment },
+                    { 7, DelimiterElementWriter.EndSegment },
+                    { 8, DelimiterElementWriter.BeginFigure },
+                    { 9, DelimiterElementWriter.EndFigure },
+                    // entries 10, 11 and 12 do not exist in ISO/IEC 8632-3
+                    { 13, DelimiterElementWriter.BeginProtectionRegion },
+                    { 14, DelimiterElementWriter.EndProtectionRegion },
+                    { 15, DelimiterElementWriter.BeginCompoundLine },
+                    { 16, DelimiterElementWriter.EndCompoundLine },
+                    { 17, DelimiterElementWriter.BeginCompoundTextPath },
+                    { 18, DelimiterElementWriter.EndCompoundTextPath },
+                    { 19, DelimiterElementWriter.BeginTileArray },
+                    { 20, DelimiterElementWriter.EndTileArray },
+                    { 21, DelimiterElementWriter.BeginApplicationStructure },
+                    { 22, DelimiterElementWriter.BeginApplicationStructureBody },
+                    { 23, DelimiterElementWriter.EndApplicationStructure },
+                }
+            },
         };
 
         private bool _insideMetafile;

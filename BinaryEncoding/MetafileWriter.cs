@@ -233,6 +233,12 @@ namespace CgmInfo.BinaryEncoding
                     { 7, SegmentWriter.SegmentPickPriority },
                 }
             },
+            // application structure descriptor elements [ISO/IEC 8632-3 8.11, Table 12]
+            { 9, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, ApplicationStructureDescriptorWriter.ApplicationStructureAttribute },
+                }
+            },
         };
 
         private bool _insideMetafile;

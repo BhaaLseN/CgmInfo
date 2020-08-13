@@ -208,6 +208,12 @@ namespace CgmInfo.BinaryEncoding
                     //{ 51, AttributeWriter.SymbolOrientation },
                 }
             },
+            // escape elements [ISO/IEC 8632-3 8.8, Table 9]
+            { 6, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, EscapeWriter.Escape },
+                }
+            },
         };
 
         private bool _insideMetafile;

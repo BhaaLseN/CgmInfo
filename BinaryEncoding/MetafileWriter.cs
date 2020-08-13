@@ -221,6 +221,18 @@ namespace CgmInfo.BinaryEncoding
                     { 2, ExternalWriter.ApplicationData },
                 }
             },
+            // segment control/segment attribute elements [ISO/IEC 8632-3 8.10, Table 11]
+            { 8, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, SegmentWriter.CopySegment },
+                    { 2, SegmentWriter.InheritanceFilter },
+                    { 3, SegmentWriter.ClipInheritance },
+                    { 4, SegmentWriter.SegmentTransformation },
+                    { 5, SegmentWriter.SegmentHighlighting },
+                    { 6, SegmentWriter.SegmentDisplayPriority },
+                    { 7, SegmentWriter.SegmentPickPriority },
+                }
+            },
         };
 
         private bool _insideMetafile;

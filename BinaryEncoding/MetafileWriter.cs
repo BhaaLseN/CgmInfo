@@ -118,6 +118,40 @@ namespace CgmInfo.BinaryEncoding
                     //{ 20, ControlElementWriter.TransparentCellColor },
                 }
             },
+            // graphical primitive elements [ISO/IEC 8632-3 8.6, Table 7]
+            { 4, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, GraphicalPrimitiveWriter.Polyline },
+                    { 2, GraphicalPrimitiveWriter.DisjointPolyline },
+                    { 3, GraphicalPrimitiveWriter.Polymarker },
+                    { 4, GraphicalPrimitiveWriter.Text },
+                    { 5, GraphicalPrimitiveWriter.RestrictedText },
+                    { 6, GraphicalPrimitiveWriter.AppendText },
+                    { 7, GraphicalPrimitiveWriter.Polygon },
+                    { 8, GraphicalPrimitiveWriter.PolygonSet },
+                    { 9, GraphicalPrimitiveWriter.CellArray },
+                    //{ 10, GraphicalPrimitiveWriter.GeneralizedDrawingPrimitive },
+                    { 11, GraphicalPrimitiveWriter.Rectangle },
+                    { 12, GraphicalPrimitiveWriter.Circle },
+                    { 13, GraphicalPrimitiveWriter.CircularArc3Point },
+                    { 14, GraphicalPrimitiveWriter.CircularArc3PointClose },
+                    { 15, GraphicalPrimitiveWriter.CircularArcCenter },
+                    { 16, GraphicalPrimitiveWriter.CircularArcCenterClose },
+                    { 17, GraphicalPrimitiveWriter.Ellipse },
+                    { 18, GraphicalPrimitiveWriter.EllipticalArc },
+                    { 19, GraphicalPrimitiveWriter.EllipticalArcClose },
+                    { 20, GraphicalPrimitiveWriter.CircularArcCenterReversed },
+                    { 21, GraphicalPrimitiveWriter.ConnectingEdge },
+                    { 22, GraphicalPrimitiveWriter.HyperbolicArc },
+                    { 23, GraphicalPrimitiveWriter.ParabolicArc },
+                    { 24, GraphicalPrimitiveWriter.NonUniformBSpline },
+                    { 25, GraphicalPrimitiveWriter.NonUniformRationalBSpline },
+                    { 26, GraphicalPrimitiveWriter.Polybezier },
+                    //{ 27, GraphicalPrimitiveWriter.Polysymbol },
+                    { 28, GraphicalPrimitiveWriter.BitonalTile },
+                    { 29, GraphicalPrimitiveWriter.Tile },
+                }
+            },
         };
 
         private bool _insideMetafile;

@@ -214,6 +214,13 @@ namespace CgmInfo.BinaryEncoding
                     { 1, EscapeWriter.Escape },
                 }
             },
+            // external elements [ISO/IEC 8632-3 8.9, Table 10]
+            { 7, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, ExternalWriter.Message },
+                    { 2, ExternalWriter.ApplicationData },
+                }
+            },
         };
 
         private bool _insideMetafile;

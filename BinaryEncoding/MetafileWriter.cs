@@ -96,6 +96,28 @@ namespace CgmInfo.BinaryEncoding
                     //{ 20, PictureDescriptorWriter.ApplicationStructureDirectory },
                 }
             },
+            // control elements [ISO/IEC 8632-3 8.5, Table 6]
+            { 3, new Dictionary<int, Action<MetafileWriter, Command>>
+                {
+                    { 1, ControlElementWriter.VdcIntegerPrecision },
+                    { 2, ControlElementWriter.VdcRealPrecision },
+                    { 3, ControlElementWriter.AuxiliaryColor },
+                    { 4, ControlElementWriter.Transparency },
+                    { 5, ControlElementWriter.ClipRectangle },
+                    { 6, ControlElementWriter.ClipIndicator },
+                    { 7, ControlElementWriter.LineClippingMode },
+                    { 8, ControlElementWriter.MarkerClippingMode },
+                    { 9, ControlElementWriter.EdgeClippingMode },
+                    { 10, ControlElementWriter.NewRegion },
+                    { 11, ControlElementWriter.SavePrimitiveContext },
+                    { 12, ControlElementWriter.RestorePrimitiveContext },
+                    // entries 13 until 16 do not exist in ISO/IEC 8632-3
+                    { 17, ControlElementWriter.ProtectionRegionIndicator },
+                    { 18, ControlElementWriter.GeneralizedTextPathMode },
+                    { 19, ControlElementWriter.MiterLimit },
+                    //{ 20, ControlElementWriter.TransparentCellColor },
+                }
+            },
         };
 
         private bool _insideMetafile;

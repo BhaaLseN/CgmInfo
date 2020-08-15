@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.MetafileDescriptor;
 
@@ -148,16 +149,14 @@ namespace CgmInfo.Writers
         {
             var metafileElementsList = (MetafileElementsList)command;
             // P1: (integer) number of elements specified
-            writer.WriteInteger(0);
-            // FIXME: actually store elements as class; so we can write them back
-            //writer.WriteInteger(metafileElementsList.Elements.Count());
+            writer.WriteInteger(metafileElementsList.Elements.Count());
             // P2: (index-pair array) List of metafile elements in this metafile. Each element is represented by two values:
             //      the first is its element class code (as in Table 2)
             //      the second is its element id code (as in Table 3 to Table 10).
-            foreach (string element in metafileElementsList.Elements)
+            foreach (var element in metafileElementsList.Elements)
             {
-                //writer.WriteIndex(element.ElementClass);
-                //writer.WriteIndex(element.ElementId);
+                writer.WriteIndex(element.ElementClass);
+                writer.WriteIndex(element.ElementId);
             }
         }
 

@@ -165,8 +165,8 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Metafile Elements List: {0} entries", metafileElementsList.Elements.Count());
             parameter.BeginLevel();
-            foreach (string metafileElement in metafileElementsList.Elements)
-                parameter.WriteLine(metafileElement);
+            foreach (var metafileElement in metafileElementsList.Elements)
+                parameter.WriteLine(metafileElement.Name);
             parameter.EndLevel();
         }
         public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, PrintContext parameter)

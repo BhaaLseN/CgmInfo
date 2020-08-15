@@ -205,7 +205,7 @@ namespace CgmInfoGui.Traversal
         public void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, MetafileContext parameter)
         {
             var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE ELEMENTS LIST [{0} entries]", metafileElementsList.Elements.Count());
-            metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry)));
+            metafileElementsListNode.Nodes.AddRange(metafileElementsList.Elements.Select(entry => new SimpleNode(entry.Name)));
         }
 
         public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, MetafileContext parameter)

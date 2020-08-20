@@ -724,7 +724,7 @@ namespace CgmInfoCmd
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {
-            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, applicationStructureAttribute.DataRecord);
+            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, string.Join(", ", applicationStructureAttribute.DataRecord?.Elements.FirstOrDefault()?.Values ?? Enumerable.Empty<object>()));
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

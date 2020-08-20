@@ -124,23 +124,8 @@ namespace CgmInfo.TextEncoding
         {
             var elements = new List<MetafileElementsListElement>();
             while (reader.HasMoreData())
-                elements.Add(ParseMetafileElementsListElement(reader.ReadString()));
+                elements.Add(MetafileElementsListElement.Parse(reader.ReadString()));
             return new MetafileElementsList(elements);
-        }
-        private static MetafileElementsListElement ParseMetafileElementsListElement(string melString)
-        {
-            return melString switch
-            {
-                "DRAWINGPLUS" => new MetafileElementsListElement(-1, 0),
-                "DRAWINGSET" => new MetafileElementsListElement(-1, 1),
-                "VERSION2" => new MetafileElementsListElement(-1, 2),
-                "EXTDPRIM" => new MetafileElementsListElement(-1, 3),
-                "VERSION2GKSM" => new MetafileElementsListElement(-1, 4),
-                "VERSION3" => new MetafileElementsListElement(-1, 5),
-                "VERSION4" => new MetafileElementsListElement(-1, 6),
-                // TODO: we probably want to parse those into their actual class/id pairs at some point.
-                var everythingElse => new MetafileElementsListElement(-1, -1, everythingElse),
-            };
         }
 
         public static FontList FontList(MetafileReader reader)

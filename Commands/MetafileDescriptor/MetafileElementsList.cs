@@ -59,5 +59,29 @@ namespace CgmInfo.Commands.MetafileDescriptor
             (-1, 6) => "Version 4",
             _ => string.Format("Class {0}, Id {1}", elementClass, elementId),
         };
+
+        public static MetafileElementsListElement Parse(string melString) => melString switch
+        {
+            "DRAWINGPLUS" => new MetafileElementsListElement(-1, 0),
+            "DRAWINGSET" => new MetafileElementsListElement(-1, 1),
+            "VERSION2" => new MetafileElementsListElement(-1, 2),
+            "EXTDPRIM" => new MetafileElementsListElement(-1, 3),
+            "VERSION2GKSM" => new MetafileElementsListElement(-1, 4),
+            "VERSION3" => new MetafileElementsListElement(-1, 5),
+            "VERSION4" => new MetafileElementsListElement(-1, 6),
+            // TODO: we probably want to parse those into their actual class/id pairs at some point.
+            var everythingElse => new MetafileElementsListElement(-1, -1, everythingElse),
+        };
+        public string GetTextEncodingString() => (ElementClass, ElementId) switch
+        {
+            (-1, 0) => "DRAWINGPLUS",
+            (-1, 1) => "DRAWINGSET",
+            (-1, 2) => "VERSION2",
+            (-1, 3) => "EXTDPRIM",
+            (-1, 4) => "VERSION2GKSM",
+            (-1, 5) => "VERSION3",
+            (-1, 6) => "VERSION4",
+            _ => Name,
+        };
     }
 }

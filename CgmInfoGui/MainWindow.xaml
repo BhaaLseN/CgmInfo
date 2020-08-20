@@ -118,6 +118,7 @@
                                         <TextBlock Grid.Column="0" Margin="5">Save as</TextBlock>
                                         <ComboBox Grid.Column="1" Margin="5" SelectedValue="{Binding SaveAsFormat}" SelectedValuePath="Tag">
                                             <ComboBoxItem IsSelected="True" Tag="binary">Binary</ComboBoxItem>
+                                            <ComboBoxItem Tag="text">Text</ComboBoxItem>
                                         </ComboBox>
                                         <TextBox Grid.Column="2" Margin="5" Text="{Binding SaveAsFilePath}"/>
                                         <Button Grid.Column="3" Command="{Binding BrowseSaveAsCommand}" Margin="5" Padding="5,0">...</Button>

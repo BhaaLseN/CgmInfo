@@ -11,6 +11,7 @@ using CgmInfoGui.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 using Microsoft.Win32;
 using BinaryMetafileWriter = CgmInfo.BinaryEncoding.MetafileWriter;
+using TextMetafileWriter = CgmInfo.TextEncoding.MetafileWriter;
 
 namespace CgmInfoGui.ViewModels
 {
@@ -202,6 +203,7 @@ namespace CgmInfoGui.ViewModels
             using MetafileWriter writer = SaveAsFormat switch
             {
                 "binary" => new BinaryMetafileWriter(SaveAsFilePath),
+                "text" => new TextMetafileWriter(SaveAsFilePath),
                 _ => null,
             };
             if (writer == null)

@@ -669,6 +669,12 @@ namespace CgmInfo.TextEncoding
                                         sb.Append(c);
                                         c = '\x00';
                                     }
+                                    else if (sb.Length == 0)
+                                    {
+                                        // special case: empty string. we just found two delimiters after each other (but not three),
+                                        // this means we're just empty.
+                                        return TokenState.EndOfToken;
+                                    }
                                     else
                                     {
                                         // end of string; reset back by the one character read ahead
@@ -685,11 +691,6 @@ namespace CgmInfo.TextEncoding
                                 if (stream.Position >= stream.Length)
                                     return TokenState.EndOfFile;
                             } while (c != stringDelimiter);
-
-                            // (kinda) special case: empty string.
-                            // would break with two empty strings adjacent to each other (might happen in SDRs)
-                            if (sb.Length == 0)
-                                return TokenState.EndOfToken;
 
                             // end of string might also mean end of element;
                             // we need to do another read, or we'd end up with an empty string at the next read

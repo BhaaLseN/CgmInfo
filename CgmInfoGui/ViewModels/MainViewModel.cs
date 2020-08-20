@@ -10,6 +10,7 @@ using CgmInfo.Commands;
 using CgmInfoGui.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 using Microsoft.Win32;
+using BinaryMetafileWriter = CgmInfo.BinaryEncoding.MetafileWriter;
 
 namespace CgmInfoGui.ViewModels
 {
@@ -26,6 +27,23 @@ namespace CgmInfoGui.ViewModels
                 if (SetField(ref _fileName, value))
                     ProcessCommand.NotifyCanExecuteChanged();
             }
+        }
+
+        private string _saveAsFilePath;
+        public string SaveAsFilePath
+        {
+            get { return _saveAsFilePath; }
+            set
+            {
+                if (SetField(ref _saveAsFilePath, value))
+                    SaveAsCommand.NotifyCanExecuteChanged();
+            }
+        }
+        private string _saveAsFormat = "binary";
+        public string SaveAsFormat
+        {
+            get { return _saveAsFormat; }
+            set { SetField(ref _saveAsFormat, value); }
         }
 
         private List<NodeBase> _metafileNodes;
@@ -65,6 +83,8 @@ namespace CgmInfoGui.ViewModels
 
         public DelegateCommand BrowseCommand { get; }
         public DelegateCommand ProcessCommand { get; }
+        public DelegateCommand BrowseSaveAsCommand { get; }
+        public DelegateCommand SaveAsCommand { get; }
 
         private bool _isBusy;
         public bool IsBusy
@@ -76,6 +96,8 @@ namespace CgmInfoGui.ViewModels
                 {
                     BrowseCommand.NotifyCanExecuteChanged();
                     ProcessCommand.NotifyCanExecuteChanged();
+                    BrowseSaveAsCommand.NotifyCanExecuteChanged();
+                    SaveAsCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -84,6 +106,8 @@ namespace CgmInfoGui.ViewModels
         {
             BrowseCommand = new DelegateCommand(Browse, CanBrowse);
             ProcessCommand = new DelegateCommand(Process, CanProcess);
+            BrowseSaveAsCommand = new DelegateCommand(BrowseSaveAs, CanBrowseSaveAs);
+            SaveAsCommand = new DelegateCommand(SaveAs, CanSaveAs);
         }
 
         private bool CanBrowse(object parameter) => !IsBusy;
@@ -152,6 +176,53 @@ namespace CgmInfoGui.ViewModels
             XCFDocument = result.XCFDocument;
             Hotspots = result.Hotspots;
             MetafileProperties = result.MetafileProperties;
+        }
+
+        private bool CanBrowseSaveAs(object parameter) => !IsBusy;
+        private void BrowseSaveAs(object parameter)
+        {
+            var sfd = new SaveFileDialog
+            {
+                AddExtension = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                DefaultExt = ".cgm",
+                Filter = "Computer Graphics Metafile (*.cgm)|*.cgm",
+                RestoreDirectory = true,
+                Title = "Save as CGM file",
+            };
+            if (sfd.ShowDialog() == true)
+            {
+                SaveAsFilePath = sfd.FileName;
+            }
+        }
+        private bool CanSaveAs(object parameter) => !IsBusy && !string.IsNullOrWhiteSpace(SaveAsFilePath);
+        private async void SaveAs(object parameter)
+        {
+            using MetafileWriter writer = SaveAsFormat switch
+            {
+                "binary" => new BinaryMetafileWriter(SaveAsFilePath),
+                _ => null,
+            };
+            if (writer == null)
+                return;
+
+            IsBusy = true;
+            await Task.Run(() =>
+            {
+                Write(MetafileNodes);
+            });
+            IsBusy = false;
+
+            void Write(IEnumerable<NodeBase> nodes)
+            {
+                foreach (var node in nodes)
+                {
+                    if (node.Command != null)
+                        writer.Write(node.Command);
+                    Write(node.Nodes);
+                }
+            }
         }
 
         private bool SetField<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")

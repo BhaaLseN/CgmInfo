@@ -6,9 +6,9 @@ using CgmInfo.Commands;
 
 namespace CgmInfoCmd
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string target = args.Length >= 1 ? args[0] : @"D:\_dev\_work\standards\webcgm20-ts\static10\ALLELM01.cgm";
             var fileNames = new List<string>();

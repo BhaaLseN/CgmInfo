@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGAPS")]
     public class BeginApplicationStructure : Command
     {
         public BeginApplicationStructure(string identifier, string type, InheritanceFlag inheritanceFlag)

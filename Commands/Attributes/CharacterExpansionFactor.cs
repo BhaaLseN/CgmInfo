@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("CHAREXPAN")]
     public class CharacterExpansionFactor : Command
     {
         public CharacterExpansionFactor(double factor)

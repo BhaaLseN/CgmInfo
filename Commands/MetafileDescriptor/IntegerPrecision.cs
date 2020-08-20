@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("INTEGERPREC")]
     public class IntegerPrecision : Command
     {
         public IntegerPrecision(int precision)

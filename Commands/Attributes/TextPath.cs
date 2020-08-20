@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("TEXTPATH")]
     public class TextPath : Command
     {
         public TextPath(TextPathType path)

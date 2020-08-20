@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MFVERSION")]
     public class MetafileVersion : Command
     {
         public MetafileVersion(int version)

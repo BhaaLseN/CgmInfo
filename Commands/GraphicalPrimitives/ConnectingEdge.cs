@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("CONNEDGE")]
     public class ConnectingEdge : Command
     {
         public ConnectingEdge()

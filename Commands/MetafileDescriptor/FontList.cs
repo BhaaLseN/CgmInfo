@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("FONTLIST")]
     public class FontList : Command
     {
         public FontList(IEnumerable<string> fonts)

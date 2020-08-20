@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGPICBODY")]
     public class BeginPictureBody : Command
     {
         public BeginPictureBody()

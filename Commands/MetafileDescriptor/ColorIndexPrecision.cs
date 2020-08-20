@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("COLRINDEXPREC")]
     public class ColorIndexPrecision : Command
     {
         public ColorIndexPrecision(int precision)

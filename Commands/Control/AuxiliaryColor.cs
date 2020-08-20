@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("AUXCOLR")]
     public class AuxiliaryColor : Command
     {
         public AuxiliaryColor(MetafileColor color)

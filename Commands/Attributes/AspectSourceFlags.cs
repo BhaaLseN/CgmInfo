@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("ASF")]
     public class AspectSourceFlags : Command
     {
         public AspectSourceFlags(IDictionary<AspectSourceFlagsType, AspectSourceFlagsValue> values)

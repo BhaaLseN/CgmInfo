@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("MARKERCOLR")]
     public class MarkerColor : Command
     {
         public MarkerColor(MetafileColor color)

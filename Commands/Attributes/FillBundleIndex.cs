@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("FILLINDEX")]
     public class FillBundleIndex : Command
     {
         public FillBundleIndex(int index)

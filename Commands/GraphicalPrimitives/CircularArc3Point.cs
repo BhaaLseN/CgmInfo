@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("ARC3PT")]
     public class CircularArc3Point : Command
     {
         public CircularArc3Point(MetafilePoint start, MetafilePoint intermediate, MetafilePoint end)

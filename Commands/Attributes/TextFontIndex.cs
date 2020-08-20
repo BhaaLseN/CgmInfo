@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("TEXTFONTINDEX")]
     public class TextFontIndex : Command
     {
         public TextFontIndex(int index)

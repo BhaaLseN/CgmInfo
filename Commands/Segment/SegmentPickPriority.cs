@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("SEGPICKPRI")]
     public class SegmentPickPriority : Command
     {
         public SegmentPickPriority(int segmentIdentifier, int priority)

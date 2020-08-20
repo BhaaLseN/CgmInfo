@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("COPYSEG")]
     public class CopySegment : Command
     {
         public CopySegment(int segmentIdentifier, MetafileMatrix matrix, SegmentTransformationApplication transformationApplication)

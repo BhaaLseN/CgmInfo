@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("DISJTLINE")]
     public class DisjointPolyline : Command
     {
         public DisjointPolyline(MetafilePoint[] points)

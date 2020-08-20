@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("BACKCOLR")]
     public class BackgroundColor : Command
     {
         public BackgroundColor(MetafileColor color)

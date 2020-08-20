@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGEINDEX")]
     public class EdgeBundleIndex : Command
     {
         public EdgeBundleIndex(int index)

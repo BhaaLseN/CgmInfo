@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("FONTPROP")]
     public class FontProperties : Command
     {
         public FontProperties(FontProperty[] properties)

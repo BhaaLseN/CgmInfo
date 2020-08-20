@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINECAP")]
     public class LineCap : Command
     {
         public LineCap(int lineCapIndicator, int dashCapIndicator)

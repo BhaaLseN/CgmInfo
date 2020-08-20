@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGPROTREGION")]
     public class BeginProtectionRegion : Command
     {
         public BeginProtectionRegion(int regionIndex)

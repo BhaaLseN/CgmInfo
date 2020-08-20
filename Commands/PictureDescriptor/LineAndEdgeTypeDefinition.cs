@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("LINEEDGETYPEDEF")]
     public class LineAndEdgeTypeDefinition : Command
     {
         public LineAndEdgeTypeDefinition(int lineType, double dashCycleRepeatLength, int[] dashElements)

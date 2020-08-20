@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("EDGECLIPMODE")]
     public class EdgeClippingMode : Command
     {
         public EdgeClippingMode(ClippingMode mode)

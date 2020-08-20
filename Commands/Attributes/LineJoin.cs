@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINEJOIN")]
     public class LineJoin : Command
     {
         public LineJoin(int index)

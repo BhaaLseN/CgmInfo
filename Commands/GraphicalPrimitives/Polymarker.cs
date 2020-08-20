@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("MARKER")]
     public class Polymarker : Command
     {
         public Polymarker(MetafilePoint[] points)

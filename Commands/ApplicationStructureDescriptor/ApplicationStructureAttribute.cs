@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.ApplicationStructureDescriptor
 {
+    [TextToken("APSATTR")]
     public class ApplicationStructureAttribute : Command
     {
         public ApplicationStructureAttribute(string attributeType, StructuredDataRecord dataRecord)

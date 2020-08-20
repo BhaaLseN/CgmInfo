@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("LINEWIDTHMODE")]
     public class LineWidthSpecificationMode : Command
     {
         public LineWidthSpecificationMode(WidthSpecificationModeType widthSpecificationMode)

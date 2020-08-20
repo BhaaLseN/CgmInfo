@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("DEVVP")]
     public class DeviceViewport : Command
     {
         public DeviceViewport(MetafilePoint firstCorner, MetafilePoint secondCorner)

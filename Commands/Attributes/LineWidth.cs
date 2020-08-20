@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINEWIDTH")]
     public class LineWidth : Command
     {
         public LineWidth(double width)

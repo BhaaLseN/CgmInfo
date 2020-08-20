@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("SAVEPRIMCONT")]
     public class SavePrimitiveContext : Command
     {
         public SavePrimitiveContext(int contextName)

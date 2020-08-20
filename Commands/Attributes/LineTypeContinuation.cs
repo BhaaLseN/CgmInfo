@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINETYPECONT")]
     public class LineTypeContinuation : Command
     {
         public LineTypeContinuation(int index)

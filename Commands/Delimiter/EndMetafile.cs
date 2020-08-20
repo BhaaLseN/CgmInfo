@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDMF")]
     public class EndMetafile : Command
     {
         public EndMetafile()

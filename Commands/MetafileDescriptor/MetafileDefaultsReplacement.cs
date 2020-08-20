@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("BEGMFDEFAULTS", EndToken = "ENDMFDEFAULTS")]
     public class MetafileDefaultsReplacement : Command
     {
         public MetafileDefaultsReplacement(IEnumerable<Command> commands)

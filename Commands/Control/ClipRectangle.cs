@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("CLIPRECT")]
     public class ClipRectangle : Command
     {
         public ClipRectangle(MetafilePoint firstCorner, MetafilePoint secondCorner)

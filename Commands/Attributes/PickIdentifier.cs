@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("PICKID")]
     public class PickIdentifier : Command
     {
         public PickIdentifier(int identifier)

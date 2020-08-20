@@ -5,6 +5,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("POLYBEZIER")]
     public class Polybezier : Command
     {
         public Polybezier(int continuityIndicator, MetafilePoint[] pointSequences)

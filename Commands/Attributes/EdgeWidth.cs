@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGEWIDTH")]
     public class EdgeWidth : Command
     {
         public EdgeWidth(double width)

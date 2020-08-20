@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("PARABARC")]
     public class ParabolicArc : Command
     {
         public ParabolicArc(MetafilePoint tangentIntersectionPoint, MetafilePoint start, MetafilePoint end)

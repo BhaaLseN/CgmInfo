@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("PROTREGION")]
     public class ProtectionRegionIndicator : Command
     {
         public ProtectionRegionIndicator(int index, RegionIndicator indicator)

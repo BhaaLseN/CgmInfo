@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("APNDTEXT")]
     public class AppendText : Command
     {
         public AppendText(FinalFlag final, string text)

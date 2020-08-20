@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("NURB")]
     public class NonUniformRationalBSpline : Command
     {
         public NonUniformRationalBSpline(int splineOrder, MetafilePoint[] controlPoints, double[] knots, double start, double end, double[] weights)

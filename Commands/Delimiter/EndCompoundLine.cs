@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDCOMPOLINE")]
     public class EndCompoundLine : Command
     {
         public EndCompoundLine()

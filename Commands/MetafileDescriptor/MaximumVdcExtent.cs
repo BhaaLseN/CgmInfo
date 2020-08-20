@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MAXVDCEXT")]
     public class MaximumVdcExtent : Command
     {
         public MaximumVdcExtent(MetafilePoint firstCorner, MetafilePoint secondCorner)

@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("RESPRIMCONT")]
     public class RestorePrimitiveContext : Command
     {
         public RestorePrimitiveContext(int contextName)

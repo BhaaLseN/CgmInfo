@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MITRELIMIT")]
     public class MiterLimit : Command
     {
         public MiterLimit(double limit)

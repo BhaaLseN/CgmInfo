@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("TEXT")]
     public class TextCommand : Command
     {
         public TextCommand(MetafilePoint position, FinalFlag final, string text)

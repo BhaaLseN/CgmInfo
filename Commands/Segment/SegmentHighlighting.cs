@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("SEGHIGHL")]
     public class SegmentHighlighting : Command
     {
         public SegmentHighlighting(int segmentIdentifier, Highlighting highlighting)

@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("TEXTALIGN")]
     public class TextAlignment : Command
     {
         public TextAlignment(HorizontalTextAlignment horizontal, VerticalTextAlignment vertical, double horizontalContinuousAlignment, double verticalContinuousAlignment)

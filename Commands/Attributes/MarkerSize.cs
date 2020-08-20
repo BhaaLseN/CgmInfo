@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("MARKERSIZE")]
     public class MarkerSize : Command
     {
         public MarkerSize(double size)

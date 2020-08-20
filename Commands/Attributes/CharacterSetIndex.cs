@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("CHARSETINDEX")]
     public class CharacterSetIndex : Command
     {
         public CharacterSetIndex(int index)

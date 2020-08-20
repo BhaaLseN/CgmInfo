@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGEVIS")]
     public class EdgeVisibility : Command
     {
         public EdgeVisibility(OnOffIndicator visibility)

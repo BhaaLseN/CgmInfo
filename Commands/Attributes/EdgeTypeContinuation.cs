@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGETYPECONT")]
     public class EdgeTypeContinuation : Command
     {
         public EdgeTypeContinuation(int index)

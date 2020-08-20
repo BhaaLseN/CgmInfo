@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDPROTREGION")]
     public class EndProtectionRegion : Command
     {
         public EndProtectionRegion()

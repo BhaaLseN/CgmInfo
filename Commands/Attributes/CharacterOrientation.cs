@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("CHARORI")]
     public class CharacterOrientation : Command
     {
         public CharacterOrientation(MetafilePoint up, MetafilePoint @base)

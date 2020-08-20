@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("COLRMODEL")]
     public class ColorModelCommand : Command
     {
         public ColorModelCommand(int colorModelValue)

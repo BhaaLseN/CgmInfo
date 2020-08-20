@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGECOLR")]
     public class EdgeColor : Command
     {
         public EdgeColor(MetafileColor color)

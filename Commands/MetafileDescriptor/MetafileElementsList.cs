@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MFELEMLIST")]
     public class MetafileElementsList : Command
     {
         public MetafileElementsList(IEnumerable<MetafileElementsListElement> elements)

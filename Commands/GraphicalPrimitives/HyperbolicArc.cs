@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("HYPERBARC")]
     public class HyperbolicArc : Command
     {
         public HyperbolicArc(MetafilePoint center, MetafilePoint traverseRadiusEndPoint, MetafilePoint conjugateRadiusEndPoint, MetafilePoint start, MetafilePoint end)

@@ -34,7 +34,7 @@ namespace CgmInfoCmd
                 statsProxy.Reset();
                 using (var reader = MetafileReader.Create(fileName))
                 {
-                    var printContext = new PrintContext(fileName);
+                    using var printContext = new PrintToFileContext(fileName, Path.ChangeExtension(fileName, ".content.txt"));
                     Command command;
                     do
                     {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>CgmInfo</AssemblyName>
     <RootNamespace>CgmInfo</RootNamespace>
     <Description>CGM Metafile Info Library</Description>

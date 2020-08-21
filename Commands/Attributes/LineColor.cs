@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINECOLR")]
     public class LineColor : Command
     {
         public LineColor(MetafileColor color)

@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINETYPEINITOFFSET")]
     public class LineTypeInitialOffset : Command
     {
         public LineTypeInitialOffset(double offset)

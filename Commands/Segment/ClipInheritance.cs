@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("CLIPINH")]
     public class ClipInheritance : Command
     {
         public ClipInheritance(ClipInheritanceType inheritanceType)

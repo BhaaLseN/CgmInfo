@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("DEVVPMODE")]
     public class DeviceViewportSpecificationMode : Command
     {
         public DeviceViewportSpecificationMode(DeviceViewportSpecificationModeType deviceViewportSpecificationMode, double scaleFactor)

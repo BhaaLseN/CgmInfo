@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("RECT")]
     public class Rectangle : Command
     {
         public Rectangle(MetafilePoint firstCorner, MetafilePoint secondCorner)

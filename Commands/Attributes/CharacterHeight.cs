@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("CHARHEIGHT")]
     public class CharacterHeight : Command
     {
         public CharacterHeight(double height)

@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGMF")]
     public class BeginMetafile : Command
     {
         public BeginMetafile(string name)

@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDPIC")]
     public class EndPicture : Command
     {
         public EndPicture()

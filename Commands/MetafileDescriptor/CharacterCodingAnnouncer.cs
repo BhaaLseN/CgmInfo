@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("CHARCODING")]
     public class CharacterCodingAnnouncer : Command
     {
         public CharacterCodingAnnouncer(CharacterCodingAnnouncerType characterCodingAnnouncerType)

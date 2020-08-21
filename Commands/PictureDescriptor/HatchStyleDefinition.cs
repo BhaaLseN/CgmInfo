@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("HATCHSTYLEDEF")]
     public class HatchStyleDefinition : Command
     {
         public HatchStyleDefinition(int hatchIndex, HatchStyleIndicator styleIndicator, MetafilePoint hatchDirectionStart, MetafilePoint hatchDirectionEnd, double dutyCycleLength, int[] gapWidths, int[] lineTypes)

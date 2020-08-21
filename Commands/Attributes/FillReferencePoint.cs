@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("FILLREFPT")]
     public class FillReferencePoint : Command
     {
         public FillReferencePoint(MetafilePoint referencePoint)

@@ -165,8 +165,8 @@ namespace CgmInfoCmd
         {
             parameter.WriteLine("Metafile Elements List: {0} entries", metafileElementsList.Elements.Count());
             parameter.BeginLevel();
-            foreach (string metafileElement in metafileElementsList.Elements)
-                parameter.WriteLine(metafileElement);
+            foreach (var metafileElement in metafileElementsList.Elements)
+                parameter.WriteLine(metafileElement.Name);
             parameter.EndLevel();
         }
         public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, PrintContext parameter)
@@ -724,7 +724,7 @@ namespace CgmInfoCmd
 
         public void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, PrintContext parameter)
         {
-            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, applicationStructureAttribute.DataRecord);
+            parameter.WriteLine("Attribute: {0} '{1}'", applicationStructureAttribute.AttributeType, string.Join(", ", applicationStructureAttribute.DataRecord?.Elements.FirstOrDefault()?.Values ?? Enumerable.Empty<object>()));
         }
 
         public void AcceptUnsupportedCommand(UnsupportedCommand unsupportedCommand, PrintContext parameter)

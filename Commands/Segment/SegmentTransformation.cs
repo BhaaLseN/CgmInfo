@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("SEGTRAN")]
     public class SegmentTransformation : Command
     {
         public SegmentTransformation(int segmentIdentifier, MetafileMatrix matrix)

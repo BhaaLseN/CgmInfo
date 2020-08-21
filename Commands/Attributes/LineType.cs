@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINETYPE")]
     public class LineType : Command
     {
         public LineType(int index)

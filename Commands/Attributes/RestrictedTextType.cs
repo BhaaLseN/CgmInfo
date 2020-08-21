@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("RESTRTEXTTYPE")]
     public class RestrictedTextType : Command
     {
         public RestrictedTextType(int index)

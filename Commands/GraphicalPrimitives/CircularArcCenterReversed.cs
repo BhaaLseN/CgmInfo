@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("ARCCTRREV")]
     public class CircularArcCenterReversed : Command
     {
         public CircularArcCenterReversed(MetafilePoint center, MetafilePoint start, MetafilePoint end, double radius)

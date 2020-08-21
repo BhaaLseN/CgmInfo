@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MFDESC")]
     public class MetafileDescription : Command
     {
         public MetafileDescription(string description)

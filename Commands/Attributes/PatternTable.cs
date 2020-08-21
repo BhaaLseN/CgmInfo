@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("PATTABLE")]
     public class PatternTable : Command
     {
         public PatternTable(int index, int width, int height, MetafileColor[] colors)

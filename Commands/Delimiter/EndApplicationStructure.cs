@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDAPS")]
     public class EndApplicationStructure : Command
     {
         public EndApplicationStructure()

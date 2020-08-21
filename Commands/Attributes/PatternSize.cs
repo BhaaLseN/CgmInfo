@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("PATSIZE")]
     public class PatternSize : Command
     {
         public PatternSize(MetafilePoint width, MetafilePoint height)

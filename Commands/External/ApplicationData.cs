@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.External
 {
+    [TextToken("APPLDATA")]
     public class ApplicationData : Command
     {
         public ApplicationData(int identifier, string dataRecord)

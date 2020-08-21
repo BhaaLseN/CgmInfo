@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("ARCCTR")]
     public class CircularArcCenter : Command
     {
         public CircularArcCenter(MetafilePoint center, MetafilePoint start, MetafilePoint end, double radius)

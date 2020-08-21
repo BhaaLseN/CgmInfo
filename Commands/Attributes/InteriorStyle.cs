@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("INTSTYLE")]
     public class InteriorStyle : Command
     {
         public InteriorStyle(InteriorStyleType style)

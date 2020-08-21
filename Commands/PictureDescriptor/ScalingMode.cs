@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("SCALEMODE")]
     public class ScalingMode : Command
     {
         public ScalingMode(ScalingModeType scalingMode, double metricScalingFactor)

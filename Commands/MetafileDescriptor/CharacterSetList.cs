@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("CHARSETLIST")]
     public class CharacterSetList : Command
     {
         public CharacterSetList(IEnumerable<CharacterSetListEntry> entries)

@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("CELLARRAY")]
     public class CellArray : Command
     {
         public CellArray(MetafilePoint cornerPointP, MetafilePoint cornerPointQ, MetafilePoint cornerPointR, int nx, int ny, MetafileColor[] colors)

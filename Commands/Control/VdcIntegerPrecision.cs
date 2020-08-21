@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("VDCINTEGERPREC")]
     public class VdcIntegerPrecision : Command
     {
         public VdcIntegerPrecision(int precision)

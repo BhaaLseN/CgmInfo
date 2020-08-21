@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("HATCHINDEX")]
     public class HatchIndex : Command
     {
         public HatchIndex(int index)

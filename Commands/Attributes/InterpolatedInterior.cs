@@ -5,6 +5,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("INTERPINT")]
     public class InterpolatedInterior : Command
     {
         public InterpolatedInterior(int index, MetafilePoint[] referenceGeometry, double[] stageDesignators, MetafileColor[] colorSpecifiers)

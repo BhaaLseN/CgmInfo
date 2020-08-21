@@ -24,5 +24,8 @@ namespace CgmInfo.Utilities
             else
                 return string.Format("Color Index {0} (not known by COLOUR TABLE)", Index);
         }
+
+        public override int GetHashCode() => _actualColor != null ? _actualColor.GetHashCode() : base.GetHashCode();
+        public override bool Equals(object obj) => _actualColor != null ? _actualColor.Equals(obj) : base.Equals(obj);
     }
 }

@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("VDCEXT")]
     public class VdcExtent : Command
     {
         public VdcExtent(MetafilePoint firstCorner, MetafilePoint secondCorner)

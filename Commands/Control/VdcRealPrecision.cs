@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("VDCREALPREC")]
     public class VdcRealPrecision : Command
     {
         public VdcRealPrecision(RealRepresentation representationForm, int exponentWidth, int fractionWidth)

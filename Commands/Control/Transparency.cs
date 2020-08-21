@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("TRANSPARENCY")]
     public class Transparency : Command
     {
         public Transparency(OnOffIndicator indicator)

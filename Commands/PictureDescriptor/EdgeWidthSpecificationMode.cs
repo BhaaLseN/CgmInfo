@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("EDGEWIDTHMODE")]
     public class EdgeWidthSpecificationMode : Command
     {
         public EdgeWidthSpecificationMode(WidthSpecificationModeType widthSpecificationMode)

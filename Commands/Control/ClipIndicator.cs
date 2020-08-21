@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("CLIP")]
     public class ClipIndicator : Command
     {
         public ClipIndicator(OnOffIndicator indicator)

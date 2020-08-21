@@ -1,10 +1,11 @@
 using System;
+using System.IO;
 
 namespace CgmInfoCmd
 {
     public class PrintContext
     {
-        public string FileName { get; private set; }
+        public string FileName { get; }
 
         private Indent _indent = 0;
 
@@ -12,14 +13,11 @@ namespace CgmInfoCmd
         {
             FileName = fileName;
         }
-        public void WriteLine(object value)
-        {
-            Console.WriteLine(value);
-        }
         public void WriteLine(string format, params object[] args)
         {
-            Console.WriteLine(_indent + format, args);
+            WriteLineInternal(_indent + string.Format(format, args));
         }
+        protected virtual void WriteLineInternal(string message) => Console.WriteLine(message);
 
         public void BeginLevel()
         {
@@ -57,6 +55,39 @@ namespace CgmInfoCmd
                     return indent;
                 return new Indent(indent._depth - 1);
             }
+        }
+    }
+    public class PrintToFileContext : PrintContext, IDisposable
+    {
+        private readonly StreamWriter _writer;
+
+        public PrintToFileContext(string cgmFileName, string outputFileName)
+            : base(cgmFileName)
+        {
+            _writer = new StreamWriter(outputFileName);
+        }
+
+        protected override void WriteLineInternal(string message) => _writer.WriteLine(message);
+
+        private bool _isDisposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
+            {
+                _writer.Flush();
+                _writer.Dispose();
+            }
+
+            _isDisposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

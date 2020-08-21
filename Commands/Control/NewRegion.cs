@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("NEWREGION")]
     public class NewRegion : Command
     {
         public NewRegion()

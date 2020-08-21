@@ -9,5 +9,15 @@ namespace CgmInfo.Utilities
         {
             return GetStringValue();
         }
+
+        public override int GetHashCode() => GetStringValue().GetHashCode();
+        public override bool Equals(object obj)
+        {
+            if (!(obj is MetafileColor metafileColor))
+                return false;
+            if (metafileColor is MetafileColorIndexed indexedColor)
+                return indexedColor.Equals(this);
+            return metafileColor.GetStringValue() == GetStringValue();
+        }
     }
 }

@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("SEGPRIEXT")]
     public class SegmentPriorityExtent : Command
     {
         public SegmentPriorityExtent(int minPriorityValue, int maxPriorityValue)

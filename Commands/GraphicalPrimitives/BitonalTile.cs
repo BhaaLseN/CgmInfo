@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("BITONALTILE")]
     public class BitonalTile : Command
     {
         public BitonalTile(int compressionType, int rowPaddingIndicator, MetafileColor cellBackgroundColor, MetafileColor cellForegroundColor, StructuredDataRecord parameters, byte[] compressedCells)

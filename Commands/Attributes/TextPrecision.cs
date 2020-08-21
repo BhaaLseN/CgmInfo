@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("TEXTPREC")]
     public class TextPrecision : Command
     {
         public TextPrecision(TextPrecisionType precision)

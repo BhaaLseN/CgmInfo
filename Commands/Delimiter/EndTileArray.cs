@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDTILEARRAY")]
     public class EndTileArray : Command
     {
         public EndTileArray()

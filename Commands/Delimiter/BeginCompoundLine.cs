@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGCOMPOLINE")]
     public class BeginCompoundLine : Command
     {
         public BeginCompoundLine()

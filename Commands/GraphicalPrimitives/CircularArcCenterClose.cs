@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("ARCCTRCLOSE")]
     public class CircularArcCenterClose : Command
     {
         public CircularArcCenterClose(MetafilePoint center, MetafilePoint start, MetafilePoint end, double radius, ArcClosureType closure)

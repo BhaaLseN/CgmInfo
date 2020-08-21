@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("COLRTABLE")]
     public class ColorTable : Command
     {
         public ColorTable(int startIndex, MetafileColor[] colors)

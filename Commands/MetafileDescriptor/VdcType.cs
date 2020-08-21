@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("VDCTYPE")]
     public class VdcType : Command
     {
         public VdcType(VdcTypeSpecification specification)

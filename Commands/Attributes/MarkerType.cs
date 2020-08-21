@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("MARKERTYPE")]
     public class MarkerType : Command
     {
         public MarkerType(int index)

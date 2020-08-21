@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("TILE")]
     public class Tile : Command
     {
         public Tile(int compressionType, int rowPaddingIndicator, int cellColorPrecision, StructuredDataRecord parameters, byte[] compressedCells)

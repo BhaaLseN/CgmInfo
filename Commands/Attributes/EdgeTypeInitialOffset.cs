@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGETYPEINITOFFSET")]
     public class EdgeTypeInitialOffset : Command
     {
         public EdgeTypeInitialOffset(double offset)

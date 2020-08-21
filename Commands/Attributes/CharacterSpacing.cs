@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("CHARSPACE")]
     public class CharacterSpacing : Command
     {
         public CharacterSpacing(double additionalIntercharacterSpace)

@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("MARKERSIZEMODE")]
     public class MarkerSizeSpecificationMode : Command
     {
         public MarkerSizeSpecificationMode(WidthSpecificationModeType widthSpecificationMode)

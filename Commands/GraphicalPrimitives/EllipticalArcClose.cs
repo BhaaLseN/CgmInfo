@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("ELLIPARCCLOSE")]
     public class EllipticalArcClose : Command
     {
         public EllipticalArcClose(MetafilePoint center, MetafilePoint firstConjugateDiameter, MetafilePoint secondConjugateDiameter, MetafilePoint start, MetafilePoint end, ArcClosureType closure)

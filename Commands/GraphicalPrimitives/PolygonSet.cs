@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("POLYGONSET")]
     public class PolygonSet : Command
     {
         public PolygonSet(MetafilePoint[] points, EdgeOutFlags[] flags)

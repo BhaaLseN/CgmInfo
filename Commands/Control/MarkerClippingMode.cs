@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MARKERCLIPMODE")]
     public class MarkerClippingMode : Command
     {
         public MarkerClippingMode(ClippingMode mode)

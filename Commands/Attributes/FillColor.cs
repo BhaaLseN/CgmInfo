@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("FILLCOLR")]
     public class FillColor : Command
     {
         public FillColor(MetafileColor color)

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using CgmInfo.Commands.Enums;
 
@@ -31,5 +32,16 @@ namespace CgmInfo.TextEncoding
                 return OnOffIndicator.On;
             return OnOffIndicator.Off;
         }
+
+        public static int GetMaximumForPrecisionSigned(int precision) => (int)GetMaximumForPrecisionUnsigned(precision - 1);
+        public static uint GetMaximumForPrecisionUnsigned(int precision) => (uint)(Math.Pow(2, precision) - 1);
+        public static double GetMaximumForPrecisionSigned(RealPrecisionSpecification specification) => specification switch
+        {
+            RealPrecisionSpecification.FixedPoint32Bit => float.MaxValue,
+            RealPrecisionSpecification.FloatingPoint32Bit => float.MaxValue,
+            RealPrecisionSpecification.FixedPoint64Bit => double.MaxValue,
+            RealPrecisionSpecification.FloatingPoint64Bit => double.MaxValue,
+            var everythingElse => throw new FormatException($"Unsupported Real Precision {everythingElse}"),
+        };
     }
 }

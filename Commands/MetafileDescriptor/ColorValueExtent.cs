@@ -5,6 +5,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("COLRVALUEEXT")]
     public class ColorValueExtent : Command
     {
         internal ColorValueExtent()

@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("MAXCOLRINDEX")]
     public class MaximumColorIndex : Command
     {
         public MaximumColorIndex(int index)

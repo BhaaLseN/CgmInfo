@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("GEOPATDEF")]
     public class GeometricPatternDefinition : Command
     {
         public GeometricPatternDefinition(int geometricPatternIndex, int segmentIdentifier, MetafilePoint firstCorner, MetafilePoint secondCorner)

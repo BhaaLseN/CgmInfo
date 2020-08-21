@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGAPSBODY")]
     public class BeginApplicationStructureBody : Command
     {
         public BeginApplicationStructureBody()

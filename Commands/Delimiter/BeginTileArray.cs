@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGTILEARRAY")]
     public class BeginTileArray : Command
     {
         public BeginTileArray(MetafilePoint position,

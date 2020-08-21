@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGEJOIN")]
     public class EdgeJoin : Command
     {
         public EdgeJoin(int index)

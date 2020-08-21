@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("BEGSEG")]
     public class BeginSegment : Command
     {
         public BeginSegment(int identifier)

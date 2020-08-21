@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("CIRCLE")]
     public class Circle : Command
     {
         public Circle(MetafilePoint center, double radius)

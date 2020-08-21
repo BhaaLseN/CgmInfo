@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("LINE")]
     public class Polyline : Command
     {
         public Polyline(MetafilePoint[] points)

@@ -4,6 +4,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("RESTRTEXT")]
     public class RestrictedText : Command
     {
         public RestrictedText(double deltaWidth, double deltaHeight, MetafilePoint position, FinalFlag final, string text)

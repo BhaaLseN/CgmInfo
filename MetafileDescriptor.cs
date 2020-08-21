@@ -53,6 +53,13 @@ namespace CgmInfo
                 return null;
             return ColorTable[colorIndex];
         }
+        public int GetColorIndex(MetafileColor value)
+        {
+            int foundIndex = Array.IndexOf(ColorTable, value);
+            if (foundIndex == -1)
+                throw new ArgumentException($"Could not find color '{value}' in color table", nameof(value));
+            return foundIndex;
+        }
 
         private MetafileColor[] _colorTable = new MetafileColor[0];
         public MetafileColor[] ColorTable

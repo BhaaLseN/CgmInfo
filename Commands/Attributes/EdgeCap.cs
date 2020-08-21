@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("EDGECAP")]
     public class EdgeCap : Command
     {
         public EdgeCap(int edgeCapIndicator, int dashCapIndicator)

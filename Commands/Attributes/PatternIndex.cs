@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("PATINDEX")]
     public class PatternIndex : Command
     {
         public PatternIndex(int index)

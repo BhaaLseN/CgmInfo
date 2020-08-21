@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.PictureDescriptor
 {
+    [TextToken("INTSTYLEMODE")]
     public class InteriorStyleSpecificationMode : Command
     {
         public InteriorStyleSpecificationMode(WidthSpecificationModeType widthSpecificationMode)

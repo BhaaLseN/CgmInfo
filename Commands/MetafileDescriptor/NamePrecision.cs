@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("NAMEPREC")]
     public class NamePrecision : Command
     {
         public NamePrecision(int precision)

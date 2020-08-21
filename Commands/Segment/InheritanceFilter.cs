@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Segment
 {
+    [TextToken("INHFILTER")]
     public class InheritanceFilter : Command
     {
         public InheritanceFilter(InheritanceFilterItem[] items)

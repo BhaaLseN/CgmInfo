@@ -3,6 +3,7 @@ using CgmInfo.Utilities;
 
 namespace CgmInfo.Commands.GraphicalPrimitives
 {
+    [TextToken("POLYGON")]
     public class Polygon : Command
     {
         public Polygon(MetafilePoint[] points)

@@ -2,6 +2,7 @@
 
 namespace CgmInfo.Commands.Delimiter
 {
+    [TextToken("ENDCOMPOTEXTPATH")]
     public class EndCompoundTextPath : Command
     {
         public EndCompoundTextPath()

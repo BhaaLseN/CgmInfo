@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.MetafileDescriptor
 {
+    [TextToken("GENTEXTPATHMODE")]
     public class GeneralizedTextPathMode : Command
     {
         public GeneralizedTextPathMode(TextPathMode mode)

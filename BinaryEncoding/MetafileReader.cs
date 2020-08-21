@@ -894,7 +894,7 @@ namespace CgmInfo.BinaryEncoding
             base.Dispose(disposing);
         }
 
-        private static Encoding GetDefaultEncoding()
+        internal static Encoding GetDefaultEncoding()
         {
             try
             {
@@ -907,7 +907,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 try
                 {
-                    // in case it is not available, try to use windows-1252 instead (which is a superset of ISO 8859-1
+                    // in case it is not available, try to use windows-1252 instead (which is a superset of ISO 8859-1)
                     return Encoding.GetEncoding("Windows-1252");
                 }
                 catch

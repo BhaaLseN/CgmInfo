@@ -2,6 +2,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Attributes
 {
+    [TextToken("LINEINDEX")]
     public class LineBundleIndex : Command
     {
         public LineBundleIndex(int index)

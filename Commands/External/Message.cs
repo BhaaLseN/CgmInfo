@@ -3,6 +3,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.External
 {
+    [TextToken("MESSAGE")]
     public class Message : Command
     {
         public Message(ActionRequired actionRequired, string messageString)

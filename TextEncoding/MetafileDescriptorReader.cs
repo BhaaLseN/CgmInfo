@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.MetafileDescriptor;
-using CgmInfo.Utilities;
 
 namespace CgmInfo.TextEncoding
 {
@@ -123,9 +122,9 @@ namespace CgmInfo.TextEncoding
 
         public static MetafileElementsList MetafileElementsList(MetafileReader reader)
         {
-            var elements = new List<string>();
+            var elements = new List<MetafileElementsListElement>();
             while (reader.HasMoreData())
-                elements.Add(reader.ReadString());
+                elements.Add(MetafileElementsListElement.Parse(reader.ReadString()));
             return new MetafileElementsList(elements);
         }
 

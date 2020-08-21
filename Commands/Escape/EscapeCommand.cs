@@ -4,6 +4,7 @@ using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands.Escape
 {
+    [TextToken("ESCAPE")]
     public class EscapeCommand : Command
     {
         public EscapeCommand(int identifier, StructuredDataRecord dataRecord)

@@ -481,7 +481,7 @@ namespace CgmInfo.TextEncoding
         }
         // according to spec, explicit point must have either 1 digit integer or 1 digit fraction. lets hope we can get away with that...[ISO/IEC 8632-4 6.3.2]
         private static readonly Regex ExplicitPointNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)\.(?<fraction>[0-9]*)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
-        private static readonly Regex ScaledRealNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)(?:\.(?<fraction>[0-9]*))?[Ee](?<exponent>[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private static readonly Regex ScaledRealNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)(?:\.(?<fraction>[0-9]*))?[Ee](?<exponent>[+\-]?[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
         internal double ReadReal()
         {
             string number = ReadToken();

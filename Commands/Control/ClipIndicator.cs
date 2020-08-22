@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Indicator = indicator;
         }
 
-        public OnOffIndicator Indicator { get; private set; }
+        public OnOffIndicator Indicator { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

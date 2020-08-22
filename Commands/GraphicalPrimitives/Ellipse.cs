@@ -14,9 +14,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             SecondConjugateDiameter = secondConjugateDiameter;
         }
 
-        public MetafilePoint Center { get; private set; }
-        public MetafilePoint FirstConjugateDiameter { get; private set; }
-        public MetafilePoint SecondConjugateDiameter { get; private set; }
+        public MetafilePoint Center { get; }
+        public MetafilePoint FirstConjugateDiameter { get; }
+        public MetafilePoint SecondConjugateDiameter { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

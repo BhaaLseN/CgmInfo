@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Limit = limit;
         }
 
-        public double Limit { get; private set; }
+        public double Limit { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

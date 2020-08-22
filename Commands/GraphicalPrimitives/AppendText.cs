@@ -12,8 +12,8 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Final = final;
             Text = text;
         }
-        public FinalFlag Final { get; private set; }
-        public string Text { get; private set; }
+        public FinalFlag Final { get; }
+        public string Text { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

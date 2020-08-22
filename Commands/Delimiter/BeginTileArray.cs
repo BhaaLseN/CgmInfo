@@ -36,19 +36,19 @@ namespace CgmInfo.Commands.Delimiter
             LineDirectionImageCellCount = lineDirectionImageCellCount;
         }
 
-        public MetafilePoint Position { get; private set; }
-        public CellPathDirection CellPathDirection { get; private set; }
-        public LineProgressionDirection LineProgressionDirection { get; private set; }
-        public int PathDirectionTileCount { get; private set; }
-        public int LineDirectionTileCount { get; private set; }
-        public int LineDirectionImageCellCount { get; private set; }
-        public int PathDirectionImageCellCount { get; private set; }
-        public int LineDirectionImageOffset { get; private set; }
-        public int PathDirectionImageOffset { get; private set; }
-        public double LineDirectionCellSize { get; private set; }
-        public double PathDirectionCellSize { get; private set; }
-        public int LineDirectionCellCount { get; private set; }
-        public int PathDirectionCellCount { get; private set; }
+        public MetafilePoint Position { get; }
+        public CellPathDirection CellPathDirection { get; }
+        public LineProgressionDirection LineProgressionDirection { get; }
+        public int PathDirectionTileCount { get; }
+        public int LineDirectionTileCount { get; }
+        public int LineDirectionImageCellCount { get; }
+        public int PathDirectionImageCellCount { get; }
+        public int LineDirectionImageOffset { get; }
+        public int PathDirectionImageOffset { get; }
+        public double LineDirectionCellSize { get; }
+        public double PathDirectionCellSize { get; }
+        public int LineDirectionCellCount { get; }
+        public int PathDirectionCellCount { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

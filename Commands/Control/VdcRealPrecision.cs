@@ -29,10 +29,10 @@ namespace CgmInfo.Commands.MetafileDescriptor
             }
         }
 
-        public RealRepresentation RepresentationForm { get; private set; }
-        public int ExponentWidth { get; private set; }
-        public int FractionWidth { get; private set; }
-        public RealPrecisionSpecification Specification { get; private set; }
+        public RealRepresentation RepresentationForm { get; }
+        public int ExponentWidth { get; }
+        public int FractionWidth { get; }
+        public RealPrecisionSpecification Specification { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

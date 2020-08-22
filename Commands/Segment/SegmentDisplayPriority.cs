@@ -12,8 +12,8 @@ namespace CgmInfo.Commands.Segment
             Priority = priority;
         }
 
-        public int SegmentIdentifier { get; private set; }
-        public int Priority { get; private set; }
+        public int SegmentIdentifier { get; }
+        public int Priority { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

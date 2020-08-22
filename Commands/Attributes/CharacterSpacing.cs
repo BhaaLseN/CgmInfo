@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             AdditionalIntercharacterSpace = additionalIntercharacterSpace;
         }
 
-        public double AdditionalIntercharacterSpace { get; private set; }
+        public double AdditionalIntercharacterSpace { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

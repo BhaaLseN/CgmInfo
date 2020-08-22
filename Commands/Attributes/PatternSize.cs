@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.Attributes
             Height = height;
         }
 
-        public MetafilePoint Width { get; private set; }
-        public MetafilePoint Height { get; private set; }
+        public MetafilePoint Width { get; }
+        public MetafilePoint Height { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

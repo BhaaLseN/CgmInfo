@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.Segment
             Highlighting = highlighting;
         }
 
-        public int SegmentIdentifier { get; private set; }
-        public Highlighting Highlighting { get; private set; }
+        public int SegmentIdentifier { get; }
+        public Highlighting Highlighting { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

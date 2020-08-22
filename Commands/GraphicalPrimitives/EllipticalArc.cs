@@ -16,11 +16,11 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             End = end;
         }
 
-        public MetafilePoint Center { get; private set; }
-        public MetafilePoint FirstConjugateDiameter { get; private set; }
-        public MetafilePoint SecondConjugateDiameter { get; private set; }
-        public MetafilePoint Start { get; private set; }
-        public MetafilePoint End { get; private set; }
+        public MetafilePoint Center { get; }
+        public MetafilePoint FirstConjugateDiameter { get; }
+        public MetafilePoint SecondConjugateDiameter { get; }
+        public MetafilePoint Start { get; }
+        public MetafilePoint End { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

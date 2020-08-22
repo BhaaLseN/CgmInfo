@@ -19,13 +19,13 @@ namespace CgmInfo.Commands.PictureDescriptor
             LineTypes = lineTypes;
         }
 
-        public int HatchIndex { get; private set; }
-        public double DutyCycleLength { get; private set; }
-        public int[] GapWidths { get; private set; }
-        public int[] LineTypes { get; private set; }
-        public MetafilePoint HatchDirectionStart { get; private set; }
-        public MetafilePoint HatchDirectionEnd { get; private set; }
-        public HatchStyleIndicator StyleIndicator { get; private set; }
+        public int HatchIndex { get; }
+        public double DutyCycleLength { get; }
+        public int[] GapWidths { get; }
+        public int[] LineTypes { get; }
+        public MetafilePoint HatchDirectionStart { get; }
+        public MetafilePoint HatchDirectionEnd { get; }
+        public HatchStyleIndicator StyleIndicator { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

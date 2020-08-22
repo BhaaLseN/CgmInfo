@@ -13,9 +13,9 @@ namespace CgmInfo.Commands.PictureDescriptor
             DashElements = dashElements;
         }
 
-        public int LineType { get; private set; }
-        public double DashCycleRepeatLength { get; private set; }
-        public int[] DashElements { get; private set; }
+        public int LineType { get; }
+        public double DashCycleRepeatLength { get; }
+        public int[] DashElements { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

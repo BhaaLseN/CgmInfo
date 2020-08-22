@@ -10,7 +10,7 @@ namespace CgmInfo.Commands
             Values = values;
         }
 
-        public DataTypeIndex Type { get; private set; }
-        public object[] Values { get; private set; }
+        public DataTypeIndex Type { get; }
+        public object[] Values { get; }
     }
 }

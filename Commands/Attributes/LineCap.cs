@@ -16,10 +16,10 @@ namespace CgmInfo.Commands.Attributes
             DashCapName = GetDashCapName(dashCapIndicator);
         }
 
-        public int LineCapIndicator { get; private set; }
-        public int DashCapIndicator { get; private set; }
-        public string LineCapName { get; private set; }
-        public string DashCapName { get; private set; }
+        public int LineCapIndicator { get; }
+        public int DashCapIndicator { get; }
+        public string LineCapName { get; }
+        public string DashCapName { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

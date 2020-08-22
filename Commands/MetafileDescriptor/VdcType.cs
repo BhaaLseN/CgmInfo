@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Specification = specification;
         }
 
-        public VdcTypeSpecification Specification { get; private set; }
+        public VdcTypeSpecification Specification { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

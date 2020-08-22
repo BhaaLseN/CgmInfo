@@ -14,9 +14,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             End = end;
         }
 
-        public MetafilePoint Intermediate { get; private set; }
-        public MetafilePoint Start { get; private set; }
-        public MetafilePoint End { get; private set; }
+        public MetafilePoint Intermediate { get; }
+        public MetafilePoint Start { get; }
+        public MetafilePoint End { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

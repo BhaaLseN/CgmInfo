@@ -15,10 +15,10 @@ namespace CgmInfo.Commands.PictureDescriptor
             SegmentIdentifier = segmentIdentifier;
         }
 
-        public int GeometricPatternIndex { get; private set; }
-        public int SegmentIdentifier { get; private set; }
-        public MetafilePoint FirstCorner { get; private set; }
-        public MetafilePoint SecondCorner { get; private set; }
+        public int GeometricPatternIndex { get; }
+        public int SegmentIdentifier { get; }
+        public MetafilePoint FirstCorner { get; }
+        public MetafilePoint SecondCorner { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -16,11 +16,11 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Final = final;
             Text = text;
         }
-        public double DeltaWidth { get; private set; }
-        public double DeltaHeight { get; private set; }
-        public MetafilePoint Position { get; private set; }
-        public FinalFlag Final { get; private set; }
-        public string Text { get; private set; }
+        public double DeltaWidth { get; }
+        public double DeltaHeight { get; }
+        public MetafilePoint Position { get; }
+        public FinalFlag Final { get; }
+        public string Text { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

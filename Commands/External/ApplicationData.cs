@@ -12,8 +12,8 @@ namespace CgmInfo.Commands.External
             DataRecord = dataRecord;
         }
 
-        public int Identifier { get; private set; }
-        public string DataRecord { get; private set; }
+        public int Identifier { get; }
+        public string DataRecord { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -2,10 +2,10 @@ namespace CgmInfo.Utilities
 {
     public class MetafileColorCMYK : MetafileColor
     {
-        public int Cyan { get; private set; }
-        public int Magenta { get; private set; }
-        public int Yellow { get; private set; }
-        public int Black { get; private set; }
+        public int Cyan { get; }
+        public int Magenta { get; }
+        public int Yellow { get; }
+        public int Black { get; }
 
         public MetafileColorCMYK(int cyan, int magenta, int yellow, int black)
         {

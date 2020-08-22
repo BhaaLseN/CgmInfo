@@ -13,7 +13,7 @@ namespace CgmInfo.Commands.Attributes
             Values = values;
         }
 
-        public IDictionary<AspectSourceFlagsType, AspectSourceFlagsValue> Values { get; private set; }
+        public IDictionary<AspectSourceFlagsType, AspectSourceFlagsValue> Values { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

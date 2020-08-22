@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Precision = precision;
         }
 
-        public int Precision { get; private set; }
+        public int Precision { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

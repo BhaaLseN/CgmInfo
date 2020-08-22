@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Version = version;
         }
 
-        public int Version { get; private set; }
+        public int Version { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

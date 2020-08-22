@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             SecondCorner = secondCorner;
         }
 
-        public MetafilePoint FirstCorner { get; private set; }
-        public MetafilePoint SecondCorner { get; private set; }
+        public MetafilePoint FirstCorner { get; }
+        public MetafilePoint SecondCorner { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

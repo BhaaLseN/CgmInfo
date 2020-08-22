@@ -14,9 +14,9 @@ namespace CgmInfo.Commands.Delimiter
             Inheritance = inheritanceFlag;
         }
 
-        public string Identifier { get; private set; }
-        public string Type { get; private set; }
-        public InheritanceFlag Inheritance { get; private set; }
+        public string Identifier { get; }
+        public string Type { get; }
+        public InheritanceFlag Inheritance { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

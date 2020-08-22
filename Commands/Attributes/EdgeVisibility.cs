@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Attributes
             Visibility = visibility;
         }
 
-        public OnOffIndicator Visibility { get; private set; }
+        public OnOffIndicator Visibility { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

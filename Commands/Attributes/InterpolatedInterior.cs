@@ -18,11 +18,11 @@ namespace CgmInfo.Commands.Attributes
             ColorSpecifiers = colorSpecifiers;
         }
 
-        public int Index { get; private set; }
-        public string Name { get; private set; }
-        public MetafilePoint[] ReferenceGeometry { get; private set; }
-        public double[] StageDesignators { get; private set; }
-        public MetafileColor[] ColorSpecifiers { get; private set; }
+        public int Index { get; }
+        public string Name { get; }
+        public MetafilePoint[] ReferenceGeometry { get; }
+        public double[] StageDesignators { get; }
+        public MetafileColor[] ColorSpecifiers { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

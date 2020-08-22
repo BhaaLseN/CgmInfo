@@ -11,8 +11,8 @@ namespace CgmInfo.BinaryEncoding
             ElementId = elementId;
             ParameterListLength = parameterListLength;
         }
-        public int ElementClass { get; private set; }
-        public int ElementId { get; private set; }
-        public int ParameterListLength { get; private set; }
+        public int ElementClass { get; }
+        public int ElementId { get; }
+        public int ParameterListLength { get; }
     }
 }

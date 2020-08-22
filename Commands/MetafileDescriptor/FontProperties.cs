@@ -13,7 +13,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Properties = properties;
         }
 
-        public FontProperty[] Properties { get; private set; }
+        public FontProperty[] Properties { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {
@@ -30,10 +30,10 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Priority = priority;
             Record = record;
         }
-        public int Indicator { get; private set; }
-        public string Name { get; private set; }
-        public int Priority { get; private set; }
-        public StructuredDataElement Record { get; private set; }
+        public int Indicator { get; }
+        public string Name { get; }
+        public int Priority { get; }
+        public StructuredDataElement Record { get; }
 
         public static IReadOnlyDictionary<int, string> KnownPropertyIndicators { get; } = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
         {

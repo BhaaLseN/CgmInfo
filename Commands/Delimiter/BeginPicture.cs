@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Delimiter
             Name = name;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

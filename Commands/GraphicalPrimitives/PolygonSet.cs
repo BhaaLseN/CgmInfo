@@ -14,8 +14,8 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Flags = flags;
         }
 
-        public MetafilePoint[] Points { get; private set; }
-        public EdgeOutFlags[] Flags { get; private set; }
+        public MetafilePoint[] Points { get; }
+        public EdgeOutFlags[] Flags { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

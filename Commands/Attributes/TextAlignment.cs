@@ -15,10 +15,10 @@ namespace CgmInfo.Commands.Attributes
             VerticalContinuousAlignment = verticalContinuousAlignment;
         }
 
-        public HorizontalTextAlignment Horizontal { get; private set; }
-        public VerticalTextAlignment Vertical { get; private set; }
-        public double HorizontalContinuousAlignment { get; private set; }
-        public double VerticalContinuousAlignment { get; private set; }
+        public HorizontalTextAlignment Horizontal { get; }
+        public VerticalTextAlignment Vertical { get; }
+        public double HorizontalContinuousAlignment { get; }
+        public double VerticalContinuousAlignment { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

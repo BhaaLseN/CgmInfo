@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Color = color;
         }
 
-        public MetafileColor Color { get; private set; }
+        public MetafileColor Color { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

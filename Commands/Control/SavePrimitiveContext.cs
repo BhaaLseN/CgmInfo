@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             ContextName = contextName;
         }
 
-        public int ContextName { get; private set; }
+        public int ContextName { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Attributes
             Style = style;
         }
 
-        public InteriorStyleType Style { get; private set; }
+        public InteriorStyleType Style { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Height = height;
         }
 
-        public double Height { get; private set; }
+        public double Height { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

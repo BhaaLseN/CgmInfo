@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             CharacterCodingAnnouncerType = characterCodingAnnouncerType;
         }
 
-        public CharacterCodingAnnouncerType CharacterCodingAnnouncerType { get; private set; }
+        public CharacterCodingAnnouncerType CharacterCodingAnnouncerType { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

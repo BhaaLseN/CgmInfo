@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.PictureDescriptor
             ScaleFactor = scaleFactor;
         }
 
-        public DeviceViewportSpecificationModeType SpecificationMode { get; private set; }
-        public double ScaleFactor { get; private set; }
+        public DeviceViewportSpecificationModeType SpecificationMode { get; }
+        public double ScaleFactor { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

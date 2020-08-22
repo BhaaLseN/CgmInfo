@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Delimiter
             RegionIndex = regionIndex;
         }
 
-        public int RegionIndex { get; private set; }
+        public int RegionIndex { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

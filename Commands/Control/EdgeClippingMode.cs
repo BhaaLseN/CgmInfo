@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Mode = mode;
         }
 
-        public ClippingMode Mode { get; private set; }
+        public ClippingMode Mode { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

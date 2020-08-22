@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Width = width;
         }
 
-        public double Width { get; private set; }
+        public double Width { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -139,37 +139,35 @@ namespace CgmInfoGui.ViewModels
             IsBusy = true;
             var result = await Task.Run(() =>
             {
-                using (var reader = MetafileReader.Create(FileName))
+                using var reader = MetafileReader.Create(FileName);
+                var vmVisitor = new ViewModelBuilderVisitor().WithCommand();
+                var metafileContext = new MetafileContext();
+                var apsVisitor = new APSStructureBuilderVisitor();
+                var apsContext = new APSStructureContext();
+                var xcfVisitor = new XCFDocumentBuilderVisitor();
+                var xcfContext = new XCFDocumentContext();
+                var hotspotVisitor = new HotspotBuilderVisitor();
+                var hotspotContext = new HotspotContext();
+                Command command;
+                do
                 {
-                    var vmVisitor = new ViewModelBuilderVisitor().WithCommand();
-                    var metafileContext = new MetafileContext();
-                    var apsVisitor = new APSStructureBuilderVisitor();
-                    var apsContext = new APSStructureContext();
-                    var xcfVisitor = new XCFDocumentBuilderVisitor();
-                    var xcfContext = new XCFDocumentContext();
-                    var hotspotVisitor = new HotspotBuilderVisitor();
-                    var hotspotContext = new HotspotContext();
-                    Command command;
-                    do
+                    command = reader.Read();
+                    if (command != null)
                     {
-                        command = reader.Read();
-                        if (command != null)
-                        {
-                            command.Accept(vmVisitor, metafileContext);
-                            command.Accept(apsVisitor, apsContext);
-                            command.Accept(xcfVisitor, xcfContext);
-                            command.Accept(hotspotVisitor, hotspotContext);
-                        }
-                    } while (command != null);
-                    return new
-                    {
-                        MetafileNodes = metafileContext.RootLevel.ToList(),
-                        APSNodes = apsContext.RootLevel.ToList(),
-                        XCFDocument = xcfContext.XCF,
-                        Hotspots = hotspotContext.RootLevel.OfType<HotspotNode>().ToList(),
-                        MetafileProperties = reader.Properties,
-                    };
-                }
+                        command.Accept(vmVisitor, metafileContext);
+                        command.Accept(apsVisitor, apsContext);
+                        command.Accept(xcfVisitor, xcfContext);
+                        command.Accept(hotspotVisitor, hotspotContext);
+                    }
+                } while (command != null);
+                return new
+                {
+                    MetafileNodes = metafileContext.RootLevel.ToList(),
+                    APSNodes = apsContext.RootLevel.ToList(),
+                    XCFDocument = xcfContext.XCF,
+                    Hotspots = hotspotContext.RootLevel.OfType<HotspotNode>().ToList(),
+                    MetafileProperties = reader.Properties,
+                };
             });
             IsBusy = false;
             MetafileNodes = result.MetafileNodes;

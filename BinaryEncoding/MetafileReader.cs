@@ -510,21 +510,19 @@ namespace CgmInfo.BinaryEncoding
         {
             // this is a memory stream set by ReadCommandHeader, which contains 1..n commands itself.
             // however, _reader is disposed after every run, so we need to keep this buffer around another way.
-            using (var replacementsStream = new MemoryStream())
-            {
-                reader._reader.BaseStream.CopyTo(replacementsStream);
-                replacementsStream.Position = 0;
+            using var replacementsStream = new MemoryStream();
+            reader._reader.BaseStream.CopyTo(replacementsStream);
+            replacementsStream.Position = 0;
 
-                var commands = new List<Command>();
-                while (true)
-                {
-                    var command = reader.ReadCommand(replacementsStream);
-                    if (command == null)
-                        break;
-                    commands.Add(command);
-                }
-                return new MetafileDefaultsReplacement(commands.ToArray());
+            var commands = new List<Command>();
+            while (true)
+            {
+                var command = reader.ReadCommand(replacementsStream);
+                if (command == null)
+                    break;
+                commands.Add(command);
             }
+            return new MetafileDefaultsReplacement(commands.ToArray());
         }
 
         public long Position

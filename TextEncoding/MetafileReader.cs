@@ -14,7 +14,7 @@ namespace CgmInfo.TextEncoding
 {
     public class MetafileReader : BaseMetafileReader
     {
-        private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new Dictionary<string, Func<MetafileReader, Command>>
+        private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new Dictionary<string, Func<MetafileReader, Command>>(StringComparer.OrdinalIgnoreCase)
         {
             // delimiter elements [ISO/IEC 8632-4 7.1]
             { "BEGMF", DelimiterElementReader.BeginMetafile },

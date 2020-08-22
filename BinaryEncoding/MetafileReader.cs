@@ -785,21 +785,14 @@ namespace CgmInfo.BinaryEncoding
             return ReadReal(Descriptor.RealPrecision);
         }
 
-        private double ReadReal(RealPrecisionSpecification precision)
+        private double ReadReal(RealPrecisionSpecification precision) => precision switch
         {
-            switch (precision)
-            {
-                case RealPrecisionSpecification.FixedPoint32Bit:
-                    return ReadFixedPoint(4);
-                case RealPrecisionSpecification.FixedPoint64Bit:
-                    return ReadFixedPoint(8);
-                case RealPrecisionSpecification.FloatingPoint32Bit:
-                    return ReadFloatingPoint(4);
-                case RealPrecisionSpecification.FloatingPoint64Bit:
-                    return ReadFloatingPoint(8);
-            }
-            throw new NotSupportedException("The current Real Precision is not supported");
-        }
+            RealPrecisionSpecification.FixedPoint32Bit => ReadFixedPoint(4),
+            RealPrecisionSpecification.FixedPoint64Bit => ReadFixedPoint(8),
+            RealPrecisionSpecification.FloatingPoint32Bit => ReadFloatingPoint(4),
+            RealPrecisionSpecification.FloatingPoint64Bit => ReadFloatingPoint(8),
+            _ => throw new NotSupportedException("The current Real Precision is not supported"),
+        };
 
         internal int ReadIndex()
         {

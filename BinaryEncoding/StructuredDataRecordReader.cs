@@ -30,59 +30,34 @@ namespace CgmInfo.BinaryEncoding
             }
             return new StructuredDataRecord(elements);
         }
-        private object ReadValue(MetafileReader reader, DataTypeIndex type)
+        private object ReadValue(MetafileReader reader, DataTypeIndex type) => type switch
         {
-            switch (type)
-            {
-                case DataTypeIndex.StructuredDataRecord:
-                    return ReadStructuredDataRecord(reader);
-                case DataTypeIndex.ColorIndex:
-                    return ReadIndexedColor(reader);
-                case DataTypeIndex.ColorDirect:
-                    return ReadDirectColor(reader);
-                case DataTypeIndex.Name:
-                    return ReadName(reader);
-                case DataTypeIndex.Enumerated:
-                    return ReadEnum(reader);
-                case DataTypeIndex.Integer:
-                    return ReadInteger(reader);
-                case DataTypeIndex.Reserved:
-                    // TODO: what exactly does reserved mean in terms of advancing position?
-                    return null;
-                case DataTypeIndex.SignedInteger8bit:
-                    return ReadSigned8BitInteger(reader);
-                case DataTypeIndex.SignedInteger16bit:
-                    return ReadSigned16BitInteger(reader);
-                case DataTypeIndex.SignedInteger32bit:
-                    return ReadSigned32BitInteger(reader);
-                case DataTypeIndex.Index:
-                    return ReadIndex(reader);
-                case DataTypeIndex.Real:
-                    return ReadReal(reader);
-                case DataTypeIndex.String:
-                    return ReadString(reader);
-                case DataTypeIndex.StringFixed:
-                    return ReadStringFixed(reader);
-                case DataTypeIndex.ViewportCoordinate:
-                    return ReadViewportCoordinate(reader);
-                case DataTypeIndex.VDC:
-                    return ReadVDC(reader);
-                case DataTypeIndex.ColorComponent:
-                    return ReadColorComponent(reader);
-                case DataTypeIndex.UnsignedInteger8bit:
-                    return ReadUnsigned8BitInteger(reader);
-                case DataTypeIndex.UnsignedInteger32bit:
-                    return ReadUnsigned32BitInteger(reader);
-                case DataTypeIndex.UnsignedInteger16bit:
-                    return ReadUnsigned16BitInteger(reader);
-                case DataTypeIndex.BitStream:
-                    return ReadBitStream(reader);
-                case DataTypeIndex.ColorList:
-                default:
-                    // FIXME: how are those implemented?
-                    return null;
-            }
-        }
+            DataTypeIndex.StructuredDataRecord => ReadStructuredDataRecord(reader),
+            DataTypeIndex.ColorIndex => ReadIndexedColor(reader),
+            DataTypeIndex.ColorDirect => ReadDirectColor(reader),
+            DataTypeIndex.Name => ReadName(reader),
+            DataTypeIndex.Enumerated => ReadEnum(reader),
+            DataTypeIndex.Integer => ReadInteger(reader),
+            // TODO: what exactly does reserved mean in terms of advancing position?
+            DataTypeIndex.Reserved => null,
+            DataTypeIndex.SignedInteger8bit => ReadSigned8BitInteger(reader),
+            DataTypeIndex.SignedInteger16bit => ReadSigned16BitInteger(reader),
+            DataTypeIndex.SignedInteger32bit => ReadSigned32BitInteger(reader),
+            DataTypeIndex.Index => ReadIndex(reader),
+            DataTypeIndex.Real => ReadReal(reader),
+            DataTypeIndex.String => ReadString(reader),
+            DataTypeIndex.StringFixed => ReadStringFixed(reader),
+            DataTypeIndex.ViewportCoordinate => ReadViewportCoordinate(reader),
+            DataTypeIndex.VDC => ReadVDC(reader),
+            DataTypeIndex.ColorComponent => ReadColorComponent(reader),
+            DataTypeIndex.UnsignedInteger8bit => ReadUnsigned8BitInteger(reader),
+            DataTypeIndex.UnsignedInteger32bit => ReadUnsigned32BitInteger(reader),
+            DataTypeIndex.UnsignedInteger16bit => ReadUnsigned16BitInteger(reader),
+            DataTypeIndex.BitStream => ReadBitStream(reader),
+            // FIXME: how are those implemented?
+            DataTypeIndex.ColorList => null,
+            _ => null,
+        };
 
         protected virtual StructuredDataRecord ReadStructuredDataRecord(MetafileReader reader) => reader.ReadStructuredDataRecord();
 

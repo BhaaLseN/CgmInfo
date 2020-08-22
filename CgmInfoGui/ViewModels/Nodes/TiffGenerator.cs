@@ -83,16 +83,13 @@ namespace CgmInfoGui.ViewModels.Nodes
                 {
                     if (entry.NumberOfValues == 1)
                     {
-                        int valueToWrite;
-                        if (entry.Value is short s)
-                            valueToWrite = s;
-                        else if (entry.Value is int i)
-                            valueToWrite = i;
-                        else if (entry.Value is long l)
-                            valueToWrite = (int)l;
-                        else
-                            throw new NotSupportedException($"Unsupported TIFF content type {entry.Value?.GetType().Name}.");
-
+                        int valueToWrite = entry.Value switch
+                        {
+                            short s => s,
+                            int i => i,
+                            long l => (int)l,
+                            _ => throw new NotSupportedException($"Unsupported TIFF content type {entry.Value?.GetType().Name}."),
+                        };
                         writer.WriteInteger(valueToWrite);
                     }
                     else
@@ -194,25 +191,22 @@ namespace CgmInfoGui.ViewModels.Nodes
             return _stream;
         }
 
-        private short ConvertCompression(int compressionType)
+        private short ConvertCompression(int compressionType) => compressionType switch
         {
-            switch (compressionType)
-            {
-                case 2: // CCITT Group 4 T6
-                    return 4;
-                case 3: // CCITT Group 3 T4 (1D)
-                    return 2;
-                case 4: // CCITT Group 3 T4 (2D)
-                    return 3;
-                case 5: // Bitmap (uncompressed)
-                    return 1;
-                case 7: // Baseline JPEG
-                    return 6;
-                case 8: // LZW
-                    return 5;
-            }
-            throw new NotSupportedException($"Compression type {compressionType} is not supported by TIFF");
-        }
+            // CCITT Group 4 T6
+            2 => 4,
+            // CCITT Group 3 T4 (1D)
+            3 => 2,
+            // CCITT Group 3 T4 (2D)
+            4 => 3,
+            // Bitmap (uncompressed)
+            5 => 1,
+            // Baseline JPEG
+            7 => 6,
+            // LZW
+            8 => 5,
+            _ => throw new NotSupportedException($"Compression type {compressionType} is not supported by TIFF"),
+        };
 
         private sealed class IFDEntry
         {

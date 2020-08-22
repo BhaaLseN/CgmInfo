@@ -259,7 +259,7 @@ namespace CgmInfo.BinaryEncoding
         public static bool IsBinaryMetafile(Stream stream)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream", "stream is null.");
+                throw new ArgumentNullException(nameof(stream));
             if (!stream.CanSeek)
                 throw new InvalidOperationException("Cannot seek the stream.");
 
@@ -570,7 +570,7 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadInteger(int numBytes, bool unsigned)
         {
             if (numBytes < 1 || numBytes > 4)
-                throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
+                throw new ArgumentOutOfRangeException(nameof(numBytes), numBytes, "Number of bytes must be between 1 and 4");
             uint ret = 0;
             int signBit = 1 << ((numBytes * 8) - 1);
             int maxUnsignedValue = 1 << (numBytes * 8);

@@ -16,7 +16,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             : this()
         {
             if (colorSpace != ColorSpace.RGB && colorSpace != ColorSpace.CMYK)
-                throw new ArgumentOutOfRangeException("colorSpace", colorSpace, "Color Space must be either RGB or CMYK for use with this constructor");
+                throw new ArgumentOutOfRangeException(nameof(colorSpace), colorSpace, "Color Space must be either RGB or CMYK for use with this constructor");
             ColorSpace = colorSpace;
             Minimum = minimum;
             Maximum = maximum;
@@ -28,7 +28,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             : this()
         {
             if (colorSpace != ColorSpace.CIE)
-                throw new ArgumentOutOfRangeException("colorSpace", colorSpace, "Color Space must be CIE for use with this constructor");
+                throw new ArgumentOutOfRangeException(nameof(colorSpace), colorSpace, "Color Space must be CIE for use with this constructor");
             ColorSpace = colorSpace;
             FirstScale = firstScale;
             SecondScale = secondScale;

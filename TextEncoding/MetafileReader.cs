@@ -196,7 +196,7 @@ namespace CgmInfo.TextEncoding
         };
 
         public MetafileReader(string fileName)
-            : base(fileName, false)
+            : base(fileName, isBinaryEncoding: false)
         {
         }
 

@@ -18,7 +18,7 @@ namespace CgmInfoGui.Converters
         }
         private PropertyDescriptorCollection GenerateItemsAsProperties(IEnumerable<T> values)
         {
-            return new PropertyDescriptorCollection(values.Select((item, index) => new ListItemPropertyDescriptor(values, index)).ToArray(), true);
+            return new PropertyDescriptorCollection(values.Select((item, index) => new ListItemPropertyDescriptor(values, index)).ToArray(), readOnly: true);
         }
 
         private sealed class ListItemPropertyDescriptor : PropertyDescriptor

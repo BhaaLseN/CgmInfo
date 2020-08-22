@@ -247,7 +247,7 @@ namespace CgmInfo.BinaryEncoding
         private Encoding _currentEncoding = GetDefaultEncoding();
 
         public MetafileReader(string fileName)
-            : base(fileName, true)
+            : base(fileName, isBinaryEncoding: true)
         {
         }
         private MetafileReader(MetafileReader parent, byte[] subBuffer)
@@ -565,7 +565,7 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadInteger()
         {
             // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
-            return ReadInteger(Descriptor.IntegerPrecision / 8, false);
+            return ReadInteger(Descriptor.IntegerPrecision / 8, unsigned: false);
         }
         internal int ReadInteger(int numBytes, bool unsigned)
         {
@@ -603,7 +603,7 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadEnum()
         {
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
-            return ReadInteger(2, false);
+            return ReadInteger(2, unsigned: false);
         }
         internal TEnum ReadEnum<TEnum>() where TEnum : Enum
         {
@@ -629,7 +629,7 @@ namespace CgmInfo.BinaryEncoding
             if (Descriptor.VdcType == VdcTypeSpecification.Integer)
             {
                 // value is a signed integer at VDC Integer Precision
-                return ReadInteger(Descriptor.VdcIntegerPrecision / 8, false);
+                return ReadInteger(Descriptor.VdcIntegerPrecision / 8, unsigned: false);
             }
             else if (Descriptor.VdcType == VdcTypeSpecification.Real)
             {
@@ -741,7 +741,7 @@ namespace CgmInfo.BinaryEncoding
         {
             // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
             // color components are unsigned integers at direct color precision
-            return ReadInteger(colorPrecision, true);
+            return ReadInteger(colorPrecision, unsigned: true);
         }
 
         internal double ReadFixedPoint(int numBytes)
@@ -750,9 +750,9 @@ namespace CgmInfo.BinaryEncoding
             // real value is computed as "whole + (fraction / 2**exp)"
             // exp is the width of the fraction value
             // the "whole part" has the same form as a Signed Integer
-            int whole = ReadInteger(numBytes / 2, false);
+            int whole = ReadInteger(numBytes / 2, unsigned: false);
             // the "fractional part" has the same form as an Unsigned Integer
-            int fraction = ReadInteger(numBytes / 2, true);
+            int fraction = ReadInteger(numBytes / 2, unsigned: true);
             // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
             // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
             int exp = numBytes / 2 * 8;
@@ -797,12 +797,12 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadIndex()
         {
             // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
-            return ReadInteger(Descriptor.IndexPrecision / 8, false);
+            return ReadInteger(Descriptor.IndexPrecision / 8, unsigned: false);
         }
         internal int ReadName()
         {
             // name is a signed integer at name precision [ISO/IEC 8632-3 7, Table 1, N]
-            return ReadInteger(Descriptor.NamePrecision / 8, false);
+            return ReadInteger(Descriptor.NamePrecision / 8, unsigned: false);
         }
         internal ushort ReadWord()
         {

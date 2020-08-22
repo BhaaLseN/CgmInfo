@@ -153,7 +153,7 @@ namespace CgmInfoGui.ViewModels.Nodes
             //        having /some/ support feels more useful than none at all, even though
             //        more than half of the realistically occurring types are broken.
             //        time might find a solution for the problem, so it stays here for later.
-            using (var writer = new BinaryWriter(_stream, Encoding.ASCII, true))
+            using (var writer = new BinaryWriter(_stream, Encoding.ASCII, leaveOpen: true))
             {
                 WriteImageFileHeader(writer);
 

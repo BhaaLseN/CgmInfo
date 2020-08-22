@@ -44,7 +44,7 @@ namespace CgmInfoGui.Traversal
         }
         public void BeginLevel(NodeBase levelNode)
         {
-            BeginLevel(levelNode, false);
+            BeginLevel(levelNode, doNotAddTheNode: false);
         }
         public void BeginLevel(NodeBase levelNode, bool doNotAddTheNode)
         {

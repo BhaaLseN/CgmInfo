@@ -211,7 +211,7 @@ namespace CgmInfoGui.Traversal
         public void AcceptMetafileDescriptorMetafileDefaultsReplacement(MetafileDefaultsReplacement metafileDefaultsReplacement, MetafileContext parameter)
         {
             var metafileElementsListNode = parameter.AddMetafileDescriptorNode("METAFILE DEFAULTS REPLACEMENT [{0} entries]", metafileDefaultsReplacement.Commands.Count());
-            parameter.BeginLevel(metafileElementsListNode, true);
+            parameter.BeginLevel(metafileElementsListNode, doNotAddTheNode: true);
             foreach (var command in metafileDefaultsReplacement.Commands)
                 command.Accept(this, parameter);
             parameter.EndLevel();

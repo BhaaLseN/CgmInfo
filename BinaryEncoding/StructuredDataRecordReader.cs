@@ -72,13 +72,13 @@ namespace CgmInfo.BinaryEncoding
         protected virtual int ReadIndex(MetafileReader reader) => reader.ReadIndex();
         protected virtual int ReadInteger(MetafileReader reader) => reader.ReadInteger();
 
-        protected virtual int ReadSigned8BitInteger(MetafileReader reader) => reader.ReadInteger(1, false);
-        protected virtual int ReadSigned16BitInteger(MetafileReader reader) => reader.ReadInteger(2, false);
-        protected virtual int ReadSigned32BitInteger(MetafileReader reader) => reader.ReadInteger(4, false);
+        protected virtual int ReadSigned8BitInteger(MetafileReader reader) => reader.ReadInteger(1, unsigned: false);
+        protected virtual int ReadSigned16BitInteger(MetafileReader reader) => reader.ReadInteger(2, unsigned: false);
+        protected virtual int ReadSigned32BitInteger(MetafileReader reader) => reader.ReadInteger(4, unsigned: false);
 
-        protected virtual int ReadUnsigned8BitInteger(MetafileReader reader) => reader.ReadInteger(1, true);
-        protected virtual int ReadUnsigned16BitInteger(MetafileReader reader) => reader.ReadInteger(2, true);
-        protected virtual int ReadUnsigned32BitInteger(MetafileReader reader) => reader.ReadInteger(4, true);
+        protected virtual int ReadUnsigned8BitInteger(MetafileReader reader) => reader.ReadInteger(1, unsigned: true);
+        protected virtual int ReadUnsigned16BitInteger(MetafileReader reader) => reader.ReadInteger(2, unsigned: true);
+        protected virtual int ReadUnsigned32BitInteger(MetafileReader reader) => reader.ReadInteger(4, unsigned: true);
 
         protected virtual int ReadName(MetafileReader reader) => reader.ReadName();
         protected virtual int ReadEnum(MetafileReader reader) => reader.ReadEnum();

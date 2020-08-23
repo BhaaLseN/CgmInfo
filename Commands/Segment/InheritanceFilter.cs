@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Segment
             Items = items;
         }
 
-        public InheritanceFilterItem[] Items { get; private set; }
+        public InheritanceFilterItem[] Items { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

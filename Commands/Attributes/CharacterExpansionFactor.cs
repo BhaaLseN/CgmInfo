@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Factor = factor;
         }
 
-        public double Factor { get; private set; }
+        public double Factor { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

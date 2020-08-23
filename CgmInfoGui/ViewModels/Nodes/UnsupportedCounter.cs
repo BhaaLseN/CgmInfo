@@ -43,7 +43,7 @@ namespace CgmInfoGui.ViewModels.Nodes
                 ElementName = elementName;
             }
 
-            public string ElementName { get; private set; }
+            public string ElementName { get; }
             public int Count { get; set; }
 
             public override string DisplayName

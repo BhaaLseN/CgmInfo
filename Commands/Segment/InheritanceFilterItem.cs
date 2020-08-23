@@ -10,7 +10,7 @@ namespace CgmInfo.Commands.Segment
             Setting = setting;
         }
 
-        public InheritanceFilterDesignator Designator { get; private set; }
-        public InheritanceFilterSetting Setting { get; private set; }
+        public InheritanceFilterDesignator Designator { get; }
+        public InheritanceFilterSetting Setting { get; }
     }
 }

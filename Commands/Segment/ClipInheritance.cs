@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Segment
             InheritanceType = inheritanceType;
         }
 
-        public ClipInheritanceType InheritanceType { get; private set; }
+        public ClipInheritanceType InheritanceType { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

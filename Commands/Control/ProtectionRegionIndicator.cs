@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Index = index;
         }
 
-        public int Index { get; private set; }
-        public RegionIndicator Indicator { get; private set; }
+        public int Index { get; }
+        public RegionIndicator Indicator { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

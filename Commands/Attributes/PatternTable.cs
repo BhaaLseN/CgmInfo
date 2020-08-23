@@ -15,10 +15,10 @@ namespace CgmInfo.Commands.Attributes
             Colors = colors;
         }
 
-        public int Index { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public MetafileColor[] Colors { get; private set; }
+        public int Index { get; }
+        public int Width { get; }
+        public int Height { get; }
+        public MetafileColor[] Colors { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

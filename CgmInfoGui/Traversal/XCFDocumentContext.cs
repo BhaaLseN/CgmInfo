@@ -22,7 +22,7 @@ namespace CgmInfoGui.Traversal
                     new XAttribute("xmlns", xcf.NamespaceName),
                     new XAttribute("version", "2.0")));
         }
-        public XDocument XCF { get; private set; }
+        public XDocument XCF { get; }
 
         public void AddAPSElement(BeginApplicationStructure beginApplicationStructure)
         {

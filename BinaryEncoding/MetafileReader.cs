@@ -13,232 +13,201 @@ namespace CgmInfo.BinaryEncoding
     public class MetafileReader : BaseMetafileReader
     {
         // ISO/IEC 8632-3 8.1, Table 2
-        private readonly Dictionary<int, Dictionary<int, Func<MetafileReader, CommandHeader, Command>>> _commandTable = new Dictionary<int, Dictionary<int, Func<MetafileReader, CommandHeader, Command>>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Func<MetafileReader, CommandHeader, Command>> _commandTable = new Dictionary<(int, int), Func<MetafileReader, CommandHeader, Command>>
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
-            { 0, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    // { 0, ReadNoop }, // no-op; these are skipped already while reading the command header
-                    { 1, ReadBeginMetafile },
-                    { 2, ReadEndMetafile },
-                    { 3, DelimiterElementReader.BeginPicture },
-                    { 4, DelimiterElementReader.BeginPictureBody },
-                    { 5, DelimiterElementReader.EndPicture },
-                    { 6, DelimiterElementReader.BeginSegment },
-                    { 7, DelimiterElementReader.EndSegment },
-                    { 8, DelimiterElementReader.BeginFigure },
-                    { 9, DelimiterElementReader.EndFigure },
-                    // entries 10, 11 and 12 do not exist in ISO/IEC 8632-3
-                    { 13, DelimiterElementReader.BeginProtectionRegion },
-                    { 14, DelimiterElementReader.EndProtectionRegion },
-                    { 15, DelimiterElementReader.BeginCompoundLine },
-                    { 16, DelimiterElementReader.EndCompoundLine },
-                    { 17, DelimiterElementReader.BeginCompoundTextPath },
-                    { 18, DelimiterElementReader.EndCompoundTextPath },
-                    { 19, DelimiterElementReader.BeginTileArray },
-                    { 20, DelimiterElementReader.EndTileArray },
-                    { 21, DelimiterElementReader.BeginApplicationStructure },
-                    { 22, DelimiterElementReader.BeginApplicationStructureBody },
-                    { 23, DelimiterElementReader.EndApplicationStructure },
-                }
-            },
+            // { (0, 0), ReadNoop }, // no-op; these are skipped already while reading the command header
+            { (0, 1), ReadBeginMetafile },
+            { (0, 2), ReadEndMetafile },
+            { (0, 3), DelimiterElementReader.BeginPicture },
+            { (0, 4), DelimiterElementReader.BeginPictureBody },
+            { (0, 5), DelimiterElementReader.EndPicture },
+            { (0, 6), DelimiterElementReader.BeginSegment },
+            { (0, 7), DelimiterElementReader.EndSegment },
+            { (0, 8), DelimiterElementReader.BeginFigure },
+            { (0, 9), DelimiterElementReader.EndFigure },
+            // entries 10, 11 and 12 do not exist in ISO/IEC 8632-3
+            { (0, 13), DelimiterElementReader.BeginProtectionRegion },
+            { (0, 14), DelimiterElementReader.EndProtectionRegion },
+            { (0, 15), DelimiterElementReader.BeginCompoundLine },
+            { (0, 16), DelimiterElementReader.EndCompoundLine },
+            { (0, 17), DelimiterElementReader.BeginCompoundTextPath },
+            { (0, 18), DelimiterElementReader.EndCompoundTextPath },
+            { (0, 19), DelimiterElementReader.BeginTileArray },
+            { (0, 20), DelimiterElementReader.EndTileArray },
+            { (0, 21), DelimiterElementReader.BeginApplicationStructure },
+            { (0, 22), DelimiterElementReader.BeginApplicationStructureBody },
+            { (0, 23), DelimiterElementReader.EndApplicationStructure },
+
             // metafile descriptor elements [ISO/IEC 8632-3 8.3, Table 4]
-            { 1, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, MetafileDescriptorReader.MetafileVersion },
-                    { 2, MetafileDescriptorReader.MetafileDescription },
-                    { 3, ReadVdcType },
-                    { 4, ReadIntegerPrecision },
-                    { 5, ReadRealPrecision },
-                    { 6, ReadIndexPrecision },
-                    { 7, ReadColorPrecision },
-                    { 8, ReadColorIndexPrecision },
-                    { 9, MetafileDescriptorReader.MaximumColorIndex },
-                    { 10, MetafileDescriptorReader.ColorValueExtent },
-                    { 11, MetafileDescriptorReader.MetafileElementsList },
-                    { 12, ReadMetafileDefaultsReplacement },
-                    { 13, MetafileDescriptorReader.FontList },
-                    { 14, MetafileDescriptorReader.CharacterSetList },
-                    { 15, MetafileDescriptorReader.CharacterCodingAnnouncer },
-                    { 16, ReadNamePrecision },
-                    { 17, MetafileDescriptorReader.MaximumVdcExtent },
-                    { 18, MetafileDescriptorReader.SegmentPriorityExtent },
-                    { 19, ReadColorModel },
-                    //{ 20, MetafileDescriptorReader.ColorCalibration },
-                    { 21, MetafileDescriptorReader.FontProperties },
-                    //{ 22, MetafileDescriptorReader.GlyphMapping },
-                    //{ 23, MetafileDescriptorReader.SymbolLibraryList },
-                    //{ 24, MetafileDescriptorReader.PictureDirectory },
-                }
-            },
+            { (1, 1), MetafileDescriptorReader.MetafileVersion },
+            { (1, 2), MetafileDescriptorReader.MetafileDescription },
+            { (1, 3), ReadVdcType },
+            { (1, 4), ReadIntegerPrecision },
+            { (1, 5), ReadRealPrecision },
+            { (1, 6), ReadIndexPrecision },
+            { (1, 7), ReadColorPrecision },
+            { (1, 8), ReadColorIndexPrecision },
+            { (1, 9), MetafileDescriptorReader.MaximumColorIndex },
+            { (1, 10), MetafileDescriptorReader.ColorValueExtent },
+            { (1, 11), MetafileDescriptorReader.MetafileElementsList },
+            { (1, 12), ReadMetafileDefaultsReplacement },
+            { (1, 13), MetafileDescriptorReader.FontList },
+            { (1, 14), MetafileDescriptorReader.CharacterSetList },
+            { (1, 15), MetafileDescriptorReader.CharacterCodingAnnouncer },
+            { (1, 16), ReadNamePrecision },
+            { (1, 17), MetafileDescriptorReader.MaximumVdcExtent },
+            { (1, 18), MetafileDescriptorReader.SegmentPriorityExtent },
+            { (1, 19), ReadColorModel },
+            //{ (1, 20), MetafileDescriptorReader.ColorCalibration },
+            { (1, 21), MetafileDescriptorReader.FontProperties },
+            //{ (1, 22), MetafileDescriptorReader.GlyphMapping },
+            //{ (1, 23), MetafileDescriptorReader.SymbolLibraryList },
+            //{ (1, 24), MetafileDescriptorReader.PictureDirectory },
+
             // picture descriptor elements [ISO/IEC 8632-3 8.4, Table 5]
-            { 2, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, PictureDescriptorReader.ScalingMode },
-                    { 2, ReadColorSelectionMode },
-                    { 3, ReadLineWidthSpecificationMode },
-                    { 4, ReadMarkerSizeSpecificationMode },
-                    { 5, ReadEdgeWidthSpecificationMode },
-                    { 6, PictureDescriptorReader.VdcExtent },
-                    { 7, PictureDescriptorReader.BackgroundColor },
-                    { 8, PictureDescriptorReader.DeviceViewport },
-                    { 9, ReadDeviceViewportSpecificationMode },
-                    //{ 10, PictureDescriptorReader.DeviceViewportMapping },
-                    //{ 11, PictureDescriptorReader.LineRepresentation },
-                    //{ 12, PictureDescriptorReader.MarkerRepresentation },
-                    //{ 13, PictureDescriptorReader.TextRepresentation },
-                    //{ 14, PictureDescriptorReader.FillRepresentation },
-                    //{ 15, PictureDescriptorReader.EdgeRepresentation },
-                    { 16, ReadInteriorStyleSpecificationMode },
-                    { 17, PictureDescriptorReader.LineAndEdgeTypeDefinition },
-                    { 18, PictureDescriptorReader.HatchStyleDefinition },
-                    { 19, PictureDescriptorReader.GeometricPatternDefinition },
-                    //{ 20, PictureDescriptorReader.ApplicationStructureDirectory },
-                }
-            },
+            { (2, 1), PictureDescriptorReader.ScalingMode },
+            { (2, 2), ReadColorSelectionMode },
+            { (2, 3), ReadLineWidthSpecificationMode },
+            { (2, 4), ReadMarkerSizeSpecificationMode },
+            { (2, 5), ReadEdgeWidthSpecificationMode },
+            { (2, 6), PictureDescriptorReader.VdcExtent },
+            { (2, 7), PictureDescriptorReader.BackgroundColor },
+            { (2, 8), PictureDescriptorReader.DeviceViewport },
+            { (2, 9), ReadDeviceViewportSpecificationMode },
+            //{ (2, 10), PictureDescriptorReader.DeviceViewportMapping },
+            //{ (2, 11), PictureDescriptorReader.LineRepresentation },
+            //{ (2, 12), PictureDescriptorReader.MarkerRepresentation },
+            //{ (2, 13), PictureDescriptorReader.TextRepresentation },
+            //{ (2, 14), PictureDescriptorReader.FillRepresentation },
+            //{ (2, 15), PictureDescriptorReader.EdgeRepresentation },
+            { (2, 16), ReadInteriorStyleSpecificationMode },
+            { (2, 17), PictureDescriptorReader.LineAndEdgeTypeDefinition },
+            { (2, 18), PictureDescriptorReader.HatchStyleDefinition },
+            { (2, 19), PictureDescriptorReader.GeometricPatternDefinition },
+            //{ (2, 20), PictureDescriptorReader.ApplicationStructureDirectory },
+
             // control elements [ISO/IEC 8632-3 8.5, Table 6]
-            { 3, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, ReadVdcIntegerPrecision },
-                    { 2, ReadVdcRealPrecision },
-                    { 3, ControlElementReader.AuxiliaryColor },
-                    { 4, ControlElementReader.Transparency },
-                    { 5, ControlElementReader.ClipRectangle },
-                    { 6, ControlElementReader.ClipIndicator },
-                    { 7, ControlElementReader.LineClippingMode },
-                    { 8, ControlElementReader.MarkerClippingMode },
-                    { 9, ControlElementReader.EdgeClippingMode },
-                    { 10, ControlElementReader.NewRegion },
-                    { 11, ControlElementReader.SavePrimitiveContext },
-                    { 12, ControlElementReader.RestorePrimitiveContext },
-                    // entries 13 until 16 do not exist in ISO/IEC 8632-3
-                    { 17, ControlElementReader.ProtectionRegionIndicator },
-                    { 18, ControlElementReader.GeneralizedTextPathMode },
-                    { 19, ControlElementReader.MiterLimit },
-                    //{ 20, ControlElementReader.TransparentCellColor },
-                }
-            },
+            { (3, 1), ReadVdcIntegerPrecision },
+            { (3, 2), ReadVdcRealPrecision },
+            { (3, 3), ControlElementReader.AuxiliaryColor },
+            { (3, 4), ControlElementReader.Transparency },
+            { (3, 5), ControlElementReader.ClipRectangle },
+            { (3, 6), ControlElementReader.ClipIndicator },
+            { (3, 7), ControlElementReader.LineClippingMode },
+            { (3, 8), ControlElementReader.MarkerClippingMode },
+            { (3, 9), ControlElementReader.EdgeClippingMode },
+            { (3, 10), ControlElementReader.NewRegion },
+            { (3, 11), ControlElementReader.SavePrimitiveContext },
+            { (3, 12), ControlElementReader.RestorePrimitiveContext },
+            // entries 13 until 16 do not exist in ISO/IEC 8632-3
+            { (3, 17), ControlElementReader.ProtectionRegionIndicator },
+            { (3, 18), ControlElementReader.GeneralizedTextPathMode },
+            { (3, 19), ControlElementReader.MiterLimit },
+            //{ (3, 20), ControlElementReader.TransparentCellColor },
+
             // graphical primitive elements [ISO/IEC 8632-3 8.6, Table 7]
-            { 4, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, GraphicalPrimitiveReader.Polyline },
-                    { 2, GraphicalPrimitiveReader.DisjointPolyline },
-                    { 3, GraphicalPrimitiveReader.Polymarker },
-                    { 4, GraphicalPrimitiveReader.Text },
-                    { 5, GraphicalPrimitiveReader.RestrictedText },
-                    { 6, GraphicalPrimitiveReader.AppendText },
-                    { 7, GraphicalPrimitiveReader.Polygon },
-                    { 8, GraphicalPrimitiveReader.PolygonSet },
-                    { 9, GraphicalPrimitiveReader.CellArray },
-                    //{ 10, GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
-                    { 11, GraphicalPrimitiveReader.Rectangle },
-                    { 12, GraphicalPrimitiveReader.Circle },
-                    { 13, GraphicalPrimitiveReader.CircularArc3Point },
-                    { 14, GraphicalPrimitiveReader.CircularArc3PointClose },
-                    { 15, GraphicalPrimitiveReader.CircularArcCenter },
-                    { 16, GraphicalPrimitiveReader.CircularArcCenterClose },
-                    { 17, GraphicalPrimitiveReader.Ellipse },
-                    { 18, GraphicalPrimitiveReader.EllipticalArc },
-                    { 19, GraphicalPrimitiveReader.EllipticalArcClose },
-                    { 20, GraphicalPrimitiveReader.CircularArcCenterReversed },
-                    { 21, GraphicalPrimitiveReader.ConnectingEdge },
-                    { 22, GraphicalPrimitiveReader.HyperbolicArc },
-                    { 23, GraphicalPrimitiveReader.ParabolicArc },
-                    { 24, GraphicalPrimitiveReader.NonUniformBSpline },
-                    { 25, GraphicalPrimitiveReader.NonUniformRationalBSpline },
-                    { 26, GraphicalPrimitiveReader.Polybezier },
-                    //{ 27, GraphicalPrimitiveReader.Polysymbol },
-                    { 28, GraphicalPrimitiveReader.BitonalTile },
-                    { 29, GraphicalPrimitiveReader.Tile },
-                }
-            },
+            { (4, 1), GraphicalPrimitiveReader.Polyline },
+            { (4, 2), GraphicalPrimitiveReader.DisjointPolyline },
+            { (4, 3), GraphicalPrimitiveReader.Polymarker },
+            { (4, 4), GraphicalPrimitiveReader.Text },
+            { (4, 5), GraphicalPrimitiveReader.RestrictedText },
+            { (4, 6), GraphicalPrimitiveReader.AppendText },
+            { (4, 7), GraphicalPrimitiveReader.Polygon },
+            { (4, 8), GraphicalPrimitiveReader.PolygonSet },
+            { (4, 9), GraphicalPrimitiveReader.CellArray },
+            //{ (4, 10), GraphicalPrimitiveReader.GeneralizedDrawingPrimitive },
+            { (4, 11), GraphicalPrimitiveReader.Rectangle },
+            { (4, 12), GraphicalPrimitiveReader.Circle },
+            { (4, 13), GraphicalPrimitiveReader.CircularArc3Point },
+            { (4, 14), GraphicalPrimitiveReader.CircularArc3PointClose },
+            { (4, 15), GraphicalPrimitiveReader.CircularArcCenter },
+            { (4, 16), GraphicalPrimitiveReader.CircularArcCenterClose },
+            { (4, 17), GraphicalPrimitiveReader.Ellipse },
+            { (4, 18), GraphicalPrimitiveReader.EllipticalArc },
+            { (4, 19), GraphicalPrimitiveReader.EllipticalArcClose },
+            { (4, 20), GraphicalPrimitiveReader.CircularArcCenterReversed },
+            { (4, 21), GraphicalPrimitiveReader.ConnectingEdge },
+            { (4, 22), GraphicalPrimitiveReader.HyperbolicArc },
+            { (4, 23), GraphicalPrimitiveReader.ParabolicArc },
+            { (4, 24), GraphicalPrimitiveReader.NonUniformBSpline },
+            { (4, 25), GraphicalPrimitiveReader.NonUniformRationalBSpline },
+            { (4, 26), GraphicalPrimitiveReader.Polybezier },
+            //{ (4, 27), GraphicalPrimitiveReader.Polysymbol },
+            { (4, 28), GraphicalPrimitiveReader.BitonalTile },
+            { (4, 29), GraphicalPrimitiveReader.Tile },
+
             // attribute elements [ISO/IEC 8632-3 8.7, Table 8]
-            { 5, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, AttributeReader.LineBundleIndex },
-                    { 2, AttributeReader.LineType },
-                    { 3, AttributeReader.LineWidth },
-                    { 4, AttributeReader.LineColor },
-                    { 5, AttributeReader.MarkerBundleIndex },
-                    { 6, AttributeReader.MarkerType },
-                    { 7, AttributeReader.MarkerSize },
-                    { 8, AttributeReader.MarkerColor },
-                    { 9, AttributeReader.TextBundleIndex },
-                    { 10, AttributeReader.TextFontIndex },
-                    { 11, AttributeReader.TextPrecision },
-                    { 12, AttributeReader.CharacterExpansionFactor },
-                    { 13, AttributeReader.CharacterSpacing },
-                    { 14, AttributeReader.TextColor },
-                    { 15, AttributeReader.CharacterHeight },
-                    { 16, AttributeReader.CharacterOrientation },
-                    { 17, AttributeReader.TextPath },
-                    { 18, AttributeReader.TextAlignment },
-                    { 19, AttributeReader.CharacterSetIndex },
-                    { 20, AttributeReader.AlternateCharacterSetIndex },
-                    { 21, AttributeReader.FillBundleIndex },
-                    { 22, AttributeReader.InteriorStyle },
-                    { 23, AttributeReader.FillColor },
-                    { 24, AttributeReader.HatchIndex },
-                    { 25, AttributeReader.PatternIndex },
-                    { 26, AttributeReader.EdgeBundleIndex },
-                    { 27, AttributeReader.EdgeType },
-                    { 28, AttributeReader.EdgeWidth },
-                    { 29, AttributeReader.EdgeColor },
-                    { 30, AttributeReader.EdgeVisibility },
-                    { 31, AttributeReader.FillReferencePoint },
-                    { 32, AttributeReader.PatternTable },
-                    { 33, AttributeReader.PatternSize },
-                    { 34, ReadColorTable },
-                    { 35, AttributeReader.AspectSourceFlags },
-                    { 36, AttributeReader.PickIdentifier },
-                    { 37, AttributeReader.LineCap },
-                    { 38, AttributeReader.LineJoin },
-                    { 39, AttributeReader.LineTypeContinuation },
-                    { 40, AttributeReader.LineTypeInitialOffset },
-                    //{ 41, ControlElementReader.TextScoreType },
-                    { 42, AttributeReader.RestrictedTextType },
-                    { 43, AttributeReader.InterpolatedInterior },
-                    { 44, AttributeReader.EdgeCap },
-                    { 45, AttributeReader.EdgeJoin },
-                    { 46, AttributeReader.EdgeTypeContinuation },
-                    { 47, AttributeReader.EdgeTypeInitialOffset },
-                    //{ 48, ControlElementReader.SymbolLibraryIndex },
-                    //{ 49, ControlElementReader.SymbolColor },
-                    //{ 50, ControlElementReader.SymbolSize },
-                    //{ 51, ControlElementReader.SymbolOrientation },
-                }
-            },
+            { (5, 1), AttributeReader.LineBundleIndex },
+            { (5, 2), AttributeReader.LineType },
+            { (5, 3), AttributeReader.LineWidth },
+            { (5, 4), AttributeReader.LineColor },
+            { (5, 5), AttributeReader.MarkerBundleIndex },
+            { (5, 6), AttributeReader.MarkerType },
+            { (5, 7), AttributeReader.MarkerSize },
+            { (5, 8), AttributeReader.MarkerColor },
+            { (5, 9), AttributeReader.TextBundleIndex },
+            { (5, 10), AttributeReader.TextFontIndex },
+            { (5, 11), AttributeReader.TextPrecision },
+            { (5, 12), AttributeReader.CharacterExpansionFactor },
+            { (5, 13), AttributeReader.CharacterSpacing },
+            { (5, 14), AttributeReader.TextColor },
+            { (5, 15), AttributeReader.CharacterHeight },
+            { (5, 16), AttributeReader.CharacterOrientation },
+            { (5, 17), AttributeReader.TextPath },
+            { (5, 18), AttributeReader.TextAlignment },
+            { (5, 19), AttributeReader.CharacterSetIndex },
+            { (5, 20), AttributeReader.AlternateCharacterSetIndex },
+            { (5, 21), AttributeReader.FillBundleIndex },
+            { (5, 22), AttributeReader.InteriorStyle },
+            { (5, 23), AttributeReader.FillColor },
+            { (5, 24), AttributeReader.HatchIndex },
+            { (5, 25), AttributeReader.PatternIndex },
+            { (5, 26), AttributeReader.EdgeBundleIndex },
+            { (5, 27), AttributeReader.EdgeType },
+            { (5, 28), AttributeReader.EdgeWidth },
+            { (5, 29), AttributeReader.EdgeColor },
+            { (5, 30), AttributeReader.EdgeVisibility },
+            { (5, 31), AttributeReader.FillReferencePoint },
+            { (5, 32), AttributeReader.PatternTable },
+            { (5, 33), AttributeReader.PatternSize },
+            { (5, 34), ReadColorTable },
+            { (5, 35), AttributeReader.AspectSourceFlags },
+            { (5, 36), AttributeReader.PickIdentifier },
+            { (5, 37), AttributeReader.LineCap },
+            { (5, 38), AttributeReader.LineJoin },
+            { (5, 39), AttributeReader.LineTypeContinuation },
+            { (5, 40), AttributeReader.LineTypeInitialOffset },
+            //{ (5, 41), ControlElementReader.TextScoreType },
+            { (5, 42), AttributeReader.RestrictedTextType },
+            { (5, 43), AttributeReader.InterpolatedInterior },
+            { (5, 44), AttributeReader.EdgeCap },
+            { (5, 45), AttributeReader.EdgeJoin },
+            { (5, 46), AttributeReader.EdgeTypeContinuation },
+            { (5, 47), AttributeReader.EdgeTypeInitialOffset },
+            //{ (5, 48), ControlElementReader.SymbolLibraryIndex },
+            //{ (5, 49), ControlElementReader.SymbolColor },
+            //{ (5, 50), ControlElementReader.SymbolSize },
+            //{ (5, 51), ControlElementReader.SymbolOrientation },
+
             // escape elements [ISO/IEC 8632-3 8.8, Table 9]
-            { 6, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, EscapeReader.Escape },
-                }
-            },
+            { (6, 1), EscapeReader.Escape },
+
             // external elements [ISO/IEC 8632-3 8.9, Table 10]
-            { 7, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, ExternalReader.Message },
-                    { 2, ExternalReader.ApplicationData },
-                }
-            },
+            { (7, 1), ExternalReader.Message },
+            { (7, 2), ExternalReader.ApplicationData },
+
             // segment control/segment attribute elements [ISO/IEC 8632-3 8.10, Table 11]
-            { 8, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, SegmentReader.CopySegment },
-                    { 2, SegmentReader.InheritanceFilter },
-                    { 3, SegmentReader.ClipInheritance },
-                    { 4, SegmentReader.SegmentTransformation },
-                    { 5, SegmentReader.SegmentHighlighting },
-                    { 6, SegmentReader.SegmentDisplayPriority },
-                    { 7, SegmentReader.SegmentPickPriority },
-                }
-            },
+            { (8, 1), SegmentReader.CopySegment },
+            { (8, 2), SegmentReader.InheritanceFilter },
+            { (8, 3), SegmentReader.ClipInheritance },
+            { (8, 4), SegmentReader.SegmentTransformation },
+            { (8, 5), SegmentReader.SegmentHighlighting },
+            { (8, 6), SegmentReader.SegmentDisplayPriority },
+            { (8, 7), SegmentReader.SegmentPickPriority },
+
             // application structure descriptor elements [ISO/IEC 8632-3 8.11, Table 12]
-            { 9, new Dictionary<int, Func<MetafileReader, CommandHeader, Command>>
-                {
-                    { 1, ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
-                }
-            },
+            { (9, 1), ApplicationStructureDescriptorReader.ApplicationStructureAttribute },
         };
 
         private BinaryReader _reader;
@@ -247,7 +216,7 @@ namespace CgmInfo.BinaryEncoding
         private Encoding _currentEncoding = GetDefaultEncoding();
 
         public MetafileReader(string fileName)
-            : base(fileName, true)
+            : base(fileName, isBinaryEncoding: true)
         {
         }
         private MetafileReader(MetafileReader parent, byte[] subBuffer)
@@ -259,7 +228,7 @@ namespace CgmInfo.BinaryEncoding
         public static bool IsBinaryMetafile(Stream stream)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream", "stream is null.");
+                throw new ArgumentNullException(nameof(stream));
             if (!stream.CanSeek)
                 throw new InvalidOperationException("Cannot seek the stream.");
 
@@ -284,8 +253,7 @@ namespace CgmInfo.BinaryEncoding
             if (commandHeader == null)
                 return null;
 
-            if (!_commandTable.TryGetValue(commandHeader.ElementClass, out var elementClassMap) || elementClassMap == null ||
-                !elementClassMap.TryGetValue(commandHeader.ElementId, out var commandHandler) || commandHandler == null)
+            if (!_commandTable.TryGetValue((commandHeader.ElementClass, commandHeader.ElementId), out var commandHandler) || commandHandler == null)
                 commandHandler = ReadUnsupportedElement;
 
             try
@@ -510,21 +478,19 @@ namespace CgmInfo.BinaryEncoding
         {
             // this is a memory stream set by ReadCommandHeader, which contains 1..n commands itself.
             // however, _reader is disposed after every run, so we need to keep this buffer around another way.
-            using (var replacementsStream = new MemoryStream())
-            {
-                reader._reader.BaseStream.CopyTo(replacementsStream);
-                replacementsStream.Position = 0;
+            using var replacementsStream = new MemoryStream();
+            reader._reader.BaseStream.CopyTo(replacementsStream);
+            replacementsStream.Position = 0;
 
-                var commands = new List<Command>();
-                while (true)
-                {
-                    var command = reader.ReadCommand(replacementsStream);
-                    if (command == null)
-                        break;
-                    commands.Add(command);
-                }
-                return new MetafileDefaultsReplacement(commands.ToArray());
+            var commands = new List<Command>();
+            while (true)
+            {
+                var command = reader.ReadCommand(replacementsStream);
+                if (command == null)
+                    break;
+                commands.Add(command);
             }
+            return new MetafileDefaultsReplacement(commands.ToArray());
         }
 
         public long Position
@@ -567,12 +533,12 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadInteger()
         {
             // integer is a signed integer at integer precision [ISO/IEC 8632-3 7, Table 1, I]
-            return ReadInteger(Descriptor.IntegerPrecision / 8, false);
+            return ReadInteger(Descriptor.IntegerPrecision / 8, unsigned: false);
         }
         internal int ReadInteger(int numBytes, bool unsigned)
         {
             if (numBytes < 1 || numBytes > 4)
-                throw new ArgumentOutOfRangeException("numBytes", numBytes, "Number of bytes must be between 1 and 4");
+                throw new ArgumentOutOfRangeException(nameof(numBytes), numBytes, "Number of bytes must be between 1 and 4");
             uint ret = 0;
             int signBit = 1 << ((numBytes * 8) - 1);
             int maxUnsignedValue = 1 << (numBytes * 8);
@@ -605,7 +571,7 @@ namespace CgmInfo.BinaryEncoding
         internal int ReadEnum()
         {
             // enum is a signed integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, E / Note 3]
-            return ReadInteger(2, false);
+            return ReadInteger(2, unsigned: false);
         }
         internal TEnum ReadEnum<TEnum>() where TEnum : Enum
         {
@@ -631,7 +597,7 @@ namespace CgmInfo.BinaryEncoding
             if (Descriptor.VdcType == VdcTypeSpecification.Integer)
             {
                 // value is a signed integer at VDC Integer Precision
-                return ReadInteger(Descriptor.VdcIntegerPrecision / 8, false);
+                return ReadInteger(Descriptor.VdcIntegerPrecision / 8, unsigned: false);
             }
             else if (Descriptor.VdcType == VdcTypeSpecification.Real)
             {
@@ -743,7 +709,7 @@ namespace CgmInfo.BinaryEncoding
         {
             // FIXME: color component in CIELAB/CIELUV/RGB-related is reals, not ints
             // color components are unsigned integers at direct color precision
-            return ReadInteger(colorPrecision, true);
+            return ReadInteger(colorPrecision, unsigned: true);
         }
 
         internal double ReadFixedPoint(int numBytes)
@@ -752,9 +718,9 @@ namespace CgmInfo.BinaryEncoding
             // real value is computed as "whole + (fraction / 2**exp)"
             // exp is the width of the fraction value
             // the "whole part" has the same form as a Signed Integer
-            int whole = ReadInteger(numBytes / 2, false);
+            int whole = ReadInteger(numBytes / 2, unsigned: false);
             // the "fractional part" has the same form as an Unsigned Integer
-            int fraction = ReadInteger(numBytes / 2, true);
+            int fraction = ReadInteger(numBytes / 2, unsigned: true);
             // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
             // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
             int exp = numBytes / 2 * 8;
@@ -787,31 +753,24 @@ namespace CgmInfo.BinaryEncoding
             return ReadReal(Descriptor.RealPrecision);
         }
 
-        private double ReadReal(RealPrecisionSpecification precision)
+        private double ReadReal(RealPrecisionSpecification precision) => precision switch
         {
-            switch (precision)
-            {
-                case RealPrecisionSpecification.FixedPoint32Bit:
-                    return ReadFixedPoint(4);
-                case RealPrecisionSpecification.FixedPoint64Bit:
-                    return ReadFixedPoint(8);
-                case RealPrecisionSpecification.FloatingPoint32Bit:
-                    return ReadFloatingPoint(4);
-                case RealPrecisionSpecification.FloatingPoint64Bit:
-                    return ReadFloatingPoint(8);
-            }
-            throw new NotSupportedException("The current Real Precision is not supported");
-        }
+            RealPrecisionSpecification.FixedPoint32Bit => ReadFixedPoint(4),
+            RealPrecisionSpecification.FixedPoint64Bit => ReadFixedPoint(8),
+            RealPrecisionSpecification.FloatingPoint32Bit => ReadFloatingPoint(4),
+            RealPrecisionSpecification.FloatingPoint64Bit => ReadFloatingPoint(8),
+            _ => throw new NotSupportedException("The current Real Precision is not supported"),
+        };
 
         internal int ReadIndex()
         {
             // index is a signed integer at index precision [ISO/IEC 8632-3 7, Table 1, IX]
-            return ReadInteger(Descriptor.IndexPrecision / 8, false);
+            return ReadInteger(Descriptor.IndexPrecision / 8, unsigned: false);
         }
         internal int ReadName()
         {
             // name is a signed integer at name precision [ISO/IEC 8632-3 7, Table 1, N]
-            return ReadInteger(Descriptor.NamePrecision / 8, false);
+            return ReadInteger(Descriptor.NamePrecision / 8, unsigned: false);
         }
         internal ushort ReadWord()
         {

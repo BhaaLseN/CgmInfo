@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Attributes
             ReferencePoint = referencePoint;
         }
 
-        public MetafilePoint ReferencePoint { get; private set; }
+        public MetafilePoint ReferencePoint { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

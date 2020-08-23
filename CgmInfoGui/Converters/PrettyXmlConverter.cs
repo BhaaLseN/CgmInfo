@@ -334,11 +334,9 @@ namespace CgmInfoGui.Converters
 
             if (value is XmlNode node)
             {
-                using (var reader = new XmlNodeReader(node))
-                {
-                    reader.MoveToContent();
-                    value = XElement.Load(reader, LoadOptions.PreserveWhitespace);
-                }
+                using var reader = new XmlNodeReader(node);
+                reader.MoveToContent();
+                value = XElement.Load(reader, LoadOptions.PreserveWhitespace);
             }
 
 

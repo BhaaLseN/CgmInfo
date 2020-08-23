@@ -15,6 +15,6 @@ namespace CgmInfo.Commands
             Elements = elements;
         }
 
-        public IEnumerable<StructuredDataElement> Elements { get; private set; }
+        public IEnumerable<StructuredDataElement> Elements { get; }
     }
 }

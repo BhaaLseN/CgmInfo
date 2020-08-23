@@ -16,9 +16,9 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             PointSequences = pointSequences;
         }
 
-        public int ContinuityIndicator { get; private set; }
-        public string Name { get; private set; }
-        public MetafilePoint[] PointSequences { get; private set; }
+        public int ContinuityIndicator { get; }
+        public string Name { get; }
+        public MetafilePoint[] PointSequences { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

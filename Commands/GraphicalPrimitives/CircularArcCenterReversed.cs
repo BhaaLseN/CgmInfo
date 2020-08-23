@@ -15,10 +15,10 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Radius = radius;
         }
 
-        public MetafilePoint Center { get; private set; }
-        public MetafilePoint Start { get; private set; }
-        public MetafilePoint End { get; private set; }
-        public double Radius { get; private set; }
+        public MetafilePoint Center { get; }
+        public MetafilePoint Start { get; }
+        public MetafilePoint End { get; }
+        public double Radius { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

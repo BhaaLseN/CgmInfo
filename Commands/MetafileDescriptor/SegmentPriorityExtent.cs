@@ -12,8 +12,8 @@ namespace CgmInfo.Commands.MetafileDescriptor
             MaximumPriorityValue = maxPriorityValue;
         }
 
-        public int MinimumPriorityValue { get; private set; }
-        public int MaximumPriorityValue { get; private set; }
+        public int MinimumPriorityValue { get; }
+        public int MaximumPriorityValue { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.PictureDescriptor
             MetricScalingFactor = metricScalingFactor;
         }
 
-        public ScalingModeType ScalingModeType { get; private set; }
-        public double MetricScalingFactor { get; private set; }
+        public ScalingModeType ScalingModeType { get; }
+        public double MetricScalingFactor { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

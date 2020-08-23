@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Attributes
             Path = path;
         }
 
-        public TextPathType Path { get; private set; }
+        public TextPathType Path { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

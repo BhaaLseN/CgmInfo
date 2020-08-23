@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -26,7 +27,7 @@ namespace CgmInfo.Utilities
         /// </returns>
         public static Dictionary<string, string> ParseDescription(string description)
         {
-            var ret = new Dictionary<string, string>();
+            var ret = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             var matches = DescriptionCommaSeparatedParameterRegex.Matches(description);
             if (matches.Count < 2)

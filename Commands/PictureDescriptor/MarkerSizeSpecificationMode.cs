@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.PictureDescriptor
             WidthSpecificationMode = widthSpecificationMode;
         }
 
-        public WidthSpecificationModeType WidthSpecificationMode { get; private set; }
+        public WidthSpecificationModeType WidthSpecificationMode { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

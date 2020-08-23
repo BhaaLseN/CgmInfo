@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Index = index;
         }
 
-        public int Index { get; private set; }
+        public int Index { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

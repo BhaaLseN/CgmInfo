@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Mode = mode;
         }
 
-        public TextPathMode Mode { get; private set; }
+        public TextPathMode Mode { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -24,11 +24,9 @@ namespace CgmInfoGui
             // don't load an existing layout if panels are missing; otherwise they wont be shown
             if (layout != null && layout.Root != null && !HasMissingPanels(layout))
             {
-                using (var reader = layout.CreateReader())
-                {
-                    var serializer = new XmlLayoutSerializer(_dockingManager);
-                    serializer.Deserialize(reader);
-                }
+                using var reader = layout.CreateReader();
+                var serializer = new XmlLayoutSerializer(_dockingManager);
+                serializer.Deserialize(reader);
             }
         }
 

@@ -17,12 +17,12 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Weights = weights;
         }
 
-        public int SplineOrder { get; private set; }
-        public MetafilePoint[] ControlPoints { get; private set; }
-        public double[] Knots { get; private set; }
-        public double Start { get; private set; }
-        public double End { get; private set; }
-        public double[] Weights { get; private set; }
+        public int SplineOrder { get; }
+        public MetafilePoint[] ControlPoints { get; }
+        public double[] Knots { get; }
+        public double Start { get; }
+        public double End { get; }
+        public double[] Weights { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

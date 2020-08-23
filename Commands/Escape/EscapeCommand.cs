@@ -15,9 +15,9 @@ namespace CgmInfo.Commands.Escape
             DataRecord = dataRecord;
         }
 
-        public int Identifier { get; private set; }
-        public string Name { get; private set; }
-        public StructuredDataRecord DataRecord { get; private set; }
+        public int Identifier { get; }
+        public string Name { get; }
+        public StructuredDataRecord DataRecord { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

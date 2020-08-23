@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Description = description;
         }
 
-        public string Description { get; private set; }
+        public string Description { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

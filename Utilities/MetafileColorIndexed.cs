@@ -4,7 +4,7 @@ namespace CgmInfo.Utilities
     {
         private readonly MetafileColor _actualColor;
 
-        public int Index { get; private set; }
+        public int Index { get; }
 
         public MetafileColorIndexed(int colorIndex, MetafileColor actualColor)
         {

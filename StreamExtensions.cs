@@ -8,7 +8,7 @@ namespace CgmInfo
         public static ushort ReadWord(this Stream stream)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream", "stream is null.");
+                throw new ArgumentNullException(nameof(stream));
 
             return (ushort)((stream.ReadByte() << 8) | stream.ReadByte());
         }

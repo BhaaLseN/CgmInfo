@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.Attributes
             Precision = precision;
         }
 
-        public TextPrecisionType Precision { get; private set; }
+        public TextPrecisionType Precision { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

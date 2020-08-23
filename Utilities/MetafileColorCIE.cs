@@ -5,10 +5,10 @@ namespace CgmInfo.Utilities
 {
     public class MetafileColorCIE : MetafileColor
     {
-        public ColorModel ColorModel { get; private set; }
-        public double Component1 { get; private set; }
-        public double Component2 { get; private set; }
-        public double Component3 { get; private set; }
+        public ColorModel ColorModel { get; }
+        public double Component1 { get; }
+        public double Component2 { get; }
+        public double Component3 { get; }
 
         public MetafileColorCIE(ColorModel colorModel, double component1, double component2, double component3)
         {

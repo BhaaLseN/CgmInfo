@@ -2,9 +2,9 @@ namespace CgmInfo.Utilities
 {
     public class MetafileColorRGB : MetafileColor
     {
-        public int Red { get; private set; }
-        public int Green { get; private set; }
-        public int Blue { get; private set; }
+        public int Red { get; }
+        public int Green { get; }
+        public int Blue { get; }
 
         public MetafileColorRGB(int red, int green, int blue)
         {

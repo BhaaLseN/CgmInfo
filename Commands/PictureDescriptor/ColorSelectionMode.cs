@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.PictureDescriptor
             ColorMode = colorMode;
         }
 
-        public ColorModeType ColorMode { get; private set; }
+        public ColorModeType ColorMode { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

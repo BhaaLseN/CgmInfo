@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Size = size;
         }
 
-        public double Size { get; private set; }
+        public double Size { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

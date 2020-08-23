@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.Segment
             Matrix = matrix;
         }
 
-        public int SegmentIdentifier { get; private set; }
-        public MetafileMatrix Matrix { get; private set; }
+        public int SegmentIdentifier { get; }
+        public MetafileMatrix Matrix { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -13,8 +13,8 @@ namespace CgmInfo.Commands
             ElementId = elementId;
         }
 
-        public int ElementId { get; private set; }
-        public int ElementClass { get; private set; }
+        public int ElementId { get; }
+        public int ElementClass { get; }
 
         public abstract void Accept<T>(ICommandVisitor<T> visitor, T parameter);
     }

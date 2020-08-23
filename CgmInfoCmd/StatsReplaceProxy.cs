@@ -52,16 +52,14 @@ namespace CgmInfoCmd
             if (File.Exists(statsFileName))
                 File.Delete(statsFileName);
 
-            using (var fileStream = File.OpenWrite(statsFileName))
-            using (var writer = new StreamWriter(fileStream))
+            using var fileStream = File.OpenWrite(statsFileName);
+            using var writer = new StreamWriter(fileStream);
+            foreach (var group in _stats.OrderBy(g => g.Key))
             {
-                foreach (var group in _stats.OrderBy(g => g.Key))
+                writer.WriteLine("{0}: {1} elements", group.Key, group.Value.Count);
+                foreach (var element in group.Value.OrderBy(g => g.Key))
                 {
-                    writer.WriteLine("{0}: {1} elements", group.Key, group.Value.Count);
-                    foreach (var element in group.Value.OrderBy(g => g.Key))
-                    {
-                        writer.WriteLine("\t{0}, {1}: {2}", group.Key, element.Key, element.Value);
-                    }
+                    writer.WriteLine("\t{0}, {1}: {2}", group.Key, element.Key, element.Value);
                 }
             }
         }

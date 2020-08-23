@@ -16,10 +16,10 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Closure = closure;
         }
 
-        public MetafilePoint Intermediate { get; private set; }
-        public MetafilePoint Start { get; private set; }
-        public MetafilePoint End { get; private set; }
-        public ArcClosureType Closure { get; set; }
+        public MetafilePoint Intermediate { get; }
+        public MetafilePoint Start { get; }
+        public MetafilePoint End { get; }
+        public ArcClosureType Closure { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

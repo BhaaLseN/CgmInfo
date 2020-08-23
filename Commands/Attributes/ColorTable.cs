@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.Attributes
             Colors = colors;
         }
 
-        public int StartIndex { get; private set; }
-        public MetafileColor[] Colors { get; private set; }
+        public int StartIndex { get; }
+        public MetafileColor[] Colors { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

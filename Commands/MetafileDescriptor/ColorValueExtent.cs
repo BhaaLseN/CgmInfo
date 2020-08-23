@@ -16,7 +16,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             : this()
         {
             if (colorSpace != ColorSpace.RGB && colorSpace != ColorSpace.CMYK)
-                throw new ArgumentOutOfRangeException("colorSpace", colorSpace, "Color Space must be either RGB or CMYK for use with this constructor");
+                throw new ArgumentOutOfRangeException(nameof(colorSpace), colorSpace, "Color Space must be either RGB or CMYK for use with this constructor");
             ColorSpace = colorSpace;
             Minimum = minimum;
             Maximum = maximum;
@@ -28,7 +28,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             : this()
         {
             if (colorSpace != ColorSpace.CIE)
-                throw new ArgumentOutOfRangeException("colorSpace", colorSpace, "Color Space must be CIE for use with this constructor");
+                throw new ArgumentOutOfRangeException(nameof(colorSpace), colorSpace, "Color Space must be CIE for use with this constructor");
             ColorSpace = colorSpace;
             FirstScale = firstScale;
             SecondScale = secondScale;
@@ -38,17 +38,17 @@ namespace CgmInfo.Commands.MetafileDescriptor
             ThirdOffset = thirdOffset;
         }
 
-        public ColorSpace ColorSpace { get; private set; }
+        public ColorSpace ColorSpace { get; }
         // for RGB and CMYK
-        public MetafileColor Minimum { get; private set; }
-        public MetafileColor Maximum { get; private set; }
+        public MetafileColor Minimum { get; }
+        public MetafileColor Maximum { get; }
         // for CIE*
-        public double FirstScale { get; set; }
-        public double SecondScale { get; set; }
-        public double ThirdScale { get; set; }
-        public double FirstOffset { get; set; }
-        public double SecondOffset { get; set; }
-        public double ThirdOffset { get; set; }
+        public double FirstScale { get; }
+        public double SecondScale { get; }
+        public double ThirdScale { get; }
+        public double FirstOffset { get; }
+        public double SecondOffset { get; }
+        public double ThirdOffset { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

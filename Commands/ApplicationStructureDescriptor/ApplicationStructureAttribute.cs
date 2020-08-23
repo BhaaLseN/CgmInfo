@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.ApplicationStructureDescriptor
 
         }
 
-        public string AttributeType { get; private set; }
-        public StructuredDataRecord DataRecord { get; private set; }
+        public string AttributeType { get; }
+        public StructuredDataRecord DataRecord { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

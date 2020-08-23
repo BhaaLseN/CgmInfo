@@ -11,7 +11,7 @@ namespace CgmInfo.Commands.Attributes
             Offset = offset;
         }
 
-        public double Offset { get; private set; }
+        public double Offset { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

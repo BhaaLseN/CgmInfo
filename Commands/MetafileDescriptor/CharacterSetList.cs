@@ -13,7 +13,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             Entries = entries;
         }
 
-        public IEnumerable<CharacterSetListEntry> Entries { get; private set; }
+        public IEnumerable<CharacterSetListEntry> Entries { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {
@@ -28,7 +28,7 @@ namespace CgmInfo.Commands.MetafileDescriptor
             DesignationSequenceTail = designationSequenceTail;
         }
 
-        public CharacterSetType CharacterSetType { get; private set; }
-        public string DesignationSequenceTail { get; private set; }
+        public CharacterSetType CharacterSetType { get; }
+        public string DesignationSequenceTail { get; }
     }
 }

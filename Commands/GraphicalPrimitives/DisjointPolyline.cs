@@ -12,7 +12,7 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Points = points;
         }
 
-        public MetafilePoint[] Points { get; private set; }
+        public MetafilePoint[] Points { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

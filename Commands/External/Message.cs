@@ -13,8 +13,8 @@ namespace CgmInfo.Commands.External
             MessageString = messageString;
         }
 
-        public ActionRequired ActionRequired { get; private set; }
-        public string MessageString { get; private set; }
+        public ActionRequired ActionRequired { get; }
+        public string MessageString { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

@@ -17,12 +17,12 @@ namespace CgmInfo.Commands.GraphicalPrimitives
             Colors = colors;
         }
 
-        public MetafilePoint CornerPointP { get; private set; }
-        public MetafilePoint CornerPointQ { get; private set; }
-        public MetafilePoint CornerPointR { get; private set; }
-        public int NX { get; private set; }
-        public int NY { get; private set; }
-        public MetafileColor[] Colors { get; private set; }
+        public MetafilePoint CornerPointP { get; }
+        public MetafilePoint CornerPointQ { get; }
+        public MetafilePoint CornerPointR { get; }
+        public int NX { get; }
+        public int NY { get; }
+        public MetafileColor[] Colors { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

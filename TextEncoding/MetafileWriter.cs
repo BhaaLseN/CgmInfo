@@ -13,65 +13,50 @@ namespace CgmInfo.TextEncoding
     {
         private const char HardSeparator = ',';
 
-        private readonly Dictionary<int, Dictionary<int, Action<MetafileWriter>>> _indentChangeBefore = new Dictionary<int, Dictionary<int, Action<MetafileWriter>>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeBefore = new Dictionary<(int, int), Action<MetafileWriter>>
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
-            { 0, new Dictionary<int, Action<MetafileWriter>>
-                {
-                    { 2, DecreaseLevel },
-                    { 4, DecreaseLevel },
-                    { 5, DecreaseLevel },
-                    { 7, DecreaseLevel },
-                    { 9, DecreaseLevel },
-                    { 14, DecreaseLevel },
-                    { 16, DecreaseLevel },
-                    { 18, DecreaseLevel },
-                    { 20, DecreaseLevel },
-                    { 22, DecreaseLevel },
-                    { 23, DecreaseLevel },
-                }
-            },
+            { (0, 2), DecreaseLevel },
+            { (0, 4), DecreaseLevel },
+            { (0, 5), DecreaseLevel },
+            { (0, 7), DecreaseLevel },
+            { (0, 9), DecreaseLevel },
+            { (0, 14), DecreaseLevel },
+            { (0, 16), DecreaseLevel },
+            { (0, 18), DecreaseLevel },
+            { (0, 20), DecreaseLevel },
+            { (0, 22), DecreaseLevel },
+            { (0, 23), DecreaseLevel },
         };
-        private readonly Dictionary<int, Dictionary<int, Action<MetafileWriter>>> _indentChangeAfter = new Dictionary<int, Dictionary<int, Action<MetafileWriter>>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeAfter = new Dictionary<(int, int), Action<MetafileWriter>>
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
-            { 0, new Dictionary<int, Action<MetafileWriter>>
-                {
-                    { 1, IncreaseLevel },
-                    { 3, IncreaseLevel },
-                    { 4, IncreaseLevel },
-                    { 6, IncreaseLevel },
-                    { 8, IncreaseLevel },
-                    { 13, IncreaseLevel },
-                    { 15, IncreaseLevel },
-                    { 17, IncreaseLevel },
-                    { 19, IncreaseLevel },
-                    { 21, IncreaseLevel },
-                    { 22, IncreaseLevel },
-                }
-            },
+            { (0, 1), IncreaseLevel },
+            { (0, 3), IncreaseLevel },
+            { (0, 4), IncreaseLevel },
+            { (0, 6), IncreaseLevel },
+            { (0, 8), IncreaseLevel },
+            { (0, 13), IncreaseLevel },
+            { (0, 15), IncreaseLevel },
+            { (0, 17), IncreaseLevel },
+            { (0, 19), IncreaseLevel },
+            { (0, 21), IncreaseLevel },
+            { (0, 22), IncreaseLevel },
         };
-        private readonly Dictionary<int, Dictionary<int, Action<MetafileWriter, Command>>> _commandHandlerReplacement = new Dictionary<int, Dictionary<int, Action<MetafileWriter, Command>>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter, Command>> _commandHandlerReplacement = new Dictionary<(int, int), Action<MetafileWriter, Command>>
         {
             // metafile descriptor elements [ISO/IEC 8632-3 8.3, Table 4]
-            { 1, new Dictionary<int, Action<MetafileWriter, Command>>
-                {
-                    { 4, WriteIntegerPrecision },
-                    { 5, WriteRealPrecision },
-                    { 6, WriteIndexPrecision },
-                    { 7, WriteColorPrecision },
-                    { 8, WriteColorIndexPrecision },
-                    { 11, WriteMetafileElementsList },
-                    { 16, WriteNamePrecision },
-                }
-            },
+            { (1, 4), WriteIntegerPrecision },
+            { (1, 5), WriteRealPrecision },
+            { (1, 6), WriteIndexPrecision },
+            { (1, 7), WriteColorPrecision },
+            { (1, 8), WriteColorIndexPrecision },
+            { (1, 11), WriteMetafileElementsList },
+            { (1, 16), WriteNamePrecision },
+
             // control elements [ISO/IEC 8632-3 8.5, Table 6]
-            { 3, new Dictionary<int, Action<MetafileWriter, Command>>
-                {
-                    { 1, WriteVdcIntegerPrecision },
-                    { 2, WriteVdcRealPrecision },
-                }
-            },
+            { (3, 1), WriteVdcIntegerPrecision },
+            { (3, 2), WriteVdcRealPrecision },
         };
 
         public string IndentSequence { get; set; } = " ";
@@ -106,8 +91,8 @@ namespace CgmInfo.TextEncoding
                 return;
             }
 
-            if (_indentChangeBefore.TryGetValue(command.ElementClass, out var indentForClassBefore) && indentForClassBefore != null &&
-                indentForClassBefore.TryGetValue(command.ElementId, out var changeIndentBefore) && changeIndentBefore != null)
+            var classId = (command.ElementClass, command.ElementId);
+            if (_indentChangeBefore.TryGetValue(classId, out var changeIndentBefore) && changeIndentBefore != null)
             {
                 changeIndentBefore(this);
             }
@@ -115,8 +100,7 @@ namespace CgmInfo.TextEncoding
             WriteIndent();
             _writer.Write(elementName);
 
-            if (_commandHandlerReplacement.TryGetValue(command.ElementClass, out var replacementsForClass) && replacementsForClass != null &&
-                replacementsForClass.TryGetValue(command.ElementId, out var commandHandlerReplacement) && commandHandlerReplacement != null)
+            if (_commandHandlerReplacement.TryGetValue(classId, out var commandHandlerReplacement) && commandHandlerReplacement != null)
             {
                 commandHandlerReplacement(this, command);
             }
@@ -128,8 +112,7 @@ namespace CgmInfo.TextEncoding
             // TODO: support '/' as alternate terminator
             _writer.WriteLine(';');
 
-            if (_indentChangeAfter.TryGetValue(command.ElementClass, out var indentForClassAfter) && indentForClassAfter != null &&
-                indentForClassAfter.TryGetValue(command.ElementId, out var changeIndentAfter) && changeIndentAfter != null)
+            if (_indentChangeAfter.TryGetValue(classId, out var changeIndentAfter) && changeIndentAfter != null)
             {
                 changeIndentAfter(this);
             }

@@ -4,8 +4,15 @@ using System.Windows.Media;
 
 namespace CgmInfoGui.Visuals
 {
-    public abstract class VisualBase
+    public abstract class VisualBase : NotifyPropertyChangedBase
     {
+        private VisualContainer _parentContainer;
+        public VisualContainer ParentContainer
+        {
+            get { return _parentContainer; }
+            internal set { SetField(ref _parentContainer, value); }
+        }
+
         protected internal abstract void DrawTo(DrawingContext drawingContext, VisualContext visualContext);
         private static readonly Lazy<Pen> Black = new Lazy<Pen>(() =>
         {

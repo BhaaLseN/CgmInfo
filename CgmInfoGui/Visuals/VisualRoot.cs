@@ -13,6 +13,9 @@ namespace CgmInfoGui.Visuals
             get { return _visuals; }
         }
 
+        public VisualContainer NoContainer { get; } = new VisualContainer("(no container)");
+        public List<VisualContainer> Containers { get; } = new List<VisualContainer>();
+
         public Rect VdcExtent { get; set; } = Rect.Empty;
         public Rect GeometryExtent { get; set; } = Rect.Empty;
 
@@ -20,6 +23,10 @@ namespace CgmInfoGui.Visuals
         public double DirectionX { get; set; } = 1.0;
         public double DirectionY { get; set; } = 1.0;
 
+        public VisualRoot()
+        {
+            Containers.Add(NoContainer);
+        }
         #region IEnumerable/ICollection
 
         public int Count => _visuals.Count;
@@ -28,6 +35,7 @@ namespace CgmInfoGui.Visuals
         public void Add(VisualBase item)
         {
             _visuals.Add(item);
+            item.ParentContainer = NoContainer;
         }
 
         public void Clear() => _visuals.Clear();

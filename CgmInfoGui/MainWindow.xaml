@@ -9,6 +9,7 @@
         xmlns:conv="clr-namespace:CgmInfoGui.Converters"
         xmlns:mvm="clr-namespace:CgmInfoGui.ViewModels"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:visual="clr-namespace:CgmInfoGui.Visuals"
         mc:Ignorable="d"
         Title="CGM Info" Height="480" Width="640" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
@@ -136,50 +137,88 @@
                                 </FlowDocumentReader>
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Visuals" ContentId="Visuals" CanClose="False">
-                                <xctk:Zoombox IsUsingScrollBars="True" ZoomModifiers="None" DragModifiers="None">
-                                    <xctk:Zoombox.Resources>
-                                        <Style x:Key="{x:Type xctk:Zoombox}" BasedOn="{StaticResource {x:Type xctk:Zoombox}}" TargetType="{x:Type xctk:Zoombox}">
-                                            <Style.Triggers>
-                                                <!--
-                                                Copied straight from WPF Toolkit source.
-                                                I don't want any cursors by default when no ZoomModifier and DragModifier are set;
-                                                but they don't seem to care about that case.
-                                                Setting Drag/Zoom setters to not use any particular cursor works, but for some reason
-                                                I had to include all of the setters here; or none would trigger.
-                                                -->
-                                                <!-- NOTE:  Order matters!
-                                                  These triggers should be ordered according to the KeyModifiers assigned to
-                                                  each operation. If one operation requires Ctrl and another requires
-                                                  Ctrl+Shift, the trigger for the operation requiring both modifier keys
-                                                  should appear *after* the trigger for the operation requiring only one. -->
-                                                <Trigger Property="AreDragModifiersActive" Value="True">
-                                                    <Setter Property="Cursor" Value="{x:Null}" />
-                                                </Trigger>
-                                                <Trigger Property="AreZoomToSelectionModifiersActive" Value="True">
-                                                    <Setter Property="Cursor" Value="Cross" />
-                                                </Trigger>
-                                                <Trigger Property="AreZoomModifiersActive" Value="True">
-                                                    <Setter Property="Cursor" Value="{x:Null}" />
-                                                </Trigger>
-                                                <Trigger Property="AreRelativeZoomModifiersActive" Value="True">
-                                                    <Setter Property="Cursor" Value="{x:Static xctk:ZoomboxCursors.ZoomRelative}" />
-                                                </Trigger>
-                                                <!-- The IsDraggingContent and IsSelectingRegion triggers should always be last. -->
-                                                <Trigger Property="IsDraggingContent" Value="True">
-                                                    <Setter Property="Cursor" Value="SizeAll" />
-                                                </Trigger>
-                                                <Trigger Property="IsSelectingRegion" Value="True">
-                                                    <Setter Property="Cursor" Value="Cross" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </xctk:Zoombox.Resources>
-                                    <ctrl:VisualCanvas DataContext="{Binding VisualRoot}" ItemsSource="{Binding Visuals}"
-                                                       VdcExtent="{Binding VdcExtent}"
-                                                       GeometryExtent="{Binding GeometryExtent}"
-                                                       DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
-                                                       Margin="10"/>
-                                </xctk:Zoombox>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5px"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TreeView ItemsSource="{Binding VisualRoot.Containers}">
+                                        <TreeView.Resources>
+                                            <HierarchicalDataTemplate DataType="{x:Type visual:VisualContainer}" ItemsSource="{Binding Children}">
+                                                <CheckBox IsChecked="{Binding IsVisible}">
+                                                    <CheckBox.Content>
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} ({1} visual, {2} total)">
+                                                                    <MultiBinding.Bindings>
+                                                                        <Binding Path="ContainerName"/>
+                                                                        <Binding Path="VisualCount"/>
+                                                                        <Binding Path="TotalCount"/>
+                                                                    </MultiBinding.Bindings>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </CheckBox.Content>
+                                                    <CheckBox.Style>
+                                                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding TotalCount}" Value="0">
+                                                                    <Setter Property="TextBlock.FontStyle" Value="Italic"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </CheckBox.Style>
+                                                </CheckBox>
+                                            </HierarchicalDataTemplate>
+                                        </TreeView.Resources>
+                                    </TreeView>
+                                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+                                    <xctk:Zoombox Grid.Column="2" IsUsingScrollBars="True" ZoomModifiers="None" DragModifiers="None">
+                                        <xctk:Zoombox.Resources>
+                                            <Style x:Key="{x:Type xctk:Zoombox}" BasedOn="{StaticResource {x:Type xctk:Zoombox}}" TargetType="{x:Type xctk:Zoombox}">
+                                                <Style.Triggers>
+                                                    <!--
+                                                    Copied straight from WPF Toolkit source.
+                                                    I don't want any cursors by default when no ZoomModifier and DragModifier are set;
+                                                    but they don't seem to care about that case.
+                                                    Setting Drag/Zoom setters to not use any particular cursor works, but for some reason
+                                                    I had to include all of the setters here; or none would trigger.
+                                                    -->
+                                                    <!-- NOTE:  Order matters!
+                                                      These triggers should be ordered according to the KeyModifiers assigned to
+                                                      each operation. If one operation requires Ctrl and another requires
+                                                      Ctrl+Shift, the trigger for the operation requiring both modifier keys
+                                                      should appear *after* the trigger for the operation requiring only one. -->
+                                                    <Trigger Property="AreDragModifiersActive" Value="True">
+                                                        <Setter Property="Cursor" Value="{x:Null}" />
+                                                    </Trigger>
+                                                    <Trigger Property="AreZoomToSelectionModifiersActive" Value="True">
+                                                        <Setter Property="Cursor" Value="Cross" />
+                                                    </Trigger>
+                                                    <Trigger Property="AreZoomModifiersActive" Value="True">
+                                                        <Setter Property="Cursor" Value="{x:Null}" />
+                                                    </Trigger>
+                                                    <Trigger Property="AreRelativeZoomModifiersActive" Value="True">
+                                                        <Setter Property="Cursor" Value="{x:Static xctk:ZoomboxCursors.ZoomRelative}" />
+                                                    </Trigger>
+                                                    <!-- The IsDraggingContent and IsSelectingRegion triggers should always be last. -->
+                                                    <Trigger Property="IsDraggingContent" Value="True">
+                                                        <Setter Property="Cursor" Value="SizeAll" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelectingRegion" Value="True">
+                                                        <Setter Property="Cursor" Value="Cross" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </xctk:Zoombox.Resources>
+                                        <ctrl:VisualCanvas DataContext="{Binding VisualRoot}" ItemsSource="{Binding Visuals}"
+                                                           VdcExtent="{Binding VdcExtent}"
+                                                           GeometryExtent="{Binding GeometryExtent}"
+                                                           DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
+                                                           Margin="10"/>
+                                    </xctk:Zoombox>
+                                </Grid>
                             </xcad:LayoutDocument>
                             <xcad:LayoutDocument Title="Hotspots" ContentId="Hotspots" CanClose="False">
                                 <Grid>

@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Media;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
+using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfoGui.ViewModels.Nodes;
 using CgmInfoGui.Visuals;
 using CgmTextAlignment = CgmInfo.Commands.Attributes.TextAlignment;
 
@@ -10,6 +13,11 @@ namespace CgmInfoGui.Traversal;
 
 public class GraphicalElementContext
 {
+    public GraphicalElementContext()
+    {
+        CurrentLevel = Visuals.NoContainer;
+    }
+
     public TextVisual? LastText { get; set; }
     public VisualRoot Visuals { get; } = new();
     public LineAttributeValues LineAttributes { get; } = new();
@@ -18,6 +26,35 @@ public class GraphicalElementContext
     public void Add(VisualBase visual)
     {
         Visuals.Add(visual);
+        visual.ParentContainer = CurrentLevel;
+        CurrentLevel.VisualCount++;
+    }
+
+    public VisualContainer CurrentLevel { get; private set; }
+    private readonly Stack<VisualContainer> _levelStack = new();
+    public void BeginLevel(BeginApplicationStructure beginApplicationStructure)
+    {
+        var newLevel = new VisualContainer(new ApplicationStructureNode(beginApplicationStructure));
+        if (CurrentLevel == Visuals.NoContainer)
+            Visuals.Containers.Add(newLevel);
+        else
+            CurrentLevel.Add(newLevel);
+        _levelStack.Push(CurrentLevel);
+        CurrentLevel = newLevel;
+    }
+
+    public void UpdateLevelAttributes(ApplicationStructureAttribute applicationStructureAttribute)
+    {
+        CurrentLevel.ApsViewModel?.Add(new APSAttributeNode(applicationStructureAttribute));
+    }
+
+    public void EndLevel()
+    {
+        CurrentLevel.UpdateContainerName();
+        if (_levelStack.Count > 0)
+            CurrentLevel = _levelStack.Pop();
+        else
+            CurrentLevel = Visuals.NoContainer;
     }
     public void SetMaximumExtent(Point lowerLeft, Point upperRight)
     {

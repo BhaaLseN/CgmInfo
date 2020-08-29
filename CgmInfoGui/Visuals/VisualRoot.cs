@@ -10,6 +10,9 @@ public class VisualRoot : ICollection<VisualBase>, IEnumerable<VisualBase>
 
     public IEnumerable<VisualBase> Visuals => _visuals;
 
+    public VisualContainer NoContainer { get; } = new VisualContainer("(no container)");
+    public List<VisualContainer> Containers { get; } = [];
+
     public Rect VdcExtent { get; set; }
     public Rect GeometryExtent { get; set; }
 
@@ -17,12 +20,20 @@ public class VisualRoot : ICollection<VisualBase>, IEnumerable<VisualBase>
     public double DirectionX { get; set; } = 1.0;
     public double DirectionY { get; set; } = 1.0;
 
+    public VisualRoot()
+    {
+        Containers.Add(NoContainer);
+    }
     #region IEnumerable/ICollection
 
     public int Count => _visuals.Count;
     public bool IsReadOnly => ((ICollection<VisualBase>)_visuals).IsReadOnly;
 
-    public void Add(VisualBase item) => _visuals.Add(item);
+    public void Add(VisualBase item)
+    {
+        _visuals.Add(item);
+        item.ParentContainer = NoContainer;
+    }
 
     public void Clear() => _visuals.Clear();
     public bool Contains(VisualBase item) => _visuals.Contains(item);

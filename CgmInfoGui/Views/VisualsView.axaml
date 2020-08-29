@@ -6,17 +6,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:paz="using:Avalonia.Controls.PanAndZoom"
              xmlns:vm="using:CgmInfoGui.ViewModels"
+             xmlns:visuals="using:CgmInfoGui.Visuals"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
              x:DataType="vm:VisualsViewModel">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <paz:ZoomBorder EnablePan="True" EnableZoom="True">
-            <controls:VisualCanvas Margin="10"
-                                   DataContext="{Binding VisualRoot}"
-                                   DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
-                                   GeometryExtent="{Binding GeometryExtent}"
-                                   VdcExtent="{Binding VdcExtent}" />
-        </paz:ZoomBorder>
+  <Grid ColumnDefinitions="*, 5, 3*">
+    <TreeView ItemsSource="{Binding VisualRoot.Containers}" Grid.Column="0">
+      <TreeView.DataTemplates>
+        <TreeDataTemplate DataType="visuals:VisualContainer" ItemsSource="{Binding Children}">
+          <CheckBox IsChecked="{Binding IsVisible}">
+            <CheckBox.Content>
+              <TextBlock Classes.empty="{Binding !TotalCount}">
+                <TextBlock.Styles>
+                  <Style Selector="TextBlock.empty">
+                    <Setter Property="FontStyle" Value="Italic"/>
+                  </Style>
+                </TextBlock.Styles>
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}{0} ({1} visual, {2} total)">
+                    <Binding Path="ContainerName"/>
+                    <Binding Path="VisualCount"/>
+                    <Binding Path="TotalCount"/>
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+            </CheckBox.Content>
+          </CheckBox>
+        </TreeDataTemplate>
+      </TreeView.DataTemplates>
+    </TreeView>
+    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="2">
+      <paz:ZoomBorder EnablePan="True" EnableZoom="True">
+        <controls:VisualCanvas Margin="10"
+                               DataContext="{Binding VisualRoot}"
+                               DirectionX="{Binding DirectionX}" DirectionY="{Binding DirectionY}"
+                               GeometryExtent="{Binding GeometryExtent}"
+                               VdcExtent="{Binding VdcExtent}" />
+      </paz:ZoomBorder>
     </ScrollViewer>
+  </Grid>
 </UserControl>

@@ -180,18 +180,28 @@ namespace CgmInfoGui.Controls
             drawingContext.DrawRectangle(GeometryExtentBrush, GeometryExtentPen, GeometryExtent);
             base.OnRender(drawingContext);
         }
+    }
 
-        private sealed class DrawingVisualX : DrawingVisual
+    public sealed class DrawingVisualX : DrawingVisual
+    {
+        public DrawingVisualX(VisualBase visual, VisualContext visualContext)
         {
-            public DrawingVisualX(VisualBase visual, VisualContext visualContext)
-            {
-                Visual = visual;
+            Visual = visual;
+            visual.ParentContainer.PropertyChanged += ParentContainer_PropertyChanged;
 
-                var drawingContext = RenderOpen();
-                visual.DrawTo(drawingContext, visualContext);
-                drawingContext.Close();
-            }
-            public VisualBase Visual { get; }
+            var drawingContext = RenderOpen();
+            visual.DrawTo(drawingContext, visualContext);
+            drawingContext.Close();
         }
+
+        private void ParentContainer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(VisualContainer.IsVisible))
+                return;
+
+            VisualOpacity = Visual.ParentContainer.IsVisible.GetValueOrDefault(defaultValue: true) ? 1.0 : 0.0;
+        }
+
+        public VisualBase Visual { get; }
     }
 }

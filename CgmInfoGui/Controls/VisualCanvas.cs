@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -143,9 +144,23 @@ public class VisualCanvas : ItemsControl
     }
     private void UpdateVisuals(IEnumerable<VisualBase> list)
     {
+        if (_visuals is not null)
+        {
+            foreach (var visual in _visuals.Where(v => v.ParentContainer is not null))
+                visual.ParentContainer!.PropertyChanged -= VisualParentContainer_PropertyChanged;
+        }
+
         _visuals = [.. list];
+        foreach (var visual in _visuals.Where(v => v.ParentContainer is not null))
+            visual.ParentContainer!.PropertyChanged += VisualParentContainer_PropertyChanged;
+
         _needsRedraw = true;
         InvalidateVisual();
+    }
+    private void VisualParentContainer_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(VisualContainer.IsVisible))
+            InvalidateVisual();
     }
     private void DrawVisuals()
     {
@@ -174,7 +189,7 @@ public class VisualCanvas : ItemsControl
 
         DrawVisuals();
 
-        foreach (var item in Items.OfType<DrawingVisual>())
+        foreach (var item in Items.OfType<DrawingVisual>().Where(v => v.Visual.ParentContainer?.IsVisible != false))
             item.Drawing.Draw(drawingContext);
 
         drawingContext.DrawRectangle(VdcExtentBrush, VdcExtentPen, VdcExtent);

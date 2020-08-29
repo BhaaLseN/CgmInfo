@@ -1,6 +1,8 @@
 using System.Linq;
 using Avalonia;
+using CgmInfo.Commands.ApplicationStructureDescriptor;
 using CgmInfo.Commands.Attributes;
+using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
 using CgmInfo.Commands.GraphicalPrimitives;
 using CgmInfo.Commands.MetafileDescriptor;
@@ -12,6 +14,19 @@ namespace CgmInfoGui.Traversal;
 
 public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementContext>
 {
+    public override void AcceptDelimiterBeginApplicationStructure(BeginApplicationStructure beginApplicationStructure, GraphicalElementContext parameter)
+    {
+        parameter.BeginLevel(beginApplicationStructure);
+    }
+    public override void AcceptDelimiterEndApplicationStructure(EndApplicationStructure endApplicationStructure, GraphicalElementContext parameter)
+    {
+        parameter.EndLevel();
+    }
+    public override void AcceptApplicationStructureDescriptorAttribute(ApplicationStructureAttribute applicationStructureAttribute, GraphicalElementContext parameter)
+    {
+        parameter.UpdateLevelAttributes(applicationStructureAttribute);
+    }
+
     public override void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, GraphicalElementContext parameter)
     {
         parameter.SetMaximumExtent(vdcExtent.FirstCorner.ToPoint(), vdcExtent.SecondCorner.ToPoint());

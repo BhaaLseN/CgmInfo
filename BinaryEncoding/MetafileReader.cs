@@ -223,6 +223,7 @@ namespace CgmInfo.BinaryEncoding
             : base(parent)
         {
             _reader = new BinaryReader(new MemoryStream(subBuffer));
+            _currentEncoding = parent._currentEncoding;
         }
 
         public static bool IsBinaryMetafile(Stream stream)

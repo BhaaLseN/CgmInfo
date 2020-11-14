@@ -19,6 +19,7 @@ namespace CgmInfo.BinaryEncoding
         private MetafileWriter(MetafileWriter parent, MemoryStream buffer)
             : base(parent, buffer)
         {
+            _currentEncoding = parent._currentEncoding;
         }
 
         protected override void WriteInternal(Command command, Action<BaseMetafileWriter, Command> commandHandler)

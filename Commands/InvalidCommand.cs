@@ -33,7 +33,7 @@ namespace CgmInfo.Commands
         public bool IsTextEncoding => ElementClass == ReservedElementClass_Text && ElementId == ReservedElementId_Text;
         /// <summary>Element Name in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>
-        public string ElementName { get; }
+        public string? ElementName { get; }
         /// <summary>The <see cref="Exception"/> that occurred when trying to read this particular command.</summary>
         public Exception Exception { get; }
 

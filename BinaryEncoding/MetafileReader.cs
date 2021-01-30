@@ -218,6 +218,7 @@ namespace CgmInfo.BinaryEncoding
         public MetafileReader(string fileName)
             : base(fileName, isBinaryEncoding: true)
         {
+            _reader = null!;
         }
         private MetafileReader(MetafileReader parent, byte[] subBuffer)
             : base(parent)
@@ -241,7 +242,7 @@ namespace CgmInfo.BinaryEncoding
             // check whether the first two bytes are 0/1 (BEGIN METAFILE)
             return elementClass == 0 && elementId == 1;
         }
-        protected override Command ReadCommand(Stream stream)
+        protected override Command? ReadCommand(Stream stream)
         {
             // stop at EOF; or when we cannot at least read another command header
             if (stream.Position + 2 > stream.Length)
@@ -286,7 +287,7 @@ namespace CgmInfo.BinaryEncoding
             return result;
         }
 
-        private CommandHeader ReadCommandHeader(Stream stream)
+        private CommandHeader? ReadCommandHeader(Stream stream)
         {
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
             if (stream.Position % 2 == 1)
@@ -359,7 +360,7 @@ namespace CgmInfo.BinaryEncoding
         private static Command ReadBeginMetafile(MetafileReader reader, CommandHeader commandHeader)
         {
             var result = DelimiterElementReader.BeginMetafile(reader, commandHeader);
-            reader._insideMetafile = result != null;
+            reader._insideMetafile = true;
             return result;
         }
         private static Command ReadEndMetafile(MetafileReader reader, CommandHeader commandHeader)

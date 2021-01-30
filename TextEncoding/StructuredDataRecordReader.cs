@@ -24,7 +24,7 @@ namespace CgmInfo.TextEncoding
         {
             var type = ReadDataTypeIndex(reader);
             if ((int)type == -1)
-                return null;
+                return null!;
 
             int count = reader.ReadInteger();
             object[] values = new object[count];
@@ -44,7 +44,7 @@ namespace CgmInfo.TextEncoding
             DataTypeIndex.Enumerated => ReadEnum(reader),
             DataTypeIndex.Integer => ReadInteger(reader),
             // TODO: what exactly does reserved mean in terms of advancing position?
-            DataTypeIndex.Reserved => null,
+            DataTypeIndex.Reserved => null!,
             DataTypeIndex.SignedInteger8bit => ReadSigned8BitInteger(reader),
             DataTypeIndex.SignedInteger16bit => ReadSigned16BitInteger(reader),
             DataTypeIndex.SignedInteger32bit => ReadSigned32BitInteger(reader),
@@ -60,8 +60,8 @@ namespace CgmInfo.TextEncoding
             DataTypeIndex.UnsignedInteger16bit => ReadUnsigned16BitInteger(reader),
             DataTypeIndex.BitStream => ReadBitStream(reader),
             // FIXME: how are those implemented?
-            DataTypeIndex.ColorList => null,
-            _ => null,
+            DataTypeIndex.ColorList => null!,
+            _ => null!,
         };
 
         protected virtual StructuredDataRecord ReadStructuredDataRecord(MetafileReader reader) => reader.ReadStructuredDataRecord();

@@ -81,7 +81,7 @@ namespace CgmInfo.TextEncoding
         }
         protected override void WriteInternal(Command command, Action<BaseMetafileWriter, Command> commandHandler)
         {
-            string elementName = TextTokenAttribute.GetToken(command);
+            string? elementName = TextTokenAttribute.GetToken(command);
             if (string.IsNullOrWhiteSpace(elementName))
             {
                 // we didn't find this command in the table; means we don't support it (yet).

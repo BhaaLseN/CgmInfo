@@ -302,7 +302,7 @@ namespace CgmInfo.TextEncoding
 
                 default: // >6 reserved for registered values, >9 for values known in ISO/IEC 9973 at the time of writing
                     // TODO: as defined in the Register, for type>9.
-                    return null;
+                    return null!;
             }
         }
 

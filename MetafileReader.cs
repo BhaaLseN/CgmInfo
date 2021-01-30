@@ -10,7 +10,7 @@ namespace CgmInfo
     public abstract class MetafileReader : IDisposable
     {
         private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
-        private readonly FileStream _fileStream;
+        private readonly FileStream? _fileStream;
 
         public MetafileDescriptor Descriptor { get; } = new MetafileDescriptor();
         public MetafileProperties Properties { get; }
@@ -28,7 +28,7 @@ namespace CgmInfo
             Properties = other.Properties;
         }
 
-        public Command Read()
+        public Command? Read()
         {
             if (_fileStream == null)
                 throw new InvalidOperationException("Attempted to read a Command from a Sub-Buffer reader.");
@@ -38,7 +38,7 @@ namespace CgmInfo
             return command;
         }
 
-        protected abstract Command ReadCommand(Stream stream);
+        protected abstract Command? ReadCommand(Stream stream);
 
         public static MetafileReader Create(string fileName)
         {

@@ -1,37 +1,44 @@
 using System;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Proxies;
+using System.Reflection;
 using CgmInfo.Commands;
 using CgmInfo.Traversal;
 using CgmInfoGui.ViewModels.Nodes;
 
 namespace CgmInfoGui.Traversal
 {
-    public class NodeContextInterceptor<TContext> : RealProxy
+    public class NodeContextInterceptor<TContext> : DispatchProxy
         where TContext : NodeContext
     {
-        private readonly ICommandVisitor<TContext> _visitor;
+        private ICommandVisitor<TContext> _visitor;
         private NodeBase _lastSeenNode;
 
-        public NodeContextInterceptor(ICommandVisitor<TContext> visitor)
-            : base(typeof(ICommandVisitor<TContext>))
+        public NodeContextInterceptor() { }
+
+        public ICommandVisitor<TContext> GetTransparentProxy()
         {
-            _visitor = visitor ?? throw new ArgumentNullException(nameof(visitor));
+            var proxy = Create<ICommandVisitor<TContext>, NodeContextInterceptor<TContext>>();
+
+            return proxy;
         }
-
-        public override IMessage Invoke(IMessage msg)
+        public static ICommandVisitor<TContext> Around(ICommandVisitor<TContext> visitor)
         {
-            if (msg is IMethodCallMessage methodMessage)
-            {
-                // call the real method; we need that for the actual node
-                object retVal = methodMessage.MethodBase.Invoke(_visitor, methodMessage.Args);
-                // attempt to update the currently created node with the command being passed
-                UpdateCommand(methodMessage.Args);
-                return new ReturnMessage(retVal, null, 0, methodMessage.LogicalCallContext, methodMessage);
-            }
+            if (visitor == null)
+                throw new ArgumentNullException(nameof(visitor));
 
-            return msg;
+            var proxy = Create<ICommandVisitor<TContext>, NodeContextInterceptor<TContext>>();
+            var underlyingInstance = (NodeContextInterceptor<TContext>)proxy;
+            underlyingInstance._visitor = visitor;
+            return proxy;
+        }
+        protected override object Invoke(MethodInfo targetMethod, object[] args)
+        {
+            if (_visitor == null)
+                throw new InvalidOperationException($"Interceptor must be created using the static {nameof(Around)} method on an existing visitor.");
+
+            object retVal = targetMethod.Invoke(_visitor, args);
+            UpdateCommand(args);
+            return retVal;
         }
 
         private void UpdateCommand(object[] args)
@@ -60,7 +67,7 @@ namespace CgmInfoGui.Traversal
         public static ICommandVisitor<TContext> WithCommand<TContext>(this ICommandVisitor<TContext> visitor)
             where TContext : NodeContext
         {
-            return (ICommandVisitor<TContext>)new NodeContextInterceptor<TContext>(visitor).GetTransparentProxy();
+            return NodeContextInterceptor<TContext>.Around(visitor);
         }
     }
 }

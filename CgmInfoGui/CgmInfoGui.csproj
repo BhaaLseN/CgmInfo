@@ -1,183 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{93329EC3-0416-441D-AFC8-0DBE4A072A03}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <OutputType>Exe</OutputType>
     <RootNamespace>CgmInfoGui</RootNamespace>
     <AssemblyName>CgmInfoGui</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Description>CGM Metafile Info Browser (https://github.com/BhaaLseN/CgmInfo)</Description>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <ProjectReference Include="..\CgmInfo.csproj" />
+    <!-- NU1701 triggers because this package is not a .NET 5.0 compatible package; but it still works. -->
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.4.0" NoWarn="NU1701" />
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Controls\SearchPanel.xaml.cs">
-      <DependentUpon>SearchPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PropertiesPanel.xaml.cs">
-      <DependentUpon>PropertiesPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Converters\ExpandableIListConverter.cs" />
-    <Compile Include="Converters\FileSizeConverter.cs" />
-    <Compile Include="Converters\NullToVisibilityConverter.cs" />
-    <Compile Include="Converters\PrefixConverter.cs" />
-    <Compile Include="Converters\PrettyXmlConverter.cs" />
-    <Compile Include="Properties\Settings.cs" />
-    <Compile Include="Traversal\HotspotBuilderVisitor.cs" />
-    <Compile Include="Traversal\HotspotContext.cs" />
-    <Compile Include="Traversal\NodeContextInterceptor.cs" />
-    <Compile Include="Traversal\XCFDocumentBuilderVisitor.cs" />
-    <Compile Include="Traversal\APSStructureBuilderVisitor.cs" />
-    <Compile Include="Traversal\APSStructureContext.cs" />
-    <Compile Include="Traversal\MetafileContext.cs" />
-    <Compile Include="Traversal\NodeContext.cs" />
-    <Compile Include="Traversal\ViewModelBuilderVisitor.cs" />
-    <Compile Include="Traversal\XCFDocumentContext.cs" />
-    <Compile Include="ViewModels\DelegateCommand.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\ApplicationStructureViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\APSAttributeNode.cs" />
-    <Compile Include="ViewModels\Nodes\FontListViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\HotspotNode.cs" />
-    <Compile Include="ViewModels\Nodes\ImageNode.cs" />
-    <Compile Include="ViewModels\Nodes\InvalidCommandNode.cs" />
-    <Compile Include="ViewModels\Nodes\Sources\BitonalTileSource.cs" />
-    <Compile Include="ViewModels\Nodes\Sources\ITileSource.cs" />
-    <Compile Include="ViewModels\Nodes\MetafileDescriptionViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\PictureViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\SegmentViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\SimpleNode.cs" />
-    <Compile Include="ViewModels\Nodes\MetafileViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\NodeBase.cs" />
-    <Compile Include="ViewModels\Nodes\Sources\TileSource.cs" />
-    <Compile Include="ViewModels\Nodes\TiffGenerator.cs" />
-    <Compile Include="ViewModels\Nodes\TileArrayViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\UnsupportedContainer.cs" />
-    <Compile Include="ViewModels\Nodes\UnsupportedCounter.cs" />
-    <Compile Include="ViewModels\Nodes\UnsupportedNode.cs" />
-    <Page Include="Controls\PropertiesPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\SearchPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Resources\Nodes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Update="Properties\Settings.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
+    <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CgmInfo.csproj">
-      <Project>{47c4f45a-fec9-48c9-b308-4e15cd4b35ce}</Project>
-      <Name>CgmInfo</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Extended.Wpf.Toolkit">
-      <Version>3.4.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reflection.DispatchProxy">
-      <Version>4.7.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
   <ImportGroup>
     <Import Project="..\Common.props" />
   </ImportGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -50,7 +50,7 @@ namespace CgmInfo
         public MetafileColor GetIndexedColor(int colorIndex)
         {
             if (colorIndex < 0 || colorIndex >= ColorTable.Length)
-                return null;
+                return null!;
             return ColorTable[colorIndex];
         }
         public int GetColorIndex(MetafileColor value)

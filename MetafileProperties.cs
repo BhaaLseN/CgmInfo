@@ -10,8 +10,8 @@ namespace CgmInfo
 
         public bool IsBinaryEncoding { get; }
         public long FileSize { get; }
-        public string Name { get; internal set; }
+        public string Name { get; internal set; } = null!;
         public int Version { get; internal set; }
-        public string Profile { get; internal set; }
+        public string? Profile { get; internal set; }
     }
 }

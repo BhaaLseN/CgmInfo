@@ -5,6 +5,7 @@
     <AssemblyName>CgmInfo</AssemblyName>
     <RootNamespace>CgmInfo</RootNamespace>
     <Description>CGM Metafile Info Library</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

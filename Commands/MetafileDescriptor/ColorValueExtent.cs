@@ -11,6 +11,9 @@ namespace CgmInfo.Commands.MetafileDescriptor
         internal ColorValueExtent()
             : base(1, 10)
         {
+            // TODO: remove when a NotNullWhenSomething attribute exists that lets us specify
+            //       "they're not null when color space is RGB/CMYK".
+            Minimum = Maximum = null!;
         }
         public ColorValueExtent(ColorSpace colorSpace, MetafileColor minimum, MetafileColor maximum)
             : this()

@@ -219,9 +219,9 @@ namespace CgmInfo.TextEncoding
 
         private long _commandPosition;
         private int _currentTokenIndex;
-        private List<string> _currentTokens;
+        private List<string>? _currentTokens;
 
-        protected override Command ReadCommand(Stream stream)
+        protected override Command? ReadCommand(Stream stream)
         {
             // remember the current position for error feedback.
             // this always signifies the beginning of the command; not the token.
@@ -281,7 +281,7 @@ namespace CgmInfo.TextEncoding
         {
             // null signals end-of-file, but since ENDMFDEFAULTS must have a corresponding BEDMFDEFAULTS,
             // we'll just use it to end the loop in there in the same manner.
-            return null;
+            return null!;
         }
 
         private static Command ReadVdcType(MetafileReader reader)
@@ -397,7 +397,7 @@ namespace CgmInfo.TextEncoding
         private string ReadToken()
         {
             if (_currentTokens == null || _currentTokenIndex >= _currentTokens.Count)
-                return null;
+                return null!;
             return _currentTokens[_currentTokenIndex++];
         }
 

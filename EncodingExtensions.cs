@@ -4,7 +4,7 @@ namespace CgmInfo
 {
     internal static class EncodingExtensions
     {
-        public static bool Supports(this Encoding encoding, string s)
+        public static bool Supports(this Encoding encoding, string? s)
         {
             // assume a null encoding is never supported
             if (encoding == null)

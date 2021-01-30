@@ -7,25 +7,25 @@ namespace CgmInfo.Commands
     public sealed class TextTokenAttribute : Attribute
     {
         public string Token { get; }
-        public string EndToken { get; set; }
+        public string? EndToken { get; set; }
 
         public TextTokenAttribute(string token)
         {
             Token = token;
         }
 
-        public static string GetToken(Command command)
+        public static string? GetToken(Command command)
         {
             var textTokenAttribute = command?.GetType().GetTypeInfo().GetCustomAttribute<TextTokenAttribute>();
             return textTokenAttribute?.Token;
         }
-        public static string GetEndToken(Command command)
+        public static string? GetEndToken(Command command)
         {
             var textTokenAttribute = command?.GetType().GetTypeInfo().GetCustomAttribute<TextTokenAttribute>();
             return textTokenAttribute?.EndToken;
         }
         // enums shouldn't really have an EndToken, so it doesn't make much sense to provide a GetEndToken method here.
-        public static string GetToken<TEnum>(TEnum enumValue) where TEnum : Enum
+        public static string? GetToken<TEnum>(TEnum enumValue) where TEnum : Enum
         {
             var textTokenAttribute = typeof(TEnum).GetRuntimeField(enumValue.ToString())?.GetCustomAttribute<TextTokenAttribute>();
             return textTokenAttribute?.Token;

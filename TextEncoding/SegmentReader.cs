@@ -59,7 +59,7 @@ namespace CgmInfo.TextEncoding
             var ifdType = typeof(InheritanceFilterDesignator);
             foreach (var filter in Enum.GetValues(ifdType).OfType<InheritanceFilterDesignator>())
             {
-                mapping[TextTokenAttribute.GetToken(filter)] = filter;
+                mapping[TextTokenAttribute.GetToken(filter)!] = filter;
             }
             return mapping;
         }

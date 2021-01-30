@@ -35,13 +35,13 @@ namespace CgmInfo.Commands
         }
         /// <summary>Element Name in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>
-        public string ElementName { get; }
+        public string? ElementName { get; }
         /// <summary>Raw parameter string as read from the file in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>
-        public string RawParameters { get; }
+        public string? RawParameters { get; }
         /// <summary>Raw buffer bytes as read from the file in Binary Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>false</c>.</remarks>
-        public byte[] RawBuffer { get; }
+        public byte[]? RawBuffer { get; }
 
         public override void Accept<T>(ICommandVisitor<T> visitor, T parameter)
         {

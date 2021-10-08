@@ -186,8 +186,8 @@ namespace CgmInfo.TextEncoding
             int bytesWritten = 0;
             foreach (byte b in value)
             {
-                _writer.Write(_bitStreamMap[(b >> 4) & 0x8]);
-                _writer.Write(_bitStreamMap[b & 0x8]);
+                _writer.Write(_bitStreamMap[(b >> 4) & 0xF]);
+                _writer.Write(_bitStreamMap[b & 0xF]);
 
                 bytesWritten++;
 

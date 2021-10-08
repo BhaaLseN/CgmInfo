@@ -528,7 +528,7 @@ namespace CgmInfo.BinaryEncoding
             if (length == 255)
                 length = ReadWord();
 
-            byte[] sdrBuffer = _reader.ReadBytes(length);
+            byte[] sdrBuffer = ReadBytes(length);
             return sdrReader.Read(new MetafileReader(this, sdrBuffer));
         }
 
@@ -552,11 +552,12 @@ namespace CgmInfo.BinaryEncoding
             return signedRet;
         }
 
+        internal byte[] ReadBytes(int length) => _reader.ReadBytes(length);
         internal byte[] ReadBitstream()
         {
             // bitstream is a series of unsigned integer at fixed 16-bit precision [ISO/IEC 8632-3 7, Table 1, BS / Note 15]
             // 16 bits per entry is chosen for portability reasons and need not be filled completely; the remainder is set to 0.
-            byte[] data = _reader.ReadBytes((int)(_reader.BaseStream.Length - _reader.BaseStream.Position));
+            byte[] data = ReadBytes((int)(_reader.BaseStream.Length - _reader.BaseStream.Position));
             // the data is little endian; swap if necessary.
             if (!BitConverter.IsLittleEndian)
             {
@@ -735,14 +736,14 @@ namespace CgmInfo.BinaryEncoding
             // but the endianness might not work out. swap if necessary
             if (numBytes == 4)
             {
-                byte[] floatBytes = _reader.ReadBytes(4);
+                byte[] floatBytes = ReadBytes(4);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(floatBytes);
                 return BitConverter.ToSingle(floatBytes, 0);
             }
             if (numBytes == 8)
             {
-                byte[] doubleBytes = _reader.ReadBytes(8);
+                byte[] doubleBytes = ReadBytes(8);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(doubleBytes);
                 return BitConverter.ToDouble(doubleBytes, 0);
@@ -788,19 +789,32 @@ namespace CgmInfo.BinaryEncoding
         {
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
             int length = ReadByte();
-            // long string: length of 255 indicates that either one or two words follow
-            bool isPartialString = false;
+            byte[] characters;
+
+            // long string: length of 255 indicates that blocks similar to long-form commands follow
             if (length == 255)
             {
-                length = ReadWord();
-                // first bit indicates whether this is just a partial string and another one follows
-                isPartialString = (length >> 16) == 1;
-                length &= 0x7FFF;
-            }
+                bool isPartialString;
+                using var tempString = new MemoryStream();
+                do
+                {
+                    int chunkLength = ReadWord();
+                    // first bit indicates whether this is just a partial string and another one follows
+                    isPartialString = (chunkLength >> 16) == 1;
+                    chunkLength &= 0x7FFF;
 
-            byte[] characters = new byte[length];
-            for (int i = 0; i < length; i++)
-                characters[i] = ReadByte();
+                    byte[] chunk = ReadBytes(chunkLength);
+                    tempString.Write(chunk, 0, chunk.Length);
+
+                    length += chunkLength;
+                } while (isPartialString);
+
+                characters = tempString.ToArray();
+            }
+            else
+            {
+                characters = ReadBytes(length);
+            }
 
             string result;
             // try to detect certain common encodings (based on ISO/IEC 2022 / ECMA-35)
@@ -839,10 +853,6 @@ namespace CgmInfo.BinaryEncoding
             {
                 result = _currentEncoding.GetString(characters);
             }
-
-            // TODO: verify this actually works like that; not sure if the string immediately follows...
-            if (isPartialString)
-                result += ReadString();
 
             return result;
         }

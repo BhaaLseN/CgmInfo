@@ -35,10 +35,13 @@ namespace CgmInfo.BinaryEncoding
             const byte MaxShortParameterListLength = 0x1F;
             int parameterListLength = Math.Min(buffer.Length, MaxShortParameterListLength);
             WriteCommandHeader(command.ElementClass, command.ElementId, parameterListLength);
-            if (parameterListLength == MaxShortParameterListLength)
-                WriteLongParameterListLength(buffer.Length);
 
-            WriteBuffer(buffer);
+            // long-form commands write 0x1F to the regular field, then write everything in blocks preceded by a 15 bit length each
+            // (where the 16th bit indicates whether another block follows) [ISO/IEC 8632-3 5.4, Figure 2]
+            if (parameterListLength == MaxShortParameterListLength)
+                WriteLongParameterList(buffer);
+            else
+                WriteBuffer(buffer);
         }
 
         internal override void EnsureWordAligned()
@@ -56,9 +59,11 @@ namespace CgmInfo.BinaryEncoding
             ushort commandHeader = (ushort)(((elementClass & MaxElementClassValue) << 12) | ((elementId & MaxElementIdValue) << 5) | (parameterListLength & 0x1F));
             WriteWord(commandHeader);
         }
-        private void WriteLongParameterListLength(int parameterListLength)
+        private void WriteLongParameterList(byte[] longParameterList)
         {
             const int MaxLongParameterListLength = 0x7FFF;
+            int parameterListLength = longParameterList.Length;
+            int sourceIndex = 0;
             while (parameterListLength > 0)
             {
                 // the lower 15 bits are the actual length of this partition
@@ -70,6 +75,11 @@ namespace CgmInfo.BinaryEncoding
 
                 ushort longFormCommandHeader = (ushort)((lastPartitionFlag << 15) | (partitionLength & MaxLongParameterListLength));
                 WriteWord(longFormCommandHeader);
+
+                byte[] writeBuffer = new byte[partitionLength];
+                Array.Copy(longParameterList, sourceIndex, writeBuffer, 0, partitionLength);
+                WriteBuffer(writeBuffer);
+                sourceIndex += partitionLength;
             }
         }
         internal override void WriteInteger(int value)
@@ -169,13 +179,8 @@ namespace CgmInfo.BinaryEncoding
 
             // string starts with a length byte [ISO/IEC 8632-3 7, Table 1, Note 6]
             WriteIntAsByte(stringLength);
-            // long string: length of 255 indicates that either one or two words follow
-            if (stringLength >= 255)
-            {
-                // TODO: can we safely (ab)use the same logic here?
-                WriteLongParameterListLength(stringLength);
-            }
 
+            byte[] characters;
             if (needDifferentEncoding)
             {
                 // switch to a different encodings (based on ISO/IEC 2022 / ECMA-35) - we chose UTF-8 because it likely fits everything.
@@ -183,15 +188,27 @@ namespace CgmInfo.BinaryEncoding
                 // with F = "I" (0x49), which indicates UTF-8 Level 3 support. This should be enough for everything.
                 // [ISO-IR International Register of Coded Character Sets to be used with Escape Sequences, 2.8.2]
                 // [ISO/IEC 8632-1 6.3.4.5, Example 1]
-                WriteByte(0x1B);
-                WriteByte(0x25);
-                WriteByte(0x2F);
-                WriteByte(0x49);
                 _currentEncoding = Encoding.UTF8;
+                characters = _currentEncoding.GetBytes(value);
+
+                Array.Resize(ref characters, characters.Length + 4);
+                Array.Copy(characters, 0, characters, 4, characters.Length - 4);
+
+                characters[0] = 0x1B;
+                characters[1] = 0x25;
+                characters[2] = 0x2F;
+                characters[3] = 0x49;
+            }
+            else
+            {
+                characters = _currentEncoding.GetBytes(value);
             }
 
-            byte[] characters = _currentEncoding.GetBytes(value);
-            WriteBuffer(characters);
+            // long string: length of 255 indicates that either one or two words follow
+            if (stringLength >= 255)
+                WriteLongParameterList(characters);
+            else
+                WriteBuffer(characters);
         }
 
         internal override void WriteIndex(int value, int indexPrecision)

@@ -6,6 +6,7 @@
     <RootNamespace>CgmInfo</RootNamespace>
     <Description>CGM Metafile Info Library</Description>
     <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

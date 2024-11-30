@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>CgmInfoCmd</AssemblyName>
     <RootNamespace>CgmInfoCmd</RootNamespace>
     <Description>CGM Metafile Info command line tool for testing</Description>
@@ -9,21 +8,16 @@
     <OutputType>Exe</OutputType>
     <StartupObject>CgmInfoCmd.Program</StartupObject>
   </PropertyGroup>
-  
   <ImportGroup>
     <Import Project="..\Common.props" />
   </ImportGroup>
-  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\CgmInfo.csproj" />
   </ItemGroup>
-
 </Project>

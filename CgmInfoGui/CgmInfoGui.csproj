@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CgmInfoGui</RootNamespace>
     <AssemblyName>CgmInfoGui</AssemblyName>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <Description>CGM Metafile Info Browser (https://github.com/BhaaLseN/CgmInfo)</Description>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\CgmInfo.csproj" />
-    <!-- NU1701 triggers because this package is not a .NET 6.0 compatible package; but it still works. -->
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.4.0" NoWarn="NU1701" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -34,9 +30,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
   <ImportGroup>
     <Import Project="..\Common.props" />
   </ImportGroup>
-
 </Project>

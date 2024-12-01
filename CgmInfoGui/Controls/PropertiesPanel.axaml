@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:nodes="using:CgmInfoGui.ViewModels.Nodes"
+             xmlns:conv="using:CgmInfoGui.Converters"
+             xmlns:pg="using:CgmInfoGui.Controls.PropertyGrid"
+             xmlns:avaloniaHex="clr-namespace:AvaloniaHex;assembly=AvaloniaHex"
+             xmlns:rendering="clr-namespace:AvaloniaHex.Rendering;assembly=AvaloniaHex"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CgmInfoGui.Controls.PropertiesPanel">
+  <UserControl.Resources>
+    <conv:HexConverter x:Key="hexConverter"/>
+  </UserControl.Resources>
+  <UserControl.DataTemplates>
+    <DataTemplate DataType="{x:Type nodes:UnsupportedNode}">
+      <avaloniaHex:HexEditor FontFamily="Consolas,monospace" Document="{Binding Command, Converter={StaticResource hexConverter}}">
+        <avaloniaHex:HexEditor.Columns>
+          <rendering:OffsetColumn />
+          <rendering:HexColumn />
+          <rendering:AsciiColumn />
+        </avaloniaHex:HexEditor.Columns>
+      </avaloniaHex:HexEditor>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type nodes:ImageNode}">
+      <Grid>
+        <Image Source="{Binding Image}" IsVisible="{Binding !LoadError}"/>
+        <TextBlock Text="{Binding LoadError.Message}" IsVisible="{Binding !!LoadError}"/>
+      </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type nodes:NodeBase}">
+      <pg:ReadOnlyPropertyGrid SelectedObject="{Binding Command}"/>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+  <ContentPresenter Content="{Binding $parent.Source}"/>
+</UserControl>

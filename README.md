@@ -11,12 +11,13 @@ CgmInfo is a fully managed CGM Metafile library based on the ISO/IEC 8632:1999 s
 ### Projects
 * `CgmInfo`: The main library, targetting [.NET Standard 2.0](https://github.com/dotnet/standard). Entry point is `MetafileReader` in the `CgmInfo` Namespace which attempts to determine on whether to read the file as binary or text.
 * `CgmInfoCmd`: A CLI application printing a semi-spammy overview of the Metafile, targetting [.NET 9.0](https://github.com/dotnet/core). Mostly included for testing and reference only.
-* `CgmInfoGui`: A GUI application written in WPF to present a view on various aspects of the metafile, such as its metafile structure, its application structure and other uses such as hotspot information or [XML Companion file](http://www.w3.org/TR/webcgm20/WebCGM20-XCF.html) creation.
+* `CgmInfoGui`: A GUI application written in [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia/) to present a view on various aspects of the metafile, such as its metafile structure, its application structure and other uses such as hotspot information or [XML Companion file](http://www.w3.org/TR/webcgm20/WebCGM20-XCF.html) creation.
 
 ### Components
-CgmInfo is fully written in C# and should work on all platforms that implement at least .NET Standard 2.0; with the CLI application CgmInfoCmd requiring .NET 9.0 or later. However, the GUI application CgmInfoGui is written using WPF and uses various third party libraries to provide a functional user interface, which will most likely be limited to run on Windows.
-- [Extended WPF Toolkit Community Edition](https://github.com/xceedsoftware/wpftoolkit/) by [Xceed](https://xceed.com/) for
-  - [Docking Tabs](https://github.com/xceedsoftware/wpftoolkit/wiki/AvalonDock) for Tabbed UI that can be undocked/positioned as necessary (provided by `AvalonDock`)
-  - [Zoombox](https://github.com/xceedsoftware/wpftoolkit/wiki/Zoombox) to provide Zooming/Panning capabilities (experimental branch only for now)
-  - [Property Grid](https://github.com/xceedsoftware/wpftoolkit/wiki/PropertyGrid) to provide detailed information on various views
-- An updated version of [XML-to-WPF FlowDocument](http://xmlflowdocument.codeplex.com/) by [Chris Cavanagh](https://chriscavanagh.wordpress.com/2008/11/02/rendering-xml-as-a-flowdocument/) that better suits my needs.
+CgmInfo is fully written in C# and should work on all platforms that implement at least .NET Standard 2.0; with the CLI application CgmInfoCmd and the GUI application CgmInfoGui requiring .NET 9.0 (or later).
+- [Avalonia](https://github.com/AvaloniaUI/Avalonia/) for the cross-platform UI framework.
+- [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/) for XML rendering, as there is no `FlowDocument` equivalent in Avalonia (yet).
+  - An updated version of [XML-to-WPF FlowDocument](http://xmlflowdocument.codeplex.com/) by [Chris Cavanagh](https://chriscavanagh.wordpress.com/2008/11/02/rendering-xml-as-a-flowdocument/) that better suits my needs.
+- [AvaloniaHex](https://github.com/Washi1337/AvaloniaHex/) for viewing of unsupported/unexpected commands.
+- [Dock.Avalonia](https://github.com/wieslawsoltes/Dock/) for the general layout.
+- [ImageSharp](https://github.com/SixLabors/ImageSharp/) for conversion of embedded raster files, since Avalonia (and Skia) don't support some of the formats.

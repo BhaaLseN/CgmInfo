@@ -1,7 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:nodes="clr-namespace:CgmInfoGui.ViewModels.Nodes">
-    <HierarchicalDataTemplate DataType="{x:Type nodes:NodeBase}" ItemsSource="{Binding Nodes}">
-        <TextBlock Text="{Binding DisplayName}"/>
-    </HierarchicalDataTemplate>
-</ResourceDictionary>

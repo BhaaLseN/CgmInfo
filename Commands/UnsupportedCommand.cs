@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands
@@ -29,10 +30,9 @@ namespace CgmInfo.Commands
         /// to identify the given command) or the Text Encoding (which uses plain-text
         /// <see cref="ElementName"/> and a list of <see cref="RawParameters"/>).
         /// </summary>
-        public bool IsTextEncoding
-        {
-            get { return ElementClass == ReservedElementClass_Text && ElementId == ReservedElementId_Text; }
-        }
+        [MemberNotNullWhen(false, nameof(RawBuffer))]
+        [MemberNotNullWhen(true, nameof(ElementName), nameof(RawParameters))]
+        public bool IsTextEncoding => ElementClass == ReservedElementClass_Text && ElementId == ReservedElementId_Text;
         /// <summary>Element Name in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>
         public string? ElementName { get; }

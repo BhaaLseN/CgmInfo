@@ -1,0 +1,28 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="using:CgmInfoGui.Converters"
+        xmlns:pg="using:CgmInfoGui.Controls.PropertyGrid">
+  <Design.PreviewWith>
+    <StackPanel Width="400" Spacing="10">
+      <StackPanel Background="{DynamicResource SystemRegionBrush}">
+        <pg:ReadOnlyPropertyGrid />
+      </StackPanel>
+    </StackPanel>
+  </Design.PreviewWith>
+
+  <conv:ObjectPropertyConverter x:Key="ObjectPropertyConverter"/>
+  <ControlTheme x:Key="{x:Type pg:ReadOnlyPropertyGrid}" TargetType="pg:ReadOnlyPropertyGrid" x:DataType="pg:ReadOnlyPropertyGrid">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <TreeDataGrid>
+          <TreeDataGrid.Source>
+            <MultiBinding Converter="{StaticResource ObjectPropertyConverter}">
+              <TemplateBinding Property="SelectedObject"/>
+              <TemplateBinding/>
+            </MultiBinding>
+          </TreeDataGrid.Source>
+        </TreeDataGrid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

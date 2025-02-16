@@ -1,0 +1,63 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CgmInfoGui.ViewModels"
+        xmlns:conv="using:CgmInfoGui.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CgmInfoGui.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CGM Info">
+  <Window.Resources>
+    <conv:FileSizeConverter x:Key="fileSizeConverter"/>
+  </Window.Resources>
+  <DockPanel>
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto">
+      <TextBlock Margin="5" Text="CGM File:" VerticalAlignment="Center"/>
+      <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Grid.Column="1">
+        <TextBox.KeyBindings>
+          <KeyBinding Gesture="Return" Command="{Binding ProcessCommand}"/>
+        </TextBox.KeyBindings>
+      </TextBox>
+      <Button Command="{Binding BrowseCommand}" Margin="5" Padding="5,0" Grid.Column="2">...</Button>
+
+      <Button Command="{Binding ProcessCommand}" Margin="5" Grid.Row="1" Grid.ColumnSpan="3">Process CGM</Button>
+    </Grid>
+    <Border BorderThickness="0,2,0,0" BorderBrush="{DynamicResource ThemeAccentBrush3}" DockPanel.Dock="Bottom">
+      <Border.Styles>
+        <Style Selector="Separator">
+          <Setter Property="RenderTransform">
+            <Setter.Value>
+              <RotateTransform Angle="90"/>
+            </Setter.Value>
+          </Setter>
+        </Style>
+        <Style Selector="TextBlock">
+          <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+      </Border.Styles>
+      <StackPanel Orientation="Horizontal" Margin="12,5">
+        <TextBlock Text="{Binding MetafileProperties.Name, FallbackValue='(select file first)'}"/>
+        <Separator/>
+        <TextBlock Classes.IsBinary="{Binding MetafileProperties.IsBinaryEncoding}" Classes.IsText="{Binding !MetafileProperties.IsBinaryEncoding}">
+          <TextBlock.Styles>
+            <Style Selector="TextBlock.IsBinary">
+              <Setter Property="Text" Value="Binary Encoding"/>
+            </Style>
+            <Style Selector="TextBlock.IsText">
+              <Setter Property="Text" Value="Text Encoding"/>
+            </Style>
+          </TextBlock.Styles>
+        </TextBlock>
+        <Separator/>
+        <TextBlock Text="{Binding MetafileProperties.Version, StringFormat='v{0}'}"/>
+        <Separator/>
+        <TextBlock Text="{Binding MetafileProperties.Profile, FallbackValue=''}"/>
+        <Separator/>
+        <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
+      </StackPanel>
+    </Border>
+    <DockControl Layout="{Binding Layout}"/>
+  </DockPanel>
+</Window>

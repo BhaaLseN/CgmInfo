@@ -1,10 +1,9 @@
-namespace CgmInfoGui.ViewModels.Nodes
+namespace CgmInfoGui.ViewModels.Nodes;
+
+public class UnsupportedContainer : NodeBase
 {
-    public class UnsupportedContainer : NodeBase
+    public override string DisplayName
     {
-        public override string DisplayName
-        {
-            get { return string.Format("Unsupported Nodes [{0} entries]", Nodes.Count); }
-        }
+        get { return string.Format("Unsupported Nodes [{0} entries]", Nodes.Count); }
     }
 }

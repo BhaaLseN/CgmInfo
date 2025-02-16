@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ctrl="using:CgmInfoGui.Controls"
+             xmlns:nodes="using:CgmInfoGui.ViewModels.Nodes"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="ctrl:SearchPanel"
+             x:Class="CgmInfoGui.Controls.SearchPanel"
+             Name="self">
+  <DockPanel LastChildFill="True"
+             DataContext="{Binding #self}">
+    <Grid DockPanel.Dock="Top">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="auto"/>
+      </Grid.ColumnDefinitions>
+      <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+      <!-- disable clear button when no text is present -->
+      <Button Name="ClearButton" Content="x" Grid.Column="1" IsEnabled="{Binding !!SearchText.Length}" Click="OnClearClick"/>
+    </Grid>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+      <TextBlock Text="{Binding Results.Count}"/>
+      <TextBlock xml:space="preserve"> Results</TextBlock>
+    </StackPanel>
+    <ListBox ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult}">
+      <ListBox.Styles>
+        <Style Selector="Run.match">
+          <Setter Property="TextDecorations" Value="Underline"/>
+          <Setter Property="Foreground" Value="Red"/>
+        </Style>
+      </ListBox.Styles>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <ContentPresenter Content="{Binding DisplayText}"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

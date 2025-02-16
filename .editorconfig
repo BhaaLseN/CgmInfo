@@ -233,3 +233,6 @@ dotnet_naming_rule.private_fields_should_be_underscore_camel_case.style = unders
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.severity = warning
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.symbols = locals_parameters
 dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.style = camel_case_style
+
+# diagnostic id specific rules
+dotnet_code_quality.CA1826.exclude_ordefault_methods = true

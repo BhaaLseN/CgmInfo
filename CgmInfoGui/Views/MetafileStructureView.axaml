@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ctrl="using:CgmInfoGui.Controls"
+             xmlns:nodes="using:CgmInfoGui.ViewModels.Nodes"
+             xmlns:vm="using:CgmInfoGui.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CgmInfoGui.Views.MetafileStructureView"
+             x:DataType="vm:MetafileStructureViewModel">
+  <Grid ColumnDefinitions="*, Auto, *" RowDefinitions="*, Auto">
+    <TreeView Name="MetafileStructure" ItemsSource="{Binding MetafileNodes}" SelectedItem="{Binding #SearchPanel.SelectedResult.Node}" AutoScrollToSelectedItem="True">
+      <TreeView.Styles>
+        <Style Selector="TreeViewItem" x:DataType="nodes:NodeBase">
+          <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+        </Style>
+      </TreeView.Styles>
+    </TreeView>
+    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+    <TabControl Grid.Column="2">
+      <TabItem Header="Properties">
+        <ctrl:PropertiesPanel Source="{Binding #MetafileStructure.SelectedItem, Mode=OneWay}"/>
+      </TabItem>
+      <TabItem Header="Search">
+        <ctrl:SearchPanel Source="{Binding MetafileNodes}" Name="SearchPanel" Tree="{Binding #MetafileStructure}"/>
+      </TabItem>
+    </TabControl>
+    <Grid Grid.Row="1" Grid.ColumnSpan="3" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
+      <TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center">Save as</TextBlock>
+      <ComboBox Grid.Column="1" Margin="5" SelectedValue="{Binding SaveAsFormat}" SelectedValueBinding="{Binding Tag, x:DataType=ComboBoxItem}">
+        <ComboBoxItem IsSelected="True" Tag="binary">Binary</ComboBoxItem>
+        <ComboBoxItem Tag="text" >Text</ComboBoxItem>
+      </ComboBox>
+      <TextBox Grid.Column="2" Margin="5" Text="{Binding SaveAsFilePath}"/>
+      <Button Grid.Column="3" Command="{Binding BrowseSaveAsCommand}" Margin="5" Padding="5,0">...</Button>
+      <Button Grid.Column="4" Command="{Binding SaveAsCommand}" Margin="5">Save</Button>
+    </Grid>
+  </Grid>
+</UserControl>

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using CgmInfo.Traversal;
 
 namespace CgmInfo.Commands
@@ -30,6 +31,7 @@ namespace CgmInfo.Commands
         /// to identify the given command) or the Text Encoding (which uses plain-text
         /// <see cref="ElementName"/>).
         /// </summary>
+        [MemberNotNullWhen(true, nameof(ElementName))]
         public bool IsTextEncoding => ElementClass == ReservedElementClass_Text && ElementId == ReservedElementId_Text;
         /// <summary>Element Name in Text Encoding</summary>
         /// <remarks>Only set when <see cref="IsTextEncoding"/> is <c>true</c>.</remarks>

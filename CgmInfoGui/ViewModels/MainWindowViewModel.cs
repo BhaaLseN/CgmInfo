@@ -46,6 +46,7 @@ public partial class MainWindowViewModel : ViewModelBase, ICommandReceiver
     public ApplicationStructureViewModel ApplicationStructure { get; }
     public CompanionFileViewModel CompanionFile { get; }
     public HotspotsViewModel Hotspots { get; }
+    public VisualsViewModel Visuals { get; }
 
     private bool _isBusy;
 
@@ -70,7 +71,8 @@ public partial class MainWindowViewModel : ViewModelBase, ICommandReceiver
         ApplicationStructure = new();
         CompanionFile = new();
         Hotspots = new();
-        Documents = [MetafileStructure, ApplicationStructure, CompanionFile, Hotspots];
+        Visuals = new();
+        Documents = [MetafileStructure, Visuals, ApplicationStructure, CompanionFile, Hotspots];
 
         _layout = new DockFactory(this).CreateLayout();
     }

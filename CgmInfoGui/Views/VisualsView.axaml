@@ -1,0 +1,21 @@
+<UserControl x:Class="CgmInfoGui.Views.VisualsView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:CgmInfoGui.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:paz="using:Avalonia.Controls.PanAndZoom"
+             xmlns:vm="using:CgmInfoGui.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:VisualsViewModel">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <paz:ZoomBorder EnablePan="True" EnableZoom="True">
+            <controls:VisualCanvas Margin="10"
+                                   DataContext="{Binding VisualRoot}"
+                                   GeometryExtent="{Binding GeometryExtent}"
+                                   VdcExtent="{Binding VdcExtent}" />
+        </paz:ZoomBorder>
+    </ScrollViewer>
+</UserControl>

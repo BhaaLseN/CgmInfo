@@ -15,13 +15,14 @@ public class LineVisual : VisualBase
     public Point[] Points { get; }
     public Func<Pen> Pen { get; }
 
-    protected internal override void DrawTo(DrawingContext drawingContext)
+    protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
         var geo = new StreamGeometry();
         using (var ctx = geo.Open())
         {
-            ctx.BeginFigure(Points[0], isFilled: false);
-            ctx.PolyLineTo(Points[1..], isStroked: true);
+            Point[] points = [.. Points.Select(visualContext.Correct)];
+            ctx.BeginFigure(points[0], isFilled: false);
+            ctx.PolyLineTo(points[1..], isStroked: true);
         }
         drawingContext.DrawGeometry(null, Pen(), geo);
     }

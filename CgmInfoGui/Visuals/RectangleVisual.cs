@@ -1,4 +1,3 @@
-using System;
 using Avalonia;
 using Avalonia.Media;
 
@@ -8,15 +7,15 @@ public class RectangleVisual : VisualBase
 {
     public RectangleVisual(Point firstCorner, Point secondCorner)
     {
-        FirstCorner = new Point(Math.Min(firstCorner.X, secondCorner.X), Math.Min(firstCorner.Y, secondCorner.Y));
-        SecondCorner = new Point(Math.Max(firstCorner.X, secondCorner.X), Math.Max(firstCorner.Y, secondCorner.Y));
+        FirstCorner = firstCorner;
+        SecondCorner = secondCorner;
     }
     public Point FirstCorner { get; }
     public Point SecondCorner { get; }
 
-    protected internal override void DrawTo(DrawingContext drawingContext)
+    protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
         // FIXME: use EDGE* and INTERIOR* here.
-        drawingContext.DrawRectangle(null, GetBlack(), new Rect(FirstCorner, SecondCorner));
+        drawingContext.DrawRectangle(null, GetBlack(), new Rect(visualContext.Correct(FirstCorner), visualContext.Correct(SecondCorner)));
     }
 }

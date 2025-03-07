@@ -28,10 +28,11 @@ public class EllipseVisual : VisualBase
     public double Rad { get; }
     public double Angle { get; }
 
-    protected internal override void DrawTo(DrawingContext drawingContext)
+    protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
+        var center = visualContext.Correct(Center);
         // FIXME: use EDGE* and INTERIOR* here.
-        using (drawingContext.PushTransform(Matrix.CreateTranslation(Center.X, Center.Y) * Matrix.CreateRotation(Rad)))
-            drawingContext.DrawEllipse(null, GetBlack(), Center, RadiusX, RadiusY);
+        using (drawingContext.PushTransform(Matrix.CreateTranslation(center.X, center.Y) * Matrix.CreateRotation(Rad)))
+            drawingContext.DrawEllipse(null, GetBlack(), center, RadiusX, RadiusY);
     }
 }

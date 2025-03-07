@@ -14,6 +14,10 @@ public class VisualCanvas : ItemsControl
         AvaloniaProperty.Register<VisualCanvas, Rect>(nameof(VdcExtent));
     public static readonly StyledProperty<Rect> GeometryExtentProperty =
         AvaloniaProperty.Register<VisualCanvas, Rect>(nameof(GeometryExtent));
+    public static readonly StyledProperty<double> DirectionXProperty =
+        AvaloniaProperty.Register<VisualCanvas, double>(nameof(DirectionX), defaultValue: 1.0);
+    public static readonly StyledProperty<double> DirectionYProperty =
+        AvaloniaProperty.Register<VisualCanvas, double>(nameof(DirectionY), defaultValue: 1.0);
 
     public static readonly StyledProperty<Brush> VdcExtentBrushProperty =
         AvaloniaProperty.Register<VisualCanvas, Brush>(nameof(VdcExtentBrush));
@@ -56,6 +60,16 @@ public class VisualCanvas : ItemsControl
     {
         get { return GetValue(GeometryExtentProperty); }
         set { SetValue(GeometryExtentProperty, value); }
+    }
+    public double DirectionX
+    {
+        get { return GetValue(DirectionXProperty); }
+        set { SetValue(DirectionXProperty, value); }
+    }
+    public double DirectionY
+    {
+        get { return GetValue(DirectionYProperty); }
+        set { SetValue(DirectionYProperty, value); }
     }
 
     private VisualBase[]? _visuals;
@@ -140,12 +154,13 @@ public class VisualCanvas : ItemsControl
 
         _needsRedraw = false;
         Items.Clear();
+        var visualContext = new VisualContext(GeometryExtent, DirectionX, DirectionY);
         foreach (var item in _visuals)
         {
             var drawingVisual = new DrawingGroup();
             // TODO: do we need to remember the original visual?
             using (var context = drawingVisual.Open())
-                item.DrawTo(context);
+                item.DrawTo(context, visualContext);
             Items.Add(new DrawingVisual(item, drawingVisual));
         }
     }

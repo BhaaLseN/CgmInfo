@@ -13,9 +13,9 @@ public class CircleVisual : VisualBase
     public Point Center { get; }
     public double Radius { get; }
 
-    protected internal override void DrawTo(DrawingContext drawingContext)
+    protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
         // FIXME: use EDGE* and INTERIOR* here.
-        drawingContext.DrawEllipse(null, GetBlack(), Center, Radius, Radius);
+        drawingContext.DrawEllipse(null, GetBlack(), visualContext.Correct(Center), Radius, Radius);
     }
 }

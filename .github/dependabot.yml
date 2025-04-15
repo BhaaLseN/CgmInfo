@@ -13,6 +13,7 @@ updates:
       Avalonia:
         patterns:
           - "*Avalonia*"
+          - "Dock.Model.Mvvm"
       SixLabors:
         patterns:
           - "SixLabors*"

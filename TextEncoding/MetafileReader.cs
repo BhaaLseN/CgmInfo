@@ -223,6 +223,8 @@ namespace CgmInfo.TextEncoding
 
         protected override Command? ReadCommand(Stream stream)
         {
+            var trackingBuffer = TrackInternalBuffer ? new TrackingBuffer(stream.Position) : null;
+
             // remember the current position for error feedback.
             // this always signifies the beginning of the command; not the token.
             _commandPosition = stream.Position;
@@ -248,16 +250,50 @@ namespace CgmInfo.TextEncoding
 
             try
             {
-                return commandHandler(this);
+                var result = commandHandler(this);
+                result.Buffer = RawBuffer(trackingBuffer, stream, _commandPosition);
+                return result;
             }
             catch (Exception ex)
             {
-                return new InvalidCommand(elementName, ex);
+                return new InvalidCommand(elementName, ex)
+                {
+                    Buffer = RawBuffer(trackingBuffer, stream, _commandPosition),
+                };
             }
             finally
             {
                 _currentTokens = null;
             }
+        }
+
+        private static TrackingBuffer? RawBuffer(TrackingBuffer? trackingBuffer, Stream stream, long commandPosition)
+        {
+            // no tracking? don't bother.
+            if (trackingBuffer == null)
+                return null;
+
+            long commandEnd = stream.Position;
+            stream.Seek(commandPosition, SeekOrigin.Begin);
+            byte[] buffer = new byte[commandEnd - commandPosition];
+            int totalRead = 0;
+            while (totalRead < buffer.Length)
+            {
+                int bytesRead = stream.Read(buffer, totalRead, buffer.Length - totalRead);
+                if (bytesRead == 0)
+                    break;
+
+                totalRead += bytesRead;
+            }
+
+            stream.Seek(commandEnd, SeekOrigin.Begin);
+
+            if (totalRead < buffer.Length)
+                Array.Resize(ref buffer, totalRead);
+
+            trackingBuffer.AddBuffer(buffer);
+
+            return trackingBuffer;
         }
 
         private Command UnsupportedCommand(string elementName)
@@ -467,8 +503,10 @@ namespace CgmInfo.TextEncoding
                 {
                     int charValue = ExtendedDigits.IndexOf(digits[i]);
                     if (charValue < 0 || charValue >= radix)
+                    {
                         throw new ArgumentOutOfRangeException("BasedInteger", digits[charValue],
                             string.Format("Invalid Based Integer digits '{0}' at command position {1}", number, _commandPosition));
+                    }
 
                     num = num * radix + charValue;
                 }

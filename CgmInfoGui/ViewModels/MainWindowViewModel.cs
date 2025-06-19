@@ -100,6 +100,7 @@ public partial class MainWindowViewModel : ViewModelBase, ICommandReceiver
         var result = await Task.Run(() =>
         {
             using var reader = MetafileReader.Create(FileName);
+            reader.TrackInternalBuffer = true;
             Command? command;
             do
             {

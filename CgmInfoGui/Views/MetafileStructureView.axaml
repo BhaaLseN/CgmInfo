@@ -24,6 +24,9 @@
       <TabItem Header="Search">
         <ctrl:SearchPanel Source="{Binding MetafileNodes}" Name="SearchPanel" Tree="{Binding #MetafileStructure}"/>
       </TabItem>
+      <TabItem Header="Raw">
+        <ctrl:RawPanel Source="{Binding #MetafileStructure.SelectedItem, Mode=OneWay}"/>
+      </TabItem>
     </TabControl>
     <Grid Grid.Row="1" Grid.ColumnSpan="3" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
       <TextBlock Grid.Column="0" Margin="5" VerticalAlignment="Center">Save as</TextBlock>

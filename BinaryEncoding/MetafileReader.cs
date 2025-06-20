@@ -214,6 +214,9 @@ namespace CgmInfo.BinaryEncoding
         private bool _insideMetafile;
         // assume a default ISO 8859-1 [ISO/IEC 8632-1 6.3.4.5]
         private Encoding _currentEncoding = GetDefaultEncoding();
+        // only valid between ReadCommandHeader and the end of ReadCommand.
+        // might point to null, or the previous buffer otherwise.
+        private TrackingBuffer? _trackingBuffer;
 
         public MetafileReader(string fileName)
             : base(fileName, isBinaryEncoding: true)
@@ -261,10 +264,14 @@ namespace CgmInfo.BinaryEncoding
             try
             {
                 result = commandHandler(this, commandHeader);
+                result.Buffer = commandHeader.Buffer;
             }
             catch (Exception ex)
             {
-                return new InvalidCommand(commandHeader.ElementClass, commandHeader.ElementId, ex);
+                return new InvalidCommand(commandHeader.ElementClass, commandHeader.ElementId, ex)
+                {
+                    Buffer = commandHeader.Buffer,
+                };
             }
             // the only case where _insideMetafile is allowed to be false is at the end of the file (0/2 END METAFILE)
             if (result != null && !_insideMetafile)
@@ -276,12 +283,16 @@ namespace CgmInfo.BinaryEncoding
                 {
                     // the Metafile should end at END METAFILE and EOF; +/- a padding byte
                     if (stream.Position < stream.Length - 2)
+                    {
                         throw new FormatException(string.Format(
                             "Found Element Id 2 (END METAFILE), but got {0} bytes left to read. Multiple Metafiles within a single file are not supported.",
                             stream.Length - stream.Position - 1));
+                    }
                 }
                 else if (result.ElementId != 1)
+                {
                     throw new FormatException("Expected Element Id 1 (BEGIN METAFILE) at the beginning of a Metafile");
+                }
             }
 
             return result;
@@ -289,14 +300,21 @@ namespace CgmInfo.BinaryEncoding
 
         private CommandHeader? ReadCommandHeader(Stream stream)
         {
+            var trackingBuffer = TrackInternalBuffer ? new TrackingBuffer(stream.Position) : null;
+            _trackingBuffer = trackingBuffer;
+
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
             if (stream.Position % 2 == 1)
-                stream.Seek(1, SeekOrigin.Current);
+            {
+                byte align = (byte)stream.ReadByte();
+                trackingBuffer?.SetAlign(align);
+            }
 
             ushort commandHeader = stream.ReadWord();
             int elementClass = (commandHeader >> 12) & 0xF;
             int elementId = (commandHeader >> 5) & 0x7F;
             int parameterListLength = commandHeader & 0x1F;
+            trackingBuffer?.SetHeader(commandHeader);
 
             // store the whole element in a buffer; resolving long commands ahead of time
             var readBuffer = new MemoryStream(parameterListLength);
@@ -311,6 +329,7 @@ namespace CgmInfo.BinaryEncoding
                 {
                     // first comes the length; 2 octets
                     ushort longFormCommandHeader = stream.ReadWord();
+                    trackingBuffer?.AddLongCommand(longFormCommandHeader);
                     // top-most bit indicates whether more partitions follow or not
                     int partitionFlag = (longFormCommandHeader >> 15) & 0x1;
                     isLastPartition = partitionFlag == 0;
@@ -322,6 +341,7 @@ namespace CgmInfo.BinaryEncoding
                     byte[] buffer = new byte[partitionLength];
                     stream.Read(buffer, 0, buffer.Length);
                     readBuffer.Write(buffer, 0, buffer.Length);
+                    trackingBuffer?.AddBuffer(buffer);
 
                 } while (!isLastPartition);
             }
@@ -331,6 +351,7 @@ namespace CgmInfo.BinaryEncoding
                 byte[] buffer = new byte[parameterListLength];
                 stream.Read(buffer, 0, buffer.Length);
                 readBuffer.Write(buffer, 0, buffer.Length);
+                trackingBuffer?.AddBuffer(buffer);
             }
 
             readBuffer.Position = 0;
@@ -348,7 +369,10 @@ namespace CgmInfo.BinaryEncoding
                 return ReadCommandHeader(stream);
             }
 
-            return new CommandHeader(elementClass, elementId, parameterListLength);
+            return new CommandHeader(elementClass, elementId, parameterListLength)
+            {
+                Buffer = trackingBuffer,
+            };
         }
 
         private static Command ReadUnsupportedElement(MetafileReader reader, CommandHeader commandHeader)
@@ -563,9 +587,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 for (int i = 0; i < data.Length; i += 2)
                 {
-                    byte temp = data[i];
-                    data[i] = data[i + 1];
-                    data[i + 1] = temp;
+                    (data[i + 1], data[i]) = (data[i], data[i + 1]);
                 }
             }
             return data;
@@ -832,6 +854,7 @@ namespace CgmInfo.BinaryEncoding
                     // ESC 2/5 2/15 4/7: UTF-8 Level 1
                     // ESC 2/5 2/15 4/8: UTF-8 Level 2
                     // ESC 2/5 2/15 4/9: UTF-8 Level 3
+                    _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.UTF8);
                     _currentEncoding = Encoding.UTF8;
                 }
                 else
@@ -839,6 +862,7 @@ namespace CgmInfo.BinaryEncoding
                     // ESC 2/5 2/15 4/10: UTF-16 Level 1
                     // ESC 2/5 2/15 4/11: UTF-16 Level 2
                     // ESC 2/5 2/15 4/12: UTF-16 Level 3
+                    _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.BigEndianUnicode);
                     _currentEncoding = Encoding.BigEndianUnicode;
                 }
                 result = _currentEncoding.GetString(characters, 4, length - 4);
@@ -847,6 +871,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 // ESC 2/8 4/2: ISO 646, U.S. National Character Set (ASCII)
                 _currentEncoding = Encoding.ASCII;
+                _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.ASCII);
                 result = _currentEncoding.GetString(characters, 3, length - 3);
             }
             else

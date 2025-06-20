@@ -245,9 +245,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 for (int i = 0; i < data.Length; i += 2)
                 {
-                    byte temp = data[i];
-                    data[i] = data[i + 1];
-                    data[i + 1] = temp;
+                    (data[i + 1], data[i]) = (data[i], data[i + 1]);
                 }
             }
             WriteBuffer(data);

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CgmInfo
 {
     public class MetafileProperties
@@ -13,5 +15,6 @@ namespace CgmInfo
         public string Name { get; internal set; } = null!;
         public int Version { get; internal set; }
         public string? Profile { get; internal set; }
+        public List<string> EncodingChanges { get; } = [];
     }
 }

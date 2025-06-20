@@ -18,6 +18,6 @@ CgmInfo is fully written in C# and should work on all platforms that implement a
 - [Avalonia](https://github.com/AvaloniaUI/Avalonia/) for the cross-platform UI framework.
 - [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/) for XML rendering, as there is no `FlowDocument` equivalent in Avalonia (yet).
   - An updated version of [XML-to-WPF FlowDocument](http://xmlflowdocument.codeplex.com/) by [Chris Cavanagh](https://chriscavanagh.wordpress.com/2008/11/02/rendering-xml-as-a-flowdocument/) that better suits my needs.
-- [AvaloniaHex](https://github.com/Washi1337/AvaloniaHex/) for viewing of unsupported/unexpected commands.
+- [AvaloniaHex](https://github.com/Washi1337/AvaloniaHex/) for viewing of unsupported/unexpected commands and the underlying raw data.
 - [Dock.Avalonia](https://github.com/wieslawsoltes/Dock/) for the general layout.
 - [ImageSharp](https://github.com/SixLabors/ImageSharp/) for conversion of embedded raster files, since Avalonia (and Skia) don't support some of the formats.

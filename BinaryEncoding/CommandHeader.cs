@@ -1,3 +1,5 @@
+using CgmInfo.Utilities;
+
 namespace CgmInfo.BinaryEncoding
 {
 #if DEBUG
@@ -14,5 +16,7 @@ namespace CgmInfo.BinaryEncoding
         public int ElementClass { get; }
         public int ElementId { get; }
         public int ParameterListLength { get; }
+
+        internal TrackingBuffer? Buffer { get; init; }
     }
 }

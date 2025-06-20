@@ -15,6 +15,9 @@ namespace CgmInfo
         public MetafileDescriptor Descriptor { get; } = new MetafileDescriptor();
         public MetafileProperties Properties { get; }
 
+        /// <summary>Enables tracking of the internal buffer, which will increase memory usage but allow better debugging.</summary>
+        public bool TrackInternalBuffer { get; set; }
+
         protected MetafileReader(string fileName, bool isBinaryEncoding)
         {
             _fileStream = File.OpenRead(fileName);
@@ -35,6 +38,9 @@ namespace CgmInfo
 
             var command = ReadCommand(_fileStream);
             command?.Accept(_propertyVisitor, Properties);
+            if (command?.Buffer?.EncodingChanges is [..])
+                Properties.EncodingChanges.AddRange(command.Buffer.EncodingChanges);
+
             return command;
         }
 

@@ -11,6 +11,7 @@
         Title="CGM Info">
   <Window.Resources>
     <conv:FileSizeConverter x:Key="fileSizeConverter"/>
+    <conv:StringJoinConverter x:Key="joinConverter"/>
   </Window.Resources>
   <DockPanel>
     <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto">
@@ -54,6 +55,9 @@
         <TextBlock Text="{Binding MetafileProperties.Version, StringFormat='v{0}'}"/>
         <Separator/>
         <TextBlock Text="{Binding MetafileProperties.Profile, FallbackValue=''}"/>
+        <Separator/>
+        <TextBlock Text="{Binding MetafileProperties.EncodingChanges.Count, FallbackValue='0'}"
+                   ToolTip.Tip="{Binding MetafileProperties.EncodingChanges, Converter={StaticResource joinConverter}, FallbackValue='Encoding changes: (none)', StringFormat='Encoding changes: {0}'}"/>
         <Separator/>
         <TextBlock Text="{Binding MetafileProperties.FileSize, Converter={StaticResource fileSizeConverter}}"/>
       </StackPanel>

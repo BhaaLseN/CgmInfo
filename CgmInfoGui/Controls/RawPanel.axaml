@@ -10,8 +10,9 @@
              x:Class="CgmInfoGui.Controls.RawPanel">
   <UserControl.Resources>
     <conv:RawHexConverter x:Key="hexConverter"/>
+    <conv:StringJoinConverter x:Key="joinConverter"/>
   </UserControl.Resources>
-  <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, *" RowSpacing="5" ColumnSpacing="10" DataContext="{Binding $parent[ctrl:RawPanel].Source}">
+  <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, *" RowSpacing="5" ColumnSpacing="10" DataContext="{Binding $parent[ctrl:RawPanel].Source}">
     <TextBlock Grid.Row="0" Grid.Column="0">File offset:</TextBlock>
     <SelectableTextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Command.Buffer.Start, StringFormat='0x{0:x08} ({0})'}"/>
 
@@ -19,7 +20,10 @@
     <TextBlock Grid.Row="1" Grid.Column="1" IsVisible="{Binding !Command.Buffer.Unaligned, FallbackValue=false}">Yes</TextBlock>
     <TextBlock Grid.Row="1" Grid.Column="1" IsVisible="{Binding Command.Buffer.Unaligned, FallbackValue=false}">No</TextBlock>
 
-    <avaloniaHex:HexEditor FontFamily="Consolas,monospace" Document="{Binding Command, Converter={StaticResource hexConverter}}" Grid.Row="2" Grid.ColumnSpan="2" conv:RawHexConverter.ApplyHighlights="true">
+    <TextBlock Grid.Row="2" Grid.Column="0">Encoding switch (DOCS):</TextBlock>
+    <SelectableTextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Command.Buffer.EncodingChanges, Converter={StaticResource joinConverter}, FallbackValue='(none)'}"/>
+
+    <avaloniaHex:HexEditor FontFamily="Consolas,monospace" Document="{Binding Command, Converter={StaticResource hexConverter}}" Grid.Row="3" Grid.ColumnSpan="2" conv:RawHexConverter.ApplyHighlights="true">
       <avaloniaHex:HexEditor.Columns>
         <ctrl:OffsetColumn />
         <rendering:HexColumn />

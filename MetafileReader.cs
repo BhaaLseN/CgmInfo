@@ -38,6 +38,9 @@ namespace CgmInfo
 
             var command = ReadCommand(_fileStream);
             command?.Accept(_propertyVisitor, Properties);
+            if (command?.Buffer?.EncodingChanges is [..])
+                Properties.EncodingChanges.AddRange(command.Buffer.EncodingChanges);
+
             return command;
         }
 

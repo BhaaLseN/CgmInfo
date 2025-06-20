@@ -648,6 +648,8 @@ namespace CgmInfo.TextEncoding
         }
         private static TokenState ReadToken(ITokenProvider stream, out string token)
         {
+            // FIXME: this doesn't account for DOCS (DECIDE OTHER CODING SYSTEM) instructions identified by "ESC % F" (0x1B 0x25 F)
+            //        or any sort of encoding differences at all. clear-text files probably only work if they're ASCII-adjacent (like UTF-8) [ISO/IEC 8632-4 5.3]
             var sb = new StringBuilder();
             try
             {

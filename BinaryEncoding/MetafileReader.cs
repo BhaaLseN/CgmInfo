@@ -214,6 +214,9 @@ namespace CgmInfo.BinaryEncoding
         private bool _insideMetafile;
         // assume a default ISO 8859-1 [ISO/IEC 8632-1 6.3.4.5]
         private Encoding _currentEncoding = GetDefaultEncoding();
+        // only valid between ReadCommandHeader and the end of ReadCommand.
+        // might point to null, or the previous buffer otherwise.
+        private TrackingBuffer? _trackingBuffer;
 
         public MetafileReader(string fileName)
             : base(fileName, isBinaryEncoding: true)
@@ -298,6 +301,7 @@ namespace CgmInfo.BinaryEncoding
         private CommandHeader? ReadCommandHeader(Stream stream)
         {
             var trackingBuffer = TrackInternalBuffer ? new TrackingBuffer(stream.Position) : null;
+            _trackingBuffer = trackingBuffer;
 
             // commands are always word aligned [ISO/IEC 8632-3 5.4]
             if (stream.Position % 2 == 1)
@@ -850,6 +854,7 @@ namespace CgmInfo.BinaryEncoding
                     // ESC 2/5 2/15 4/7: UTF-8 Level 1
                     // ESC 2/5 2/15 4/8: UTF-8 Level 2
                     // ESC 2/5 2/15 4/9: UTF-8 Level 3
+                    _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.UTF8);
                     _currentEncoding = Encoding.UTF8;
                 }
                 else
@@ -857,6 +862,7 @@ namespace CgmInfo.BinaryEncoding
                     // ESC 2/5 2/15 4/10: UTF-16 Level 1
                     // ESC 2/5 2/15 4/11: UTF-16 Level 2
                     // ESC 2/5 2/15 4/12: UTF-16 Level 3
+                    _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.BigEndianUnicode);
                     _currentEncoding = Encoding.BigEndianUnicode;
                 }
                 result = _currentEncoding.GetString(characters, 4, length - 4);
@@ -865,6 +871,7 @@ namespace CgmInfo.BinaryEncoding
             {
                 // ESC 2/8 4/2: ISO 646, U.S. National Character Set (ASCII)
                 _currentEncoding = Encoding.ASCII;
+                _trackingBuffer?.SwitchEncoding(_currentEncoding, Encoding.ASCII);
                 result = _currentEncoding.GetString(characters, 3, length - 3);
             }
             else

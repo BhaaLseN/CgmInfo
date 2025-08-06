@@ -24,10 +24,10 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="AvaloniaHex" Version="0.1.8" />
+    <PackageReference Include="AvaloniaHex" Version="0.1.9" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Dock.Avalonia" Version="11.3.0.15" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.3.0.15" />
+    <PackageReference Include="Dock.Avalonia" Version="11.3.0.17" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.3.0.17" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
   </ItemGroup>
 

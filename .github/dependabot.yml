@@ -17,3 +17,8 @@ updates:
       SixLabors:
         patterns:
           - "SixLabors*"
+    ignore:
+    - dependency-name: "Avalonia.Controls.TreeDataGrid"
+      # Versions starting at 11.2.0 are commercial for a lack of open source contributors/maintainers.
+      versions: [ ">=11.2.0" ]
+

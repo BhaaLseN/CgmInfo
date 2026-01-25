@@ -25,7 +25,7 @@
 
     <avaloniaHex:HexEditor FontFamily="Consolas,monospace" Document="{Binding Command, Converter={StaticResource hexConverter}}" Grid.Row="3" Grid.ColumnSpan="2" conv:RawHexConverter.ApplyHighlights="true">
       <avaloniaHex:HexEditor.Columns>
-        <ctrl:OffsetColumn />
+        <rendering:OffsetColumn />
         <rendering:HexColumn />
         <rendering:AsciiColumn />
       </avaloniaHex:HexEditor.Columns>

@@ -69,7 +69,7 @@ public sealed class RawHexConverter : IValueConverter
         }
         protected override bool IsHighlighted(TrackingBuffer buffer, BitLocation location)
         {
-            return buffer.Unaligned && location.ByteIndex == 0;
+            return buffer.Unaligned && location.ByteIndex == (ulong)buffer.Start;
         }
     }
     private sealed class CommandHeaderHighlighter : TrackingBufferHighlighter
@@ -80,10 +80,11 @@ public sealed class RawHexConverter : IValueConverter
         }
         protected override bool IsHighlighted(TrackingBuffer buffer, BitLocation location)
         {
-            if (location.ByteIndex == 1)
+            long byteIndex = (long)location.ByteIndex - buffer.Start;
+            if (byteIndex == 1)
                 return true;
 
-            return buffer.Unaligned ? location.ByteIndex == 2 : location.ByteIndex == 0;
+            return buffer.Unaligned ? byteIndex == 2 : byteIndex == 0;
         }
     }
     private sealed class TrackingBufferDocument : IBinaryDocument
@@ -94,9 +95,7 @@ public sealed class RawHexConverter : IValueConverter
         public TrackingBufferDocument(TrackingBuffer buffer)
         {
             _buffer = buffer;
-            // FIXME: AvaloniaHex currently renders this incorrectly when the start is not at zero (AvaloniaHex#20)
-            _virtualStart = 0;
-            //_virtualStart = (ulong)_buffer.Start;
+            _virtualStart = (ulong)_buffer.Start;
             Length = _virtualStart + (ulong)_buffer.Buffer.Length;
             ValidRanges = new BitRangeUnion([new BitRange(_virtualStart, Length)]).AsReadOnly();
         }

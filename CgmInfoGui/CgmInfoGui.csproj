@@ -33,6 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CgmInfo.csproj" />
+    <ProjectReference Include="..\CgmInfo\CgmInfo.csproj" />
   </ItemGroup>
 </Project>

@@ -18,21 +18,9 @@
   </PropertyGroup>
   
   <ImportGroup>
-    <Import Project="Common.props" />
+    <Import Project="..\Common.props" />
   </ImportGroup>
-  
-  <ItemGroup>
-	<Compile Remove="CgmInfoCmd\**" />
-	<Compile Remove="CgmInfoGui\**" />
-	<Compile Remove="packages\**" />
-	<EmbeddedResource Remove="CgmInfoCmd\**" />
-	<EmbeddedResource Remove="CgmInfoGui\**" />
-	<EmbeddedResource Remove="packages\**" />
-	<None Remove="CgmInfoCmd\**" />
-	<None Remove="CgmInfoGui\**" />
-	<None Remove="packages\**" />
-  </ItemGroup>
-  
+ 
   <ItemGroup>
     <None Remove="*.bak" />
     <None Remove="*.suo" />

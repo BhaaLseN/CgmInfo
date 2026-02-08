@@ -15,7 +15,10 @@ public class CircleVisual : VisualBase
 
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
-        // FIXME: use EDGE* and INTERIOR* here.
-        drawingContext.DrawEllipse(null, GetBlack(), visualContext.Correct(Center), Radius, Radius);
+        using (drawingContext.PushTransform(Transform))
+        {
+            // FIXME: use EDGE* and INTERIOR* here.
+            drawingContext.DrawEllipse(null, GetBlack(), /*visualContext.Correct*/(Center), Radius, Radius);
+        }
     }
 }

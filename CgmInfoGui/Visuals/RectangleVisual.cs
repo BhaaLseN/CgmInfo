@@ -15,7 +15,10 @@ public class RectangleVisual : VisualBase
 
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
-        // FIXME: use EDGE* and INTERIOR* here.
-        drawingContext.DrawRectangle(null, GetBlack(), new Rect(visualContext.Correct(FirstCorner), visualContext.Correct(SecondCorner)));
+        using (drawingContext.PushTransform(Transform))
+        {
+            // FIXME: use EDGE* and INTERIOR* here.
+            drawingContext.DrawRectangle(null, GetBlack(), new Rect(/*visualContext.Correct*/(FirstCorner), /*visualContext.Correct*/(SecondCorner)));
+        }
     }
 }

@@ -24,9 +24,10 @@ public class LineVisual : VisualBase
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
         var geo = new StreamGeometry();
+        using (drawingContext.PushTransform(Transform))
         using (var ctx = geo.Open())
         {
-            Point[] points = [.. Points.Select(visualContext.Correct)];
+            Point[] points = [.. Points/*.Select(visualContext.Correct)*/];
             if (IsClosed)
                 points = [.. points, points[0]];
             ctx.BeginFigure(points[0], isFilled: false);

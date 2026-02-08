@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Avalonia;
 using Avalonia.Media;
 
@@ -21,6 +21,8 @@ public class ArcVisual : VisualBase
     public ArcVisual(Point center, Point firstConjugateDiameter, Point secondConjugateDiameter, Point start, Point end)
         : this(center, start, end)
     {
+        FirstDiameter = firstConjugateDiameter;
+        SecondDiameter = secondConjugateDiameter;
         // calculate the actual radius in X/Y direction
         RadiusX = Distance(Center, firstConjugateDiameter);
         RadiusY = Distance(Center, secondConjugateDiameter);
@@ -47,19 +49,23 @@ public class ArcVisual : VisualBase
     public Point Center { get; }
     public Point Start { get; }
     public Point End { get; }
+    public Point FirstDiameter { get; }
+    public Point SecondDiameter { get; }
     public double RadiusX { get; }
     public double RadiusY { get; }
     public double Angle { get; }
 
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
+        using var _ = drawingContext.PushTransform(Transform);
+
         var start = Vector.Normalize(Start);
         var end = Vector.Normalize(End);
         var nnStart = new Point(Center.X + (start.X * RadiusX), Center.Y + (start.Y * RadiusY));
         var nnEnd = new Point(Center.X + (end.X * RadiusX), Center.Y + (end.Y * RadiusY));
 
-        var startPoint = visualContext.Correct(nnStart);
-        var endPoint = visualContext.Correct(nnEnd);
+        var startPoint = /*visualContext.Correct*/(nnStart);
+        var endPoint = /*visualContext.Correct*/(nnEnd);
 
         // D.4.5.6 CIRCULAR ARC CENTRE
         // If the start ray and the end ray coincide, it is recommended that the interpreter draw the full circle.
@@ -67,7 +73,7 @@ public class ArcVisual : VisualBase
         {
             // But: ArcTo cannot be used to draw a full circle.
             // FIXME: use EDGE* and INTERIOR* here.
-            drawingContext.DrawEllipse(null, GetBlack(), visualContext.Correct(Center), RadiusX, RadiusY);
+            drawingContext.DrawEllipse(null, GetBlack(), /*visualContext.Correct*/(Center), RadiusX, RadiusY);
         }
         else
         {

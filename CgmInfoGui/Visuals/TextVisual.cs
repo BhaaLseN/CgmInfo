@@ -25,7 +25,18 @@ public class TextVisual : VisualBase
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
         var formattedText = CreateFormattedText(new SolidColorBrush(FontColor));
-        drawingContext.DrawText(formattedText, visualContext.Correct(Location));
+        using (drawingContext.PushTransform(Transform))
+        {
+            var uprightDirection = new Vector(
+                visualContext.DirectionX > 0 ? 1.0 : -1.0,
+                visualContext.DirectionY > 0 ? -1.0 : 1.0);
+
+            using (drawingContext.PushTransform(Matrix.CreateScale(uprightDirection)))
+            {
+                var location = new Point(Location.X * uprightDirection.X, Location.Y * uprightDirection.Y);
+                drawingContext.DrawText(formattedText, /*visualContext.Correct*/(location));
+            }
+        }
     }
 
     // from Avalonia.Media.FormattedText, otherwise it may throw.

@@ -25,9 +25,23 @@ public class GraphicalElementContext
 
     public void Add(VisualBase visual)
     {
+        visual.Transform = CurrentTransform;
         Visuals.Add(visual);
         visual.ParentContainer = CurrentLevel;
         CurrentLevel.VisualCount++;
+    }
+
+    public Matrix CurrentTransform { get; private set; } = Matrix.CreateScale(1.0, -1.0);
+    //public Matrix CurrentTransform { get; private set; } = Matrix.CreateScale(1.0, 1.0);
+    private readonly Stack<Matrix> _stack = new();
+    public void PushTransform(Matrix m)
+    {
+        _stack.Push(CurrentTransform);
+        CurrentTransform = m * CurrentTransform;
+    }
+    public void PopTransform()
+    {
+        CurrentTransform = _stack.Pop();
     }
 
     public VisualContainer CurrentLevel { get; private set; }

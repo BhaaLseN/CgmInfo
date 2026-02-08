@@ -182,6 +182,17 @@ public class VisualCanvas : ItemsControl
 
     public override void Render(DrawingContext drawingContext)
     {
+        var metaHeight = GeometryExtent.Height;
+        // Step 1: move drawing so minY = 0
+        var normalize = Matrix.CreateTranslation(-GeometryExtent.X, -GeometryExtent.Y);
+        // Step 2: flip Y
+        var flip = Matrix.CreateScale(1, -1);
+        // Step 3: move drawing down by metaHeight
+        var translate = Matrix.CreateTranslation(0, metaHeight);
+        var rootTransform = normalize * flip * translate;
+
+        using var _ = drawingContext.PushTransform(rootTransform);
+
         var paperBrush = new SolidColorBrush(VisualBase.GetBackgroundColor());
         // TODO: this should only be the VDC extent, since the image defines the paper size.
         var paperSize = VdcExtent.Union(GeometryExtent);

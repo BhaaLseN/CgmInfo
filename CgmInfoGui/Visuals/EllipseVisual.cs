@@ -31,6 +31,16 @@ public class EllipseVisual : VisualBase
 
     protected internal override void DrawTo(DrawingContext drawingContext, VisualContext visualContext)
     {
+        using (drawingContext.PushTransform(Transform))
+        {
+            // Build ellipse-local transform
+            var ellipseMatrix = Matrix.CreateTranslation(-0.5, -0.5) * new Matrix(FirstConjugateDiameter.X, FirstConjugateDiameter.Y, SecondConjugateDiameter.X, SecondConjugateDiameter.Y, 0, 0) * Matrix.CreateTranslation(Center.X, Center.Y);
+            using (drawingContext.PushTransform(ellipseMatrix))
+            {
+                drawingContext.DrawEllipse(brush: null, GetBlack(), center: new Point(0.5, 0.5), radiusX: 0.5, radiusY: 0.5);
+            }
+        }
+        return;
         var center = visualContext.Correct(Center);
         double rad = visualContext.Angle(MajorAxisPoint.Y - Center.Y, MajorAxisPoint.X - Center.X);
         // FIXME: use EDGE* and INTERIOR* here.

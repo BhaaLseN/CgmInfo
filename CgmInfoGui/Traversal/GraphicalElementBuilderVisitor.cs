@@ -30,6 +30,12 @@ public class GraphicalElementBuilderVisitor : CommandVisitor<GraphicalElementCon
     public override void AcceptPictureDescriptorVdcExtent(VdcExtent vdcExtent, GraphicalElementContext parameter)
     {
         parameter.SetMaximumExtent(vdcExtent.FirstCorner.ToPoint(), vdcExtent.SecondCorner.ToPoint());
+
+        var orientationMatrix = Matrix.CreateScale(
+            vdcExtent.FirstCorner.X < vdcExtent.SecondCorner.X ? 1.0 : -1.0,
+            vdcExtent.FirstCorner.Y < vdcExtent.SecondCorner.Y ? -1.0 : 1.0);
+
+        parameter.PushTransform(orientationMatrix);
     }
 
     public override void AcceptAttributeLineColor(LineColor lineColor, GraphicalElementContext parameter)

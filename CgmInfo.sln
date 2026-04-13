@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgmInfo", "CgmInfo\CgmInfo.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgmInfoCmd", "CgmInfoCmd\CgmInfoCmd.csproj", "{577A77DD-127D-423D-A221-94F1D58F05DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgmInfoGui", "CgmInfoGui\CgmInfoGui.csproj", "{2B7803BB-18EA-4098-9C0A-E87E99F8A59E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgmInfoGui", "CgmInfoGui\CgmInfoGui.csproj", "{2B7803BB-18EA-4098-9C0A-E87E99F8A59E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

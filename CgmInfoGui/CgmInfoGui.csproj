@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.13" />
-    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.4.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.13" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.13" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.13" />
+    <PackageReference Include="Avalonia" Version="12.0.0" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.0" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Include="Avalonia.Diagnostics" Version="11.3.13">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
@@ -25,9 +25,9 @@
     </PackageReference>
     <PackageReference Include="AvaloniaHex" Version="0.1.10" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Dock.Avalonia" Version="11.3.11.22" />
-    <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.11.22" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.3.11.22" />
+    <PackageReference Include="Dock.Avalonia" Version="12.0.0.1" />
+    <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.1" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="12.0.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="TreeDataGrid" Version="11.3.12.1" />
   </ItemGroup>

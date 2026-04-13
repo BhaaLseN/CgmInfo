@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>CgmInfoCmd</AssemblyName>
     <RootNamespace>CgmInfoCmd</RootNamespace>
     <Description>CGM Metafile Info command line tool for testing</Description>

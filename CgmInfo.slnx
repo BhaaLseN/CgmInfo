@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CgmInfo/CgmInfo.csproj" />
+  <Project Path="CgmInfoCmd/CgmInfoCmd.csproj" />
+  <Project Path="CgmInfoGui/CgmInfoGui.csproj" />
+</Solution>

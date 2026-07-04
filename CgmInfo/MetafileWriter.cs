@@ -5,6 +5,7 @@ using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
 using CgmInfo.Writers;
 
@@ -51,7 +52,7 @@ namespace CgmInfo
             { (1, 9), MetafileDescriptorWriter.MaximumColorIndex },
             { (1, 10), MetafileDescriptorWriter.ColorValueExtent },
             { (1, 11), MetafileDescriptorWriter.MetafileElementsList },
-            //{ (1, 12), MetafileDescriptorWriter.MetafileDefaultsReplacement },
+            { (1, 12), WriteMetafileDefaultsReplacement },
             { (1, 13), MetafileDescriptorWriter.FontList },
             { (1, 14), MetafileDescriptorWriter.CharacterSetList },
             { (1, 15), MetafileDescriptorWriter.CharacterCodingAnnouncer },
@@ -426,7 +427,9 @@ namespace CgmInfo
             if (value == null)
                 return;
 
-            WriteEnum(value.Type);
+            // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
+            WriteIndex((int)value.Type);
+            // count is an interger at the current integer precision for SDR [ISO/IEC 8632-1 H.2.2]
             WriteInteger(value.Values.Length);
             switch (value.Type)
             {
@@ -443,7 +446,8 @@ namespace CgmInfo
                     writeAll<int>(WriteName);
                     break;
                 case DataTypeIndex.Enumerated:
-                    writeAll<Enum>(WriteEnum);
+                    // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
+                    writeAll<Enum>(e => WriteInteger(Convert.ToInt32(e)));
                     break;
                 case DataTypeIndex.Integer:
                     writeAll<int>(WriteInteger);
@@ -497,5 +501,12 @@ namespace CgmInfo
                     writeAction(value);
             }
         }
+
+        private static void WriteMetafileDefaultsReplacement(MetafileWriter writer, Command command)
+        {
+            writer.WriteMetafileDefaultsReplacement((MetafileDefaultsReplacement)command);
+        }
+
+        protected abstract void WriteMetafileDefaultsReplacement(MetafileDefaultsReplacement command);
     }
 }

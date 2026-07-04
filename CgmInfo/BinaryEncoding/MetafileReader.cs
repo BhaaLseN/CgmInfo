@@ -264,7 +264,7 @@ namespace CgmInfo.BinaryEncoding
             try
             {
                 result = commandHandler(this, commandHeader);
-                result.Buffer = commandHeader.Buffer;
+                result?.Buffer = commandHeader.Buffer;
             }
             catch (Exception ex)
             {

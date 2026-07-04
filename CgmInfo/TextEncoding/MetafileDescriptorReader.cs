@@ -62,12 +62,12 @@ namespace CgmInfo.TextEncoding
 
         public static ColorPrecision ColorPrecision(MetafileReader reader)
         {
-            return new ColorPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger()));
+            return new ColorPrecision(TextEncodingHelper.GetBitPrecision((uint)reader.ReadInteger()));
         }
 
         public static ColorIndexPrecision ColorIndexPrecision(MetafileReader reader)
         {
-            return new ColorIndexPrecision(TextEncodingHelper.GetBitPrecision(reader.ReadInteger()));
+            return new ColorIndexPrecision(TextEncodingHelper.GetBitPrecision((uint)reader.ReadInteger()));
         }
 
         public static MaximumColorIndex MaximumColorIndex(MetafileReader reader)

@@ -11,7 +11,7 @@ namespace CgmInfo.TextEncoding
         public static readonly CultureInfo Culture = new CultureInfo("en");
 
         // returns the amount of bits (multiples of a byte) required to store input
-        public static int GetBitPrecision(int input)
+        public static int GetBitPrecision(uint input)
         {
             if (input <= 0xFF)
                 return 8;
@@ -24,7 +24,7 @@ namespace CgmInfo.TextEncoding
         public static int GetBitPrecision(int minValue, int maxValue)
         {
             // min is either 0 or negative, so subtracting it from max gives us roughly the number of values possible
-            return GetBitPrecision(maxValue - minValue);
+            return GetBitPrecision((uint)(maxValue - minValue));
         }
         public static OnOffIndicator GetOnOffValue(string token)
         {
@@ -33,14 +33,13 @@ namespace CgmInfo.TextEncoding
             return OnOffIndicator.Off;
         }
 
-        public static int GetMaximumForPrecisionSigned(int precision) => (int)GetMaximumForPrecisionUnsigned(precision - 1);
-        public static uint GetMaximumForPrecisionUnsigned(int precision) => (uint)(Math.Pow(2, precision) - 1);
-        public static double GetMaximumForPrecisionSigned(RealPrecisionSpecification specification) => specification switch
+        public static (int Min, int Max) GetRangeForPrecision(int precision) => (-(int)(1u << (precision - 1)), (int)((1u << (precision - 1)) - 1));
+        public static (double Min, double Max) GetRangeForPrecision(RealPrecisionSpecification specification) => specification switch
         {
-            RealPrecisionSpecification.FixedPoint32Bit => float.MaxValue,
-            RealPrecisionSpecification.FloatingPoint32Bit => float.MaxValue,
-            RealPrecisionSpecification.FixedPoint64Bit => double.MaxValue,
-            RealPrecisionSpecification.FloatingPoint64Bit => double.MaxValue,
+            RealPrecisionSpecification.FixedPoint32Bit => (float.MinValue, float.MaxValue),
+            RealPrecisionSpecification.FloatingPoint32Bit => (float.MinValue, float.MaxValue),
+            RealPrecisionSpecification.FixedPoint64Bit => (double.MinValue, double.MaxValue),
+            RealPrecisionSpecification.FloatingPoint64Bit => (double.MinValue, double.MaxValue),
             var everythingElse => throw new FormatException($"Unsupported Real Precision {everythingElse}"),
         };
     }

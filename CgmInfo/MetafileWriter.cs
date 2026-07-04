@@ -427,7 +427,9 @@ namespace CgmInfo
             if (value == null)
                 return;
 
-            WriteEnum(value.Type);
+            // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
+            WriteIndex((int)value.Type);
+            // count is an interger at the current integer precision for SDR [ISO/IEC 8632-1 H.2.2]
             WriteInteger(value.Values.Length);
             switch (value.Type)
             {
@@ -444,7 +446,8 @@ namespace CgmInfo
                     writeAll<int>(WriteName);
                     break;
                 case DataTypeIndex.Enumerated:
-                    writeAll<Enum>(WriteEnum);
+                    // enum is an index at the current index precision for SDR [ISO/IEC 8632-1 H.2.2]
+                    writeAll<Enum>(e => WriteInteger(Convert.ToInt32(e)));
                     break;
                 case DataTypeIndex.Integer:
                     writeAll<int>(WriteInteger);

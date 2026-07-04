@@ -251,7 +251,7 @@ namespace CgmInfo.TextEncoding
             try
             {
                 var result = commandHandler(this);
-                result.Buffer = RawBuffer(trackingBuffer, stream, _commandPosition);
+                result?.Buffer = RawBuffer(trackingBuffer, stream, _commandPosition);
                 return result;
             }
             catch (Exception ex)

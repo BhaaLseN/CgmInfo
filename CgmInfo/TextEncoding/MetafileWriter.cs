@@ -311,9 +311,9 @@ namespace CgmInfo.TextEncoding
         {
             // Text encoding writes the INTEGER PRECISION as min/max pairs instead of the actual precision in bits.
             var integerPrecision = (IntegerPrecision)command;
-            int maxValue = TextEncodingHelper.GetMaximumForPrecisionSigned(integerPrecision.Precision);
+            var (minValue, maxValue) = TextEncodingHelper.GetRangeForPrecision(integerPrecision.Precision);
 
-            writer.WriteIntegerLiteral(-maxValue);
+            writer.WriteIntegerLiteral(minValue);
             writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.IntegerPrecision = integerPrecision.Precision;
@@ -323,9 +323,9 @@ namespace CgmInfo.TextEncoding
             // Text encoding writes the REAL PRECISION as min/max pairs instead of the actual precision in bits.
             // it also has an indicator at the end of how many significant digits this encoding uses.
             var realPrecision = (RealPrecision)command;
-            double maxValue = TextEncodingHelper.GetMaximumForPrecisionSigned(realPrecision.Specification);
+            var (minValue, maxValue) = TextEncodingHelper.GetRangeForPrecision(realPrecision.Specification);
 
-            writer.WriteRealLiteral(-maxValue);
+            writer.WriteRealLiteral(minValue);
             writer.WriteRealLiteral(maxValue);
             // we don't really know how much we have, lets assume _something_
             // TODO: does (or should) this depend on RealPrecision.Specification?
@@ -335,11 +335,12 @@ namespace CgmInfo.TextEncoding
         }
         private static void WriteIndexPrecision(MetafileWriter writer, Command command)
         {
-            // Text encoding writes the INDEX PRECISION as max value instead of the actual precision in bits.
+            // Text encoding writes the INDEX PRECISION as min/max pairs instead of the actual precision in bits.
             var indexPrecision = (IndexPrecision)command;
-            uint maxValue = TextEncodingHelper.GetMaximumForPrecisionUnsigned(indexPrecision.Precision);
+            var (minValue, maxValue) = TextEncodingHelper.GetRangeForPrecision(indexPrecision.Precision);
 
-            writer.WriteIntegerLiteral((int)maxValue);
+            writer.WriteIntegerLiteral(minValue);
+            writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.IndexPrecision = indexPrecision.Precision;
         }
@@ -347,9 +348,9 @@ namespace CgmInfo.TextEncoding
         {
             // Text encoding writes the COLOUR PRECISION as max value instead of the actual precision in bits.
             var colorPrecision = (ColorPrecision)command;
-            uint maxValue = TextEncodingHelper.GetMaximumForPrecisionUnsigned(colorPrecision.Precision);
+            var (_, maxValue) = TextEncodingHelper.GetRangeForPrecision(colorPrecision.Precision);
 
-            writer.WriteIntegerLiteral((int)maxValue);
+            writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.ColorPrecision = colorPrecision.Precision;
         }
@@ -357,9 +358,9 @@ namespace CgmInfo.TextEncoding
         {
             // Text encoding writes the COLOUR INDEX PRECISION as max value instead of the actual precision in bits.
             var colorIndexPrecision = (ColorIndexPrecision)command;
-            uint maxValue = TextEncodingHelper.GetMaximumForPrecisionUnsigned(colorIndexPrecision.Precision);
+            var (_, maxValue) = TextEncodingHelper.GetRangeForPrecision(colorIndexPrecision.Precision);
 
-            writer.WriteIntegerLiteral((int)maxValue);
+            writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.ColorIndexPrecision = colorIndexPrecision.Precision;
         }
@@ -367,9 +368,9 @@ namespace CgmInfo.TextEncoding
         {
             // Text encoding writes the NAME PRECISION as max value instead of the actual precision in bits.
             var namePrecision = (NamePrecision)command;
-            uint maxValue = TextEncodingHelper.GetMaximumForPrecisionUnsigned(namePrecision.Precision);
+            var (_, maxValue) = TextEncodingHelper.GetRangeForPrecision(namePrecision.Precision);
 
-            writer.WriteIntegerLiteral((int)maxValue);
+            writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.NamePrecision = namePrecision.Precision;
         }
@@ -389,9 +390,9 @@ namespace CgmInfo.TextEncoding
         {
             // Text encoding writes the VDC INTEGER PRECISION as min/max pairs instead of the actual precision in bits.
             var vdcIntegerPrecision = (VdcIntegerPrecision)command;
-            int maxValue = TextEncodingHelper.GetMaximumForPrecisionSigned(vdcIntegerPrecision.Precision);
+            var (minValue, maxValue) = TextEncodingHelper.GetRangeForPrecision(vdcIntegerPrecision.Precision);
 
-            writer.WriteIntegerLiteral(-maxValue);
+            writer.WriteIntegerLiteral(minValue);
             writer.WriteIntegerLiteral(maxValue);
 
             writer.Descriptor.VdcIntegerPrecision = vdcIntegerPrecision.Precision;
@@ -402,9 +403,9 @@ namespace CgmInfo.TextEncoding
             // Text encoding writes the VDC REAL PRECISION as min/max pairs instead of the actual precision in bits.
             // it also has an indicator at the end of how many significant digits this encoding uses.
             var vdcRealPrecision = (VdcRealPrecision)command;
-            double maxValue = TextEncodingHelper.GetMaximumForPrecisionSigned(vdcRealPrecision.Specification);
+            var (minValue, maxValue) = TextEncodingHelper.GetRangeForPrecision(vdcRealPrecision.Specification);
 
-            writer.WriteRealLiteral(-maxValue);
+            writer.WriteRealLiteral(minValue);
             writer.WriteRealLiteral(maxValue);
             // we don't really know how much we have, lets assume _something_
             // TODO: does (or should) this depend on VdcRealPrecision.Specification?

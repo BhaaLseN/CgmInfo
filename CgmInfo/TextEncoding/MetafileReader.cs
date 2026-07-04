@@ -485,10 +485,13 @@ namespace CgmInfo.TextEncoding
             var match = DecimalInteger.Match(number);
             if (match.Success)
             {
-                if (!int.TryParse(match.Groups["digits"].Value, out int num))
-                    throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at command position {1}", number, _commandPosition));
-                if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
-                    num = -num;
+                if (!int.TryParse(match.Value, out int num))
+                {
+                    if (!int.TryParse(match.Groups["digits"].Value, out num))
+                        throw new FormatException(string.Format("Invalid Decimal Integer digits '{0}' at command position {1}", number, _commandPosition));
+                    if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
+                        num = -num;
+                }
                 return num;
             }
 

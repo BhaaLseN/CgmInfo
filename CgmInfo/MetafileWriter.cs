@@ -5,6 +5,7 @@ using System.Linq;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Delimiter;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.MetafileDescriptor;
 using CgmInfo.Utilities;
 using CgmInfo.Writers;
 
@@ -51,7 +52,7 @@ namespace CgmInfo
             { (1, 9), MetafileDescriptorWriter.MaximumColorIndex },
             { (1, 10), MetafileDescriptorWriter.ColorValueExtent },
             { (1, 11), MetafileDescriptorWriter.MetafileElementsList },
-            //{ (1, 12), MetafileDescriptorWriter.MetafileDefaultsReplacement },
+            { (1, 12), WriteMetafileDefaultsReplacement },
             { (1, 13), MetafileDescriptorWriter.FontList },
             { (1, 14), MetafileDescriptorWriter.CharacterSetList },
             { (1, 15), MetafileDescriptorWriter.CharacterCodingAnnouncer },
@@ -497,5 +498,12 @@ namespace CgmInfo
                     writeAction(value);
             }
         }
+
+        private static void WriteMetafileDefaultsReplacement(MetafileWriter writer, Command command)
+        {
+            writer.WriteMetafileDefaultsReplacement((MetafileDefaultsReplacement)command);
+        }
+
+        protected abstract void WriteMetafileDefaultsReplacement(MetafileDefaultsReplacement command);
     }
 }

@@ -109,14 +109,15 @@ namespace CgmInfo.TextEncoding
                 commandHandler(this, command);
             }
 
-            // TODO: support '/' as alternate terminator
-            _writer.WriteLine(';');
+            WriteTerminator();
 
             if (_indentChangeAfter.TryGetValue(classId, out var changeIndentAfter) && changeIndentAfter != null)
             {
                 changeIndentAfter(this);
             }
         }
+
+        private void WriteTerminator(bool alternate = false) => _writer.WriteLine(alternate ? '/' : ';');
 
         private static void IncreaseLevel(MetafileWriter writer) => writer._indent++;
         private static void DecreaseLevel(MetafileWriter writer)
@@ -240,6 +241,19 @@ namespace CgmInfo.TextEncoding
         {
             base.WriteStructuredDataElement(value);
             _sdeCount++;
+        }
+
+        protected override void WriteMetafileDefaultsReplacement(MetafileDefaultsReplacement value)
+        {
+            WriteTerminator();
+            IncreaseLevel(this);
+
+            foreach (var command in value.Commands)
+                Write(command);
+
+            DecreaseLevel(this);
+            WriteIndent();
+            _writer.Write(TextTokenAttribute.GetEndToken(value));
         }
 
         internal override void WriteDirectColor(MetafileColor value, int colorDirectPrecision)

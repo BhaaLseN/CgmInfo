@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using CgmInfo.Commands;
 using CgmInfo.Commands.Enums;
+using CgmInfo.Commands.MetafileDescriptor;
 using BaseMetafileWriter = CgmInfo.MetafileWriter;
 
 namespace CgmInfo.BinaryEncoding
@@ -264,6 +265,18 @@ namespace CgmInfo.BinaryEncoding
             if (shortLength == 255)
                 WriteWord((ushort)sdeBuffer.Length);
             WriteBuffer(sdeBuffer);
+        }
+
+        protected override void WriteMetafileDefaultsReplacement(MetafileDefaultsReplacement value)
+        {
+            using var ms = new MemoryStream();
+            using var writer = new MetafileWriter(this, ms) { _insideMetafile = true };
+
+            foreach (var command in value.Commands)
+                writer.Write(command);
+
+            byte[] mdrBuffer = ms.ToArray();
+            WriteBuffer(mdrBuffer);
         }
     }
 }

@@ -24,7 +24,7 @@
     <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.1.0" />
     <PackageReference Include="Dock.Model.Mvvm" Version="12.1.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
-    <PackageReference Include="TreeDataGrid" Version="12.0.0.4" />
+    <PackageReference Include="TreeDataGrid" Version="12.0.0.6" />
   </ItemGroup>
 
   <ItemGroup>

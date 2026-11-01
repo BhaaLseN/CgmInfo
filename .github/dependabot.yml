@@ -18,8 +18,6 @@ updates:
         patterns:
           - "SixLabors*"
     ignore:
+    # Versions starting at 3.2.0 require a license, even for open source use.
+    # its only use is their TIFF decoder, which I'll likely replace at some point.
     - dependency-name: "SixLabors.ImageSharp"
-      # Versions starting at 3.2.0 require a license, even for open source use.
-      # its only use is their TIFF decoder, which I'll likely replace at some point.
-      versions: [ ">=3.2.0" ]
-

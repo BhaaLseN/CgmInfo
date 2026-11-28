@@ -13,7 +13,7 @@ namespace CgmInfoCmd
         private bool _preventActualMethodCalls;
         private readonly T _target;
 
-        private Dictionary<string, Dictionary<string, int>> _stats = new Dictionary<string, Dictionary<string, int>>();
+        private Dictionary<string, Dictionary<string, int>> _stats = new();
 
         public ICommandVisitor<TContext> GetTransparentProxy(bool preventActualMethodCalls)
         {

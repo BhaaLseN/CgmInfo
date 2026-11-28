@@ -377,7 +377,7 @@ namespace CgmInfo.TextEncoding
             return InteriorStyleType.Hollow;
         }
 
-        private static readonly Dictionary<string, AspectSourceFlagsType[]> ASFMapping = new Dictionary<string, AspectSourceFlagsType[]>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, AspectSourceFlagsType[]> ASFMapping = new(StringComparer.OrdinalIgnoreCase)
         {
             // single values
             { "LINETYPE", new[] { AspectSourceFlagsType.LineType } },

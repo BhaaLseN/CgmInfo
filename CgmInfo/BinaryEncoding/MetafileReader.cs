@@ -13,7 +13,7 @@ namespace CgmInfo.BinaryEncoding
     public class MetafileReader : BaseMetafileReader
     {
         // ISO/IEC 8632-3 8.1, Table 2
-        private readonly Dictionary<(int ElementClass, int ElementId), Func<MetafileReader, CommandHeader, Command>> _commandTable = new Dictionary<(int, int), Func<MetafileReader, CommandHeader, Command>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Func<MetafileReader, CommandHeader, Command>> _commandTable = new()
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
             // { (0, 0), ReadNoop }, // no-op; these are skipped already while reading the command header

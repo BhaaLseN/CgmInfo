@@ -14,7 +14,7 @@ namespace CgmInfo.TextEncoding
 {
     public class MetafileReader : BaseMetafileReader
     {
-        private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new Dictionary<string, Func<MetafileReader, Command>>(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, Func<MetafileReader, Command>> _commandTable = new(StringComparer.OrdinalIgnoreCase)
         {
             // delimiter elements [ISO/IEC 8632-4 7.1]
             { "BEGMF", DelimiterElementReader.BeginMetafile },
@@ -476,8 +476,8 @@ namespace CgmInfo.TextEncoding
         {
             return ReadInteger();
         }
-        private static readonly Regex DecimalInteger = new Regex(@"^(?<sign>[+\-])?(?<digits>[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
-        private static readonly Regex BasedInteger = new Regex(@"^(?<sign>[+\-])?(?<radix>(?:[2-9]|1[0-6]))#(?<digits>[0-9A-F]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private static readonly Regex DecimalInteger = new(@"^(?<sign>[+\-])?(?<digits>[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+        private static readonly Regex BasedInteger = new(@"^(?<sign>[+\-])?(?<radix>(?:[2-9]|1[0-6]))#(?<digits>[0-9A-F]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
         private const string ExtendedDigits = "0123456789ABCDEF";
         internal int ReadInteger()
         {
@@ -511,7 +511,7 @@ namespace CgmInfo.TextEncoding
                             string.Format("Invalid Based Integer digits '{0}' at command position {1}", number, _commandPosition));
                     }
 
-                    num = num * radix + charValue;
+                    num = (num * radix) + charValue;
                 }
                 if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
                     num = -num;
@@ -521,8 +521,8 @@ namespace CgmInfo.TextEncoding
             throw new FormatException(string.Format("Unsupported Integer Format '{0}' at command position {1}", number, _commandPosition));
         }
         // according to spec, explicit point must have either 1 digit integer or 1 digit fraction. lets hope we can get away with that...[ISO/IEC 8632-4 6.3.2]
-        private static readonly Regex ExplicitPointNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)\.(?<fraction>[0-9]*)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
-        private static readonly Regex ScaledRealNumber = new Regex(@"^(?<sign>[+\-])?(?<integer>[0-9]*)(?:\.(?<fraction>[0-9]*))?[Ee](?<exponent>[+\-]?[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private static readonly Regex ExplicitPointNumber = new(@"^(?<sign>[+\-])?(?<integer>[0-9]*)\.(?<fraction>[0-9]*)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
+        private static readonly Regex ScaledRealNumber = new(@"^(?<sign>[+\-])?(?<integer>[0-9]*)(?:\.(?<fraction>[0-9]*))?[Ee](?<exponent>[+\-]?[0-9]+)$", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase);
         internal double ReadReal()
         {
             string number = ReadToken();

@@ -243,7 +243,7 @@ namespace CgmInfo.Writers
                 // P3: (structured data record) property value record, each record contains a single member and is comprised of
                 // [data type indicator, data element count, data element(s)].
                 // NOTE: we only store that single member; but we still have to write a full record.
-                writer.WriteStructuredDataRecord(new StructuredDataRecord(new[] { property.Record }));
+                writer.WriteStructuredDataRecord(new StructuredDataRecord([property.Record]));
             }
         }
     }

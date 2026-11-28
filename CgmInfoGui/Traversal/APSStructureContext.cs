@@ -11,7 +11,7 @@ public class APSStructureContext : NodeContext
 {
     public void AddAttributeNode(ApplicationStructureAttribute applicationStructureAttribute)
     {
-        var allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
+        object[] allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
         switch (applicationStructureAttribute.AttributeType.ToUpperInvariant())
         {
             #region WebCGM 2.0 Intelligent Content [WebCGM20-IC]
@@ -67,11 +67,11 @@ public class APSStructureContext : NodeContext
 
                 var regionNode = AddNode("@{0} Viewcontext ({1} by {2})", applicationStructureAttribute.AttributeType,
                     Math.Abs(endX - startX), Math.Abs(endY - startY));
-                regionNode.Nodes.AddRange(new[]
-                {
+                regionNode.Nodes.AddRange(
+                [
                     new SimpleNode(string.Format("Start: {0}", start)),
                     new SimpleNode(string.Format("End: {0}", end)),
-                });
+                ]);
                 break;
 
             #endregion
@@ -123,11 +123,11 @@ public class APSStructureContext : NodeContext
 
                     var regionNode = AddNode("@{0} Rectangle ({1} by {2})", applicationStructureAttribute.AttributeType,
                         Math.Abs(endX - startX), Math.Abs(endY - startY));
-                    regionNode.Nodes.AddRange(new[]
-                    {
+                    regionNode.Nodes.AddRange(
+                    [
                         new SimpleNode(string.Format("Start: {0}", start)),
                         new SimpleNode(string.Format("End: {0}", end)),
-                    });
+                    ]);
                 }
                 else
                 {
@@ -149,12 +149,12 @@ public class APSStructureContext : NodeContext
                     var focus2 = new PointF(focus2X, focus2Y);
 
                     var regionNode = AddNode("@{0} Ellipse (at {1})", applicationStructureAttribute.AttributeType, center);
-                    regionNode.Nodes.AddRange(new[]
-                    {
+                    regionNode.Nodes.AddRange(
+                    [
                         new SimpleNode(string.Format("Center: {0}", center)),
                         new SimpleNode(string.Format("Focal Point 1: {0}", focus1)),
                         new SimpleNode(string.Format("Focal Point 2: {0}", focus2)),
-                    });
+                    ]);
                 }
                 else
                 {
@@ -197,13 +197,13 @@ public class APSStructureContext : NodeContext
                     var lastPoint = firstPoint;
                     foreach (var pointGroup in pointGroups)
                     {
-                        points.Add(new[]
-                        {
+                        points.Add(
+                        [
                             lastPoint,
                             pointGroup[0],
                             pointGroup[1],
                             pointGroup[2],
-                        });
+                        ]);
                         lastPoint = pointGroup[2];
                     }
                     var regionNode = AddNode("@{0} Polybezier ({1} points)", applicationStructureAttribute.AttributeType, points.Count);

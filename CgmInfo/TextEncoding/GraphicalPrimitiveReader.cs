@@ -290,7 +290,7 @@ namespace CgmInfo.TextEncoding
                 case 4: // T4 2-dimensional
                 case 5: // bitmap (uncompressed)
                     // [null_SDR], for compression types 1-5,
-                    return new StructuredDataRecord(new StructuredDataElement[0]);
+                    return new StructuredDataRecord([]);
 
                 case 6: // run length
                     return reader.ReadStructuredDataRecord();

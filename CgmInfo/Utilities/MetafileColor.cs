@@ -13,7 +13,7 @@ namespace CgmInfo.Utilities
         public override int GetHashCode() => GetStringValue().GetHashCode();
         public override bool Equals(object obj)
         {
-            if (!(obj is MetafileColor metafileColor))
+            if (obj is not MetafileColor metafileColor)
                 return false;
             if (metafileColor is MetafileColorIndexed indexedColor)
                 return indexedColor.Equals(this);

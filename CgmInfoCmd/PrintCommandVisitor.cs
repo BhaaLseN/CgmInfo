@@ -127,10 +127,14 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorRealPrecision(RealPrecision realPrecision, PrintContext parameter)
         {
             if (realPrecision.Specification == RealPrecisionSpecification.Unsupported)
+            {
                 parameter.WriteLine("Real Precision: Unsupported ({0}, {1} bit Exponent width, {2} bit Fraction width)",
                     realPrecision.RepresentationForm, realPrecision.ExponentWidth, realPrecision.FractionWidth);
+            }
             else
+            {
                 parameter.WriteLine("Real Precision: {0}", realPrecision.Specification);
+            }
         }
         public void AcceptMetafileDescriptorIndexPrecision(IndexPrecision indexPrecision, PrintContext parameter)
         {
@@ -151,15 +155,21 @@ namespace CgmInfoCmd
         public void AcceptMetafileDescriptorColorValueExtent(ColorValueExtent colorValueExtent, PrintContext parameter)
         {
             if (colorValueExtent.ColorSpace == ColorSpace.Unknown)
+            {
                 parameter.WriteLine("Color Value Extent: Unknown Color Space");
+            }
             else if (colorValueExtent.ColorSpace == ColorSpace.CIE)
+            {
                 parameter.WriteLine("Color Value Extent: CIE {0}+{1}/{2}+{3}/{4}+{5}",
                     colorValueExtent.FirstScale, colorValueExtent.FirstOffset,
                     colorValueExtent.SecondScale, colorValueExtent.SecondOffset,
                     colorValueExtent.ThirdScale, colorValueExtent.ThirdOffset);
+            }
             else // RGB or CMYK
+            {
                 parameter.WriteLine("Color Value Extent: {0} {1}/{2}",
                     colorValueExtent.ColorSpace, colorValueExtent.Minimum, colorValueExtent.Maximum);
+            }
         }
         public void AcceptMetafileDescriptorMetafileElementsList(MetafileElementsList metafileElementsList, PrintContext parameter)
         {
@@ -190,9 +200,12 @@ namespace CgmInfoCmd
             parameter.WriteLine("Character Set List: {0} entries", characterSetList.Entries.Count());
             parameter.BeginLevel();
             foreach (var entry in characterSetList.Entries)
+            {
                 parameter.WriteLine("{0} (Tail {1})",
                     entry.CharacterSetType,
                     string.Join(", ", entry.DesignationSequenceTail.Select(c => ((int)c).ToString("x2"))));
+            }
+
             parameter.EndLevel();
         }
         public void AcceptMetafileDescriptorCharacterCodingAnnouncer(CharacterCodingAnnouncer characterCodingAnnouncer, PrintContext parameter)
@@ -295,10 +308,14 @@ namespace CgmInfoCmd
         public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, PrintContext parameter)
         {
             if (vdcRealPrecision.Specification == RealPrecisionSpecification.Unsupported)
+            {
                 parameter.WriteLine("VDC Real Precision: Unsupported ({0}, {1} bit Exponent width, {2} bit Fraction width)",
                     vdcRealPrecision.RepresentationForm, vdcRealPrecision.ExponentWidth, vdcRealPrecision.FractionWidth);
+            }
             else
+            {
                 parameter.WriteLine("VDC Real Precision: {0}", vdcRealPrecision.Specification);
+            }
         }
         public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, PrintContext parameter)
         {

@@ -23,8 +23,7 @@ public class NodeContextInterceptor<TContext> : DispatchProxy
     }
     public static ICommandVisitor<TContext> Around(ICommandVisitor<TContext> visitor)
     {
-        if (visitor == null)
-            throw new ArgumentNullException(nameof(visitor));
+        ArgumentNullException.ThrowIfNull(visitor);
 
         var proxy = Create<ICommandVisitor<TContext>, NodeContextInterceptor<TContext>>();
         var underlyingInstance = (NodeContextInterceptor<TContext>)proxy;

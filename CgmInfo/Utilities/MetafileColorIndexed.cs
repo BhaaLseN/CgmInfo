@@ -14,7 +14,7 @@ namespace CgmInfo.Utilities
         public override ARGB ToARGB()
         {
             if (_actualColor == null)
-                return default(ARGB);
+                return default;
             return _actualColor.ToARGB();
         }
         protected override string GetStringValue()

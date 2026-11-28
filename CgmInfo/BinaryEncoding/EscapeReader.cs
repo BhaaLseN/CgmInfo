@@ -17,12 +17,17 @@ namespace CgmInfo.BinaryEncoding
             // otherwise it is probably application specific and cannot be assumed to be a structured record
             StructuredDataRecord dataRecord;
             if (EscapeCommand.KnownEscapeTypes.ContainsKey(identifier))
+            {
                 dataRecord = reader.ReadStructuredDataRecord();
+            }
             else
-                dataRecord = new StructuredDataRecord(new[]
-                {
-                    new StructuredDataElement(DataTypeIndex.String, new object[] { reader.ReadString() }),
-                });
+            {
+                dataRecord = new StructuredDataRecord(
+                [
+                    new StructuredDataElement(DataTypeIndex.String, [reader.ReadString()]),
+                ]);
+            }
+
             return new EscapeCommand(identifier, dataRecord);
         }
     }

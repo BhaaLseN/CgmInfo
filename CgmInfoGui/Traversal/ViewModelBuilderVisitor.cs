@@ -137,23 +137,23 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var extentNode = parameter.AddMetafileDescriptorNode("COLOUR VALUE EXTENT: Color Space {0}", colorValueExtent.ColorSpace);
         if (colorValueExtent.ColorSpace == ColorSpace.CIE)
         {
-            extentNode.Nodes.AddRange(new[]
-            {
+            extentNode.Nodes.AddRange(
+            [
                 new SimpleNode(string.Format("First Scale: {0}", colorValueExtent.FirstScale)),
                 new SimpleNode(string.Format("First Offset: {0}", colorValueExtent.FirstOffset)),
                 new SimpleNode(string.Format("Second Scale: {0}", colorValueExtent.SecondScale)),
                 new SimpleNode(string.Format("Second Offset: {0}", colorValueExtent.SecondOffset)),
                 new SimpleNode(string.Format("Third Scale: {0}", colorValueExtent.ThirdScale)),
                 new SimpleNode(string.Format("Third Offset: {0}", colorValueExtent.ThirdOffset)),
-            });
+            ]);
         }
         else if (colorValueExtent.ColorSpace != ColorSpace.Unknown) // RGB or CMYK
         {
-            extentNode.Nodes.AddRange(new[]
-            {
+            extentNode.Nodes.AddRange(
+            [
                 new SimpleNode(string.Format("Minimum: {0}", colorValueExtent.Minimum)),
                 new SimpleNode(string.Format("Maximum: {0}", colorValueExtent.Maximum)),
-            });
+            ]);
         }
     }
 
@@ -190,11 +190,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptMetafileDescriptorRealPrecision(RealPrecision realPrecision, MetafileContext parameter)
     {
         var realNode = parameter.AddMetafileDescriptorNode("REAL PRECISION: {0}", realPrecision.RepresentationForm);
-        realNode.Nodes.AddRange(new[]
-        {
+        realNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Exponent Width: {0} bit", realPrecision.ExponentWidth)),
             new SimpleNode(string.Format("Fraction Width: {0} bit", realPrecision.FractionWidth)),
-        });
+        ]);
     }
 
     public void AcceptMetafileDescriptorVdcType(VdcType vdcType, MetafileContext parameter)
@@ -241,11 +241,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var maxVdcNode = parameter.AddMetafileDescriptorNode("MAXIMUM VDC EXTENT: {0} by {1}",
             Math.Abs(maximumVdcExtent.SecondCorner.X - maximumVdcExtent.FirstCorner.X),
             Math.Abs(maximumVdcExtent.SecondCorner.Y - maximumVdcExtent.FirstCorner.Y));
-        maxVdcNode.Nodes.AddRange(new[]
-        {
+        maxVdcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("First Corner: {0}", maximumVdcExtent.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", maximumVdcExtent.SecondCorner)),
-        });
+        ]);
     }
 
     public void AcceptMetafileDescriptorSegmentPriorityExtent(SegmentPriorityExtent segmentPriorityExtent, MetafileContext parameter)
@@ -292,11 +292,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var maxVdcNode = parameter.AddNode("VDC EXTENT: {0} by {1}",
             Math.Abs(vdcExtent.SecondCorner.X - vdcExtent.FirstCorner.X),
             Math.Abs(vdcExtent.SecondCorner.Y - vdcExtent.FirstCorner.Y));
-        maxVdcNode.Nodes.AddRange(new[]
-        {
+        maxVdcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("First Corner: {0}", vdcExtent.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", vdcExtent.SecondCorner)),
-        });
+        ]);
     }
 
     public void AcceptPictureDescriptorBackgroundColor(BackgroundColor backgroundColor, MetafileContext parameter)
@@ -309,11 +309,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var deviceViewportNode = parameter.AddNode("DEVICE VIEWPORT: {0} by {1}",
             Math.Abs(deviceViewport.SecondCorner.X - deviceViewport.FirstCorner.X),
             Math.Abs(deviceViewport.SecondCorner.Y - deviceViewport.FirstCorner.Y));
-        deviceViewportNode.Nodes.AddRange(new[]
-        {
+        deviceViewportNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("First Corner: {0}", deviceViewport.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", deviceViewport.SecondCorner)),
-        });
+        ]);
     }
 
     public void AcceptPictureDescriptorDeviceViewportSpecificationMode(DeviceViewportSpecificationMode deviceViewportSpecificationMode, MetafileContext parameter)
@@ -336,11 +336,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptPictureDescriptorLineAndEdgeTypeDefinition(LineAndEdgeTypeDefinition lineAndEdgeTypeDefinition, MetafileContext parameter)
     {
         var lineAndEdgeTypeDefinitionNode = parameter.AddNode("LINE AND EDGE TYPE DEFINITION: {0}", lineAndEdgeTypeDefinition.LineType);
-        lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
-        {
+        lineAndEdgeTypeDefinitionNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Line Type Index: {0}", lineAndEdgeTypeDefinition.LineType)),
             new SimpleNode(string.Format("Dash Cycle Repeat Length: {0}", lineAndEdgeTypeDefinition.DashCycleRepeatLength)),
-        });
+        ]);
         var entries = new SimpleNode(string.Format("Dash Elements [{0} elements]", lineAndEdgeTypeDefinition.DashElements.Length));
         entries.Nodes.AddRange(lineAndEdgeTypeDefinition.DashElements.Select(i => new SimpleNode(i.ToString())));
         lineAndEdgeTypeDefinitionNode.Nodes.Add(entries);
@@ -349,14 +349,14 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptPictureDescriptorHatchStyleDefinition(HatchStyleDefinition hatchStyleDefinition, MetafileContext parameter)
     {
         var hatchStyleDefinitionNode = parameter.AddNode("HATCH STYLE DEFINITION: {0}", hatchStyleDefinition.HatchIndex);
-        hatchStyleDefinitionNode.Nodes.AddRange(new[]
-        {
+        hatchStyleDefinitionNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Hatch Index: {0}", hatchStyleDefinition.HatchIndex)),
             new SimpleNode(string.Format("Style Indicator: {0}", hatchStyleDefinition.StyleIndicator)),
             new SimpleNode(string.Format("Hatch Direction Start: {0}", hatchStyleDefinition.HatchDirectionStart)),
             new SimpleNode(string.Format("Hatch Direction End: {0}", hatchStyleDefinition.HatchDirectionEnd)),
             new SimpleNode(string.Format("Duty Cycle Length: {0}", hatchStyleDefinition.DutyCycleLength)),
-        });
+        ]);
         var gapWidths = new SimpleNode(string.Format("Gap Widths [{0} elements]", hatchStyleDefinition.GapWidths.Length));
         gapWidths.Nodes.AddRange(hatchStyleDefinition.GapWidths.Select(i => new SimpleNode(i.ToString())));
         hatchStyleDefinitionNode.Nodes.Add(gapWidths);
@@ -368,23 +368,23 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptPictureDescriptorGeometricPatternDefinition(GeometricPatternDefinition geometricPatternDefinition, MetafileContext parameter)
     {
         var lineAndEdgeTypeDefinitionNode = parameter.AddNode("GEOMETRIC PATTERN DEFINITION: {0}", geometricPatternDefinition.GeometricPatternIndex);
-        lineAndEdgeTypeDefinitionNode.Nodes.AddRange(new[]
-        {
+        lineAndEdgeTypeDefinitionNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Geometric Pattern Index: {0}", geometricPatternDefinition.GeometricPatternIndex)),
             new SimpleNode(string.Format("Segment Identifier: {0}", geometricPatternDefinition.SegmentIdentifier)),
             new SimpleNode(string.Format("First Corner: {0}", geometricPatternDefinition.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", geometricPatternDefinition.SecondCorner)),
-        });
+        ]);
     }
 
     public void AcceptControlVdcRealPrecision(VdcRealPrecision vdcRealPrecision, MetafileContext parameter)
     {
         var realNode = parameter.AddNode("VDC REAL PRECISION: {0}", vdcRealPrecision.RepresentationForm);
-        realNode.Nodes.AddRange(new[]
-        {
+        realNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Exponent Width: {0} bit", vdcRealPrecision.ExponentWidth)),
             new SimpleNode(string.Format("Fraction Width: {0} bit", vdcRealPrecision.FractionWidth)),
-        });
+        ]);
     }
 
     public void AcceptControlAuxiliaryColor(AuxiliaryColor auxiliaryColor, MetafileContext parameter)
@@ -402,11 +402,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var clipRectNode = parameter.AddNode("CLIP RECTANGLE: {0} by {1}",
             Math.Abs(clipRectangle.SecondCorner.X - clipRectangle.FirstCorner.X),
             Math.Abs(clipRectangle.SecondCorner.Y - clipRectangle.FirstCorner.Y));
-        clipRectNode.Nodes.AddRange(new[]
-        {
+        clipRectNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("First Corner: {0}", clipRectangle.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", clipRectangle.SecondCorner)),
-        });
+        ]);
     }
 
     public void AcceptControlClipIndicator(ClipIndicator clipIndicator, MetafileContext parameter)
@@ -477,20 +477,20 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptGraphicalPrimitiveText(TextCommand text, MetafileContext parameter)
     {
         var node = parameter.AddNode("TEXT: '{0}'{1}", text.Text, text.Final == FinalFlag.Final ? " (final)" : "");
-        node.Nodes.AddRange(new[]
-        {
+        node.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Position [{0}]", text.Position))
             {
                 new SimpleNode(string.Format("X: {0}", text.Position.X)),
                 new SimpleNode(string.Format("Y: {0}", text.Position.Y)),
             },
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveRestrictedText(RestrictedText restrictedText, MetafileContext parameter)
     {
         var node = parameter.AddNode("RESTRICTED TEXT: '{0}'{1}", restrictedText.Text, restrictedText.Final == FinalFlag.Final ? " (final)" : "");
-        node.Nodes.AddRange(new[]
-        {
+        node.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Position [{0}]", restrictedText.Position))
             {
                 new SimpleNode(string.Format("X: {0}", restrictedText.Position.X)),
@@ -501,7 +501,7 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
                 new SimpleNode(string.Format("Delta Width: {0}", restrictedText.DeltaWidth)),
                 new SimpleNode(string.Format("Delta Height: {0}", restrictedText.DeltaHeight)),
             },
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveAppendText(AppendText appendText, MetafileContext parameter)
     {
@@ -520,18 +520,18 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptGraphicalPrimitiveCellArray(CellArray cellArray, MetafileContext parameter)
     {
         var cellArrayNode = parameter.AddNode("CELL ARRAY: {0} by {1}", cellArray.NX, cellArray.NY);
-        cellArrayNode.Nodes.AddRange(new[]
-        {
+        cellArrayNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Corner Point P: {0}", cellArray.CornerPointP)),
             new SimpleNode(string.Format("Corner Point Q: {0}", cellArray.CornerPointQ)),
             new SimpleNode(string.Format("Corner Point R: {0}", cellArray.CornerPointR)),
-        });
+        ]);
         for (int y = 0; y < cellArray.NY; y++)
         {
             var rowNode = new SimpleNode(string.Format("Row {0}", y));
             for (int x = 0; x < cellArray.NX; x++)
             {
-                rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[y * cellArray.NX + x].ToString()));
+                rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[(y * cellArray.NX) + x].ToString()));
             }
             cellArrayNode.Nodes.Add(rowNode);
         }
@@ -541,112 +541,112 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var rectNode = parameter.AddNode("RECTANGLE: {0} by {1}",
             Math.Abs(rectangle.SecondCorner.X - rectangle.FirstCorner.X),
             Math.Abs(rectangle.SecondCorner.Y - rectangle.FirstCorner.Y));
-        rectNode.Nodes.AddRange(new[]
-        {
+        rectNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("First Corner: {0}", rectangle.FirstCorner)),
             new SimpleNode(string.Format("Second Corner: {0}", rectangle.SecondCorner)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircle(Circle circle, MetafileContext parameter)
     {
         var circleNode = parameter.AddNode("CIRCLE: {0} by {0}", circle.Radius);
-        circleNode.Nodes.AddRange(new[]
-        {
+        circleNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", circle.Center)),
             new SimpleNode(string.Format("Radius: {0}", circle.Radius)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircularArc3Point(CircularArc3Point circularArc3Point, MetafileContext parameter)
     {
         var circularArcNode = parameter.AddNode("CIRCULAR ARC 3 POINT: {0} to {1} to {2}",
             circularArc3Point.Start, circularArc3Point.Intermediate, circularArc3Point.End);
-        circularArcNode.Nodes.AddRange(new[]
-        {
+        circularArcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Start: {0}", circularArc3Point.Start)),
             new SimpleNode(string.Format("Intermediate: {0}", circularArc3Point.Intermediate)),
             new SimpleNode(string.Format("End: {0}", circularArc3Point.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircularArc3PointClose(CircularArc3PointClose circularArc3PointClose, MetafileContext parameter)
     {
         var circularArcNode = parameter.AddNode("CIRCULAR ARC 3 POINT CLOSE: {0} to {1} to {2} ({3})",
             circularArc3PointClose.Start, circularArc3PointClose.Intermediate, circularArc3PointClose.End, circularArc3PointClose.Closure);
-        circularArcNode.Nodes.AddRange(new[]
-        {
+        circularArcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Start: {0}", circularArc3PointClose.Start)),
             new SimpleNode(string.Format("Intermediate: {0}", circularArc3PointClose.Intermediate)),
             new SimpleNode(string.Format("End: {0}", circularArc3PointClose.End)),
             new SimpleNode(string.Format("Arc Closure: {0}", circularArc3PointClose.Closure)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircularArcCenter(CircularArcCenter circularArcCenter, MetafileContext parameter)
     {
         var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE: {0} by {0}", circularArcCenter.Radius);
-        circularArcNode.Nodes.AddRange(new[]
-        {
+        circularArcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", circularArcCenter.Center)),
             new SimpleNode(string.Format("Start: {0}", circularArcCenter.Start)),
             new SimpleNode(string.Format("End: {0}", circularArcCenter.End)),
             new SimpleNode(string.Format("Radius: {0}", circularArcCenter.Radius)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircularArcCenterClose(CircularArcCenterClose circularArcCenterClose, MetafileContext parameter)
     {
         var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE CLOSE: {0} by {0} ({1})", circularArcCenterClose.Radius, circularArcCenterClose.Closure);
-        circularArcNode.Nodes.AddRange(new[]
-        {
+        circularArcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", circularArcCenterClose.Center)),
             new SimpleNode(string.Format("Start: {0}", circularArcCenterClose.Start)),
             new SimpleNode(string.Format("End: {0}", circularArcCenterClose.End)),
             new SimpleNode(string.Format("Radius: {0}", circularArcCenterClose.Radius)),
             new SimpleNode(string.Format("Arc Closure: {0}", circularArcCenterClose.Closure)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveEllipse(Ellipse ellipse, MetafileContext parameter)
     {
         var ellipseNode = parameter.AddNode("ELLIPSE: {0}", ellipse.Center);
-        ellipseNode.Nodes.AddRange(new[]
-        {
+        ellipseNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", ellipse.Center)),
             new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipse.FirstConjugateDiameter)),
             new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipse.SecondConjugateDiameter)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveEllipticalArc(EllipticalArc ellipticalArc, MetafileContext parameter)
     {
         var ellipseNode = parameter.AddNode("ELLIPTICAL ARC: {0}", ellipticalArc.Center);
-        ellipseNode.Nodes.AddRange(new[]
-        {
+        ellipseNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", ellipticalArc.Center)),
             new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipticalArc.FirstConjugateDiameter)),
             new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipticalArc.SecondConjugateDiameter)),
             new SimpleNode(string.Format("Start: {0}", ellipticalArc.Start)),
             new SimpleNode(string.Format("End: {0}", ellipticalArc.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveEllipticalArcClose(EllipticalArcClose ellipticalArcClose, MetafileContext parameter)
     {
         var ellipseNode = parameter.AddNode("ELLIPTICAL ARC CLOSE: {0} ({1})", ellipticalArcClose.Center, ellipticalArcClose.Closure);
-        ellipseNode.Nodes.AddRange(new[]
-        {
+        ellipseNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", ellipticalArcClose.Center)),
             new SimpleNode(string.Format("First Conjugate Diameter: {0}", ellipticalArcClose.FirstConjugateDiameter)),
             new SimpleNode(string.Format("Second Conjugate Diameter: {0}", ellipticalArcClose.SecondConjugateDiameter)),
             new SimpleNode(string.Format("Start: {0}", ellipticalArcClose.Start)),
             new SimpleNode(string.Format("End: {0}", ellipticalArcClose.End)),
             new SimpleNode(string.Format("Arc Closure: {0}", ellipticalArcClose.Closure)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveCircularArcCenterReversed(CircularArcCenterReversed circularArcCenterReversed, MetafileContext parameter)
     {
         var circularArcNode = parameter.AddNode("CIRCULAR ARC CENTRE REVERSED: {0} by {0}", circularArcCenterReversed.Radius);
-        circularArcNode.Nodes.AddRange(new[]
-        {
+        circularArcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", circularArcCenterReversed.Center)),
             new SimpleNode(string.Format("Start: {0}", circularArcCenterReversed.Start)),
             new SimpleNode(string.Format("End: {0}", circularArcCenterReversed.End)),
             new SimpleNode(string.Format("Radius: {0}", circularArcCenterReversed.Radius)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveConnectingEdge(ConnectingEdge connectingEdge, MetafileContext parameter)
     {
@@ -655,24 +655,24 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptGraphicalPrimitiveHyperbolicArc(HyperbolicArc hyperbolicArc, MetafileContext parameter)
     {
         var arcNode = parameter.AddNode("HYPERBOLIC ARC: {0}", hyperbolicArc.Center);
-        arcNode.Nodes.AddRange(new[]
-        {
+        arcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Center: {0}", hyperbolicArc.Center)),
             new SimpleNode(string.Format("Traverse Radius End Point: {0}", hyperbolicArc.TraverseRadiusEndPoint)),
             new SimpleNode(string.Format("Conjugate Radius End Point: {0}", hyperbolicArc.ConjugateRadiusEndPoint)),
             new SimpleNode(string.Format("Start: {0}", hyperbolicArc.Start)),
             new SimpleNode(string.Format("End: {0}", hyperbolicArc.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveParabolicArc(ParabolicArc parabolicArc, MetafileContext parameter)
     {
         var arcNode = parameter.AddNode("PARABOLIC ARC: {0}", parabolicArc.TangentIntersectionPoint);
-        arcNode.Nodes.AddRange(new[]
-        {
+        arcNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Tangent Intersection Point: {0}", parabolicArc.TangentIntersectionPoint)),
             new SimpleNode(string.Format("Start: {0}", parabolicArc.Start)),
             new SimpleNode(string.Format("End: {0}", parabolicArc.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveNonUniformBSpline(NonUniformBSpline nonUniformBSpline, MetafileContext parameter)
     {
@@ -682,14 +682,14 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         controlPointsNode.Nodes.AddRange(nonUniformBSpline.ControlPoints.Select(n => new SimpleNode(n.ToString())));
         var knotsNode = new SimpleNode(string.Format("Knots [{0} elements]", nonUniformBSpline.Knots.Length));
         knotsNode.Nodes.AddRange(nonUniformBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
-        splineNode.Nodes.AddRange(new[]
-        {
+        splineNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Spline Order: {0}", nonUniformBSpline.SplineOrder)),
             controlPointsNode,
             knotsNode,
             new SimpleNode(string.Format("Start: {0}", nonUniformBSpline.Start)),
             new SimpleNode(string.Format("End: {0}", nonUniformBSpline.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitiveNonUniformRationalBSpline(NonUniformRationalBSpline nonUniformRationalBSpline, MetafileContext parameter)
     {
@@ -701,15 +701,15 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         knotsNode.Nodes.AddRange(nonUniformRationalBSpline.Knots.Select(n => new SimpleNode(n.ToString())));
         var weightsNode = new SimpleNode(string.Format("Weights [{0} elements]", nonUniformRationalBSpline.Weights.Length));
         weightsNode.Nodes.AddRange(nonUniformRationalBSpline.Weights.Select(n => new SimpleNode(n.ToString())));
-        splineNode.Nodes.AddRange(new[]
-        {
+        splineNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Spline Order: {0}", nonUniformRationalBSpline.SplineOrder)),
             controlPointsNode,
             knotsNode,
             weightsNode,
             new SimpleNode(string.Format("Start: {0}", nonUniformRationalBSpline.Start)),
             new SimpleNode(string.Format("End: {0}", nonUniformRationalBSpline.End)),
-        });
+        ]);
     }
     public void AcceptGraphicalPrimitivePolybezier(Polybezier polybezier, MetafileContext parameter)
     {
@@ -809,11 +809,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptAttributeCharacterOrientation(CharacterOrientation characterOrientation, MetafileContext parameter)
     {
         var charOrientNode = parameter.AddNode("CHARACTER ORIENTATION: {0}/{1}", characterOrientation.Up, characterOrientation.Base);
-        charOrientNode.Nodes.AddRange(new[]
-        {
+        charOrientNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Up: {0}", characterOrientation.Up)),
             new SimpleNode(string.Format("Base: {0}", characterOrientation.Base)),
-        });
+        ]);
     }
     public void AcceptAttributeTextPath(TextPath textPath, MetafileContext parameter)
     {
@@ -822,11 +822,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptAttributeTextAlignment(TextAlignment textAlignment, MetafileContext parameter)
     {
         var textAlignNode = parameter.AddNode("TEXT ALIGNMENT: {0}/{1}", textAlignment.Horizontal, textAlignment.Vertical);
-        textAlignNode.Nodes.AddRange(new[]
-        {
+        textAlignNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Horizontal: {0}", textAlignment.Horizontal)),
             new SimpleNode(string.Format("Vertical: {0}", textAlignment.Vertical)),
-        });
+        ]);
         if (textAlignment.Horizontal == HorizontalTextAlignment.Continuous)
             textAlignNode.Add(new SimpleNode(string.Format("Horizontal Continuous Alignment: {0}", textAlignment.HorizontalContinuousAlignment)));
         if (textAlignment.Vertical == VerticalTextAlignment.Continuous)
@@ -893,11 +893,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptAttributePatternSize(PatternSize patternSize, MetafileContext parameter)
     {
         var patternSizeNode = parameter.AddNode("PATTERN SIZE: {0} by {1}", patternSize.Height, patternSize.Width);
-        patternSizeNode.Nodes.AddRange(new[]
-        {
+        patternSizeNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Height: {0}", patternSize.Height)),
             new SimpleNode(string.Format("Width: {0}", patternSize.Width)),
-        });
+        ]);
     }
     public void AcceptAttributeColorTable(ColorTable colorTable, MetafileContext parameter)
     {
@@ -918,11 +918,11 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         var lineCapNode = parameter.AddNode("LINE CAP: line {0} ({1}), dash {2} ({3})",
             lineCap.LineCapIndicator, lineCap.LineCapName,
             lineCap.DashCapIndicator, lineCap.DashCapName);
-        lineCapNode.Nodes.AddRange(new[]
-        {
+        lineCapNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Line Cap Indicator: {0} ({1})", lineCap.LineCapIndicator, lineCap.LineCapName)),
             new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", lineCap.DashCapIndicator, lineCap.DashCapName)),
-        });
+        ]);
     }
     public void AcceptAttributeLineJoin(LineJoin lineJoin, MetafileContext parameter)
     {
@@ -950,23 +950,23 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
         stageDesignatorsNode.Nodes.AddRange(interpolatedInterior.StageDesignators.Select(d => new SimpleNode(d.ToString())));
         var colorSpecifiersNode = new SimpleNode(string.Format("Color Specifiers [{0} entries]", interpolatedInterior.ColorSpecifiers.Length));
         colorSpecifiersNode.Nodes.AddRange(interpolatedInterior.ColorSpecifiers.Select(c => new SimpleNode(c.ToString())));
-        interpolatedInteriorNode.Nodes.AddRange(new[]
-        {
+        interpolatedInteriorNode.Nodes.AddRange(
+        [
             referenceGeometryNode,
             stageDesignatorsNode,
             colorSpecifiersNode,
-        });
+        ]);
     }
     public void AcceptAttributeEdgeCap(EdgeCap edgeCap, MetafileContext parameter)
     {
         var edgeCapNode = parameter.AddNode("EDGE CAP: line {0} ({1}), dash {2} ({3})",
             edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName,
             edgeCap.DashCapIndicator, edgeCap.DashCapName);
-        edgeCapNode.Nodes.AddRange(new[]
-        {
+        edgeCapNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Edge Cap Indicator: {0} ({1})", edgeCap.EdgeCapIndicator, edgeCap.EdgeCapName)),
             new SimpleNode(string.Format("Dash Cap Indicator: {0} ({1})", edgeCap.DashCapIndicator, edgeCap.DashCapName)),
-        });
+        ]);
     }
     public void AcceptAttributeEdgeJoin(EdgeJoin edgeJoin, MetafileContext parameter)
     {
@@ -1006,8 +1006,8 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptSegmentCopySegment(CopySegment copySegment, MetafileContext parameter)
     {
         var copySegmentNode = parameter.AddNode("COPY SEGMENT: {0}", copySegment.SegmentIdentifier);
-        copySegmentNode.Nodes.AddRange(new[]
-        {
+        copySegmentNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("Transformation applied: {0}", copySegment.TransformationApplication)),
             new SimpleNode(string.Format("X Scale: {0}", copySegment.Matrix.Elements[0])),
             new SimpleNode(string.Format("X Rotation: {0}", copySegment.Matrix.Elements[1])),
@@ -1015,7 +1015,7 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
             new SimpleNode(string.Format("Y Scale: {0}", copySegment.Matrix.Elements[3])),
             new SimpleNode(string.Format("X Translation: {0}", copySegment.Matrix.Elements[4])),
             new SimpleNode(string.Format("Y Translation: {0}", copySegment.Matrix.Elements[5])),
-        });
+        ]);
     }
     public void AcceptSegmentInheritanceFilter(InheritanceFilter inheritanceFilter, MetafileContext parameter)
     {
@@ -1029,15 +1029,15 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
     public void AcceptSegmentSegmentTransformation(SegmentTransformation segmentTransformation, MetafileContext parameter)
     {
         var segmentTransformationNode = parameter.AddNode("SEGMENT TRANSFORMATION: {0}", segmentTransformation.SegmentIdentifier);
-        segmentTransformationNode.Nodes.AddRange(new[]
-        {
+        segmentTransformationNode.Nodes.AddRange(
+        [
             new SimpleNode(string.Format("X Scale: {0}", segmentTransformation.Matrix.Elements[0])),
             new SimpleNode(string.Format("X Rotation: {0}", segmentTransformation.Matrix.Elements[1])),
             new SimpleNode(string.Format("Y Rotation: {0}", segmentTransformation.Matrix.Elements[2])),
             new SimpleNode(string.Format("Y Scale: {0}", segmentTransformation.Matrix.Elements[3])),
             new SimpleNode(string.Format("X Translation: {0}", segmentTransformation.Matrix.Elements[4])),
             new SimpleNode(string.Format("Y Translation: {0}", segmentTransformation.Matrix.Elements[5])),
-        });
+        ]);
     }
     public void AcceptSegmentSegmentHighlighting(SegmentHighlighting segmentHighlighting, MetafileContext parameter)
     {

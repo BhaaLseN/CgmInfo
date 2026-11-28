@@ -13,7 +13,7 @@ namespace CgmInfoCmd
         private bool _preventActualMethodCalls;
         private readonly T _target;
 
-        private Dictionary<string, Dictionary<string, int>> _stats = new Dictionary<string, Dictionary<string, int>>();
+        private Dictionary<string, Dictionary<string, int>> _stats = new();
 
         public ICommandVisitor<TContext> GetTransparentProxy(bool preventActualMethodCalls)
         {
@@ -84,11 +84,11 @@ namespace CgmInfoCmd
                 count = 0;
             elements[elementName] = count + 1;
         }
-        private string GetElementClass(int elementClass)
+        private static string GetElementClass(int elementClass)
         {
             return string.Format("Class {0}", elementClass);
         }
-        private string GetElementId(int elementId)
+        private static string GetElementId(int elementId)
         {
             return string.Format("Id {0}", elementId);
         }

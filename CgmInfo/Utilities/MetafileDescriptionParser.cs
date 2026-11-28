@@ -8,11 +8,11 @@ namespace CgmInfo.Utilities
     public static class MetafileDescriptionParser
     {
         // handles parameters such as "key:value""key:value"
-        private static readonly Regex DescriptionQuotedParameterRegex = new Regex(
+        private static readonly Regex DescriptionQuotedParameterRegex = new(
             @"\s*""(?<key>[^:]+?):(?<value>.+?)""",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
         // handles parameters such as "key:value","key:value" or "key:value";"key:value"
-        private static readonly Regex DescriptionCommaSeparatedParameterRegex = new Regex(
+        private static readonly Regex DescriptionCommaSeparatedParameterRegex = new(
             @"\s*""(?<key>[^:]+?):(?<value>.+?)""(?:[;,]|$)",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

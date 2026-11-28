@@ -8,7 +8,7 @@ namespace CgmInfoGui.Traversal;
 public class HotspotBuilderVisitor : CommandVisitor<HotspotContext>
 {
     // consider grobject, para and subpara as hotspot (ie. interactive regions/objects that can be "picked") [WebCGM20-Concepts 2.3.3]
-    private static readonly string[] HotspotAPSTypes = { "GROBJECT", "PARA", "SUBPARA" };
+    private static readonly string[] HotspotAPSTypes = ["GROBJECT", "PARA", "SUBPARA"];
     private static bool IsHotspot(BeginApplicationStructure beginApplicationStructure)
     {
         if (beginApplicationStructure == null)

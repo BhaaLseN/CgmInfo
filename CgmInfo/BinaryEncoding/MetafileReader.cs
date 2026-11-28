@@ -13,7 +13,7 @@ namespace CgmInfo.BinaryEncoding
     public class MetafileReader : BaseMetafileReader
     {
         // ISO/IEC 8632-3 8.1, Table 2
-        private readonly Dictionary<(int ElementClass, int ElementId), Func<MetafileReader, CommandHeader, Command>> _commandTable = new Dictionary<(int, int), Func<MetafileReader, CommandHeader, Command>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Func<MetafileReader, CommandHeader, Command>> _commandTable = new()
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
             // { (0, 0), ReadNoop }, // no-op; these are skipped already while reading the command header
@@ -749,7 +749,7 @@ namespace CgmInfo.BinaryEncoding
             // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
             // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
             int exp = numBytes / 2 * 8;
-            return whole + fraction / Math.Pow(2, exp);
+            return whole + (fraction / Math.Pow(2, exp));
         }
         internal double ReadFloatingPoint(int numBytes)
         {

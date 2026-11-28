@@ -9,7 +9,7 @@ namespace CgmInfo
 {
     public abstract class MetafileReader : IDisposable
     {
-        private readonly MetafilePropertyVisitor _propertyVisitor = new MetafilePropertyVisitor();
+        private readonly MetafilePropertyVisitor _propertyVisitor = new();
         private readonly FileStream? _fileStream;
 
         public MetafileDescriptor Descriptor { get; } = new MetafileDescriptor();

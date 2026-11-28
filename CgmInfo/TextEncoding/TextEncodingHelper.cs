@@ -8,7 +8,7 @@ namespace CgmInfo.TextEncoding
     {
         // returns a culture closest to what the clear text encoding looks like.
         // neutral English seems to work just fine.
-        public static readonly CultureInfo Culture = new CultureInfo("en");
+        public static readonly CultureInfo Culture = new("en");
 
         // returns the amount of bits (multiples of a byte) required to store input
         public static int GetBitPrecision(uint input)

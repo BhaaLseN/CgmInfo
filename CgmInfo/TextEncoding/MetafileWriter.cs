@@ -13,7 +13,7 @@ namespace CgmInfo.TextEncoding
     {
         private const char HardSeparator = ',';
 
-        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeBefore = new Dictionary<(int, int), Action<MetafileWriter>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeBefore = new()
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
             { (0, 2), DecreaseLevel },
@@ -28,7 +28,7 @@ namespace CgmInfo.TextEncoding
             { (0, 22), DecreaseLevel },
             { (0, 23), DecreaseLevel },
         };
-        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeAfter = new Dictionary<(int, int), Action<MetafileWriter>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter>> _indentChangeAfter = new()
         {
             // delimiter elements [ISO/IEC 8632-3 8.2, Table 3]
             { (0, 1), IncreaseLevel },
@@ -43,7 +43,7 @@ namespace CgmInfo.TextEncoding
             { (0, 21), IncreaseLevel },
             { (0, 22), IncreaseLevel },
         };
-        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter, Command>> _commandHandlerReplacement = new Dictionary<(int, int), Action<MetafileWriter, Command>>
+        private readonly Dictionary<(int ElementClass, int ElementId), Action<MetafileWriter, Command>> _commandHandlerReplacement = new()
         {
             // metafile descriptor elements [ISO/IEC 8632-3 8.3, Table 4]
             { (1, 4), WriteIntegerPrecision },

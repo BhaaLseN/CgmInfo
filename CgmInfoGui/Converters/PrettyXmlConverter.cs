@@ -26,7 +26,7 @@ public sealed class PrettyXmlConverter : IValueConverter
         return string.Format("{0}:{1}", prefix, name.LocalName);
     }
 
-    public TextDocument Render(XDocument document)
+    public static TextDocument Render(XDocument document)
     {
         var lines = new List<string>();
         // declaration is not an XNode (or XObject), so we can only take care of it here
@@ -37,7 +37,7 @@ public sealed class PrettyXmlConverter : IValueConverter
 
         return new(string.Join(Environment.NewLine, lines));
     }
-    public TextDocument Render(XElement element)
+    public static TextDocument Render(XElement element)
     {
         var lines = new List<string>(RenderElement(element, 0));
         return new(string.Join(Environment.NewLine, lines));
@@ -45,7 +45,7 @@ public sealed class PrettyXmlConverter : IValueConverter
 
     private static IEnumerable<string> RenderElement(XElement element, int indent)
     {
-        var childIndent = ChildIndent;
+        int childIndent = ChildIndent;
 
         // render start tag, attributes, and short closing-tag if no content
         yield return RenderLine(indent, RenderElement(element));
@@ -56,7 +56,7 @@ public sealed class PrettyXmlConverter : IValueConverter
             // render content
             foreach (var node in element.Nodes())
             {
-                foreach (var block in RenderNode(node, indent + childIndent))
+                foreach (string block in RenderNode(node, indent + childIndent))
                     yield return block;
             }
 

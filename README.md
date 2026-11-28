@@ -10,11 +10,11 @@ CgmInfo is a fully managed CGM Metafile library based on the ISO/IEC 8632:1999 s
 
 ### Projects
 * `CgmInfo`: The main library, targetting [.NET Standard 2.0](https://github.com/dotnet/standard). Entry point is `MetafileReader` in the `CgmInfo` Namespace which attempts to determine on whether to read the file as binary or text.
-* `CgmInfoCmd`: A CLI application printing a semi-spammy overview of the Metafile, targetting [.NET 9.0](https://github.com/dotnet/core). Mostly included for testing and reference only.
+* `CgmInfoCmd`: A CLI application printing a semi-spammy overview of the Metafile, targetting [.NET 11.0](https://github.com/dotnet/core). Mostly included for testing and reference only.
 * `CgmInfoGui`: A GUI application written in [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia/) to present a view on various aspects of the metafile, such as its metafile structure, its application structure and other uses such as hotspot information or [XML Companion file](http://www.w3.org/TR/webcgm20/WebCGM20-XCF.html) creation.
 
 ### Components
-CgmInfo is fully written in C# and should work on all platforms that implement at least .NET Standard 2.0; with the CLI application CgmInfoCmd and the GUI application CgmInfoGui requiring .NET 10.0 (or later).
+CgmInfo is fully written in C# and should work on all platforms that implement at least .NET Standard 2.0; with the CLI application CgmInfoCmd and the GUI application CgmInfoGui requiring .NET 11.0 (or later).
 - [Avalonia](https://github.com/AvaloniaUI/Avalonia/) for the cross-platform UI framework.
 - [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/) for XML rendering, as there is no `FlowDocument` equivalent in Avalonia (yet).
   - An updated version of [XML-to-WPF FlowDocument](http://xmlflowdocument.codeplex.com/) by [Chris Cavanagh](https://chriscavanagh.wordpress.com/2008/11/02/rendering-xml-as-a-flowdocument/) that better suits my needs.

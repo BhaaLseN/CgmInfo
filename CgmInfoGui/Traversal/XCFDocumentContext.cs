@@ -78,7 +78,7 @@ public class XCFDocumentContext
             }
         }
     }
-    private string SerializeAttributeValue(ApplicationStructureAttribute applicationStructureAttribute)
+    private static string SerializeAttributeValue(ApplicationStructureAttribute applicationStructureAttribute)
     {
         object[] allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
         switch (applicationStructureAttribute.AttributeType.ToUpperInvariant())

@@ -11,7 +11,7 @@ public class APSStructureContext : NodeContext
 {
     public void AddAttributeNode(ApplicationStructureAttribute applicationStructureAttribute)
     {
-        var allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
+        object[] allValues = applicationStructureAttribute.DataRecord.Elements.SelectMany(el => el.Values).ToArray();
         switch (applicationStructureAttribute.AttributeType.ToUpperInvariant())
         {
             #region WebCGM 2.0 Intelligent Content [WebCGM20-IC]

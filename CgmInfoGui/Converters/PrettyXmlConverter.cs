@@ -45,7 +45,7 @@ public sealed class PrettyXmlConverter : IValueConverter
 
     private static IEnumerable<string> RenderElement(XElement element, int indent)
     {
-        var childIndent = ChildIndent;
+        int childIndent = ChildIndent;
 
         // render start tag, attributes, and short closing-tag if no content
         yield return RenderLine(indent, RenderElement(element));
@@ -56,7 +56,7 @@ public sealed class PrettyXmlConverter : IValueConverter
             // render content
             foreach (var node in element.Nodes())
             {
-                foreach (var block in RenderNode(node, indent + childIndent))
+                foreach (string block in RenderNode(node, indent + childIndent))
                     yield return block;
             }
 

@@ -236,3 +236,7 @@ dotnet_naming_rule.locals_parameters_should_be_underscore_camel_case.style = cam
 
 # diagnostic id specific rules
 dotnet_code_quality.CA1826.exclude_ordefault_methods = true
+
+# some namespaces intentionally don't match the folder structure to make the code more discoverable.
+# this is fine and accepted.
+dotnet_diagnostic.IDE0130.severity = suggestion

@@ -7,6 +7,6 @@ namespace CgmInfo.Utilities
         public int Green { get; set; }
         public int Blue { get; set; }
 
-        public override string ToString() => $"A={Alpha} R={Red} G={Green} B={Blue}";
+        public override readonly string ToString() => $"A={Alpha} R={Red} G={Green} B={Blue}";
     }
 }

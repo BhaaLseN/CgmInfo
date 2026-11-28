@@ -19,10 +19,10 @@ namespace CgmInfo.TextEncoding
             }
             else
             {
-                dataRecord = new StructuredDataRecord(new[]
-                {
-                    new StructuredDataElement(DataTypeIndex.String, new object[] { reader.ReadString() }),
-                });
+                dataRecord = new StructuredDataRecord(
+                [
+                    new StructuredDataElement(DataTypeIndex.String, [reader.ReadString()]),
+                ]);
             }
 
             return new EscapeCommand(identifier, dataRecord);

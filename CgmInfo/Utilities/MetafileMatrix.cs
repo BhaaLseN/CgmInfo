@@ -13,7 +13,7 @@ namespace CgmInfo.Utilities
             A13 = a13;
             A23 = a23;
 
-            Elements = new[] { A11, A12, A21, A22, A13, A23 };
+            Elements = [A11, A12, A21, A22, A13, A23];
         }
 
         public double A11 { get; }

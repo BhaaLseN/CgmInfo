@@ -61,7 +61,7 @@ namespace CgmInfo
             return foundIndex;
         }
 
-        private MetafileColor[] _colorTable = new MetafileColor[0];
+        private MetafileColor[] _colorTable = [];
         public MetafileColor[] ColorTable => _colorTable;
 
         public ColorModel ColorModel { get; internal set; }

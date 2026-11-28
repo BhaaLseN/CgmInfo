@@ -531,7 +531,7 @@ public class ViewModelBuilderVisitor : ICommandVisitor<MetafileContext>
             var rowNode = new SimpleNode(string.Format("Row {0}", y));
             for (int x = 0; x < cellArray.NX; x++)
             {
-                rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[y * cellArray.NX + x].ToString()));
+                rowNode.Nodes.Add(new SimpleNode(cellArray.Colors[(y * cellArray.NX) + x].ToString()));
             }
             cellArrayNode.Nodes.Add(rowNode);
         }

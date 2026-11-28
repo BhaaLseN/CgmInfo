@@ -749,7 +749,7 @@ namespace CgmInfo.BinaryEncoding
             // if someone wanted a 4 byte fixed point real, they get 32 bits (16 bits whole, 16 bits fraction)
             // therefore exp would be 16 here (same for 8 byte with 64 bits and 32/32 -> 32 exp)
             int exp = numBytes / 2 * 8;
-            return whole + fraction / Math.Pow(2, exp);
+            return whole + (fraction / Math.Pow(2, exp));
         }
         internal double ReadFloatingPoint(int numBytes)
         {

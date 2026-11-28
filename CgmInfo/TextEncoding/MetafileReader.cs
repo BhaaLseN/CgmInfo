@@ -511,7 +511,7 @@ namespace CgmInfo.TextEncoding
                             string.Format("Invalid Based Integer digits '{0}' at command position {1}", number, _commandPosition));
                     }
 
-                    num = num * radix + charValue;
+                    num = (num * radix) + charValue;
                 }
                 if (match.Groups["sign"].Success && match.Groups["sign"].Value == "-")
                     num = -num;

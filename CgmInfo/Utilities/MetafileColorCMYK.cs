@@ -21,13 +21,13 @@ namespace CgmInfo.Utilities
             double y = Yellow / 255.0;
             double k = Black / 255.0;
 
-            double r = c * (1.0 - k) + k;
-            double g = m * (1.0 - k) + k;
-            double b = y * (1.0 - k) + k;
+            double r = (c * (1.0 - k)) + k;
+            double g = (m * (1.0 - k)) + k;
+            double b = (y * (1.0 - k)) + k;
 
-            r = (1.0 - r) * 255.0 + 0.5;
-            g = (1.0 - g) * 255.0 + 0.5;
-            b = (1.0 - b) * 255.0 + 0.5;
+            r = ((1.0 - r) * 255.0) + 0.5;
+            g = ((1.0 - g) * 255.0) + 0.5;
+            b = ((1.0 - b) * 255.0) + 0.5;
 
             int red = (int)r;
             int green = (int)g;
